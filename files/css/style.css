@@ -1,0 +1,185 @@
+
+/* GENERAL */
+
+.width-auto {
+    width: auto;   
+}
+
+.vertical-line {
+    height: 64px;
+    width: 0;
+    border-left: 1px solid rgba(127, 127, 127, 0.25);
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+
+/* OVERWRITE BOOTSTRAP */
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+/*.row > * {
+    width: auto;
+}*/
+
+li {
+    list-style-type: none;
+}
+
+.navbar {
+    flex-grow: 1;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.navbar.navbar-default {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-bs-theme="dark"] .navbar.navbar-default {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.shiny-plot-output {
+    padding: 8px;
+}
+
+
+/* HEADER */
+
+.top-spacer {
+    width: 100%;
+    height: 64px;
+    opacity: 0;
+}
+
+.header-box {
+    display: flex;
+    flex-direction: row;
+    margin: 12px;
+    align-items: center;
+}
+
+.main-title {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.jamrai-logo-header-long {
+    height: 64px;
+    width: auto;
+    margin-left: 24px;
+}
+
+.jamrai-logo-header-rect {
+    display: none;
+}
+
+
+/* MAIN SECTION */
+
+.main-box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.main-panel {
+    display: flex;
+    flex-grow: 1;
+}
+
+.tabbable {
+    width: 100%;
+}
+
+
+/* FOOTER */
+
+.footer-box {
+    display: flex;
+    flex-direction: row;
+    margin-top: 12px;
+    background-color: #303030;
+}
+
+.footer-image {
+    margin: 12px;
+}
+
+.jamrai-logo-footer {
+    width: 264px;
+    margin-left: 24px;
+}
+
+.eu-logo-footer {
+    width: 264px;
+    margin-left: 24px;
+}
+
+
+/* RESPONSIVE */
+
+@media screen and (orientation:portrait) {
+
+    .top-spacer {
+        height: 48px;
+    }
+
+    .header-box {
+        display: flex;
+        flex-direction: row; /*column;*/
+        margin: 12px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+
+    .jamrai-logo-header-long {
+        display: none;
+    }
+    
+    .jamrai-logo-header-rect {
+        display: block;
+        height: 128px;
+        width: auto;
+        margin-top: 32px;
+        margin-bottom: 24px;
+    }
+
+    .main-title {
+        font-size: 24px;
+        font-weight: bold;
+        /*flex-grow: 1;*/
+        text-align: center;
+    }
+
+    .navbar {
+        flex-grow: unset;
+    }
+
+    .navbar-nav {
+        align-items: flex-end;
+    }
+
+    .main-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .main-panel {
+        margin-top: 12px;
+    }
+
+    .tab-text {
+        display: none;
+    }
+}
