@@ -5,7 +5,14 @@ FROM rocker/shiny
 RUN mkdir /home/shiny-app
 
 # Install R dependencies
-RUN R -e "install.packages(c('dplyr', 'ggplot2', 'leaflet', 'gapminder', 'shinyWidgets', 'bslib', 'bsicons', 'thematic', 'rmarkdown'))"
+## base
+RUN R -e "install.packages(c('dplyr', 'leaflet', 'gapminder', 'shinyWidgets', 'rmarkdown'))"
+## plots
+RUN R -e "install.packages(c('ggplot2', 'echarts4r'))"
+## style
+RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
+## 
+RUN R -e "install.packages(c('remotes'))"
 
 # Copy the Shiny app code
 #COPY app.R /home/shiny-app/app.R
