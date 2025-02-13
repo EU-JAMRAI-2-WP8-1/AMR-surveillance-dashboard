@@ -8,8 +8,8 @@
 - Install Docker (for Ubuntu, see: https://docs.docker.com/engine/install/ubuntu/)
 - Clone the repository on your PC
 
-    `git clone https://gitlab.com/eu-jamrai-2-wp8.1/amr-surveillance-dashboard.git`
-- Enter the "amr-surveillance-dashboard" directory
+    `git clone https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard.git`
+- Enter the "AMR-surveillance-dashboard" directory
 - Build and run the Docker image
 
     `docker compose build`
@@ -20,8 +20,16 @@
 
 ### For Windows
 
-*TODO*
-
+- Be sure that Git is installed on your PC (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- Install Docker Desktop for Windows, see instructions at https://docs.docker.com/desktop/setup/install/windows-install/
+- Clone the repository on your PC:
+    - Open Git GUI
+    - Click on "Clone Existing Repository"
+    - In "Source location", write https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard.git
+    - In "Target Directory", select a folder, then add the name for the new directory to be created at the end of the path (for example, select your "Document" folder, then add "/AMR-surveillance-dashboard
+" to the path)
+    - A GitHub window should pop-up, click on "Sign in with your browser". It opens a GitHub page on which you click on "Authorize git-ecosystem", then provide your credentials. The repository should now be cloned on your PC !
+- Run "docker compose" in the folder (*more details will be added on this point*)
 
 ## Edit the application
 

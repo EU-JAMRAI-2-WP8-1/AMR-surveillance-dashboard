@@ -2,6 +2,7 @@ library(shiny)
 library(shinyWidgets)
 library(dplyr)
 library(ggplot2)
+library(echarts4r)
 library(leaflet)
 library(gapminder)
 library(bslib)
@@ -45,6 +46,18 @@ thematic_shiny(
 # variables
 jamraiLogoHeaderLong <- file.path("www/logos/TRANSPARENT_LONG2.png")
 jamraiLogoHeaderRect <- file.path("www/logos/TRANSPARENT_RECTANGULAR.png")
+
+
+## TEST MAP
+#print(countrycode::codelist$country.name.en)
+#print(unique(gapminder$country[gapminder$continent == "Europe"]))
+#cns <- countrycode::codelist$country.name.en
+countryList <- unique(gapminder$country[gapminder$continent == "Europe"])
+mapDataframe <- data.frame(
+    country = countryList,
+    value = runif(length(countryList), 1, 100)
+)
+##
 
 # user interface
 ui <- shinyUI(fluidPage(
@@ -146,7 +159,11 @@ ui <- shinyUI(fluidPage(
                         bsicons::bs_icon("globe-europe-africa"),
                         tags$span("Map") %>% tagAppendAttributes(class="tab-text")
                     ),
-                    plotOutput("plot")
+                    #plotOutput("plot"),
+                    mapDataframe |> 
+                        e_charts(country) |> 
+                        e_map(value, map="world") |> 
+                        e_visual_map(value)
                 ),
                 tabPanel(
                     tags$span(
