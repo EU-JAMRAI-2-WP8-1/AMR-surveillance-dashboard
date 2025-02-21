@@ -1,8 +1,11 @@
 library(shiny)
 library(shinyWidgets)
+library(readxl)
 library(dplyr)
+library(countrycode)
 library(ggplot2)
 library(echarts4r)
+library(plotly)
 library(leaflet)
 library(gapminder)
 library(bslib)
@@ -15,7 +18,6 @@ options(shiny.port = 8180)
 
 shiny::addResourcePath('www', '/srv/shiny-server/www')
 
-dataset <- read.csv("/home/shiny-app/results.csv")
 appFilesDirectory = "/home/shiny-app/files"
 
 ## pour layout --> voir https://shiny.posit.co/r/articles/build/layout-guide/
@@ -47,20 +49,31 @@ thematic_shiny(
 jamraiLogoHeaderLong <- file.path("www/logos/TRANSPARENT_LONG2.png")
 jamraiLogoHeaderRect <- file.path("www/logos/TRANSPARENT_RECTANGULAR.png")
 
+# import and parse data
+dataset <- read_excel("/home/shiny-app/files/data/survey_replies_20250217.xls", sheet="Content")
+countryList <- na.omit(dataset[c(4:ncol(dataset)),1])
 
-## TEST MAP
-#print(countrycode::codelist$country.name.en)
-#print(unique(gapminder$country[gapminder$continent == "Europe"]))
-#cns <- countrycode::codelist$country.name.en
-countryList <- unique(gapminder$country[gapminder$continent == "Europe"])
-mapDataframe <- data.frame(
-    country = countryList,
-    value = runif(length(countryList), 1, 100)
-)
-##
+
+# TEST - MAP WITH PLOTLY
+countryList <- read.csv("/home/shiny-app/files/data/countryList.csv")
+countryReplies <- data.frame(country=countryList$Country, reply=rep(0, nrow(countryList)))
+replies <- c("Ukraine", "Slovak Republic", "Denmark", "Latvia", "Estonia", "Norway", "Slovenia", "Sweden", "Luxembourg") ## todo -> take from input file instead
+
+for (row in c(1:nrow(countryReplies))) {
+  if (countryReplies[row, 1] %in% replies) {
+    countryReplies[row, 2] <- 1
+  }
+}
+
+### ICI
+
+### pour mettre le dark mode sur les maps plotly -> utiliser ceci peut etre (sur serveur)
+
+
 
 # user interface
 ui <- shinyUI(fluidPage(
+    input_dark_mode(id = "mode") %>% tagAppendAttributes(class="hidden"),
     theme = custom_theme,
     includeCSS(file.path("/srv/shiny-server/www/css/style.css")),
     page_navbar(
@@ -159,11 +172,33 @@ ui <- shinyUI(fluidPage(
                         bsicons::bs_icon("globe-europe-africa"),
                         tags$span("Map") %>% tagAppendAttributes(class="tab-text")
                     ),
-                    #plotOutput("plot"),
-                    mapDataframe |> 
-                        e_charts(country) |> 
-                        e_map(value, map="world") |> 
-                        e_visual_map(value)
+                    fluidRow(
+                        tags$span("Countries participation to the survey") %>% tagAppendAttributes(class="plot-title"),
+                        plotlyOutput(outputId = "mainMap")
+
+                        #tags$span(
+                        #    tags$span(
+                        #        tags$span(
+                        #            ""
+                        #        ) %>% tagAppendAttributes(class="map-legend-color jamrai-blue"),
+                        #        tags$span(
+                        #            "Reply"
+                        #        ) %>% tagAppendAttributes(class="map-legend-description"),
+                        #        tags$span(
+                        #            ""
+                        #        ) %>% tagAppendAttributes(class="map-legend-color soft-red"),
+                        #        tags$span(
+                        #            "No reply"
+                        #        ) %>% tagAppendAttributes(class="map-legend-description"),
+                        #        tags$span(
+                        #            ""
+                        #        ) %>% tagAppendAttributes(class="map-legend-color soft-grey"),
+                        #        tags$span(
+                        #            "Not participating"
+                        #        ) %>% tagAppendAttributes(class="map-legend-description")
+                        #    ) %>% tagAppendAttributes(class="map-legend-row")
+                        #) %>% tagAppendAttributes(class="map-legend-box")
+                    )
                 ),
                 tabPanel(
                     tags$span(
@@ -228,6 +263,61 @@ server <- function(input, output, session) {
 
     output$plot <- renderPlot({
         hist(rnorm(input$n), breaks = input$bins, col = "#007bc2")
+    })
+
+    output$mainMap <- renderPlotly({
+
+        if (input$dark_mode == "dark") {
+            themeBgColor = "#1D1F21"
+        } else {
+            themeBgColor = "#ffffff"
+        }
+
+        countryReplies %>%
+        plot_ly(
+            #width="100%",
+            height=680
+        ) %>%
+        add_trace(
+            type='choropleth',
+            locationmode="country names",
+            #geojson=geojson,
+            locations=countryReplies$country,
+            z=countryReplies$reply,
+            zmin=0,
+            zmax=1,
+            #showlegend=TRUE,
+            #autocolorscale=FALSE,
+            showscale=FALSE,
+            colors=c("#cc8888","#0fdbd5"),
+            #colorbar=list(
+            #    title=list(
+            #        text="Reply to the survey"
+            #    ),
+            #    dtick=1,
+            #    nticks=2
+            #    ),
+            marker=list(line=list(width=1, color=themeBgColor))
+        ) %>%
+        layout(
+            geo = list(
+                #title="JAMRAI WP8.1 replies",
+                scope='europe',
+                showframe=FALSE,
+                showland=TRUE,
+                landcolor="#cccccc", #inside countries
+                countrycolor=themeBgColor, #lines
+                bgcolor = themeBgColor, # bg color - inside map
+                #coastlinecolor="#fff",
+                showcoastline=FALSE,
+                projection=list(scale=1.5)
+            ),
+            #plot_bgcolor = "#000000", # no effect
+            paper_bgcolor = themeBgColor, # bg color - outside map
+            margin=list(t=0, r=0,  l=0, b=0),
+            autosize=TRUE
+        )
+
     })
 
 }

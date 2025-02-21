@@ -13,6 +13,21 @@
     margin-right: 16px;
 }
 
+.hidden {
+    display: none;
+}
+
+.jamrai-blue {
+    background-color:#0fdbd5;
+}
+
+.soft-red {
+    background-color:#cc8888;
+}
+
+.soft-grey {
+    background-color:#cccccc;
+}
 
 /* OVERWRITE BOOTSTRAP */
 
@@ -92,8 +107,43 @@ li {
     flex-grow: 1;
 }
 
+.plot-title {
+    font-size: 24px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
 .tabbable {
     width: 100%;
+}
+
+.map-legend-box {
+    display: flex;
+    margin-top: 320px;
+    margin-bottom: 24px;
+    margin-left: 400px;
+    margin-right: 12px;
+}
+
+.map-legend-row {
+    display: flex;
+    flex-direction: row;
+    margin: 4px;
+}
+
+.map-legend-description {
+    color: #888888;
+    font-size: 24px;
+    margin-left: 8px;
+}
+
+.map-legend-color {
+    height:24px;
+    width:24px;
+    margin-left: 48px;
+    border: 1px solid #888888;
 }
 
 
