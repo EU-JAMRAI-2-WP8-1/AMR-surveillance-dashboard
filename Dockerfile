@@ -14,7 +14,7 @@ RUN R -e "install.packages(c('dplyr', 'leaflet', 'gapminder', 'shinyWidgets', 'r
 ## data parsing
 RUN R -e "install.packages(c('readxl'))"
 ## plots
-RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly'))"
+RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly', 'geojsonR'))"
 ## style
 RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
 ## 
@@ -22,8 +22,7 @@ RUN R -e "install.packages(c('remotes'))"
 
 # Copy the Shiny app code
 #COPY app.R /home/shiny-app/app.R
-COPY files/data/survey_replies_20250217.xls /home/shiny-app/files/data/survey_replies_20250217.xls
-COPY files/data/countryList.csv /home/shiny-app/files/data/countryList.csv
+COPY files/data/* /home/shiny-app/files/data/
 COPY files/logos/* /srv/shiny-server/www/logos/
 #COPY files/css/style.css /srv/shiny-server/www/css/style.css
 

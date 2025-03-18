@@ -6,6 +6,7 @@ library(countrycode)
 library(ggplot2)
 library(echarts4r)
 library(plotly)
+library(geojsonR)
 library(leaflet)
 library(gapminder)
 library(bslib)
@@ -45,9 +46,12 @@ thematic_shiny(
   session = shiny::getDefaultReactiveDomain()
 )
 
-# variables
+# import logos
 jamraiLogoHeaderLong <- file.path("www/logos/TRANSPARENT_LONG2.png")
 jamraiLogoHeaderRect <- file.path("www/logos/TRANSPARENT_RECTANGULAR.png")
+
+# import Europe polygons
+# geojsonEurope = FROM_GeoJson("/home/shiny-app/files/data/CNTR_RG_03M_2024_3035.geojson")
 
 # import and parse data
 dataset <- read_excel("/home/shiny-app/files/data/survey_replies_20250217.xls", sheet="Content")
@@ -57,7 +61,7 @@ countryList <- na.omit(dataset[c(4:ncol(dataset)),1])
 # TEST - MAP WITH PLOTLY
 countryList <- read.csv("/home/shiny-app/files/data/countryList.csv")
 countryReplies <- data.frame(country=countryList$Country, reply=rep(0, nrow(countryList)))
-replies <- c("Ukraine", "Slovak Republic", "Denmark", "Latvia", "Estonia", "Norway", "Slovenia", "Sweden", "Luxembourg") ## todo -> take from input file instead
+replies <- c("Ukraine", "Slovak Republic", "Denmark", "Iceland", "Latvia", "Estonia", "Norway", "Slovenia", "Sweden", "Luxembourg", "Portugal", "Malta", "Finland", "Hungary", "Belgium", "Czechia", "France", "Greece", "Italy", "Poland") ## todo -> take from input file instead
 
 for (row in c(1:nrow(countryReplies))) {
   if (countryReplies[row, 1] %in% replies) {
@@ -172,9 +176,9 @@ ui <- shinyUI(fluidPage(
                         bsicons::bs_icon("globe-europe-africa"),
                         tags$span("Map") %>% tagAppendAttributes(class="tab-text")
                     ),
-                    fluidRow(
+                    fluidRow( ## todo: wrap into division
                         tags$span("Countries participation to the survey") %>% tagAppendAttributes(class="plot-title"),
-                        plotlyOutput(outputId = "mainMap")
+                        plotlyOutput(outputId = "mainMap"),
 
                         #tags$span(
                         #    tags$span(
@@ -198,6 +202,11 @@ ui <- shinyUI(fluidPage(
                         #        ) %>% tagAppendAttributes(class="map-legend-description")
                         #    ) %>% tagAppendAttributes(class="map-legend-row")
                         #) %>% tagAppendAttributes(class="map-legend-box")
+
+                        tags$span(
+                            "Map source: ",
+                            tags$a(href="https://www.naturalearthdata.com/", "naturalearthdata")
+                        )
                     )
                 ),
                 tabPanel(
@@ -278,17 +287,37 @@ server <- function(input, output, session) {
             #width="100%",
             height=680
         ) %>%
+        layout(
+            geo = list(
+                scope="europe",
+                showframe=FALSE,
+                showland=TRUE,
+                landcolor="#cccccc", # inside countries
+                countrycolor=themeBgColor, # lines
+                bgcolor = themeBgColor, # bg color - inside map
+                #coastlinecolor="#fff",
+                showcoastline=FALSE,
+                projection=list(
+                    scale=1.5  # initial zoom
+                )
+                #color=countryReplies$reply
+            ),
+            #plot_bgcolor = "#000000", # no effect
+            paper_bgcolor = themeBgColor, # bg color - outside map
+            margin=list(t=0, r=0,  l=0, b=0),
+            autosize=TRUE
+        ) %>%
         add_trace(
+            #geojson=FROM_GeoJson("/home/shiny-app/files/data/CNTR_RG_03M_2024_3035.geojson"),
             type='choropleth',
             locationmode="country names",
-            #geojson=geojson,
             locations=countryReplies$country,
             z=countryReplies$reply,
             zmin=0,
             zmax=1,
             #showlegend=TRUE,
             #autocolorscale=FALSE,
-            showscale=FALSE,
+            showscale=TRUE,
             colors=c("#cc8888","#0fdbd5"),
             #colorbar=list(
             #    title=list(
@@ -298,26 +327,7 @@ server <- function(input, output, session) {
             #    nticks=2
             #    ),
             marker=list(line=list(width=1, color=themeBgColor))
-        ) %>%
-        layout(
-            geo = list(
-                #title="JAMRAI WP8.1 replies",
-                scope='europe',
-                showframe=FALSE,
-                showland=TRUE,
-                landcolor="#cccccc", #inside countries
-                countrycolor=themeBgColor, #lines
-                bgcolor = themeBgColor, # bg color - inside map
-                #coastlinecolor="#fff",
-                showcoastline=FALSE,
-                projection=list(scale=1.5)
-            ),
-            #plot_bgcolor = "#000000", # no effect
-            paper_bgcolor = themeBgColor, # bg color - outside map
-            margin=list(t=0, r=0,  l=0, b=0),
-            autosize=TRUE
         )
-
     })
 
 }
