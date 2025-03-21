@@ -1,8 +1,12 @@
+## NOTES
+# TODO -> cohenrence in snake/camel case
+
 ## SETUP ##
 
 # import libraries
 library(shiny)
 library(shinyWidgets)
+library(sf)
 library(readxl)
 library(rjson)
 library(dplyr)
@@ -63,10 +67,12 @@ jamraiLogoHeaderRectWhite <- file.path("www/logos/TRANSPARENT_LONG1_WHITE-480x10
 euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
 
 # import Europe polygons
-#geojsonEurope = FROM_GeoJson(file.path("/home/shiny-app/files/data/CNTR_RG_20M_2024_3035.geojson"))
-geojsonEurope = geojson_read(file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson"))
+#geojsonEurope = FROM_GeoJson(file.path("/home/shiny-app/files/data/europe.geojson")) ## not working
+geojsonEurope2 = geojson_read(file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
+geojsonEurope = fromJSON(file = file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
+
 ## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries
-#geojsonEurope = FROM_GeoJson(file.path("/home/shiny-app/files/data/europe.geojson"))
+
 
 # import survey questions and replies from JSON
 surveyDataFile <- file.path("/home/shiny-app/files/data/replies_formatted_20250314.json")
@@ -81,6 +87,8 @@ for (country in surveyData[[3]][["possible_answers"]]){
     countryList <- c(countryList, country$title)
 }
 
+countryReplies <- data.frame(country=countryList, reply=rep(0, length(countryList)))
+replies <- c("Ukraine", "Slovak Republic", "Denmark", "Latvia", "Estonia", "Norway", "Slovenia", "Sweden", "Luxembourg") ## todo -> take from input file instead
 
 ## USER INTERFACE ##
 
@@ -232,9 +240,9 @@ ui <- shinyUI(fluidPage(
                     fluidRow( ## todo: wrap into division
                         ##tags$span("Countries participation to the survey") %>% tagAppendAttributes(class="plot-title"), ## title - temporarily removed
                         
-                        #plotlyOutput(outputId = "mainMap"), # replaced by leaflet map
-                        leafletOutput("mainMap") %>% tagAppendAttributes(class="main-map-output"),
-
+                        tags$div(
+                            leafletOutput("mainMap")
+                        ) %>% tagAppendAttributes(class="map-container"),
                         #tags$span
                         #    tags$span(
                         #        tags$span(
@@ -267,17 +275,18 @@ ui <- shinyUI(fluidPage(
 
                 # plots
                 tabPanel(
+
                     tags$span(
                         bsicons::bs_icon("bar-chart"),
                         tags$span("Dashboard") %>% tagAppendAttributes(class="tab-text")
                     ),
                     fluidRow(
-                        plotOutput(outputId = "outChartLifeExp"),
-                        plotOutput(outputId = "outChartGDP")
+                        plotlyOutput(outputId = "plotlyMap") # replaced by leaflet map
+                        #plotOutput(outputId = "outChartLifeExp"),
+                        #plotOutput(outputId = "outChartGDP")
                     )
                 ),
 
-                
                 tabPanel(
                     tags$span(
                         bsicons::bs_icon("table"),
@@ -299,16 +308,33 @@ ui <- shinyUI(fluidPage(
 ## SERVER ##
 
 server <- function(input, output, session) {
+
+    bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
+    pal <- colorBin("YlOrRd", domain = geojsonEurope$density, bins = bins)
+
+    getCountryColors <- function(country) {
+        if (country == TRUE) {
+            return("#0000ff")
+        } else {
+            return("#ff0000")
+        }
+    }
+
+    getThemeBgColor <- function(colorMode) {
+        if (colorMode == "dark") {
+            return("#1d1f21")
+        } else {
+            return("#ffffff")
+        }
+    }
+
+    themeBgColor <- reactive({
+        getThemeBgColor(input$dark_mode)
+    })
     
     # filter data and store as reactive value
-    data <- reactive({
-        gapminder %>%
-            filter(country == input$inCountry) %>%
-            group_by(year) %>%
-            summarise(
-                AvgLifeExp = round(mean(lifeExp)),
-                AvgGdpPercap = round(mean(gdpPercap), digits = 2)
-        )
+    filteredData <- reactive({
+        getCountryColors(input$countriesSelection)
     })
 
     # custom common properties for charts
@@ -321,108 +347,118 @@ server <- function(input, output, session) {
     )
 
     # render placeholder1 chart
-    output$outChartLifeExp <- renderPlot({
-        ggplot(data(), aes(x = year, y = AvgLifeExp)) +
-            geom_col(fill = "#008aab") +
-            geom_text(aes(label = AvgLifeExp), vjust = 2, size = 6, color = "#ffffff") +
-            labs(title = paste("Placeholder graph - ", input$inCountry))
-    })
+    #output$outChartLifeExp <- renderPlot({
+    #    ggplot(filteredData(), aes(x = year, y = AvgLifeExp)) +
+    #        geom_col(fill = "#008aab") +
+    #        geom_text(aes(label = AvgLifeExp), vjust = 2, size = 6, color = "#ffffff") +
+    #        labs(title = paste("Placeholder graph - ", input$countriesSelection))
+    #})
 
     # render placeholder2 chart
-    output$outChartGDP <- renderPlot({
-        ggplot(data(), aes(x = year, y = AvgGdpPercap)) +
-            geom_line(color = "#008aab", size = 2) +
-            geom_point(color = "#008aab", size = 5) +
-            geom_label(
-                aes(label = AvgGdpPercap),
-                nudge_x = 0.25,
-                nudge_y = 0.25
-            ) +
-            labs(title = paste("Placeholder graph - ", input$inCountry))
-    })
+    #output$outChartGDP <- renderPlot({
+    #    ggplot(filteredData(), aes(x = year, y = AvgGdpPercap)) +
+    #        geom_line(color = "#008aab", size = 2) +
+    #        geom_point(color = "#008aab", size = 5) +
+    #        geom_label(
+    #            aes(label = AvgGdpPercap),
+    #            nudge_x = 0.25,
+    #            nudge_y = 0.25
+    #        ) +
+    #        labs(title = paste("Placeholder graph - ", input$countriesSelection))
+    #})
 
-    output$plot <- renderPlot({
-        hist(rnorm(input$n), breaks = input$bins, col = "#007bc2")
-    })
+    #output$plot <- renderPlot({
+    #    hist(rnorm(input$n), breaks = input$bins, col = "#007bc2")
+    #})
 
     output$mainMap <- renderLeaflet({
 
         if (input$dark_mode == "dark") {
-            themeBgColor = "#1D1F21"
+            themeBgColor = "#1d1f21"
+            themeFgColor = "#ffffff"
         } else {
             themeBgColor = "#ffffff"
+            themeFgColor = "#1d1f21"
         }
 
-        leaflet() %>%
+        leaflet(geojsonEurope) %>%
         setView(lng = 22, lat = 50, zoom = 4) %>%
         #addTiles(
         #    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         #    #{attribution: '© OpenStreetMap'}
         #) %>%
-        #setView(0.34580993652344, 50.6252978589571, zoom = 3) %>%
         addGeoJSON(
             geojson = geojsonEurope,
             opacity = 1,
-            fillOpacity = 0,
-            color = themeBgColor,
+            fillOpacity = 1,
+            color = themeBgColor(),
             weight = 1,
-            fillColor = "#000"
-        )
+            fillColor = "#aaaaaa"
+        )# %>%
+        #addPolygons(
+        #    fillColor = ~pal(density),
+        #    fillOpacity = 1 ## function based on PARTICIPATION
+        #)
     })
 
-    #output$mainMap <- renderPlotly({ # replaced by leaflet map
-    #    if (input$dark_mode == "dark") {
-    #        themeBgColor = "#1D1F21"
-    #    } else {
-    #        themeBgColor = "#ffffff"
-    #    }
-    #    countryReplies %>%
-    #    plot_ly(
-    #        #width="100%",
-    #        height=680
-    #    ) %>%
-    #    layout(
-    #        geo = list(
-    #            scope="europe",
-    #            showframe=FALSE,
-    #            showland=TRUE,
-    #            landcolor="#cccccc", # inside countries
-    #            countrycolor=themeBgColor, # lines
-    #            bgcolor = themeBgColor, # bg color - inside map
-    #            #coastlinecolor="#fff",
-    #            showcoastline=FALSE,
-    #            projection=list(
-    #                scale=1.5  # initial zoom
-    #            )
-    #            #color=countryReplies$reply
-    #        ),
-    #        #plot_bgcolor = "#000000", # no effect
-    #        paper_bgcolor = themeBgColor, # bg color - outside map
-    #        margin=list(t=0, r=0,  l=0, b=0),
-    #        autosize=TRUE
-    #    ) %>%
-    #    add_trace(
-    #        #geojson=FROM_GeoJson("/home/shiny-app/files/data/CNTR_RG_03M_2024_3035.geojson"),
-    #        type='choropleth',
-    #        locationmode="country names",
-    #        locations=countryReplies$country,
-    #        z=countryReplies$reply,
-    #        zmin=0,
-    #        zmax=1,
-    #        #showlegend=TRUE,
-    #        #autocolorscale=FALSE,
-    #        showscale=TRUE,
-    #        colors=c("#cc8888","#0fdbd5"),
-    #        #colorbar=list(
-    #        #    title=list(
-    #        #        text="Reply to the survey"
-    #        #    ),
-    #        #    dtick=1,
-    #        #    nticks=2
-    #        #    ),
-    #        marker=list(line=list(width=1, color=themeBgColor))
-    #    )
-    #})
+    
+
+    output$plotlyMap <- renderPlotly({ # replaced by leaflet map
+        if (input$dark_mode == "dark") {
+            themeBgColor = "#1D1F21"
+        } else {
+            themeBgColor = "#ffffff"
+        }
+        #countryReplies %>%
+        plot_ly(
+            #width="100%",
+
+            
+
+            ,height=680
+        ) %>%
+        add_trace(
+            type='choropleth',
+            geojson=geojsonEurope,
+            locations=countryReplies$country,
+            z=countryReplies$reply,
+            zmin=0,
+            zmax=1,
+            #showlegend=TRUE,
+            #autocolorscale=FALSE,
+            showscale=TRUE,
+            colors=c("#cc8888","#0fdbd5"),
+            #colorbar=list(
+            #    title=list(
+            #        text="Reply to the survey"
+            #    ),
+            #    dtick=1,
+            #    nticks=2
+            #    ),
+            marker=list(line=list(width=1, color=themeBgColor))
+        ) %>%
+        layout(
+            geo = list(
+                scope="europe",
+                showcountries=FALSE, # enlever
+                showframe=FALSE,
+                showland=FALSE,# tester false
+                landcolor="#cccccc", # inside countries
+                countrycolor=themeBgColor, # lines
+                bgcolor = themeBgColor, # bg color - inside map
+                #coastlinecolor="#fff",
+                showcoastline=FALSE,
+                projection=list(
+                    scale=1.5  # initial zoom
+                )
+                #color=countryReplies$reply
+            ),
+            #plot_bgcolor = "#000000", # no effect
+            paper_bgcolor = themeBgColor, # bg color - outside map
+            margin=list(t=0, r=0,  l=0, b=0),
+            autosize=TRUE
+        )
+    })
 
 }
 

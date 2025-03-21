@@ -42,7 +42,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Andorra"
         },
         {
             "type": "Feature",
@@ -245,7 +246,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Albania"
         },
         {
             "type": "Feature",
@@ -472,7 +474,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Switzerland"
         },
         {
             "type": "Feature",
@@ -911,7 +914,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Austria"
         },
         {
             "type": "Feature",
@@ -1152,7 +1156,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Bosnia and Herzegovina"
         },
         {
             "type": "Feature",
@@ -1387,7 +1392,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Belgium"
         },
         {
             "type": "Feature",
@@ -1666,7 +1672,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Bulgaria"
         },
         {
             "type": "Feature",
@@ -1877,7 +1884,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Belarus"
         },
         {
             "type": "Feature",
@@ -2454,7 +2462,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Croatia"
         },
         {
             "type": "Feature",
@@ -2729,7 +2738,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Hungary"
         },
         {
             "type": "Feature",
@@ -2924,7 +2934,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Czechia"
         },
         {
             "type": "Feature",
@@ -3673,7 +3684,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Germany"
         },
         {
             "type": "Feature",
@@ -3958,7 +3970,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Denmark"
         },
         {
             "type": "Feature",
@@ -4115,7 +4128,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Estonia"
         },
         {
             "type": "Feature",
@@ -4892,7 +4906,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Spain"
         },
         {
             "type": "Feature",
@@ -5265,7 +5280,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Finland"
         },
         {
             "type": "Feature",
@@ -5308,7 +5324,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Faroes"
         },
         {
             "type": "Feature",
@@ -6125,7 +6142,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "France"
         },
         {
             "type": "Feature",
@@ -6168,7 +6186,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Guernsey"
         },
         {
             "type": "Feature",
@@ -6263,7 +6282,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Gibraltar"
         },
         {
             "type": "Feature",
@@ -6508,7 +6528,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Netherlands"
         },
         {
             "type": "Feature",
@@ -7125,7 +7146,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Norway"
         },
         {
             "type": "Feature",
@@ -7300,7 +7322,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Ireland"
         },
         {
             "type": "Feature",
@@ -7343,7 +7366,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Isle of Man"
         },
         {
             "type": "Feature",
@@ -7500,7 +7524,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Iceland"
         },
         {
             "type": "Feature",
@@ -8205,7 +8230,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Italy"
         },
         {
             "type": "Feature",
@@ -8368,7 +8394,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Jersey"
         },
         {
             "type": "Feature",
@@ -8475,7 +8502,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Liechtenstein"
         },
         {
             "type": "Feature",
@@ -8812,7 +8840,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Lithuania"
         },
         {
             "type": "Feature",
@@ -8875,7 +8904,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Luxembourg"
         },
         {
             "type": "Feature",
@@ -9038,7 +9068,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Latvia"
         },
         {
             "type": "Feature",
@@ -9105,7 +9136,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Monaco"
         },
         {
             "type": "Feature",
@@ -9324,7 +9356,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Moldova"
         },
         {
             "type": "Feature",
@@ -9415,7 +9448,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Montenegro"
         },
         {
             "type": "Feature",
@@ -9686,7 +9720,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "North Macedonia"
         },
         {
             "type": "Feature",
@@ -10111,7 +10146,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Malta"
         },
         {
             "type": "Feature",
@@ -10556,7 +10592,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Sweden"
         },
         {
             "type": "Feature",
@@ -11087,7 +11124,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Slovenia"
         },
         {
             "type": "Feature",
@@ -11436,7 +11474,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Svalbard and Jan Mayen"
         },
         {
             "type": "Feature",
@@ -11579,7 +11618,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Slovakia"
         },
         {
             "type": "Feature",
@@ -11622,7 +11662,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "San Marino"
         },
         {
             "type": "Feature",
@@ -11913,7 +11954,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Poland"
         },
         {
             "type": "Feature",
@@ -12326,7 +12368,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Portugal"
         },
         {
             "type": "Feature",
@@ -12621,7 +12664,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Romania"
         },
         {
             "type": "Feature",
@@ -12902,7 +12946,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Serbia"
         },
         {
             "type": "Feature",
@@ -13553,7 +13598,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Ukraine"
         },
         {
             "type": "Feature",
@@ -13596,7 +13642,8 @@
                         ]
                     ]
                 ]
-            }
+            },
+            "id": "Vatican City"
         }
     ]
 }

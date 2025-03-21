@@ -29,7 +29,7 @@ RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly'))"
 ## style
 RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
 ## 
-RUN R -e "install.packages(c('remotes', 'sf', 'geos'))"
+RUN R -e "install.packages(c('remotes', 'sf', 'geos', 'gdal'))"
 
 # Copy the Shiny app code
 #COPY app.R /home/shiny-app/app.R

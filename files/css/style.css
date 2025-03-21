@@ -128,9 +128,24 @@ li {
     width: 100%;
 }
 
-.main-map-output {
-    width: 100%;
+
+.leaflet-container {
+    background: #ffffff;
+    outline: 0;
+}
+
+[data-bs-theme="dark"] .leaflet-container {
+    background: #1d1f21;
+    outline: 0;
+}
+
+.map-container {
     height: 100%;
+}
+
+#mainMap {
+    height: 100%;
+    width: 100%;
 }
 
 .map-legend-box {
