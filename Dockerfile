@@ -2,23 +2,34 @@
 FROM rocker/shiny
 
 # install Linux R packages dependencies
-RUN apt-get install libcurl4-openssl-dev
-##RUN apt-get install -y libudunits2-dev
+RUN apt update
+RUN apt install libcurl4-openssl-dev
+
+# Linux packages for geojsonio
+RUN apt install -y libjq-dev
+RUN apt install -y libudunits2-dev
+RUN apt install -y libgeos-dev
+RUN apt install -y gdal-bin
+RUN apt install -y proj-bin
+RUN apt install -y libgdal-dev
+RUN apt install -y libproj-dev
 
 # Make a directory in the container
 RUN mkdir /home/shiny-app
 
 # Install R dependencies
 ## base
-RUN R -e "install.packages(c('dplyr', 'leaflet', 'gapminder', 'shinyWidgets', 'rmarkdown'))"
+RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'shinyWidgets', 'rmarkdown'))"
 ## data parsing
-RUN R -e "install.packages(c('readxl'))"
+RUN R -e "install.packages(c('readxl', 'rjson'))"
+## map
+RUN R -e "install.packages(c('leaflet', 'geojsonR', 'geojsonio'))"
 ## plots
-RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly', 'geojsonR'))"
+RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly'))"
 ## style
 RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
 ## 
-RUN R -e "install.packages(c('remotes'))"
+RUN R -e "install.packages(c('remotes', 'sf', 'geos'))"
 
 # Copy the Shiny app code
 #COPY app.R /home/shiny-app/app.R
