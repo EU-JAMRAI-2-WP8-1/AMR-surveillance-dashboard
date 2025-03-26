@@ -1,25 +1,30 @@
 ## NOTES
 # TODO -> cohenrence in snake/camel case
+# mapresultsdata -> nom de variable pas top
 
 ## SETUP ##
 
 # import libraries
 library(shiny)
 library(shinyWidgets)
-library(sf)
+#library(sf)
 library(readxl)
 library(rjson)
+library(jsonlite)
 library(dplyr)
-library(countrycode)
+library(hash)
+#library(countrycode)
 library(ggplot2)
 library(echarts4r)
 library(plotly)
-library(geojsonR)
-library(geojsonio)
-library(leaflet)
+#library(RColorBrewer)
+#library(geojsonR)
+#library(geojsonio)
+#library(leaflet)
 library(gapminder)
 library(bslib)
 library(thematic)
+
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
@@ -68,27 +73,109 @@ euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-
 
 # import Europe polygons
 #geojsonEurope = FROM_GeoJson(file.path("/home/shiny-app/files/data/europe.geojson")) ## not working
-geojsonEurope2 = geojson_read(file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
-geojsonEurope = fromJSON(file = file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
+#geojsonEurope2 = geojson_read(file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
+geojsonEurope = rjson::fromJSON(file = file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
 
 ## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries
 
 
 # import survey questions and replies from JSON
-surveyDataFile <- file.path("/home/shiny-app/files/data/replies_formatted_20250314.json")
-surveyData     <- fromJSON(paste(readLines(surveyDataFile), collapse=""))
+surveyDataFile <- file.path("/home/shiny-app/files/data/replies_formatted.json")
+surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
+surveyDataHash <- hash(surveyData)
+
 
 # variables for data parsing -- might need to be updated for future versions of the survey
 countryQuestionIndex <- 3
 
 # prepare data
-countryList <- c()
-for (country in surveyData[[3]][["possible_answers"]]){
-    countryList <- c(countryList, country$title)
+
+# europe country list
+euroCountryList <- c()
+for (country in geojsonEurope$features){
+    euroCountryList <- c(euroCountryList, country$id)
+}
+#euroCountryDf <- data.frame(country=euroCountryList, presence=rep(1, length(euroCountryList)))
+
+# participating country list
+participatingCountries <- colnames(as.data.frame(surveyData[[3]][["possible_answers"]]))
+
+# not participating countries (grey on the map)
+nonParticipatingCountries <- setdiff(euroCountryList, participatingCountries)
+
+# set df for map results layer (color based on score, set score to zero by default)
+mapResultsData <- data.frame(country=participatingCountries, score=rep(0, length(participatingCountries)))
+
+
+
+####### TEST SCORES CALCULATION (INITIAL - ALL QUESTIONS)
+## loop sur chaque question
+## pour chaque pqys, on récupere sa reponse et le score correspondant, et on l'ajoute dans mapResultsData
+
+for (surveyQuestion in ls(surveyDataHash)) {
+    ##surveyQuestion  --> KEY
+    ##surveyDataHash[[surveyQuestion]]  --> VALUE
+
+    coefficientThisQuestion <- surveyDataHash[[surveyQuestion]][["coefficient"]]
+    
+    # treat differently multiple choice questions
+    if (surveyDataHash[[surveyQuestion]][["type"]] == "MultipleChoice") {
+
+        # take actual answers, loop over country, then loop over their answers, then check the score of that answer, add it to the country's score
+        for (country in participatingCountries) {
+            for (answer in ls(surveyDataHash[[surveyQuestion]][["actual_answers"]])) {
+                if (answer == country) {
+                    # loop over all answers for this question
+                    for (subAnswer in surveyDataHash[[surveyQuestion]][["actual_answers"]][[answer]]) {
+                        # for each answer, get score
+                        for (possibleAnswer in ls(surveyDataHash[[surveyQuestion]][["possible_answers"]])) {
+                            # get score for this reply (integrate coefficient)
+                            if (possibleAnswer == subAnswer) {
+                                scoreThisReply <- surveyDataHash[[surveyQuestion]][["possible_answers"]][[possibleAnswer]]
+                                if (scoreThisReply != "null") {
+                                    mapResultsData$score[mapResultsData$country == country] <- mapResultsData$score[mapResultsData$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        next
+    }
+
+    for (country in participatingCountries) {
+
+        # reset
+        replyThisCountry <- "" ## useful??
+        scoreThisReply <- 0
+
+        # get the reply for this country ## can't get it without looping because can't use variable after '$'
+        for (answer in ls(surveyDataHash[[surveyQuestion]][["actual_answers"]])) {
+            if (answer == country) {
+                replyThisCountry <- surveyDataHash[[surveyQuestion]][["actual_answers"]][[answer]]
+            }
+        }
+
+        # loop over possible answers to get the score for this reply
+        for (possibleAnswer in ls(surveyDataHash[[surveyQuestion]][["possible_answers"]])) {
+            # get score for this reply (integrate coefficient)
+            if (possibleAnswer == replyThisCountry) {
+                scoreThisReply <- surveyDataHash[[surveyQuestion]][["possible_answers"]][[possibleAnswer]]
+            }
+        }
+
+        if (scoreThisReply != "null") {
+            mapResultsData$score[mapResultsData$country == country] <- mapResultsData$score[mapResultsData$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
+        }
+        
+    }
+
 }
 
-countryReplies <- data.frame(country=countryList, reply=rep(0, length(countryList)))
-replies <- c("Ukraine", "Slovak Republic", "Denmark", "Latvia", "Estonia", "Norway", "Slovenia", "Sweden", "Luxembourg") ## todo -> take from input file instead
+print(mapResultsData)##dev
+
 
 ## USER INTERFACE ##
 
@@ -153,15 +240,15 @@ ui <- shinyUI(fluidPage(
     # spacer - prevents overlapping of header and navbar
     div() %>% tagAppendAttributes(class="top-spacer"),
 
-    # header
-    fluidRow(
-        img(src=jamraiLogoHeaderLong) %>% tagAppendAttributes(class="jamrai-logo-header-long width-auto"),
-        img(src=jamraiLogoHeaderRect) %>% tagAppendAttributes(class="jamrai-logo-header-rect width-auto"),
-        div() %>% tagAppendAttributes(class="vertical-line"),
-        div("EU-JAMRAI 2 - Human AMR surveillance systems in Europe") %>% tagAppendAttributes(class="main-title width-auto"),
-    ) %>% tagAppendAttributes(class="header-box"),
+    # header ## moved
+    #fluidRow(
+    #    img(src=jamraiLogoHeaderLong) %>% tagAppendAttributes(class="jamrai-logo-header-long width-auto"),
+    #    img(src=jamraiLogoHeaderRect) %>% tagAppendAttributes(class="jamrai-logo-header-rect width-auto"),
+    #    div() %>% tagAppendAttributes(class="vertical-line"),
+    #    div("EU-JAMRAI 2 - Human AMR surveillance systems in Europe") %>% tagAppendAttributes(class="main-title width-auto"),
+    #) %>% tagAppendAttributes(class="header-box"),
 
-    hr(),
+    #hr() %>% tagAppendAttributes(class="hr-small-margin"),
 
     # side bar (filters)
     sidebarLayout(
@@ -186,23 +273,52 @@ ui <- shinyUI(fluidPage(
 
             # 
 
-            tags$h4("Country"),
+            img(src=jamraiLogoHeaderRect) %>% tagAppendAttributes(class="jamrai-logo-header"),#TEST
+
+            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
+
+            tags$h4("Countries"),
             tags$div(
-                id="myclass1",
-                class="myclass",
-                    checkboxGroupInput(
+                class="country-filter-container",
+                checkboxGroupInput(
                     inputId  = "countriesSelection",
                     label    = "",
-                    choices  = countryList,
-                    selected = countryList,
+                    choices  = participatingCountries,
+                    selected = participatingCountries,
                     inline   = FALSE,
                     width    = NULL
                 )
             ) %>% tagAppendAttributes(class="filter-scroll-box"),
 
-            hr(),
+            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
 
-            tags$h4("Pathogens")
+            tags$h4("Pathogens"),
+            tags$div(
+                class="pathogen-filter-container",
+                checkboxGroupInput(
+                    inputId  = "pathogensSelection",
+                    label    = "",
+                    choices  = c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumanii", "S. aureus", "E. faecium", "E. faecalis", "S. pneumoniae", "H. influenzae"),
+                    selected = c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumanii", "S. aureus", "E. faecium", "E. faecalis", "S. pneumoniae", "H. influenzae"),
+                    inline   = FALSE,
+                    width    = NULL
+                )
+            ) %>% tagAppendAttributes(class="filter-scroll-box"),
+
+             hr() %>% tagAppendAttributes(class="hr-filters-separator"),
+
+            tags$h4("Antibiotics"),
+            tags$div(
+                class="antibiotic-filter-container", ##check si ca fonctionne comme tagAppendAttributes -> si oui utiliser ca dès que possible
+                checkboxGroupInput(
+                    inputId  = "antibioticsSelection",
+                    label    = "",
+                    choices  = c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin"),
+                    selected = c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin"),
+                    inline   = FALSE,
+                    width    = NULL
+                )
+            ) %>% tagAppendAttributes(class="filter-scroll-box"),
 
 
             #sliderInput(
@@ -222,7 +338,7 @@ ui <- shinyUI(fluidPage(
             #    label   = "Apply filters"
             #)
 
-        ) %>% tagAppendAttributes(class="width-auto"),
+        ) %>% tagAppendAttributes(class="width-16"),
 
         # main dashboard container
         mainPanel(
@@ -241,7 +357,7 @@ ui <- shinyUI(fluidPage(
                         ##tags$span("Countries participation to the survey") %>% tagAppendAttributes(class="plot-title"), ## title - temporarily removed
                         
                         tags$div(
-                            leafletOutput("mainMap")
+                            plotlyOutput(outputId = "plotlyMap")
                         ) %>% tagAppendAttributes(class="map-container"),
                         #tags$span
                         #    tags$span(
@@ -268,8 +384,12 @@ ui <- shinyUI(fluidPage(
 
                         tags$span(
                             "Map source: ",
-                            tags$a(href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries", "eurostat")
-                        )
+                            tags$a(
+                                href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
+                                "eurostat",
+                                target = "_blank"
+                            )
+                        ) %>% tagAppendAttributes(class="map-source-text")
                     )
                 ),
 
@@ -281,7 +401,7 @@ ui <- shinyUI(fluidPage(
                         tags$span("Dashboard") %>% tagAppendAttributes(class="tab-text")
                     ),
                     fluidRow(
-                        plotlyOutput(outputId = "plotlyMap") # replaced by leaflet map
+                        #leafletOutput("mainMap")
                         #plotOutput(outputId = "outChartLifeExp"),
                         #plotOutput(outputId = "outChartGDP")
                     )
@@ -309,32 +429,19 @@ ui <- shinyUI(fluidPage(
 
 server <- function(input, output, session) {
 
-    bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
-    pal <- colorBin("YlOrRd", domain = geojsonEurope$density, bins = bins)
+    calculateScores <- function(scoreDf) {
+        for (surveyQuestion in surveyData) {
+            for (countryReply in surveyQuestion["actual_answers"]) {
+                scoreDf$country <- surveyQuestion[["actual_answers"]][[countryReply]]
+            }
 
-    getCountryColors <- function(country) {
-        if (country == TRUE) {
-            return("#0000ff")
-        } else {
-            return("#ff0000")
         }
+        scoreDf
+        return(scoreDf)
     }
 
-    getThemeBgColor <- function(colorMode) {
-        if (colorMode == "dark") {
-            return("#1d1f21")
-        } else {
-            return("#ffffff")
-        }
-    }
-
-    themeBgColor <- reactive({
-        getThemeBgColor(input$dark_mode)
-    })
-    
-    # filter data and store as reactive value
-    filteredData <- reactive({
-        getCountryColors(input$countriesSelection)
+    getCoutryScores <- reactive({
+        calculateScores(mapResultsData)
     })
 
     # custom common properties for charts
@@ -371,90 +478,133 @@ server <- function(input, output, session) {
     #    hist(rnorm(input$n), breaks = input$bins, col = "#007bc2")
     #})
 
-    output$mainMap <- renderLeaflet({
-
-        if (input$dark_mode == "dark") {
-            themeBgColor = "#1d1f21"
-            themeFgColor = "#ffffff"
-        } else {
-            themeBgColor = "#ffffff"
-            themeFgColor = "#1d1f21"
-        }
-
-        leaflet(geojsonEurope) %>%
-        setView(lng = 22, lat = 50, zoom = 4) %>%
-        #addTiles(
-        #    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        #    #{attribution: '© OpenStreetMap'}
-        #) %>%
-        addGeoJSON(
-            geojson = geojsonEurope,
-            opacity = 1,
-            fillOpacity = 1,
-            color = themeBgColor(),
-            weight = 1,
-            fillColor = "#aaaaaa"
-        )# %>%
-        #addPolygons(
-        #    fillColor = ~pal(density),
-        #    fillOpacity = 1 ## function based on PARTICIPATION
-        #)
-    })
+    #output$mainMap <- renderLeaflet({
+    #
+    #    if (input$dark_mode == "dark") {
+    #        themeBgColor = "#1d1f21"
+    #        themeFgColor = "#ffffff"
+    #    } else {
+    #        themeBgColor = "#ffffff"
+    #        themeFgColor = "#1d1f21"
+    #    }
+    #
+    #    leaflet(geojsonEurope) %>%
+    #    setView(lng = 22, lat = 50, zoom = 4) %>%
+    #    #addTiles(
+    #    #    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    #    #    #{attribution: '© OpenStreetMap'}
+    #    #) %>%
+    #    addGeoJSON(
+    #        geojson = geojsonEurope,
+    #        opacity = 1,
+    #        fillOpacity = 1,
+    #        color = themeBgColor(),
+    #        weight = 1,
+    #        fillColor = "#aaaaaa"
+    #    )# %>%
+    #    #addPolygons(
+    #    #    fillColor = ~pal(density),
+    #    #    fillOpacity = 1 ## function based on PARTICIPATION
+    #    #)
+    #})
 
     
 
-    output$plotlyMap <- renderPlotly({ # replaced by leaflet map
+    output$plotlyMap <- renderPlotly({
         if (input$dark_mode == "dark") {
             themeBgColor = "#1D1F21"
+            themeFgColor = "#ffffff"
+            #themeSoftGrey = 0.3
         } else {
             themeBgColor = "#ffffff"
+            themeFgColor = "#1D1F21"
+            #themeSoftGrey = 0.7
         }
         #countryReplies %>%
-        plot_ly(
-            #width="100%",
+        map <- plot_ly(
+            #width=,
+            height=800
+        )
 
-            
-
-            ,height=680
-        ) %>%
-        add_trace(
+        map <- map %>% add_trace( # displays results
             type='choropleth',
+            #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson
             geojson=geojsonEurope,
-            locations=countryReplies$country,
-            z=countryReplies$reply,
+            locations=mapResultsData$country,#input$countriesSelection, ## to do -> formule qui ajoute/retire des pays de mapresultsdata en fonction de input$countriesSelection
+            z=mapResultsData$score,#c(rep(1, length(input$countriesSelection))),
             zmin=0,
-            zmax=1,
+            zmax=max(mapResultsData$score) * 1.1,
             #showlegend=TRUE,
             #autocolorscale=FALSE,
             showscale=TRUE,
-            colors=c("#cc8888","#0fdbd5"),
-            #colorbar=list(
-            #    title=list(
-            #        text="Reply to the survey"
-            #    ),
-            #    dtick=1,
-            #    nticks=2
-            #    ),
-            marker=list(line=list(width=1, color=themeBgColor))
-        ) %>%
-        layout(
+            colors=c("#cc8888", "#dddd77", "#0fdbd5"),
+            reversescale=FALSE,
+            #colors=c(""),
+            colorbar=list(
+                #outlinecolor=rgba(0,0,0,0),
+                outlinewidth=0,
+                thickness=20, #default 30
+                color=themeBgColor,
+                tickcolor=themeFgColor,
+                y=0.8,
+                tickfont=list(
+                    color=themeFgColor
+                ),
+                title=list(
+                    text="Score",
+                    font=list(
+                        color=themeFgColor
+                    )
+                )
+            ),
+            marker=list(
+                line=list(
+                    width=1.2,
+                    color=themeBgColor
+                )
+            )
+        )
+
+        map <- map %>% add_trace( # non-participating countries
+            name="Not participating",
+            type='choropleth',
+            geojson=geojsonEurope,
+            #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson
+            locations=nonParticipatingCountries,
+            z=rep(0.7, length(nonParticipatingCountries)),
+            zmin=0,
+            zmax=1,
+            showscale=FALSE,
+            colorscale="Greys",
+            #colors=c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
+            marker=list(
+                line=list(
+                    width=1.2,
+                    color=themeBgColor
+                )
+            )
+        )
+
+        map <- map %>% layout(
             geo = list(
                 scope="europe",
-                showcountries=FALSE, # enlever
-                showframe=FALSE,
-                showland=FALSE,# tester false
-                landcolor="#cccccc", # inside countries
-                countrycolor=themeBgColor, # lines
-                bgcolor = themeBgColor, # bg color - inside map
+                showcountries=FALSE, # hide default map
+                showframe=FALSE, # hide default map
+                showland=FALSE, # hide default map
+                #landcolor="#cccccc", # inside countries
+                #countrycolor=themeBgColor, # lines
+                bgcolor = "rgba(0,0,0,0)", # bg color - inside map
                 #coastlinecolor="#fff",
                 showcoastline=FALSE,
                 projection=list(
-                    scale=1.5  # initial zoom
+                    scale=1.7  # initial zoom
+                ),
+                center=list(
+                    lat=54, # 50 trop a en haut
+                    lon=14 # 10 top a droite
                 )
-                #color=countryReplies$reply
             ),
-            #plot_bgcolor = "#000000", # no effect
-            paper_bgcolor = themeBgColor, # bg color - outside map
+            paper_bgcolor = "rgba(0,0,0,0)",#themeBgColor, # bg color - outside map
             margin=list(t=0, r=0,  l=0, b=0),
             autosize=TRUE
         )

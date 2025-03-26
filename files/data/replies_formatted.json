@@ -117,7 +117,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -154,7 +154,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Yes",
@@ -191,7 +191,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -228,7 +228,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Yes",
@@ -265,7 +265,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Yes",
@@ -302,7 +302,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Yes",
@@ -342,7 +342,7 @@
             "International guidance (e.g., European association of urology).": 0.5,
             "International AST data.": 0.5,
             "No AST data used; guidance based on other information.": 0.2,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other": 0.2
         },
         "actual_answers": {
@@ -459,7 +459,7 @@
             "The healthcare facility that treats the patient.": 0.5,
             "The treating physician(s).": 0.2,
             "Clinical microbiologist(s) at the healthcare facility/laboratory that treats the patient.": 0.2,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other.": 0.2
         },
         "actual_answers": {
@@ -550,7 +550,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Yes",
@@ -587,7 +587,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -624,7 +624,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -661,7 +661,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -698,7 +698,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -735,7 +735,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -772,7 +772,7 @@
             "Regional and/or local guidance (including two or more institutions).": 1,
             "Guidance at each individual healthcare facility.": 0.5,
             "The treating physician(s).": 0.2,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other.": 0.2
         },
         "actual_answers": {
@@ -899,7 +899,7 @@
             "The clinical microbiological laboratory that performs the AST.": 0.8,
             "The healthcare facility where the sample was taken.": 0.5,
             "The treating physician(s)": 0.2,
-            "Do not know": null,
+            "Do not know": "null",
             "Other": 0.2
         },
         "actual_answers": {
@@ -982,7 +982,7 @@
             "All clinical microbiological laboratories.": 1,
             "A subset of clinical microbiological laboratories": 1,
             "National reference/expert laboratory": 1,
-            "Do not know": null,
+            "Do not know": "null",
             "Other": 0
         },
         "actual_answers": {
@@ -1067,7 +1067,7 @@
         "possible_answers": {
             "Yes.": 0,
             "No.": 1,
-            "Do not know.": null
+            "Do not know.": "null"
         },
         "actual_answers": {
             "Ireland": "No.",
@@ -1106,7 +1106,7 @@
             "No national guidance in place but it is currently being developed.": 0.3,
             "No national guidance in place for any included pathogens.": 0,
             "Extended AST not used.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "No national guidance in place for any included pathogens.",
@@ -1145,7 +1145,7 @@
             "The clinical microbiological laboratory that performs the AST": 0.4,
             "The healthcare facility where the sample was taken": 0.3,
             "The treating physician(s)": 0.2,
-            "Do not know": null,
+            "Do not know": "null",
             "Other": 0.2
         },
         "actual_answers": {
@@ -1229,7 +1229,7 @@
             "All clinical microbiological laboratories.": 1,
             "A subset of clinical microbiological laboratories.": 1,
             "National reference/expert laboratory.": 1,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other": 1
         },
         "actual_answers": {
@@ -1868,7 +1868,7 @@
         "possible_answers": {
             "Yes.": 1,
             "No.": 1,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other.": 1,
             "WGS not used.": 0
         },
@@ -1908,7 +1908,7 @@
             "Yes, assembled contigs.": 1,
             "No, some clinical microbiological laboratories perform WGS but data is not submitted.": 0.5,
             "No WGS data submitted from the clinical microbiological laboratories.": 0,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other": 0
         },
         "actual_answers": {
@@ -1999,7 +1999,7 @@
             "Legal obstacles; storing of data.": 1,
             "Legal, other issues.": 1,
             "Submission of data from clinical microbiology laboratories is voluntary.": 1,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other": 1
         },
         "actual_answers": {
@@ -2221,7 +2221,7 @@
             "No, WGS not used in real-time.": 0.2,
             "No but under implementation.": 0.5,
             "No, WGS not used for outbreak investigations.": 0,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other.": 0,
             "WGS not used.": 0
         },
@@ -2261,7 +2261,7 @@
             "Yes, it can be done but there is no official data sharing/analysis pipeline.": 0.5,
             "No, legal issues prevent this type of sharing and analysis.": 0,
             "No joint analysis is performed with WGS data.": 0,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other.": 0,
             "WGS not used.": 0
         },
@@ -2297,13 +2297,13 @@
             "Section2"
         ],
         "possible_answers": {
-            "Not applicable": null,
+            "Not applicable": "null",
             "Core genome multi-locus sequence typing (cgMLST).": 1,
             "Whole genome multi-locus sequence typing (wgMLST).": 1,
             "Single nucleotide polymorphism (SNP) analysis.": 1,
             "Pulsed-field gel electrophoresis (PFGE).": 0.3,
             "Multilocus variable-number tandem repeat analysis (MLVA).": 0.3,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other, non WGS-based methods.": 0.3
         },
         "actual_answers": {
@@ -2676,10 +2676,10 @@
             "Section2"
         ],
         "possible_answers": {
-            "Not applicable.": null,
+            "Not applicable.": "null",
             "Diagnostics for individual patients.": 1,
             "Specific research projects.": 1,
-            "Do not know.": null,
+            "Do not know.": "null",
             "Other.": 1,
             "WGS not used.": 0
         },
@@ -2762,7 +2762,7 @@
             "Yes, annually.": 1,
             "Yes, less often than annually.": 0.5,
             "No.": 0,
-            "Do not know.": null,
+            "Do not know.": "null",
             "WGS not used.": 0
         },
         "actual_answers": {
@@ -2799,7 +2799,7 @@
         "possible_answers": {
             "Yes.": 1,
             "No.": 1,
-            "Do not know.": null,
+            "Do not know.": "null",
             "WGS not used.": 0
         },
         "actual_answers": {
@@ -5193,7 +5193,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5234,7 +5234,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5275,7 +5275,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5316,7 +5316,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5357,7 +5357,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5398,7 +5398,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5439,7 +5439,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5480,7 +5480,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5521,7 +5521,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5562,7 +5562,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5603,7 +5603,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5644,7 +5644,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5685,7 +5685,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5726,7 +5726,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5767,7 +5767,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5807,7 +5807,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5848,7 +5848,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5889,7 +5889,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5930,7 +5930,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -5971,7 +5971,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -6012,7 +6012,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -6053,7 +6053,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -6094,7 +6094,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -6135,7 +6135,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -6176,7 +6176,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -6216,7 +6216,7 @@
             "A subset of CMLs": 0.5,
             "NRL": 1,
             "Other": 0,
-            "Do not know": null,
+            "Do not know": "null",
             "Not submitted": 0
         },
         "actual_answers": {
@@ -6257,8 +6257,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -6298,8 +6298,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -6339,8 +6339,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -6380,8 +6380,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -6421,8 +6421,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -6462,8 +6462,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -6503,8 +6503,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -6544,8 +6544,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6585,8 +6585,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6626,8 +6626,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6667,8 +6667,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6708,8 +6708,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6749,8 +6749,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6790,8 +6790,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6831,8 +6831,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6872,8 +6872,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6913,8 +6913,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6954,8 +6954,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -6995,8 +6995,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7036,8 +7036,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7077,8 +7077,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7118,8 +7118,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7159,8 +7159,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7200,8 +7200,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7241,8 +7241,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7282,8 +7282,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7323,8 +7323,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7364,8 +7364,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7405,8 +7405,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "Not part of national surveillance",
@@ -7446,8 +7446,8 @@
             "51-75%": 0.75,
             "26-50%": 0.5,
             "1-25%": 0.25,
-            "Do not know": null,
-            "Not part of national surveillance": null
+            "Do not know": "null",
+            "Not part of national surveillance": "null"
         },
         "actual_answers": {
             "Ireland": "76-100%",
@@ -7486,7 +7486,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -7525,7 +7525,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -7564,7 +7564,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -7603,7 +7603,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -7642,7 +7642,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -7681,7 +7681,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -7720,7 +7720,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -7759,7 +7759,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -7798,7 +7798,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -7837,7 +7837,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -7876,7 +7876,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -7915,7 +7915,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -7954,7 +7954,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -7993,7 +7993,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8032,7 +8032,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8071,7 +8071,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8110,7 +8110,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8149,7 +8149,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8188,7 +8188,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8227,7 +8227,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8266,7 +8266,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8305,7 +8305,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8344,7 +8344,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8383,7 +8383,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8422,7 +8422,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8461,7 +8461,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8500,7 +8500,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8539,7 +8539,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8578,7 +8578,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Do not know",
@@ -8617,7 +8617,7 @@
             "HIGH: all main geographical regions of the country are covered.": 1,
             "MEDIUM: most geographical regions of the country are covered.": 0.5,
             "LOW: a few geographical areas of the country are covered.": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "HIGH: all main geographical regions of the country are covered.",
@@ -8655,8 +8655,8 @@
             "High: Comparable methods are used": 1,
             "Medium: Different methods are used but the culture results are still considered comparable": 0.7,
             "Low: Large differences in methods makes the culture results hard to compare": 0.3,
-            "Do not know": null,
-            "No data submitted": null
+            "Do not know": "null",
+            "No data submitted": "null"
         },
         "actual_answers": {
             "Ireland": "No data submitted",
@@ -8694,8 +8694,8 @@
             "High: Comparable methods are used": 1,
             "Medium: Different methods are used but the culture results are still considered comparable": 0.7,
             "Low: Large differences in methods makes the culture results hard to compare": 0.3,
-            "Do not know": null,
-            "No data submitted": null
+            "Do not know": "null",
+            "No data submitted": "null"
         },
         "actual_answers": {
             "Ireland": "No data submitted",
@@ -8733,8 +8733,8 @@
             "High: Comparable methods are used": 1,
             "Medium: Different methods are used but the culture results are still considered comparable": 0.7,
             "Low: Large differences in methods makes the culture results hard to compare": 0.3,
-            "Do not know": null,
-            "No data submitted": null
+            "Do not know": "null",
+            "No data submitted": "null"
         },
         "actual_answers": {
             "Ireland": "No data submitted",
@@ -8772,8 +8772,8 @@
             "High: Comparable methods are used": 1,
             "Medium: Different methods are used but the culture results are still considered comparable": 0.7,
             "Low: Large differences in methods makes the culture results hard to compare": 0.3,
-            "Do not know": null,
-            "No data submitted": null
+            "Do not know": "null",
+            "No data submitted": "null"
         },
         "actual_answers": {
             "Ireland": "No data submitted",
@@ -8811,8 +8811,8 @@
             "High: Comparable methods are used": 1,
             "Medium: Different methods are used but the culture results are still considered comparable": 0.7,
             "Low: Large differences in methods makes the culture results hard to compare": 0.3,
-            "Do not know": null,
-            "No data submitted": null
+            "Do not know": "null",
+            "No data submitted": "null"
         },
         "actual_answers": {
             "Ireland": "High: Comparable methods are used",
@@ -8850,8 +8850,8 @@
             "High: Comparable methods are used": 1,
             "Medium: Different methods are used but the culture results are still considered comparable": 0.7,
             "Low: Large differences in methods makes the culture results hard to compare": 0.3,
-            "Do not know": null,
-            "No data submitted": null
+            "Do not know": "null",
+            "No data submitted": "null"
         },
         "actual_answers": {
             "Ireland": "High: Comparable methods are used",
@@ -8887,7 +8887,7 @@
         "possible_answers": {
             "Yes": 1,
             "No": 0,
-            "Do not know": null
+            "Do not know": "null"
         },
         "actual_answers": {
             "Ireland": "Yes",
@@ -8934,7 +8934,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -9083,7 +9083,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -9232,7 +9232,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -9383,7 +9383,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -9545,7 +9545,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -9696,7 +9696,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -9850,7 +9850,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -10005,7 +10005,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -10166,7 +10166,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -10316,7 +10316,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -10451,7 +10451,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -10593,7 +10593,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -10728,7 +10728,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -10876,7 +10876,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11005,7 +11005,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11136,7 +11136,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11270,7 +11270,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11402,7 +11402,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11542,7 +11542,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11677,7 +11677,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11812,7 +11812,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -11943,7 +11943,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12085,7 +12085,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12217,7 +12217,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12349,7 +12349,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12473,7 +12473,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12603,7 +12603,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12724,7 +12724,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12850,7 +12850,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -12983,7 +12983,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -13104,7 +13104,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -13226,7 +13226,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -13354,7 +13354,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -13487,7 +13487,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -13618,7 +13618,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -13738,7 +13738,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -13876,7 +13876,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14008,7 +14008,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14128,7 +14128,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14252,7 +14252,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14384,7 +14384,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14511,7 +14511,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14643,7 +14643,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14771,7 +14771,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -14931,7 +14931,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -15051,7 +15051,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -15187,7 +15187,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -15341,7 +15341,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -15469,7 +15469,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -15593,7 +15593,7 @@
             "Community-associated": 0.2,
             "Healthcare-associated": 0.2,
             "LTCF-associated": 0.2,
-            "None of the listed patient/case data available": null
+            "None of the listed patient/case data available": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -15743,8 +15743,8 @@
             "Section3"
         ],
         "possible_answers": {
-            "Yes": null,
-            "No": null
+            "Yes": "null",
+            "No": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -15778,8 +15778,8 @@
             "Section3"
         ],
         "possible_answers": {
-            "Yes": null,
-            "No": null
+            "Yes": "null",
+            "No": "null"
         },
         "actual_answers": {}
     },
@@ -15791,8 +15791,8 @@
             "Section3"
         ],
         "possible_answers": {
-            "Yes": null,
-            "No": null
+            "Yes": "null",
+            "No": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -15826,8 +15826,8 @@
             "Section3"
         ],
         "possible_answers": {
-            "Yes": null,
-            "No": null
+            "Yes": "null",
+            "No": "null"
         },
         "actual_answers": {
             "Ireland": "Yes",
@@ -15861,8 +15861,8 @@
             "Section3"
         ],
         "possible_answers": {
-            "Yes": null,
-            "No": null
+            "Yes": "null",
+            "No": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -15896,8 +15896,8 @@
             "Section3"
         ],
         "possible_answers": {
-            "Yes": null,
-            "No": null
+            "Yes": "null",
+            "No": "null"
         },
         "actual_answers": {
             "Ireland": "No",
@@ -15931,9 +15931,9 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted\u00a0continuously or with close regular intervals (at least once a month)": null,
-            "Data is submitted once a year": null,
-            "Other": null
+            "Data is submitted\u00a0continuously or with close regular intervals (at least once a month)": "null",
+            "Data is submitted once a year": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16013,9 +16013,9 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted continuously or with close regular intervals (at least once a month)": null,
-            "Data is submitted once a year": null,
-            "Other": null
+            "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
+            "Data is submitted once a year": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16092,9 +16092,9 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted continuously or with close regular intervals (at least once a month)": null,
-            "Data is submitted once a year": null,
-            "Other": null
+            "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
+            "Data is submitted once a year": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16172,9 +16172,9 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted continuously or with close regular intervals (at least once a month)": null,
-            "Data is submitted once a year": null,
-            "Other": null
+            "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
+            "Data is submitted once a year": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16251,9 +16251,9 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted continuously or with close regular intervals (at least once a month)": null,
-            "Data is submitted once a year": null,
-            "Other": null
+            "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
+            "Data is submitted once a year": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16329,11 +16329,11 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted automatically/semi-automatically via direct integrations": null,
-            "Data is submitted manually directly into digital system/database": null,
-            "Data is reported digitally in electronic files (e.g., spread sheets or text)": null,
-            "Data is reported in paper format": null,
-            "Other": null
+            "Data is submitted automatically/semi-automatically via direct integrations": "null",
+            "Data is submitted manually directly into digital system/database": "null",
+            "Data is reported digitally in electronic files (e.g., spread sheets or text)": "null",
+            "Data is reported in paper format": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16417,11 +16417,11 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted automatically/semi-automatically via direct integrations": null,
-            "Data is submitted manually directly into digital system/database": null,
-            "Data is reported digitally in electronic files (e.g., spread sheets or text)": null,
-            "Data is reported in paper format": null,
-            "Other": null
+            "Data is submitted automatically/semi-automatically via direct integrations": "null",
+            "Data is submitted manually directly into digital system/database": "null",
+            "Data is reported digitally in electronic files (e.g., spread sheets or text)": "null",
+            "Data is reported in paper format": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16502,11 +16502,11 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted automatically/semi-automatically via direct integrations": null,
-            "Data is submitted manually directly into digital system/database": null,
-            "Data is reported digitally in electronic files (e.g., spread sheets or text)": null,
-            "Data is reported in paper format": null,
-            "Other": null
+            "Data is submitted automatically/semi-automatically via direct integrations": "null",
+            "Data is submitted manually directly into digital system/database": "null",
+            "Data is reported digitally in electronic files (e.g., spread sheets or text)": "null",
+            "Data is reported in paper format": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16585,11 +16585,11 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted automatically/semi-automatically via direct integrations": null,
-            "Data is submitted manually directly into digital system/database": null,
-            "Data is reported digitally in electronic files (e.g., spread sheets or text)": null,
-            "Data is reported in paper format": null,
-            "Other": null
+            "Data is submitted automatically/semi-automatically via direct integrations": "null",
+            "Data is submitted manually directly into digital system/database": "null",
+            "Data is reported digitally in electronic files (e.g., spread sheets or text)": "null",
+            "Data is reported in paper format": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16672,11 +16672,11 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted automatically/semi-automatically via direct integrations": null,
-            "Data is submitted manually directly into digital system/database": null,
-            "Data is reported digitally in electronic files (e.g., spread sheets or text)": null,
-            "Data is reported in paper format": null,
-            "Other": null
+            "Data is submitted automatically/semi-automatically via direct integrations": "null",
+            "Data is submitted manually directly into digital system/database": "null",
+            "Data is reported digitally in electronic files (e.g., spread sheets or text)": "null",
+            "Data is reported in paper format": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16757,11 +16757,11 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted automatically/semi-automatically via direct integrations": null,
-            "Data is submitted manually directly into digital system/database": null,
-            "Data is reported digitally in electronic files (e.g., spread sheets or text)": null,
-            "Data is reported in paper format": null,
-            "Other": null
+            "Data is submitted automatically/semi-automatically via direct integrations": "null",
+            "Data is submitted manually directly into digital system/database": "null",
+            "Data is reported digitally in electronic files (e.g., spread sheets or text)": "null",
+            "Data is reported in paper format": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16875,8 +16875,8 @@
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": 0,
-            "Data is submitted once a year": null,
-            "Other": null
+            "Data is submitted once a year": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -16956,11 +16956,11 @@
             "Section3"
         ],
         "possible_answers": {
-            "Data is submitted automatically/semi-automatically via direct integrations": null,
-            "Data is submitted manually directly into digital system/database": null,
-            "Data is reported digitally in electronic files (e.g., spread sheets or text)": null,
-            "Data is reported in paper format": null,
-            "Other": null
+            "Data is submitted automatically/semi-automatically via direct integrations": "null",
+            "Data is submitted manually directly into digital system/database": "null",
+            "Data is reported digitally in electronic files (e.g., spread sheets or text)": "null",
+            "Data is reported in paper format": "null",
+            "Other": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -17047,7 +17047,7 @@
             "Data could be linked but legal issues prohibit the linkage.": 0,
             "No, systems are lacking common identifier to link the data on case/isolate level.": 0,
             "No, other reason.": 0,
-            "Do not know.": null
+            "Do not know.": "null"
         },
         "actual_answers": {
             "Ireland": [
@@ -17287,17 +17287,17 @@
             "Section3"
         ],
         "possible_answers": {
-            "The indicators and/or frequency for when a clinical sample is taken for microbiological culture varies between healthcare facilities \u2013 makes it hard to know if measured resistance levels are representative.": null,
-            "Lack of harmonization of methods at clinical microbiology laboratories \u2013 different methods generate non-comparable data.": null,
-            "Lack of harmonization of what is analyzed at the clinical microbiological laboratories \u2013 different priorities create heterogenous datasets e.g., different antibiotics are included in the routine AST.": null,
-            "Lack of resources to perform additional testing on all isolates with resistant phenotypes under surveillance \u2013 can be applicable for both clinical microbiology laboratories and/or national reference/expert laboratory.": null,
-            "Clinical microbiology laboratories lack resources and/or capacity to connect themselves to the national AMR surveillance system.": null,
-            "It is voluntary for clinical microbiological laboratories to submit data to the national AMR surveillance system(s).": null,
-            "The institution(s) responsible for the national AMR surveillance system(s) are unable to connect new clinical microbiology laboratories.": null,
-            "Decentralized systems make it difficult to build efficient structures.": null,
-            "Lack of digitalization of the national AMR surveillance system(s) makes it difficult to expand surveillance.": null,
-            "Legal obstacle(s) are preventing development of the national AMR surveillance system(s).": null,
-            "Other (free text in next question).": null
+            "The indicators and/or frequency for when a clinical sample is taken for microbiological culture varies between healthcare facilities \u2013 makes it hard to know if measured resistance levels are representative.": "null",
+            "Lack of harmonization of methods at clinical microbiology laboratories \u2013 different methods generate non-comparable data.": "null",
+            "Lack of harmonization of what is analyzed at the clinical microbiological laboratories \u2013 different priorities create heterogenous datasets e.g., different antibiotics are included in the routine AST.": "null",
+            "Lack of resources to perform additional testing on all isolates with resistant phenotypes under surveillance \u2013 can be applicable for both clinical microbiology laboratories and/or national reference/expert laboratory.": "null",
+            "Clinical microbiology laboratories lack resources and/or capacity to connect themselves to the national AMR surveillance system.": "null",
+            "It is voluntary for clinical microbiological laboratories to submit data to the national AMR surveillance system(s).": "null",
+            "The institution(s) responsible for the national AMR surveillance system(s) are unable to connect new clinical microbiology laboratories.": "null",
+            "Decentralized systems make it difficult to build efficient structures.": "null",
+            "Lack of digitalization of the national AMR surveillance system(s) makes it difficult to expand surveillance.": "null",
+            "Legal obstacle(s) are preventing development of the national AMR surveillance system(s).": "null",
+            "Other (free text in next question).": "null"
         },
         "actual_answers": {
             "Ireland": [

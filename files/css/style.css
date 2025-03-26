@@ -2,7 +2,15 @@
 /* GENERAL */
 
 .width-auto {
-    width: auto;   
+    width: auto;
+}
+
+.width-16 {
+    width: 16%;
+}
+
+.width-100 {
+    width: 100%;
 }
 
 .vertical-line {
@@ -64,6 +72,26 @@ li {
 }
 
 
+/* OVERWRITE SHINY DEFAULT */
+
+.hr-small-margin {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.hr-filters-separator {
+    margin-top: 12px;
+    margin-bottom: 32px;
+}
+
+
+/* OVERWRITE PLOTLY DEFAULT */
+
+/*#plotlyMap {
+    width: auto !important;
+}*/
+
+
 /* HEADER */
 
 .top-spacer {
@@ -84,10 +112,10 @@ li {
     font-weight: bold;
 }
 
-.jamrai-logo-header-long {
-    height: 64px;
-    width: auto;
-    margin-left: 24px;
+.jamrai-logo-header {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 16px;
 }
 
 .jamrai-logo-header-rect {
@@ -98,7 +126,7 @@ li {
 /* FILTERS */
 
 .filter-scroll-box {
-    height: 256px;
+    height: 280px;
     overflow-y: scroll;
 }
 
@@ -109,11 +137,13 @@ li {
     display: flex;
     flex-direction: row;
     width: 100%;
+    min-height: 840px;
 }
 
 .main-panel {
     display: flex;
     flex-grow: 1;
+    width: 84%;
 }
 
 .plot-title {
@@ -141,6 +171,13 @@ li {
 
 .map-container {
     height: 100%;
+    width: 80%;
+    position: absolute;
+    padding-top: 8px;
+}
+
+.map-container > .plotly {
+    position: absolute;
 }
 
 #mainMap {
@@ -173,6 +210,12 @@ li {
     width:24px;
     margin-left: 48px;
     border: 1px solid #888888;
+}
+
+.map-source-text {
+    position: absolute;
+    bottom: 0;
+    width: auto;
 }
 
 
