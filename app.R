@@ -1,6 +1,5 @@
 ## NOTES
 # TODO -> cohenrence in snake/camel case
-# countryscoresdf -> nom de variable pas top
 # revoir le format des réponses -> stocker dans un format plus lisible par R, ou un json simplifié -> question > pays > score + un tableau a part avec les tags
 ## (suite) en gros on check les tags, ca renvoie quelles questions sont ON et lesquelles sont OFF, puis il n'y a plus qu'à récupérer et additionner les scores
 
@@ -248,14 +247,6 @@ for (surveyQuestion in ls(surveyDataHash)) {
 #}
 
 
-### just for screenshot -> color countries based on participation
-for (country in countryScoresDf$country) {
-    if (countryScoresDf$totalScore[countryScoresDf$country == country] != 0) {
-        countryScoresDf$totalScore[countryScoresDf$country == country] <- 1
-    }
-}
-## note -> also remove countryScoresDf edit just hee below
-
 ## TEMP -> set countries with score = 0 as non-participating
 countryScoresDf <- countryScoresDf[countryScoresDf$totalScore != 0,]
 nonParticipatingCountries <- setdiff(euroCountryList, countryScoresDf$country)
@@ -332,16 +323,6 @@ ui <- shinyUI(fluidPage(
 
     # spacer - prevents overlapping of header and navbar
     div() %>% tagAppendAttributes(class="top-spacer"),
-
-    # header ## moved
-    #fluidRow(
-    #    img(src=jamraiLogoHeaderLong) %>% tagAppendAttributes(class="jamrai-logo-header-long width-auto"),
-    #    img(src=jamraiLogoHeaderRect) %>% tagAppendAttributes(class="jamrai-logo-header-rect width-auto"),
-    #    div() %>% tagAppendAttributes(class="vertical-line"),
-    #    div("EU-JAMRAI 2 - Human AMR surveillance systems in Europe") %>% tagAppendAttributes(class="main-title width-auto"),
-    #) %>% tagAppendAttributes(class="header-box"),
-
-    #hr() %>% tagAppendAttributes(class="hr-small-margin"),
 
     # side bar (filters)
     sidebarLayout(
@@ -523,13 +504,6 @@ ui <- shinyUI(fluidPage(
             #    value   = c(2020, 2024),
             #    step    = 1,
             #    width   = "256px"
-            #),
-
-            #sliderInput("n", "Observations", 1, 100, 50, ticks = FALSE),
-            #sliderInput("bins", "Scale", 1, 10, 5, step = 1, ticks = FALSE),
-            #actionButton(
-            #    inputId = "applyFilters",
-            #    label   = "Apply filters"
             #)
 
         ) %>% tagAppendAttributes(class="width-16"),
@@ -547,8 +521,7 @@ ui <- shinyUI(fluidPage(
                         tags$span("Map") %>% tagAppendAttributes(class="tab-text")
                     ),
 
-                    fluidRow( ## todo: wrap into division
-                        ##tags$span("Countries participation to the survey") %>% tagAppendAttributes(class="plot-title"), ## title - temporarily removed
+                    fluidRow(
                         
                         tags$div(
                             plotlyOutput(outputId = "plotlyMap")
@@ -572,7 +545,7 @@ ui <- shinyUI(fluidPage(
                         tags$span("Dashboard") %>% tagAppendAttributes(class="tab-text")
                     ),
                     fluidRow(
-                        #leafletOutput("mainMap")
+                        #
                     )
                 ),
 
@@ -586,8 +559,9 @@ ui <- shinyUI(fluidPage(
             ),
         ) %>% tagAppendAttributes(class="main-panel")
     ) %>% tagAppendAttributes(class="main-box"),
-    #hr(),
-    fluidRow( # footer
+
+    # footer
+    fluidRow(
         img(src=jamraiLogoHeaderRectWhite) %>% tagAppendAttributes(class="width-auto footer-image"),
         img(src=euLogoFundWhite) %>% tagAppendAttributes(class="width-auto footer-image")
     ) %>% tagAppendAttributes(class="footer-box")
@@ -599,6 +573,7 @@ ui <- shinyUI(fluidPage(
 server <- function(input, output, session) {
 
     convertInputToHeader <- function(sectionFilterInput, whichDf) {
+        # convert the section names from the input to the names of the columns in the scores data frame
 
         activeSectionNamesAsInScoresDf <- c()
 
@@ -633,6 +608,7 @@ server <- function(input, output, session) {
     }
 
     getCoutryScores <- function() {
+        # calculate country scores based on filters
 
         countryScores <- c()
 
@@ -672,32 +648,14 @@ server <- function(input, output, session) {
     }
 
     coutryScores <- reactive({
-        #countryScoresDf$totalScore
-
         getCoutryScores()
-
-        ##OLD
-        #if (length(input$sectionsSelection) > 1) {
-        #    as.vector(apply(countryScoresDf[countryScoresDf$country %in% input$countriesSelection, convertInputToHeader(input$sectionsSelection)], 1, sum)) / getMaxScoreActiveSections()
-        #} else {
-        #    as.vector(sum(countryScoresDf[countryScoresDf$country %in% input$countriesSelection, convertInputToHeader(input$sectionsSelection)])) / getMaxScoreActiveSections()
-        #}
-        # apply marche pas avec une seule slection -> besoin de créer une focntion sur mesure
-
-        #for (country in countryScoresDf$country) {
-        #    countryScoresDf$totalScore[countryScoresDf$country == country] <- countryScoresDf$totalScore[countryScoresDf$country == country] / (maxScore - scoreGapDf$scoreGap[scoreGapDf$country == country])
-        #    countryScoresDf$scoreSection1[countryScoresDf$country == country] <- countryScoresDf$scoreSection1[countryScoresDf$country == country] / (maxScoreSection1 - scoreGapDf$scoreGapSection1[scoreGapDf$country == country])
-        #    countryScoresDf$scoreSection2[countryScoresDf$country == country] <- countryScoresDf$scoreSection2[countryScoresDf$country == country] / (maxScoreSection2 - scoreGapDf$scoreGapSection2[scoreGapDf$country == country])
-        #    countryScoresDf$scoreSection3[countryScoresDf$country == country] <- countryScoresDf$scoreSection3[countryScoresDf$country == country] / (maxScoreSection3 - scoreGapDf$scoreGapSection3[scoreGapDf$country == country])
-        #}
-
     })
 
     getNonParticipatingCountries <- reactive({
         c(setdiff(countryScoresDf$country, input$countriesSelection), nonParticipatingCountries)
     })
 
-    # custom common properties for charts
+    # EXAMPLE - custom common properties for charts
     chart_theme <- ggplot2::theme(
         plot.title   = element_text(hjust = 0.5, size = 20, face = "bold"),
         axis.title.x = element_text(size = 15),
@@ -705,36 +663,6 @@ server <- function(input, output, session) {
         axis.text.x  = element_text(size = 12),
         axis.text.y  = element_text(size = 12)
     )
-
-    #output$mainMap <- renderLeaflet({
-    #
-    #    if (input$dark_mode == "dark") {
-    #        themeBgColor = "#1d1f21"
-    #        themeFgColor = "#ffffff"
-    #    } else {
-    #        themeBgColor = "#ffffff"
-    #        themeFgColor = "#1d1f21"
-    #    }
-    #
-    #    leaflet(geojsonEurope) %>%
-    #    setView(lng = 22, lat = 50, zoom = 4) %>%
-    #    #addTiles(
-    #    #    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    #    #    #{attribution: '© OpenStreetMap'}
-    #    #) %>%
-    #    addGeoJSON(
-    #        geojson = geojsonEurope,
-    #        opacity = 1,
-    #        fillOpacity = 1,
-    #        color = themeBgColor(),
-    #        weight = 1,
-    #        fillColor = "#aaaaaa"
-    #    )# %>%
-    #    #addPolygons(
-    #    #    fillColor = ~pal(density),
-    #    #    fillOpacity = 1 ## function based on PARTICIPATION
-    #    #)
-    #})
 
     output$plotlyMap <- renderPlotly({
         if (input$dark_mode == "dark") {
