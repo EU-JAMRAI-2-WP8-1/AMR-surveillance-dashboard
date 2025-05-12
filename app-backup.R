@@ -85,9 +85,6 @@ surveyDataFile <- file.path("/home/shiny-app/files/data/replies_formatted.json")
 surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
 surveyDataHash <- hash(surveyData)
 
-# Import survey score table from CSV - set first colums as row names
-countryScoreTable <- read.csv("/home/shiny-app/files/data/country_reply_scores.csv", row.names = 1, header=TRUE)
-
 # Europe country list
 euroCountryList <- c()
 for (country in geojsonEurope$features){
@@ -105,10 +102,8 @@ participatingCountries <- str_replace_all(colnames(as.data.frame(surveyData[[cou
 # Not-participating countries (grey on the map)
 nonParticipatingCountries <- setdiff(euroCountryList, participatingCountries)
 
-# Filters : pathogens under surveillance / antibiotics / sample types
+# Filters : pathogens under surveillance
 pathogenList <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium", "E. faecalis", "S. pneumoniae", "H. influenzae", "C. difficile")
-antibioticList <- c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin")
-sampleTypeList <- c("blood", "urine", "respiratory tract", "soft tissue", "screening", "stool")
 
 # Filters : set sections
 sections <- c("Section 1", "Section 2", "Section 3")
@@ -117,10 +112,7 @@ sectionDefinitions <- data.frame(
     "Section 2" = "Whole genome sequencing (WGS) at national reference/expert laboratory",
     "Section 3" = "Data flow of national AMR surveillance system(s)"
 )
-sectionInfoText     <- "Section 1: Treatment and diagnostic guidelines, Antimicrobial Susceptibility Testing (AST) and genotypic confirmation.\nSection 2: Whole genome sequencing (WGS) at national reference/expert laboratory\nSection 3: Data flow of national AMR surveillance system(s)"
-pathogensInfoText   <- "Unselect all filters to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus one one or several pathogens, select the pathogen(s) you need."
-antibioticsInfoText <- "Unselect all filters to ignore if questions are antibiotic-specific or not.\nTo keep only antibiotic-specific questions, select all.\nTo focus one one or several antibiotics, select the antibiotic(s) you need."
-sampleTypeInfoText  <- "Unselect all filters to ignore if questions are type-specific or not.\nTo keep only type-specific questions, select all.\nTo focus one one or several sample type, select the type(s) you need."
+sectionInfoText <- "Section 1: Treatment and diagnostic guidelines, Antimicrobial Susceptibility Testing (AST) and genotypic confirmation.\nSection 2: Whole genome sequencing (WGS) at national reference/expert laboratory\nSection 3: Data flow of national AMR surveillance system(s)"
 
 # Set df for map results layer (color based on score, set score to zero by default)
 countryScoresDf <- data.frame(
@@ -263,12 +255,13 @@ for (surveyQuestion in ls(surveyDataHash)) {
 countryScoresDf <- countryScoresDf[countryScoresDf$totalScore != 0,]
 nonParticipatingCountries <- setdiff(euroCountryList, countryScoresDf$country)
 
-#print(countryScoresDf)##debug
-
 ## USER INTERFACE ##
 
 # user interface
 ui <- shinyUI(fluidPage(
+
+    # dark mode hidden input (required)
+    input_dark_mode(id = "mode") %>% tagAppendAttributes(class="hidden"),
 
     # set theme
     theme = custom_theme,
@@ -279,17 +272,11 @@ ui <- shinyUI(fluidPage(
     # import JS
     includeScript("/srv/shiny-server/www/js/script.js"),
 
-    # dark mode hidden input (required)
-    input_dark_mode(
-        id = "mode",
-        class = "hidden"
-    ),
-
     # navigation bar
     page_navbar(
 
         nav_item(
-            class = "navbar-header",
+            class="navbar-header",
             "ENAMReS - European National AMR Surveillance"
         ),
 
@@ -313,7 +300,7 @@ ui <- shinyUI(fluidPage(
             tags$span(
                 bsicons::bs_icon("file-earmark-code"), "Source code"
             ),
-            href = "https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard",
+            href = "https://github.com/",
             target = "_blank"
             )
         ),
@@ -339,146 +326,204 @@ ui <- shinyUI(fluidPage(
 
     # spacer - prevents overlapping of header and navbar
     div(
-        class = "top-spacer"
+        class="top-spacer"
     ),
 
-    # Layout type
+    # side bar (filters)
     sidebarLayout(
 
         position = "left",
 
-        # side bar (filters)
+        # sidebar content
         sidebarPanel(
-            class = "sidebar-panel",
-            width = 2,
 
             # logo
-            img(
-                src = jamraiLogoHeaderRect,
-                class = "jamrai-logo-header"
-            ),
+            img(src=jamraiLogoHeaderRect) %>% tagAppendAttributes(class="jamrai-logo-header"),
 
-            hr(
-                class = "hr-filters-separator"
-            ),
+            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
 
-            accordion(
-
-                accordion_panel(
-                    "Sections",
+            # Country selection
+            tags$div(
+                tags$div(
+                    class = "filter-header-container",
+                    tags$div(
+                        class = "filter-header-left-part",
+                        tags$button(
+                            id = "select-all-countries",
+                            bsicons::bs_icon("check-all"),
+                            onclick = "selectAllCountries()",
+                            class = "btn btn-default btn-sm btn-primary select-all-button"
+                        ),
+                        tags$h4(
+                            class = "filter-header-text",
+                            "Countries"
+                        )
+                    ),
                     tags$button(
-                        class = "info-button",
-                        #title = sectionInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        sectionInfoText
-                    ),
-                    checkboxGroupInput(
-                        inputId  = "sectionsSelection",
-                        label    = "",
-                        choices  = sections,
-                        selected = sections,
-                        inline   = FALSE,
-                        width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
-                ),
-                accordion_panel(
-                    "Countries",
-                    actionLink("selectAllCountries", "Select All"),
-                    checkboxGroupInput(
-                        inputId  = "countriesSelection",
-                        label    = "",
-                        choices  = participatingCountries,
-                        selected = participatingCountries,
-                        inline   = FALSE,
-                        width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
-                ),
-                accordion_panel(
-                    "Pathogens",
-                    actionLink("selectAllPathogens", "Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = pathogensInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        pathogensInfoText
-                    ),
-                    checkboxGroupInput(
-                        inputId  = "pathogensSelection",
-                        label    = "",
-                        choices  = pathogenList,
-                        selected = c(),
-                        inline   = FALSE,
-                        width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
-                ),
-                accordion_panel(
-                    "Antibiotics",
-                    actionLink("selectAllAntibiotics", "Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = antibioticsInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        antibioticsInfoText
-                    ),
-                    class = "country-filter-container",
-                    checkboxGroupInput(
-                        inputId  = "antibioticsSelection",
-                        label    = "",
-                        choices  = antibioticList,
-                        selected = c(),
-                        inline   = FALSE,
-                        width    = NULL
-                    )
-                    
-                ),
-                hr(
-                    class = "hr-filters-separator"
-                ),
-                accordion_panel(
-                    "Sample type",
-                    actionLink("selectAllSampleTypes", "Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = sampleTypeInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        sampleTypeInfoText
-                    ),
-                    checkboxGroupInput(
-                        inputId  = "sampleTypesSelection",
-                        label    = "",
-                        choices  = sampleTypeList,
-                        selected = c(),
-                        inline   = FALSE,
-                        width    = NULL
+                        id = "hide-country-selection",
+                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
+                        onclick = "hideShow(\"hide-country-selection\", \"country-filter-container\")",
+                        class = "hide-show-button"
                     )
                 )
-            )
-        ),
+            ),
+            tags$div(
+                id="country-filter-container",
+                style = "display:none;",
+                checkboxGroupInput(
+                    inputId  = "countriesSelection",
+                    label    = "",
+                    choices  = participatingCountries,
+                    selected = participatingCountries,
+                    inline   = FALSE,
+                    width    = NULL
+                )
+            ) %>% tagAppendAttributes(class="filter-scroll-box"),
 
-        # main panel
+            # Section selection
+            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
+
+            tags$div(
+                tags$div(
+                    class = "filter-header-container",
+                    tags$div(
+                        class = "filter-header-left-part",
+                        tags$button(
+                            id = "select-all-section",
+                            bsicons::bs_icon("check-all"),
+                            onclick = "selectAllSections()",
+                            class = "btn btn-default btn-sm btn-primary select-all-button"
+                        ),
+                        tags$h4(
+                            class = "filter-header-text",
+                            "Sections"
+                        ),
+                        tags$button(
+                        class = "info-button",
+                        title = sectionInfoText,
+                        "?"
+                        ),
+                        tags$span(
+                            class = "info-sections",
+                            sectionInfoText
+                        )
+                    ),
+                    tags$button(
+                        id = "hide-sections-selection",
+                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
+                        onclick = "hideShow(\"hide-sections-selection\", \"section-filter-container\")",
+                        class = "hide-show-button"
+                    )
+                )
+            ),
+            tags$div(
+                id="section-filter-container",
+                style = "display:none;",
+                checkboxGroupInput(
+                    inputId  = "sectionsSelection",
+                    label    = "",
+                    choices  = sections,
+                    selected = sections,
+                    inline   = FALSE,
+                    width    = NULL
+                )
+            ) %>% tagAppendAttributes(class="filter-scroll-box"),
+
+            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
+
+            # Pathogen selection
+            tags$div(
+                tags$div(
+                    class = "filter-header-container",
+                    tags$div(
+                        class = "filter-header-left-part",
+                        tags$button(
+                            id = "select-all-pathogens",
+                            bsicons::bs_icon("check-all"),
+                            onclick = "selectAllPathogens()",
+                            class = "btn btn-default btn-sm btn-primary select-all-button"
+                        ),
+                        tags$h4(
+                            class = "filter-header-text",
+                            "Pathogens"
+                        )
+                    ),
+                    tags$button(
+                        id = "hide-pathogen-selection",
+                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
+                        onclick = "hideShow(\"hide-pathogen-selection\", \"pathogen-filter-container\")",
+                        class = "hide-show-button"
+                    )
+                )
+            ),
+            tags$div(
+                id="pathogen-filter-container",
+                style = "display:none;",
+                checkboxGroupInput(
+                    inputId  = "pathogensSelection",
+                    label    = "",
+                    choices  = pathogenList,
+                    selected = pathogenList,
+                    inline   = FALSE,
+                    width    = NULL
+                )
+            ) %>% tagAppendAttributes(class="filter-scroll-box"),
+
+            # Antibiotics selection
+            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
+
+            tags$div(
+                tags$div(
+                    class = "filter-header-container",
+                    tags$div(
+                        class = "filter-header-left-part",
+                        tags$button(
+                            id = "select-all-antibiotics",
+                            bsicons::bs_icon("check-all"),
+                            onclick = "selectAllAntibiotics()",
+                            class = "btn btn-default btn-sm btn-primary select-all-button"
+                        ),
+                        tags$h4(
+                            class = "filter-header-text",
+                            "Antibiotics"
+                        )
+                    ),
+                    tags$button(
+                        id = "hide-antibiotics-selection",
+                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
+                        onclick = "hideShow(\"hide-antibiotics-selection\", \"antibiotic-filter-container\")",
+                        class = "hide-show-button"
+                    )
+                )
+            ),
+            tags$div(
+                id="antibiotic-filter-container",
+                style = "display:none;",
+                checkboxGroupInput(
+                    inputId  = "antibioticsSelection",
+                    label    = "",
+                    choices  = c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin"),
+                    selected = c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin"),
+                    inline   = FALSE,
+                    width    = NULL
+                )
+            ) %>% tagAppendAttributes(class="filter-scroll-box")
+
+            
+            #sliderInput(
+            #    inputId = "yearSlider",
+            #    label   = "Year",
+            #    min     = 2020,
+            #    max     = 2024,
+            #    value   = c(2020, 2024),
+            #    step    = 1,
+            #    width   = "256px"
+            #)
+
+        ) %>% tagAppendAttributes(class="width-16 filter-wrapper"),
+
+        # main dashboard container
         mainPanel(
-            width = 10,
 
             # tabs
             tabsetPanel(
@@ -487,63 +532,31 @@ ui <- shinyUI(fluidPage(
                 tabPanel(
                     tags$span(
                         bsicons::bs_icon("globe-europe-africa"),
-                        tags$span(
-                            class = "tab-text",
-                            "Map"
-                        )
+                        tags$span("Map") %>% tagAppendAttributes(class="tab-text")
                     ),
 
                     fluidRow(
-
-                        class = "map-tab-container",
-
-                        column(
-                            width = 9,
+                        
+                        tags$div(
+                            class = "map-and-source-container",
                             tags$div(
-                                class = "map-and-source-container",
-                                tags$div(
-                                    class = "map-container",
-                                    plotlyOutput(outputId = "plotlyMap", width = "100%", height = "780")
-                                ),
-                                tags$div(
-                                    class = "map-source-text",
-                                    "Map source: ",
-                                    tags$a(
-                                        href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
-                                        "Eurostat",
-                                        target = "_blank"
-                                    )
-                                )
+                                class = "map-container",
+                                plotlyOutput(outputId = "plotlyMap")
                             ),
+                            tags$div(
+                                class = "map-source-text",
+                                "Map source: ",
+                                tags$a(
+                                    href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
+                                    "Eurostat",
+                                    target = "_blank"
+                                )
+                            )
                         ),
 
-                        column(
-                            width = 3,
-                            ## ici ajouter toutes les infos nécessaires
-                            tags$div(
-                                class = "map-info-container",
-                                #HTML("INFO SCORES<br>The score displayed on the map reflects the status of AMR surveillance in the countries participating in the JAMRAI-II project.<br>"),
-                                dataTableOutput('scoresTable')
-
-                            )
-                        )
-                        
-                    )
-                ),
-
-                # info
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("info-circle"),
-                        tags$span(
-                            class = "tab-text",
-                            "Info"
-                        )
-                    ),
-                    fluidRow(
                         tags$div(
-                            class = "about-container",
-                            includeHTML("/srv/shiny-server/www/html/about.html")
+                            class="map-info-container",
+                            "INFO SCORES\nThe score displayed on the map reflects the countries results to a survey gathering the status of AMR surveillance in the countries participating in the JAMRAI-II project\n",
                         )
                     )
                 ),
@@ -552,42 +565,23 @@ ui <- shinyUI(fluidPage(
                 tabPanel(
                     tags$span(
                         bsicons::bs_icon("bar-chart"),
-                        tags$span(
-                            class = "tab-text",
-                            "Dashboard"
-                        )
+                        tags$span("Dashboard") %>% tagAppendAttributes(class="tab-text")
                     ),
                     fluidRow(
                         #
                     )
                 ),
 
-                # survey results
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("journal-check"),
-                        tags$span(
-                            class = "tab-text",
-                            "Survey results"
-                        )
-                    ),
-                    tableOutput("surveyResults")
-                ),
-
-                # dataset
                 tabPanel(
                     tags$span(
                         bsicons::bs_icon("table"),
-                        tags$span(
-                            class = "tab-text",
-                            "Dataset"
-                        )
+                        tags$span("Dataset") %>% tagAppendAttributes(class="tab-text")
                     ),
                     tableOutput("myTable")
                 )
             ),
-        )
-    ),
+        ) %>% tagAppendAttributes(class="main-panel")
+    ) %>% tagAppendAttributes(class="main-box"),
 
     # footer
     fluidRow(
@@ -601,52 +595,8 @@ ui <- shinyUI(fluidPage(
 
 server <- function(input, output, session) {
 
-    # "Select all" button for countries
-    observe({
-        if (input$selectAllCountries == 0) {
-            return(NULL)
-        } else if (input$selectAllCountries%%2 == 0) {
-            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries)
-        } else {
-            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
-        }
-    })
-
-    # "Select all" button for pathogens
-    observe({
-        if (input$selectAllPathogens == 0) {
-            return(NULL)
-        } else if (input$selectAllPathogens%%2 == 0) {
-            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
-        } else {
-            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
-        }
-    })
-
-    # "Select all" button for antibiotics
-    observe({
-        if (input$selectAllAntibiotics == 0) {
-            return(NULL)
-        } else if (input$selectAllAntibiotics%%2 == 0) {
-            updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList)
-        } else {
-            updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList, selected = antibioticList)
-        }
-    })
-
-    # "Select all" button for sample types
-    observe({
-        if (input$selectAllSampleTypes == 0) {
-            return(NULL)
-        } else if (input$selectAllSampleTypes%%2 == 0) {
-            updateCheckboxGroupInput(session, "sampleTypesSelection", choices = sampleTypeList)
-        } else {
-            updateCheckboxGroupInput(session, "sampleTypesSelection", choices = sampleTypeList, selected = sampleTypeList)
-        }
-    })
-
-    # Converts the section names from the input to the names of the columns in the scores data frame
     convertInputToHeader <- function(sectionFilterInput, whichDf) {
+        # convert the section names from the input to the names of the columns in the scores data frame
 
         activeSectionNamesAsInScoresDf <- c()
 
@@ -680,76 +630,8 @@ server <- function(input, output, session) {
         
     }
 
-    # Calculates country scores based on filters
-    getCountryScores <- function() {
-
-        ## ANCHOR
-
-        # get active filters
-
-        input$sectionsSelection
-        input$pathogensSelection
-        input$antibioticsSelection
-        input$sampleTypesSelection
-
-        #input$countriesSelection
-
-        # loop over questions
-        for (column in 1:ncol(countryScoreTable)) {
-            if (column == 1) next # skip country name
-
-            ## check if question must be taken or not ##
-
-            # get tags as vector
-            tagsThisQuestion <- str_split(str_replace_all(countryScoreTable[2, column], c("\\[" = "", "\\]" = "", "'" = "")), ", ")
-
-            # sections
-            if (length(input$sectionsSelection) == 0) { # no section selected -> all zeros and stop
-                return(rep(0, length(intersect(countryScoresDf$country, input$countriesSelection))))
-            }
-
-            # no match between selected sections and question tags -> skip the question
-            if (length(intersect(input$sectionsSelection, tagsThisQuestion)) == 0) {
-                next
-            }
-
-            # pathogens
-            # if no pathogens selected -> ignore pathogen tags and go to next filter ;
-            # if at least one selected -> check for presence of the tags
-            if (length(input$pathogensSelection) > 0) {
-                # no match between selected pathogens and question tags -> skip the question
-                if (length(intersect(input$pathogensSelection, tagsThisQuestion)) == 0) {
-                    next
-                }
-            }
-
-            # antibiotics
-            #TODO
-
-
-            # sample types
-
-
-            # loop over countries
-            for (row in 1:nrow(countryScoreTable)) {
-
-                if (row == 1) next # skip question name
-
-                if (row == 2) { # tags row
-                    
-
-                    
-                }
-                    
-
-                #countryScoreTable[row, column]
-
-            }
-        }
-
-
-
-        ## OLD HERE BELOW - to delete when done
+    getCoutryScores <- function() {
+        # calculate country scores based on filters
 
         countryScores <- c()
 
@@ -773,7 +655,7 @@ server <- function(input, output, session) {
                 }
                 maxScoreThisCountry <- maxScoreThisCountry - sum(scoreGapDf[scoreGapDf$country == country, convertInputToHeader(input$sectionsSelection, "gap")])
 
-                countryScores <- c(countryScores, round(rawScoreThisCountry/maxScoreThisCountry,  digits = 4))
+                countryScores <- c(countryScores, rawScoreThisCountry/maxScoreThisCountry)
 
                 # for screenshot -> show countries reply rate (avoid "do not know" answer)
                 #maxScores <- c(maxScores, maxScoreThisCountry/maxScore)
@@ -795,11 +677,12 @@ server <- function(input, output, session) {
         # for screenshot -> show countries reply rate (avoid "do not know" answer)
         #return(maxScores)
         
+
         return(countryScores)
     }
 
-    countryScores <- reactive({
-        getCountryScores()
+    coutryScores <- reactive({
+        getCoutryScores()
     })
 
     getNonParticipatingCountries <- reactive({
@@ -827,8 +710,8 @@ server <- function(input, output, session) {
         }
         #countryReplies %>%
         map <- plot_ly(
-            #height = 800,
-            #width = 800
+            width="100%",
+            height="100%"
         )
 
         map <- map %>% add_trace( # displays results
@@ -836,7 +719,7 @@ server <- function(input, output, session) {
             #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
             geojson=geojsonEurope,
             locations=intersect(countryScoresDf$country, input$countriesSelection),#countryScoresDf$country,#input$countriesSelection, ## to do -> formule qui ajoute/retire des pays de countryscoresdf en fonction de input$countriesSelection
-            z=countryScores(),
+            z=coutryScores(),
             zmin=0,
             zmax=1, #max(countryScoresDf$totalScore) * 1.1,
             #showlegend=TRUE,
@@ -851,7 +734,7 @@ server <- function(input, output, session) {
                 thickness=20, #default 30
                 color=themeBgColor,
                 tickcolor=themeFgColor,
-                x=0.05,
+                x=0.1,
                 y=0.8,
                 tickfont=list(
                     color=themeFgColor
@@ -906,26 +789,15 @@ server <- function(input, output, session) {
                     scale=1.7  # initial zoom
                 ),
                 center=list(
-                    lat=54,
-                    lon=14
+                    lat=54, # 50 trop a en haut
+                    lon=14 # 10 top a droite
                 )
             ),
-            paper_bgcolor = "rgba(0, 0, 0, 0)",#themeBgColor, # bg color - outside map
-            margin=list(
-                t=32,
-                r=0,
-                l=0,
-                b=32
-            ),
+            paper_bgcolor = "rgba(0,0,0,0)",#themeBgColor, # bg color - outside map
+            margin=list(t=0, r=0,  l=0, b=0),
             autosize=TRUE
         )
     })
-
-    getParticipatingCountries <- reactive({
-        data.frame("Country"=intersect(countryScoresDf$country, input$countriesSelection), "Score"=countryScores())
-    })
-
-    output$scoresTable <- renderDataTable(getParticipatingCountries(), options=list(dom = 't'))
 
 }
 

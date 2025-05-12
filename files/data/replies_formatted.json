@@ -56,7 +56,7 @@
             "Sweden": 0,
             "Norway": 0,
             "Ukraine": 0,
-            "Iceland": 0 
+            "Iceland": 0
         },
         "actual_answers": {
             "Spain": "Spain",
@@ -85,7 +85,8 @@
             "Slovak Republic": "Slovak Republic",
             "Denmark": "Denmark",
             "Latvia": "Latvia",
-            "Iceland": "Iceland"
+            "Iceland": "Iceland",
+            "Bulgaria": "Bulgaria"
         }
     },
     "4": {
@@ -153,7 +154,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "Yes"
         }
     },
     "6.2": {
@@ -196,7 +198,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "Yes"
         }
     },
     "6.3": {
@@ -239,7 +242,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "Yes"
         }
     },
     "6.4": {
@@ -282,7 +286,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "No",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "Yes"
         }
     },
     "6.5": {
@@ -325,7 +330,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "Yes"
         }
     },
     "6.6": {
@@ -368,7 +374,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "Yes"
         }
     },
     "7": {
@@ -515,6 +522,9 @@
                 "Results from AST data generated at the national reference/expert laboratory.",
                 "International guidance (e.g., European association of urology).",
                 "International AST data."
+            ],
+            "Bulgaria": [
+                "Results from routine AST available in the national AMR surveillance system."
             ]
         }
     },
@@ -630,6 +640,9 @@
             ],
             "Iceland": [
                 ""
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -673,7 +686,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "9.2": {
@@ -716,7 +730,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "9.3": {
@@ -759,7 +774,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "9.4": {
@@ -802,7 +818,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "9.5": {
@@ -845,7 +862,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "9.6": {
@@ -888,7 +906,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "Yes",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "10": {
@@ -998,6 +1017,9 @@
             ],
             "Iceland": [
                 ""
+            ],
+            "Bulgaria": [
+                "Guidance at each individual healthcare facility."
             ]
         }
     },
@@ -1041,7 +1063,8 @@
             "Slovak Republic": "No national guidance in place for any included pathogens",
             "Denmark": "No national guidance in place for any included pathogens",
             "Latvia": "Yes, national guidance in place for some of the included pathogens.",
-            "Iceland": "No national guidance in place for any included pathogens"
+            "Iceland": "No national guidance in place for any included pathogens",
+            "Bulgaria": "No national guidance in place for any included pathogens"
         }
     },
     "12": {
@@ -1147,6 +1170,10 @@
             ],
             "Iceland": [
                 "National reference/expert laboratory"
+            ],
+            "Bulgaria": [
+                "The clinical microbiological laboratory that performs the AST.",
+                "The healthcare facility where the sample was taken."
             ]
         }
     },
@@ -1252,6 +1279,10 @@
             "Iceland": [
                 "A subset of clinical microbiological laboratories",
                 "National reference/expert laboratory"
+            ],
+            "Bulgaria": [
+                "All clinical microbiological laboratories.",
+                "National reference/expert laboratory"
             ]
         }
     },
@@ -1294,7 +1325,8 @@
             "Slovak Republic": "No.",
             "Denmark": "No.",
             "Latvia": "No.",
-            "Iceland": "No."
+            "Iceland": "No.",
+            "Bulgaria": "Do not know."
         }
     },
     "15": {
@@ -1339,7 +1371,8 @@
             "Slovak Republic": "No national guidance in place for any included pathogens.",
             "Denmark": "No national guidance in place for any included pathogens.",
             "Latvia": "Yes, national guidance in place for some of the included pathogens.",
-            "Iceland": "No national guidance in place for any included pathogens."
+            "Iceland": "No national guidance in place for any included pathogens.",
+            "Bulgaria": "No national guidance in place for any included pathogens."
         }
     },
     "16": {
@@ -1445,6 +1478,11 @@
             ],
             "Iceland": [
                 "National reference/expert laboratory"
+            ],
+            "Bulgaria": [
+                "National reference/expert laboratory",
+                "The clinical microbiological laboratory that performs the AST",
+                "The treating physician(s)"
             ]
         }
     },
@@ -1559,6 +1597,10 @@
             ],
             "Iceland": [
                 "National reference/expert laboratory."
+            ],
+            "Bulgaria": [
+                "A subset of clinical microbiological laboratories.",
+                "National reference/expert laboratory."
             ]
         }
     },
@@ -1604,7 +1646,8 @@
             "Slovak Republic": "Yes, WGS is outsourced but bioinformatics is performed in-house.",
             "Denmark": "Yes, both WGS and bioinformatics are performed in-house.",
             "Latvia": "Yes, both WGS and bioinformatics are performed in-house.",
-            "Iceland": "No, both WGS and bioinformatics are outsourced."
+            "Iceland": "No, both WGS and bioinformatics are outsourced.",
+            "Bulgaria": "Yes, both WGS and bioinformatics are performed in-house."
         }
     },
     "19.1": {
@@ -1649,7 +1692,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "Yes, all isolates sequenced."
+            "Iceland": "Yes, all isolates sequenced.",
+            "Bulgaria": "Yes, when required/requested."
         }
     },
     "19.2": {
@@ -1694,7 +1738,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, for specific time periods and/or number of isolates.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "No, not sequenced."
+            "Iceland": "No, not sequenced.",
+            "Bulgaria": "No, not sequenced."
         }
     },
     "19.3": {
@@ -1739,7 +1784,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "Yes, all isolates sequenced."
+            "Iceland": "Yes, all isolates sequenced.",
+            "Bulgaria": "Yes, when required/requested."
         }
     },
     "19.4": {
@@ -1784,7 +1830,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "Yes, all isolates sequenced."
+            "Iceland": "Yes, all isolates sequenced.",
+            "Bulgaria": "Yes, for specific time periods and/or number of isolates."
         }
     },
     "19.5": {
@@ -1829,7 +1876,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "No, not sequenced.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "No, not sequenced."
+            "Iceland": "No, not sequenced.",
+            "Bulgaria": "No, not sequenced."
         }
     },
     "19.6": {
@@ -1874,7 +1922,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "Yes, all isolates sequenced."
+            "Iceland": "Yes, all isolates sequenced.",
+            "Bulgaria": "Yes, for specific time periods and/or number of isolates."
         }
     },
     "19.7": {
@@ -1919,7 +1968,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "Yes, when required/requested.",
-            "Iceland": "Yes, all isolates sequenced."
+            "Iceland": "Yes, all isolates sequenced.",
+            "Bulgaria": "Yes, for specific time periods and/or number of isolates."
         }
     },
     "19.8": {
@@ -1964,7 +2014,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "Yes, when required/requested.",
-            "Iceland": "Yes, all isolates sequenced."
+            "Iceland": "Yes, all isolates sequenced.",
+            "Bulgaria": "No, not sequenced."
         }
     },
     "19.9": {
@@ -2009,7 +2060,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, for specific time periods and/or number of isolates.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "Yes, when required/requested."
+            "Iceland": "Yes, when required/requested.",
+            "Bulgaria": "No, not sequenced."
         }
     },
     "19.10": {
@@ -2054,7 +2106,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, for specific time periods and/or number of isolates.",
             "Latvia": "Yes, for specific time periods and/or number of isolates.",
-            "Iceland": "Yes, when required/requested."
+            "Iceland": "Yes, when required/requested.",
+            "Bulgaria": "No, not sequenced."
         }
     },
     "19.11": {
@@ -2099,7 +2152,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, when required/requested.",
             "Latvia": "No, not sequenced.",
-            "Iceland": "No, not sequenced."
+            "Iceland": "No, not sequenced.",
+            "Bulgaria": "Yes, when required/requested."
         }
     },
     "19.12": {
@@ -2144,7 +2198,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "Yes, when required/requested.",
-            "Iceland": "No, not sequenced."
+            "Iceland": "No, not sequenced.",
+            "Bulgaria": "No, not sequenced."
         }
     },
     "19.13": {
@@ -2188,7 +2243,8 @@
             "Slovak Republic": "Yes, when required/requested.",
             "Denmark": "Yes, all isolates sequenced.",
             "Latvia": "No, not sequenced.",
-            "Iceland": "No, not sequenced."
+            "Iceland": "No, not sequenced.",
+            "Bulgaria": "Yes, for specific time periods and/or number of isolates."
         }
     },
     "20": {
@@ -2232,7 +2288,8 @@
             "Slovak Republic": "No.",
             "Denmark": "No.",
             "Latvia": "Yes.",
-            "Iceland": "No."
+            "Iceland": "No.",
+            "Bulgaria": "No."
         }
     },
     "21": {
@@ -2336,6 +2393,9 @@
                 "No, some clinical microbiological laboratories perform WGS but data is not submitted."
             ],
             "Iceland": [
+                "No WGS data submitted from the clinical microbiological laboratories."
+            ],
+            "Bulgaria": [
                 "No WGS data submitted from the clinical microbiological laboratories."
             ]
         }
@@ -2455,6 +2515,9 @@
                 "Submission of data from clinical microbiology laboratories is voluntary."
             ],
             "Iceland": [
+                ""
+            ],
+            "Bulgaria": [
                 ""
             ]
         }
@@ -2609,6 +2672,12 @@
             "Iceland": [
                 "Outbreak/transmission investigations.",
                 "Surveillance."
+            ],
+            "Bulgaria": [
+                "Identification of the pathogen(s) causing infection/carriage for diagnostic purposes.",
+                "Outbreak/transmission investigations.",
+                "Surveillance.",
+                "Research performed at national reference/expert laboratory."
             ]
         }
     },
@@ -2655,7 +2724,8 @@
             "Slovak Republic": "No, WGS not used in real-time.",
             "Denmark": "Yes.",
             "Latvia": "No, WGS not used in real-time.",
-            "Iceland": "No but under implementation."
+            "Iceland": "No but under implementation.",
+            "Bulgaria": "No but under implementation."
         }
     },
     "25": {
@@ -2701,7 +2771,8 @@
             "Slovak Republic": "Yes, it can be done but there is no official data sharing/analysis pipeline.",
             "Denmark": "Yes, we have a data sharing/analysis pipeline set-up for this analysis.",
             "Latvia": "Yes, it can be done but there is no official data sharing/analysis pipeline.",
-            "Iceland": "Yes, it can be done but there is no official data sharing/analysis pipeline."
+            "Iceland": "Yes, it can be done but there is no official data sharing/analysis pipeline.",
+            "Bulgaria": "Yes, it can be done but there is no official data sharing/analysis pipeline."
         }
     },
     "26": {
@@ -2848,6 +2919,11 @@
             "Iceland": [
                 "Core genome multi-locus sequence typing (cgMLST).",
                 "Single nucleotide polymorphism (SNP) analysis."
+            ],
+            "Bulgaria": [
+                "Core genome multi-locus sequence typing (cgMLST).",
+                "Single nucleotide polymorphism (SNP) analysis.",
+                "Multilocus variable-number tandem repeat analysis (MLVA)."
             ]
         }
     },
@@ -3042,6 +3118,13 @@
             ],
             "Iceland": [
                 "Other."
+            ],
+            "Bulgaria": [
+                "Number of reads.",
+                "Average read length.",
+                "Depth of Coverage.",
+                "Number of contigs.",
+                "N50."
             ]
         }
     },
@@ -3166,6 +3249,10 @@
             ],
             "Iceland": [
                 "Other."
+            ],
+            "Bulgaria": [
+                "Inhouse pipeline",
+                "open access tools only."
             ]
         }
     },
@@ -3267,6 +3354,9 @@
             ],
             "Iceland": [
                 "WGS not used."
+            ],
+            "Bulgaria": [
+                "Specific research projects."
             ]
         }
     },
@@ -3311,7 +3401,8 @@
             "Slovak Republic": "Yes, annually.",
             "Denmark": "Yes, annually.",
             "Latvia": "Yes, annually.",
-            "Iceland": "Yes, annually."
+            "Iceland": "Yes, annually.",
+            "Bulgaria": "Yes, annually."
         }
     },
     "31": {
@@ -3354,7 +3445,8 @@
             "Slovak Republic": "No.",
             "Denmark": "Yes.",
             "Latvia": "No.",
-            "Iceland": "No."
+            "Iceland": "No.",
+            "Bulgaria": "No."
         }
     },
     "32": {
@@ -3397,7 +3489,8 @@
             "Slovak Republic": "External storage.",
             "Denmark": "External storage.",
             "Latvia": "Inhouse storage.",
-            "Iceland": "Other."
+            "Iceland": "Other.",
+            "Bulgaria": "Inhouse storage."
         }
     },
     "33": {
@@ -3440,7 +3533,8 @@
             "Slovak Republic": "Yes, all data.",
             "Denmark": "Yes, some data.",
             "Latvia": "Yes, all data.",
-            "Iceland": "No."
+            "Iceland": "No.",
+            "Bulgaria": "Yes, some data."
         }
     },
     "34": {
@@ -3613,6 +3707,11 @@
                 "Funding, training for available personnel.",
                 "Lack of political decision/willingness.",
                 "Other"
+            ],
+            "Bulgaria": [
+                "Funding, infrastructure.",
+                "Funding, human resources.",
+                "Lack of political decision/willingness."
             ]
         }
     },
@@ -3651,7 +3750,8 @@
             "Slovak Republic": "",
             "Denmark": "",
             "Latvia": "",
-            "Iceland": "Answer to #34: Funding for cost of consumables for WGS. \r\n\r\nGeneral comment: Please note that WGS of bacteria/AMR is not in routine use yet in the NRL. Selected strains are sent for WGS to laboratories in abroad (mainly carbapenemase-producing organisms).\r\nWGS is currently being implemented in the NRL but validation of the WGS assays / methodology is not complete. WGS has been used \"experimentally\" in the NRL in the case of domestic FWD outbreak investigations. \r\n\r\n"
+            "Iceland": "Answer to #34: Funding for cost of consumables for WGS. \r\n\r\nGeneral comment: Please note that WGS of bacteria/AMR is not in routine use yet in the NRL. Selected strains are sent for WGS to laboratories in abroad (mainly carbapenemase-producing organisms).\r\nWGS is currently being implemented in the NRL but validation of the WGS assays / methodology is not complete. WGS has been used \"experimentally\" in the NRL in the case of domestic FWD outbreak investigations. \r\n\r\n",
+            "Bulgaria": ""
         }
     },
     "36.1": {
@@ -3696,7 +3796,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.2": {
@@ -3741,7 +3842,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.3": {
@@ -3786,7 +3888,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.4": {
@@ -3831,7 +3934,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, voluntary",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.5": {
@@ -3876,7 +3980,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, mandatory",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.6": {
@@ -3921,7 +4026,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, voluntary",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.7": {
@@ -3966,7 +4072,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, voluntary",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.8": {
@@ -4011,7 +4118,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.9": {
@@ -4056,7 +4164,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.10": {
@@ -4101,7 +4210,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "No"
         }
     },
     "36.11": {
@@ -4146,7 +4256,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.12": {
@@ -4191,7 +4302,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.13": {
@@ -4236,7 +4348,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "No"
         }
     },
     "36.14": {
@@ -4280,7 +4393,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "No"
         }
     },
     "36.15": {
@@ -4325,7 +4439,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "No"
         }
     },
     "36.16": {
@@ -4370,7 +4485,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "No"
         }
     },
     "36.17": {
@@ -4415,7 +4531,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.18": {
@@ -4460,7 +4577,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.19": {
@@ -4505,7 +4623,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.20": {
@@ -4550,7 +4669,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "No"
         }
     },
     "36.21": {
@@ -4595,7 +4715,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.22": {
@@ -4640,7 +4761,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.23": {
@@ -4685,7 +4807,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.24": {
@@ -4730,7 +4853,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.25": {
@@ -4775,7 +4899,8 @@
             "Slovak Republic": "Yes, mandatory",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.26": {
@@ -4820,7 +4945,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.27": {
@@ -4865,7 +4991,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.28": {
@@ -4910,7 +5037,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "Yes, voluntary",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.29": {
@@ -4955,7 +5083,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.30": {
@@ -5000,7 +5129,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, voluntary",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.31": {
@@ -5045,7 +5175,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, mandatory",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.32": {
@@ -5090,7 +5221,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.33": {
@@ -5135,7 +5267,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.34": {
@@ -5180,7 +5313,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.35": {
@@ -5225,7 +5359,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.36": {
@@ -5270,7 +5405,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.37": {
@@ -5315,7 +5451,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.38": {
@@ -5360,7 +5497,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.39": {
@@ -5405,7 +5543,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.40": {
@@ -5450,7 +5589,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.41": {
@@ -5495,7 +5635,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.42": {
@@ -5540,7 +5681,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.43": {
@@ -5585,7 +5727,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "No"
         }
     },
     "36.44": {
@@ -5630,7 +5773,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.45": {
@@ -5675,7 +5819,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "No"
         }
     },
     "36.46": {
@@ -5720,7 +5865,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.47": {
@@ -5765,7 +5911,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.48": {
@@ -5810,7 +5957,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.49": {
@@ -5855,7 +6003,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, voluntary",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, mandatory"
         }
     },
     "36.50": {
@@ -5900,7 +6049,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, mandatory",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.51": {
@@ -5945,7 +6095,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "Yes, mandatory",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.52": {
@@ -5990,7 +6141,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.53": {
@@ -6035,7 +6187,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "Yes, voluntary"
         }
     },
     "36.54": {
@@ -6080,7 +6233,8 @@
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, voluntary"
+            "Iceland": "Yes, voluntary",
+            "Bulgaria": "No"
         }
     },
     "37.1": {
@@ -6127,7 +6281,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "A subset of CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.2": {
@@ -6174,7 +6329,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.3": {
@@ -6221,7 +6377,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.4": {
@@ -6268,7 +6425,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.5": {
@@ -6315,7 +6473,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "A subset of CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.6": {
@@ -6362,7 +6521,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "NRL",
             "Latvia": "A subset of CMLs",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.7": {
@@ -6409,7 +6569,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "A subset of CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.8": {
@@ -6456,7 +6617,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "A subset of CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.9": {
@@ -6503,7 +6665,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "NRL",
             "Latvia": "A subset of CMLs",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.10": {
@@ -6550,7 +6713,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "A subset of CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.11": {
@@ -6597,7 +6761,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "A subset of CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.12": {
@@ -6644,7 +6809,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "All CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.13": {
@@ -6691,7 +6857,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "All CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "A subset of CMLs"
         }
     },
     "37.14": {
@@ -6738,7 +6905,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "All CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.15": {
@@ -6785,7 +6953,8 @@
             "Slovak Republic": "A subset of CMLs",
             "Denmark": "All CMLs",
             "Latvia": "All CMLs",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.16": {
@@ -6831,7 +7000,8 @@
             "Slovak Republic": "Do not know",
             "Denmark": "All CMLs",
             "Latvia": "A subset of CMLs",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.17": {
@@ -6878,7 +7048,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.18": {
@@ -6925,7 +7096,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "Not submitted",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.19": {
@@ -6972,7 +7144,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.20": {
@@ -7019,7 +7192,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.21": {
@@ -7066,7 +7240,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.22": {
@@ -7113,7 +7288,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.23": {
@@ -7160,7 +7336,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "NRL"
+            "Iceland": "NRL",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.24": {
@@ -7207,7 +7384,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.25": {
@@ -7254,7 +7432,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "37.26": {
@@ -7300,7 +7479,8 @@
             "Slovak Republic": "NRL",
             "Denmark": "NRL",
             "Latvia": "NRL",
-            "Iceland": "Not submitted"
+            "Iceland": "Not submitted",
+            "Bulgaria": "Not submitted"
         }
     },
     "38.1": {
@@ -7347,7 +7527,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "51-75%"
         }
     },
     "38.2": {
@@ -7394,7 +7575,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "51-75%"
         }
     },
     "38.3": {
@@ -7441,7 +7623,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "51-75%"
         }
     },
     "38.4": {
@@ -7488,7 +7671,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "51-75%"
         }
     },
     "38.5": {
@@ -7535,7 +7719,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "51-75%"
         }
     },
     "38.6": {
@@ -7582,7 +7767,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "51-75%"
         }
     },
     "38.7": {
@@ -7629,7 +7815,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "51-75%"
         }
     },
     "38.8": {
@@ -7676,7 +7863,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "76-100%",
-            "Iceland": "76-100%"
+            "Iceland": "76-100%",
+            "Bulgaria": "26-50%"
         }
     },
     "38.9": {
@@ -7723,7 +7911,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "26-50%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.10": {
@@ -7770,7 +7959,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "26-50%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.11": {
@@ -7817,7 +8007,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.12": {
@@ -7864,7 +8055,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.13": {
@@ -7911,7 +8103,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.14": {
@@ -7958,7 +8151,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.15": {
@@ -8005,7 +8199,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Not part of national surveillance"
         }
     },
     "38.16": {
@@ -8052,7 +8247,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Not part of national surveillance"
         }
     },
     "38.17": {
@@ -8099,7 +8295,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "1-25%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.18": {
@@ -8146,7 +8343,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "1-25%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.19": {
@@ -8193,7 +8391,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "1-25%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.20": {
@@ -8240,7 +8439,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.21": {
@@ -8287,7 +8487,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "26-50%"
         }
     },
     "38.22": {
@@ -8334,7 +8535,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "26-50%"
         }
     },
     "38.23": {
@@ -8381,7 +8583,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.24": {
@@ -8428,7 +8631,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "1-25%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.25": {
@@ -8475,7 +8679,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "1-25%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.26": {
@@ -8522,7 +8727,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "1-25%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.27": {
@@ -8569,7 +8775,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "Not part of national surveillance",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.28": {
@@ -8616,7 +8823,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.29": {
@@ -8663,7 +8871,8 @@
             "Slovak Republic": "51-75%",
             "Denmark": "76-100%",
             "Latvia": "Not part of national surveillance",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "51-75%"
         }
     },
     "38.30": {
@@ -8710,7 +8919,8 @@
             "Slovak Republic": "1-25%",
             "Denmark": "76-100%",
             "Latvia": "1-25%",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "1-25%"
         }
     },
     "38.31": {
@@ -8755,7 +8965,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.32": {
@@ -8800,7 +9011,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.33": {
@@ -8845,7 +9057,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.34": {
@@ -8890,7 +9103,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.35": {
@@ -8935,7 +9149,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.36": {
@@ -8980,7 +9195,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.37": {
@@ -9025,7 +9241,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.38": {
@@ -9070,7 +9287,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.39": {
@@ -9115,7 +9333,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "HIGH: all main geographical regions of the country are covered.",
-            "Iceland": "HIGH: all main geographical regions of the country are covered."
+            "Iceland": "HIGH: all main geographical regions of the country are covered.",
+            "Bulgaria": "MEDIUM: most geographical regions of the country are covered."
         }
     },
     "38.40": {
@@ -9160,7 +9379,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "MEDIUM: most geographical regions of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.41": {
@@ -9205,7 +9425,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "MEDIUM: most geographical regions of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.42": {
@@ -9250,7 +9471,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.43": {
@@ -9295,7 +9517,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.44": {
@@ -9340,7 +9563,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.45": {
@@ -9385,7 +9609,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.46": {
@@ -9430,7 +9655,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Do not know"
         }
     },
     "38.47": {
@@ -9475,7 +9701,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Do not know"
         }
     },
     "38.48": {
@@ -9520,7 +9747,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.49": {
@@ -9565,7 +9793,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.50": {
@@ -9610,7 +9839,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.51": {
@@ -9655,7 +9885,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "MEDIUM: most geographical regions of the country are covered."
         }
     },
     "38.52": {
@@ -9700,7 +9931,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "MEDIUM: most geographical regions of the country are covered."
         }
     },
     "38.53": {
@@ -9745,7 +9977,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.54": {
@@ -9790,7 +10023,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.55": {
@@ -9835,7 +10069,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.56": {
@@ -9880,7 +10115,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.57": {
@@ -9925,7 +10161,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.58": {
@@ -9970,7 +10207,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.59": {
@@ -10015,7 +10253,8 @@
             "Slovak Republic": "HIGH: all main geographical regions of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "Do not know",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "HIGH: all main geographical regions of the country are covered."
         }
     },
     "38.60": {
@@ -10060,7 +10299,8 @@
             "Slovak Republic": "LOW: a few geographical areas of the country are covered.",
             "Denmark": "HIGH: all main geographical regions of the country are covered.",
             "Latvia": "LOW: a few geographical areas of the country are covered.",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "LOW: a few geographical areas of the country are covered."
         }
     },
     "39.1": {
@@ -10105,7 +10345,8 @@
             "Slovak Republic": "Medium: Different methods are used but the culture results are still considered comparable",
             "Denmark": "High: Comparable methods are used",
             "Latvia": "Medium: Different methods are used but the culture results are still considered comparable",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Medium: Different methods are used but the culture results are still considered comparable"
         }
     },
     "39.2": {
@@ -10150,7 +10391,8 @@
             "Slovak Republic": "Medium: Different methods are used but the culture results are still considered comparable",
             "Denmark": "Medium: Different methods are used but the culture results are still considered comparable",
             "Latvia": "Medium: Different methods are used but the culture results are still considered comparable",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Medium: Different methods are used but the culture results are still considered comparable"
         }
     },
     "39.3": {
@@ -10195,7 +10437,8 @@
             "Slovak Republic": "Medium: Different methods are used but the culture results are still considered comparable",
             "Denmark": "Medium: Different methods are used but the culture results are still considered comparable",
             "Latvia": "Medium: Different methods are used but the culture results are still considered comparable",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Medium: Different methods are used but the culture results are still considered comparable"
         }
     },
     "39.4": {
@@ -10240,7 +10483,8 @@
             "Slovak Republic": "Medium: Different methods are used but the culture results are still considered comparable",
             "Denmark": "High: Comparable methods are used",
             "Latvia": "Medium: Different methods are used but the culture results are still considered comparable",
-            "Iceland": "Do not know"
+            "Iceland": "Do not know",
+            "Bulgaria": "Medium: Different methods are used but the culture results are still considered comparable"
         }
     },
     "39.5": {
@@ -10285,7 +10529,8 @@
             "Slovak Republic": "Medium: Different methods are used but the culture results are still considered comparable",
             "Denmark": "High: Comparable methods are used",
             "Latvia": "High: Comparable methods are used",
-            "Iceland": "High: Comparable methods are used"
+            "Iceland": "High: Comparable methods are used",
+            "Bulgaria": "Do not know"
         }
     },
     "39.6": {
@@ -10330,7 +10575,8 @@
             "Slovak Republic": "Medium: Different methods are used but the culture results are still considered comparable",
             "Denmark": "High: Comparable methods are used",
             "Latvia": "High: Comparable methods are used",
-            "Iceland": "High: Comparable methods are used"
+            "Iceland": "High: Comparable methods are used",
+            "Bulgaria": "Medium: Different methods are used but the culture results are still considered comparable"
         }
     },
     "40": {
@@ -10372,7 +10618,8 @@
             "Slovak Republic": "No",
             "Denmark": "Yes",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "41.1": {
@@ -10553,6 +10800,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -10733,6 +10983,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -10916,6 +11169,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -11124,6 +11380,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -11307,6 +11566,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -11502,6 +11764,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -11698,6 +11963,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -11898,6 +12166,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -12080,6 +12351,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -12244,6 +12518,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -12429,6 +12706,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -12593,6 +12873,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -12784,6 +13067,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -12939,6 +13225,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -13099,6 +13388,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -13269,6 +13561,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -13437,6 +13732,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -13608,6 +13906,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -13767,6 +14068,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -13938,6 +14242,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -14105,6 +14412,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -14278,6 +14588,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -14441,6 +14754,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -14594,6 +14910,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -14739,6 +15058,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -14910,6 +15232,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -15055,6 +15380,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -15208,6 +15536,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -15382,6 +15713,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -15527,6 +15861,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -15676,6 +16013,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -15840,6 +16180,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -16004,6 +16347,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -16156,6 +16502,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -16298,6 +16647,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -16472,6 +16824,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -16639,6 +16994,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -16783,6 +17141,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -16934,6 +17295,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -17101,6 +17465,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -17264,6 +17631,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -17421,6 +17791,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -17573,6 +17946,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -17780,6 +18156,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -17924,6 +18303,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -18086,6 +18468,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -18272,6 +18657,9 @@
                 "Sex",
                 "Sample date",
                 "Geographic location of patent"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -18436,6 +18824,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -18587,6 +18978,9 @@
             ],
             "Iceland": [
                 "None of the listed patient/case data available"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -18751,6 +19145,9 @@
                 "Travel connection",
                 "Community-associated",
                 "Healthcare-associated"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -18792,7 +19189,8 @@
             "Slovak Republic": "Yes",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "42.2": {
@@ -18833,7 +19231,8 @@
             "Slovak Republic": "No",
             "Denmark": "Yes",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "42.3": {
@@ -18887,7 +19286,8 @@
             "Slovak Republic": "No",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "42.5": {
@@ -18928,7 +19328,8 @@
             "Slovak Republic": "No",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "Yes"
         }
     },
     "42.6": {
@@ -18969,7 +19370,8 @@
             "Slovak Republic": "No",
             "Denmark": "Yes",
             "Latvia": "No",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "42.7": {
@@ -19010,7 +19412,8 @@
             "Slovak Republic": "No",
             "Denmark": "Yes",
             "Latvia": "No",
-            "Iceland": "No"
+            "Iceland": "No",
+            "Bulgaria": "No"
         }
     },
     "42.8": {
@@ -19112,6 +19515,9 @@
             ],
             "Iceland": [
                 "Data is submitted continuously or with close regular intervals (at least once a month)"
+            ],
+            "Bulgaria": [
+                "Other"
             ]
         }
     },
@@ -19147,7 +19553,7 @@
                 ""
             ],
             "Germany": [
-                ""
+                "Which of the following types of surveillance systems are in place nationally and used for AMR surveillance? (Tick all that apply) CML: Clinical Microbiological Laboratory NRL: National Reference or Expert Laboratory The focus of this question is on what type of systems are in place and used for AMR surveillance for at least one of the included pathogens. The focus should not be on the coverage of the submitted data in this question, (i.e. how many laboratories or hospitals contribute data to a particular system). : Laboratory isolate based: CMLs can submit data on pathogens under surveillance. Data is structured in one row per isolate. : In place"
             ],
             "Poland": [
                 "Data is submitted once a year"
@@ -19209,6 +19615,9 @@
             ],
             "Iceland": [
                 "Other"
+            ],
+            "Bulgaria": [
+                "Data is submitted once a year"
             ]
         }
     },
@@ -19307,6 +19716,9 @@
             ],
             "Iceland": [
                 "Other"
+            ],
+            "Bulgaria": [
+                "Data is submitted once a year"
             ]
         }
     },
@@ -19404,6 +19816,9 @@
             ],
             "Iceland": [
                 "Data is submitted continuously or with close regular intervals (at least once a month)"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -19499,6 +19914,9 @@
                 "Data is submitted once a year"
             ],
             "Iceland": [
+                ""
+            ],
+            "Bulgaria": [
                 ""
             ]
         }
@@ -19611,6 +20029,9 @@
             ],
             "Iceland": [
                 "Data is submitted automatically/semi-automatically via direct integrations"
+            ],
+            "Bulgaria": [
+                "Other"
             ]
         }
     },
@@ -19715,6 +20136,9 @@
             ],
             "Iceland": [
                 "Data is reported digitally in electronic files (e.g., spread sheets or text)"
+            ],
+            "Bulgaria": [
+                "Data is reported digitally in electronic files (e.g., spread sheets or text)"
             ]
         }
     },
@@ -19817,6 +20241,9 @@
             ],
             "Iceland": [
                 "Data is reported digitally in electronic files (e.g., spread sheets or text)"
+            ],
+            "Bulgaria": [
+                "Other"
             ]
         }
     },
@@ -19923,6 +20350,9 @@
             ],
             "Iceland": [
                 "Data is reported digitally in electronic files (e.g., spread sheets or text)"
+            ],
+            "Bulgaria": [
+                "Data is reported digitally in electronic files (e.g., spread sheets or text)"
             ]
         }
     },
@@ -20026,6 +20456,9 @@
             ],
             "Iceland": [
                 "Data is reported in paper format"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -20126,6 +20559,9 @@
             ],
             "Iceland": [
                 ""
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -20167,7 +20603,8 @@
             "Slovak Republic": "No",
             "Denmark": "Yes",
             "Latvia": "Yes",
-            "Iceland": "Yes"
+            "Iceland": "Yes",
+            "Bulgaria": "No"
         }
     },
     "42.20": {
@@ -20268,6 +20705,9 @@
             ],
             "Iceland": [
                 "Data is submitted continuously or with close regular intervals (at least once a month)"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -20371,6 +20811,9 @@
             ],
             "Iceland": [
                 "Data is submitted automatically/semi-automatically via direct integrations"
+            ],
+            "Bulgaria": [
+                ""
             ]
         }
     },
@@ -20477,6 +20920,9 @@
             ],
             "Iceland": [
                 "There is no need, one system collects all information at national level"
+            ],
+            "Bulgaria": [
+                "There is no need, one system collects all information at national level"
             ]
         }
     },
@@ -20515,7 +20961,8 @@
             "Slovak Republic": "",
             "Denmark": "",
             "Latvia": "",
-            "Iceland": ""
+            "Iceland": "",
+            "Bulgaria": ""
         }
     },
     "45": {
@@ -20633,6 +21080,10 @@
             ],
             "Iceland": [
                 "Data is published annually in a non-interactive online and/or printed report format."
+            ],
+            "Bulgaria": [
+                "Data is published annually in a non-interactive online and/or printed report format.",
+                "A national analysis of current trends and possible explanations for increases and decreases for AMR pathogens is published with regular intervals."
             ]
         }
     },
@@ -20671,7 +21122,8 @@
             "Slovak Republic": "",
             "Denmark": "",
             "Latvia": "",
-            "Iceland": ""
+            "Iceland": "",
+            "Bulgaria": ""
         }
     },
     "47": {
@@ -20823,6 +21275,12 @@
                 "Clinical microbiology laboratories lack resources and/or capacity to connect themselves to the national AMR surveillance system.",
                 "It is voluntary for clinical microbiological laboratories to submit data to the national AMR surveillance system(s).",
                 "Decentralized systems make it difficult to build efficient structures."
+            ],
+            "Bulgaria": [
+                "The indicators and/or frequency for when a clinical sample is taken for microbiological culture varies between healthcare facilities \u2013 makes it hard to know if measured resistance levels are representative.",
+                "Lack of harmonization of what is analyzed at the clinical microbiological laboratories \u2013 different priorities create heterogenous datasets e.g., different antibiotics are included in the routine AST.",
+                "Lack of resources to perform additional testing on all isolates with resistant phenotypes under surveillance \u2013 can be applicable for both clinical microbiology laboratories and/or national reference/expert laboratory.",
+                "Legal obstacle(s) are preventing development of the national AMR surveillance system(s)."
             ]
         }
     },
@@ -20861,7 +21319,8 @@
             "Slovak Republic": "",
             "Denmark": "",
             "Latvia": "",
-            "Iceland": ""
+            "Iceland": "",
+            "Bulgaria": ""
         }
     }
 }
