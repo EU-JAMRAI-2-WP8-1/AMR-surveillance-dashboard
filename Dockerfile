@@ -24,8 +24,8 @@ RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'shinyWidg
 RUN R -e "install.packages(c('readxl', 'rjson', 'jsonlite', 'hash'))"
 ## map
 ##RUN R -e "install.packages(c())"
-## plots
-RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly'))"
+## plots and tables
+RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly', 'DT'))"
 ## style
 RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
 ## 

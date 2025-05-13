@@ -138,14 +138,18 @@
     padding: 12px;
 }
 
-.dataTable > .row > td {
-    padding: 4px;
+.map-tab-container .dataTable > tbody > tr > td {
+    padding: 1px !important;
 }
 
-.dataTable > tfoot {
+.map-tab-container .dataTable > tfoot {
     display: none;
 }
 
+.tabbable > .tab-content {
+    padding: 12px;
+    overflow-x: scroll;
+}
 
 /* OVERWRITE PLOTLY DEFAULT */
 
@@ -187,6 +191,16 @@
     border: 0;
     min-width: 200px;
 }
+
+.reset-filters-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+}
+
+/*#resetFilters {
+
+}*/
 
 #countriesSelection {
     height: 280px;
@@ -244,6 +258,17 @@
     padding: 36px;
 }
 
+.results-table {
+    padding: 24px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+.results-table-wrapper {
+    padding: 24px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
 
 /* FOOTER */
 

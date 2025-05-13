@@ -25,6 +25,7 @@ library(gapminder)
 library(bslib)
 library(thematic)
 library(stringr)
+library(DT)
 
 
 # Specify the application port
@@ -83,10 +84,10 @@ geojsonEurope = rjson::fromJSON(file = file.path("/home/shiny-app/files/data/CNT
 # Import survey questions and replies from JSON
 surveyDataFile <- file.path("/home/shiny-app/files/data/replies_formatted.json")
 surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
-surveyDataHash <- hash(surveyData)
+##surveyDataHash <- hash(surveyData) ##unused
 
 # Import survey score table from CSV - set first colums as row names
-countryScoreTable <- read.csv("/home/shiny-app/files/data/country_reply_scores.csv", row.names = 1, header=TRUE)
+countryScoreTable <- read.csv("/home/shiny-app/files/data/country_reply_scores.csv", header=TRUE) #row.names = 1,
 
 # Europe country list
 euroCountryList <- c()
@@ -102,8 +103,11 @@ countryQuestionIndex <- 3
 participatingCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["possible_answers"]])), "\\.", " ")
 ##participatingCountries <- str_replace_all(participatingCountries, "\\.", " ") ##remove if working
 
+# Countries that have replied
+repliedCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["actual_answers"]])), "\\.", " ")
+
 # Not-participating countries (grey on the map)
-nonParticipatingCountries <- setdiff(euroCountryList, participatingCountries)
+nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / antibiotics / sample types
 pathogenList <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium", "E. faecalis", "S. pneumoniae", "H. influenzae", "C. difficile")
@@ -122,148 +126,6 @@ pathogensInfoText   <- "Unselect all filters to ignore if questions are pathogen
 antibioticsInfoText <- "Unselect all filters to ignore if questions are antibiotic-specific or not.\nTo keep only antibiotic-specific questions, select all.\nTo focus one one or several antibiotics, select the antibiotic(s) you need."
 sampleTypeInfoText  <- "Unselect all filters to ignore if questions are type-specific or not.\nTo keep only type-specific questions, select all.\nTo focus one one or several sample type, select the type(s) you need."
 
-# Set df for map results layer (color based on score, set score to zero by default)
-countryScoresDf <- data.frame(
-    country       = participatingCountries,
-    totalScore    = rep(0, length(participatingCountries)),
-    scoreSection1 = rep(0, length(participatingCountries)),
-    scoreSection2 = rep(0, length(participatingCountries)),
-    scoreSection3 = rep(0, length(participatingCountries))
-)
-
-# Initialise df for score gap between actual and possible score
-scoreGapDf <- data.frame(
-    country          = participatingCountries,
-    scoreGap         = rep(0, length(participatingCountries)),
-    scoreGapSection1 = rep(0, length(participatingCountries)),
-    scoreGapSection2 = rep(0, length(participatingCountries)),
-    scoreGapSection3 = rep(0, length(participatingCountries))
-)
-
-# Initialize sum of all questions coefficient => max scores
-maxScore = 0
-maxScoreSection1 = 0
-maxScoreSection2 = 0
-maxScoreSection3 = 0
-
-
-# SCORES CALCULATION
-
-for (surveyQuestion in ls(surveyDataHash)) {
-    ##surveyQuestion  --> KEY
-    ##surveyDataHash[[surveyQuestion]]  --> VALUE
-
-    coefficientThisQuestion <- surveyDataHash[[surveyQuestion]][["coefficient"]]
-    maxScore = maxScore + coefficientThisQuestion
-    
-    # get section tag + calculate max score section-secific
-    if ("Section1" %in% surveyDataHash[[surveyQuestion]][["tags"]]) {
-        sectionColumn <- "scoreSection1"
-        scoreGapSectionColumn <- "scoreGapSection1"
-        maxScoreSection1 = maxScoreSection1 + coefficientThisQuestion
-    } else if ("Section2" %in% surveyDataHash[[surveyQuestion]][["tags"]]) {
-        sectionColumn <- "scoreSection2"
-        scoreGapSectionColumn <- "scoreGapSection2"
-        maxScoreSection2 = maxScoreSection2 + coefficientThisQuestion
-    } else if ("Section3" %in% surveyDataHash[[surveyQuestion]][["tags"]]) {
-        sectionColumn <- "scoreSection3"
-        scoreGapSectionColumn <- "scoreGapSection3"
-        maxScoreSection3 = maxScoreSection3 + coefficientThisQuestion
-    } else {
-        # skip section 0 questions (or questions without section if any)
-        next
-    }
-    
-    # treat differently multiple choice questions
-    if (surveyDataHash[[surveyQuestion]][["type"]] == "MultipleChoice") {
-
-        # take actual answers, loop over country, then loop over their answers, then check the score of that answer, add it to the country's score
-        for (country in participatingCountries) {
-            for (answer in ls(surveyDataHash[[surveyQuestion]][["actual_answers"]])) {
-                if (answer == country) {
-                    # loop over all answers for this question
-                    scoreThisQuestion <- 0 # (re)set
-                    for (subAnswer in surveyDataHash[[surveyQuestion]][["actual_answers"]][[answer]]) {
-                        # for each answer, get score
-                        for (possibleAnswer in ls(surveyDataHash[[surveyQuestion]][["possible_answers"]])) {
-                            # get score for this reply (integrate coefficient)
-                            if (possibleAnswer == subAnswer) {
-                                scoreThisReply <- surveyDataHash[[surveyQuestion]][["possible_answers"]][[possibleAnswer]]
-                                if (scoreThisReply != "null") {
-                                    scoreThisQuestion <- scoreThisQuestion + (scoreThisReply * as.numeric(coefficientThisQuestion))
-                                    #old countryScoresDf$totalScore[countryScoresDf$country == country] <- countryScoresDf$totalScore[countryScoresDf$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
-                                } else {
-                                    # if null -> add max score for this question (= coefficient) as score gap
-                                    ## note: "null" in multiple choice -> "do not know" => should be the ONLY reply, thus whole coefficient for this question can in theory be added to the score gap
-                                    scoreGapDf$scoreGap[scoreGapDf$country == country] <- scoreGapDf$scoreGap[scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-                                    scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] <- scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-                                }
-                            }
-                        }
-                    }
-                    # add score for this question to total score (cap to 1) for this country + for this section
-                    if (scoreThisQuestion > 1) {
-                        scoreThisQuestion <- 1
-                    }
-                    # -> total
-                    countryScoresDf$totalScore[countryScoresDf$country == country] <- countryScoresDf$totalScore[countryScoresDf$country == country] + scoreThisQuestion
-                    # -> section
-                    countryScoresDf[[sectionColumn]][countryScoresDf$country == country] <- countryScoresDf[[sectionColumn]][countryScoresDf$country == country] + scoreThisQuestion
-                }
-            }
-        }
-
-        next
-    }
-
-    # not multiple-choice
-    for (country in participatingCountries) {
-
-        # reset
-        replyThisCountry <- "" ## useful??
-        scoreThisReply <- 0
-
-        # get the reply for this country ## can't get it without looping because can't use variable after '$'
-        for (answer in ls(surveyDataHash[[surveyQuestion]][["actual_answers"]])) {
-            if (answer == country) {
-                replyThisCountry <- surveyDataHash[[surveyQuestion]][["actual_answers"]][[answer]]
-            }
-        }
-
-        # loop over possible answers to get the score for this reply
-        for (possibleAnswer in ls(surveyDataHash[[surveyQuestion]][["possible_answers"]])) {
-            # get score for this reply (integrate coefficient)
-            if (possibleAnswer == replyThisCountry) {
-                scoreThisReply <- surveyDataHash[[surveyQuestion]][["possible_answers"]][[possibleAnswer]]
-            }
-        }
-
-        if (scoreThisReply != "null") {
-            # if not null -> add score to total score (total and section)
-            countryScoresDf$totalScore[countryScoresDf$country == country] <- countryScoresDf$totalScore[countryScoresDf$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
-            countryScoresDf[[sectionColumn]][countryScoresDf$country == country] <- countryScoresDf[[sectionColumn]][countryScoresDf$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
-        } else {
-            # if null -> add max score for this question (= coefficient) as score gap
-            scoreGapDf$scoreGap[scoreGapDf$country == country] <- scoreGapDf$scoreGap[scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-            scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] <- scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-        }
-        
-    }
-
-}
-
-
-# REACTIVATE TO DISPLAY THE 'MAX SCORES'country reply rate (bigger score = less 'do not know') -> countryMaxScore(=maxScore-countryScoreGap) / maxScore
-#for (country in countryScoresDf$country) {
-#    countryScoresDf$totalScore[countryScoresDf$country == country] <- (maxScore - scoreGapDf$scoreGap[scoreGapDf$country == country]) / maxScore
-#}
-
-
-## TEMP -> set countries with score = 0 as non-participating
-countryScoresDf <- countryScoresDf[countryScoresDf$totalScore != 0,]
-nonParticipatingCountries <- setdiff(euroCountryList, countryScoresDf$country)
-
-#print(countryScoresDf)##debug
 
 ## USER INTERFACE ##
 
@@ -360,6 +222,11 @@ ui <- shinyUI(fluidPage(
 
             hr(
                 class = "hr-filters-separator"
+            ),
+
+            tags$span(
+                class = "reset-filters-wrapper",
+                actionButton("resetFilters", "Reset filters")
             ),
 
             accordion(
@@ -523,7 +390,7 @@ ui <- shinyUI(fluidPage(
                             tags$div(
                                 class = "map-info-container",
                                 #HTML("INFO SCORES<br>The score displayed on the map reflects the status of AMR surveillance in the countries participating in the JAMRAI-II project.<br>"),
-                                dataTableOutput('scoresTable')
+                                DT::dataTableOutput("scoresTable")
 
                             )
                         )
@@ -571,7 +438,7 @@ ui <- shinyUI(fluidPage(
                             "Survey results"
                         )
                     ),
-                    tableOutput("surveyResults")
+                    dataTableOutput("resultsTable", , width="6000px")
                 ),
 
                 # dataset
@@ -600,6 +467,17 @@ ui <- shinyUI(fluidPage(
 ## SERVER ##
 
 server <- function(input, output, session) {
+
+    ## OBSERVE ##
+
+    # "Reset filters" button
+    observeEvent(input$resetFilters, {
+        updateCheckboxGroupInput(session, "sectionsSelection", choices = c("Section 1", "Section 2", "Section 3"))
+        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries)
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = c())
+        updateCheckboxGroupInput(session, "antibioticsSelection", choices = c())
+        updateCheckboxGroupInput(session, "sampleTypesSelection", choices = c())
+    })
 
     # "Select all" button for countries
     observe({
@@ -645,58 +523,22 @@ server <- function(input, output, session) {
         }
     })
 
-    # Converts the section names from the input to the names of the columns in the scores data frame
-    convertInputToHeader <- function(sectionFilterInput, whichDf) {
 
-        activeSectionNamesAsInScoresDf <- c()
-
-        if (whichDf == "raw") {
-            for (sectionName in sectionFilterInput) {
-                if (sectionName == "Section 1") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreSection1")
-                } else if (sectionName == "Section 2") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreSection2")
-                } else if (sectionName == "Section 3") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreSection3")
-                } else {
-                    print("error in function convertInputToHeader()")
-                }
-            }
-        } else if (whichDf == "gap") {
-            for (sectionName in sectionFilterInput) {
-                if (sectionName == "Section 1") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreGapSection1")
-                } else if (sectionName == "Section 2") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreGapSection2")
-                } else if (sectionName == "Section 3") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreGapSection3")
-                } else {
-                    print("error in function convertInputToHeader()")
-                }
-            }
-        }
-
-        return(activeSectionNamesAsInScoresDf)
-        
-    }
+    ## FUNCTIONS ##
 
     # Calculates country scores based on filters
     getCountryScores <- function() {
 
-        ## ANCHOR
-
-        # get active filters
-
-        input$sectionsSelection
-        input$pathogensSelection
-        input$antibioticsSelection
-        input$sampleTypesSelection
-
-        #input$countriesSelection
+        # initiate output vector
+        ##countryScores <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        countryScores <- rep(0, length(repliedCountries))
+        ##countryMaxScores <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        countryMaxScores <- rep(0, length(repliedCountries))
+        ##countryScoreRatios <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        countryScoreRatios <- rep(0, length(repliedCountries))
 
         # loop over questions
-        for (column in 1:ncol(countryScoreTable)) {
-            if (column == 1) next # skip country name
+        for (column in 2:ncol(countryScoreTable)) { # skip col 1 = country name
 
             ## check if question must be taken or not ##
 
@@ -705,11 +547,11 @@ server <- function(input, output, session) {
 
             # sections
             if (length(input$sectionsSelection) == 0) { # no section selected -> all zeros and stop
-                return(rep(0, length(intersect(countryScoresDf$country, input$countriesSelection))))
+                return(rep(0, length(intersect(repliedCountries, input$countriesSelection))))
             }
 
             # no match between selected sections and question tags -> skip the question
-            if (length(intersect(input$sectionsSelection, tagsThisQuestion)) == 0) {
+            if (length(intersect(input$sectionsSelection, tagsThisQuestion[[1]])) == 0) {
                 next
             }
 
@@ -718,102 +560,154 @@ server <- function(input, output, session) {
             # if at least one selected -> check for presence of the tags
             if (length(input$pathogensSelection) > 0) {
                 # no match between selected pathogens and question tags -> skip the question
-                if (length(intersect(input$pathogensSelection, tagsThisQuestion)) == 0) {
+                if (length(intersect(input$pathogensSelection, tagsThisQuestion[[1]])) == 0) {
                     next
                 }
             }
 
             # antibiotics
-            #TODO
-
+            # if no antibiotic selected -> ignore tags and go to next filter ;
+            # if at least one selected -> check for presence of the tags
+            if (length(input$antibioticsSelection) > 0) {
+                # no match between selected antibiotics and question tags -> skip the question
+                if (length(intersect(input$antibioticsSelection, tagsThisQuestion[[1]])) == 0) {
+                    next
+                }
+            }
 
             # sample types
-
-
-            # loop over countries
-            for (row in 1:nrow(countryScoreTable)) {
-
-                if (row == 1) next # skip question name
-
-                if (row == 2) { # tags row
-                    
-
-                    
+            # if no sample type selected -> ignore tags ;
+            # if at least one selected -> check for presence of the tags
+            if (length(input$sampleTypesSelection) > 0) {
+                # no match between selected sample types and question tags -> skip the question
+                if (length(intersect(input$sampleTypesSelection, tagsThisQuestion[[1]])) == 0) {
+                    next
                 }
-                    
+            }
 
-                #countryScoreTable[row, column]
-
+            # all filters passed -> question taken -> loop over countries
+            ##for (row in seq(3, nrow(countryScoreTable))) { # starts at row 3 ; by step of 2 (3, 5, 7, etc.) ##OLD
+            for (row in 1:((nrow(countryScoreTable)/2) - 1)) {
+                # if country is not selected -> skip the country
+                if (!(countryScoreTable[(row * 2) + 1, 1] %in% input$countriesSelection)) {
+                    next
+                }
+                # if country taken, add score and max score to respective vectors
+                countryScores[row] <- countryScores[row] + as.double(countryScoreTable[(row * 2) + 1, column])
+                countryMaxScores[row] <- countryMaxScores[row] + as.double(countryScoreTable[(row * 2) + 2, column]) # line just below
             }
         }
-
-
-
-        ## OLD HERE BELOW - to delete when done
-
-        countryScores <- c()
-
-        # for screenshot -> show countries reply rate (avoid "do not know" answer)
-        #maxScores <- c()
-
-        for (country in input$countriesSelection) {
-            if (country %in% countryScoresDf$country) {
-                # calculate score
-                rawScoreThisCountry <- sum(countryScoresDf[countryScoresDf$country == country, convertInputToHeader(input$sectionsSelection, "raw")])
-                
-                maxScoreThisCountry <- 0
-                if ("Section 1" %in% input$sectionsSelection) {
-                    maxScoreThisCountry <- maxScoreThisCountry + maxScoreSection1
-                }
-                if ("Section 2" %in% input$sectionsSelection) {
-                    maxScoreThisCountry <- maxScoreThisCountry + maxScoreSection2
-                }
-                if ("Section 3" %in% input$sectionsSelection) {
-                    maxScoreThisCountry <- maxScoreThisCountry + maxScoreSection3
-                }
-                maxScoreThisCountry <- maxScoreThisCountry - sum(scoreGapDf[scoreGapDf$country == country, convertInputToHeader(input$sectionsSelection, "gap")])
-
-                countryScores <- c(countryScores, round(rawScoreThisCountry/maxScoreThisCountry,  digits = 4))
-
-                # for screenshot -> show countries reply rate (avoid "do not know" answer)
-                #maxScores <- c(maxScores, maxScoreThisCountry/maxScore)
-
-            }
+    
+        # calculate score ratios
+        for (i in 1:length(countryScoreRatios)) {
+            if (is.na(countryScores[i])) next
+            countryScoreRatios[i] <- countryScores[i] / countryMaxScores[i]
         }
 
-        ## ACTIVATE TO SHOW PARTICIPATION
-        #replied <- c()
-        #for (countryScore in countryScores) {
-        #    if (countryScore > 0) {
-        #        replied <- c(replied, 1)
-        #    } else {
-        #        replied <- c(replied, 0)
-        #    }
-        #}
-        #return(replied)
+        # remove NaNs from vector
+        countryScoreRatios <- countryScoreRatios[!is.na(countryScoreRatios)]
 
-        # for screenshot -> show countries reply rate (avoid "do not know" answer)
-        #return(maxScores)
-        
-        return(countryScores)
+        # in case empty...
+        if (length(countryScoreRatios) == 0) {
+            countryScoreRatios <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        }
+
+        return(countryScoreRatios)
+
     }
+
+    createResultsTable <- function() {
+
+        ## ajouter conditions de creation du DF en fonction des filtres actifs
+        
+        questions <- c()
+        tags <- c()
+
+        mandatoryTags <- c()
+
+        # loop once over questions to retrieve question titles qnd tags
+        i <- 1
+        for (question in surveyData) {
+            if ("Section 0" %in% question$tags) next # skip section 0
+
+            if (length(intersect(input$sectionsSelection, question$tags)) == 0) next # skip sections that are not selected
+
+            if (length(input$pathogensSelection != 0)) {
+                mandatoryTags <- append(mandatoryTags, input$pathogensSelection)
+            }
+            if (length(input$antibioticsSelection != 0)) {
+                mandatoryTags <- append(mandatoryTags, input$antibioticsSelection)
+            }
+            if (length(input$sampleTypesSelection != 0)) {
+                mandatoryTags <- append(mandatoryTags, input$sampleTypesSelection)
+            }
+
+            if ((length(intersect(mandatoryTags, question$tags)) == 0) & (length(mandatoryTags) > 0)) next # skip questions without selected tags
+
+            questions <- append(questions, question$title)
+            tags <- append(tags, toString(question$tags))
+        }
+
+        # add columns to DF
+        resultsTable <- data.frame("Question" = questions, Tags = tags)
+
+        # loop over selected countries
+        for (country in input$countriesSelection) {
+
+            # (re)set country replies vector
+            countryReplies <- c()
+
+            # loop over questions
+            for (question in surveyData) {
+                if ("Section 0" %in% question$tags) next # skip section 0
+
+                if (length(intersect(input$sectionsSelection, question$tags)) == 0) next # skip sections that are not selected
+
+                if (length(input$pathogensSelection != 0)) {
+                    mandatoryTags <- append(mandatoryTags, input$pathogensSelection)
+                }
+                if (length(input$antibioticsSelection != 0)) {
+                    mandatoryTags <- append(mandatoryTags, input$antibioticsSelection)
+                }
+                if (length(input$sampleTypesSelection != 0)) {
+                    mandatoryTags <- append(mandatoryTags, input$sampleTypesSelection)
+                }
+
+                if ((length(intersect(mandatoryTags, question$tags)) == 0) & (length(mandatoryTags) > 0)) next # skip questions without selected tags
+
+                if (length(question$actual_answers[[country]]) == 0) {
+                    countryReplies <- append(countryReplies, NA)
+
+                } else {
+                    countryReplies <- append(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
+                }
+            }
+
+            # append column to DF
+
+            resultsTable[[country]] <- countryReplies
+        }
+
+        return(resultsTable)
+    }
+
+
+    ## REACTIVE ##
 
     countryScores <- reactive({
         getCountryScores()
     })
 
     getNonParticipatingCountries <- reactive({
-        c(setdiff(countryScoresDf$country, input$countriesSelection), nonParticipatingCountries)
+        c(setdiff(repliedCountries, input$countriesSelection), nonParticipatingCountries)
     })
 
-    # EXAMPLE - custom common properties for charts
-    chart_theme <- ggplot2::theme(
-        plot.title   = element_text(hjust = 0.5, size = 20, face = "bold"),
-        axis.title.x = element_text(size = 15),
-        axis.title.y = element_text(size = 15),
-        axis.text.x  = element_text(size = 12),
-        axis.text.y  = element_text(size = 12)
-    )
+    getParticipatingCountries <- reactive({
+        data.frame("Country"=intersect(repliedCountries, input$countriesSelection), "Score"=round(countryScores(), 2))
+    })
+
+
+    ## OUTPUTS ##
 
     output$plotlyMap <- renderPlotly({
         if (input$dark_mode == "dark") {
@@ -835,7 +729,7 @@ server <- function(input, output, session) {
             type='choropleth',
             #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
             geojson=geojsonEurope,
-            locations=intersect(countryScoresDf$country, input$countriesSelection),#countryScoresDf$country,#input$countriesSelection, ## to do -> formule qui ajoute/retire des pays de countryscoresdf en fonction de input$countriesSelection
+            locations=intersect(repliedCountries, input$countriesSelection),
             z=countryScores(),
             zmin=0,
             zmax=1, #max(countryScoresDf$totalScore) * 1.1,
@@ -921,11 +815,27 @@ server <- function(input, output, session) {
         )
     })
 
-    getParticipatingCountries <- reactive({
-        data.frame("Country"=intersect(countryScoresDf$country, input$countriesSelection), "Score"=countryScores())
-    })
+    output$scoresTable <- DT::renderDT(
+        getParticipatingCountries(),
+        rownames = FALSE,
+        options=list(
+            dom = 't',
+            pageLength = 100
+        )
+    )
 
-    output$scoresTable <- renderDataTable(getParticipatingCountries(), options=list(dom = 't'))
+    output$resultsTable <- DT::renderDT(
+        createResultsTable(),
+        rownames = FALSE,
+        options=list(
+            autowidth=TRUE,
+            scrollX=TRUE,
+            pageLength = 10,
+            columnDefs = list(
+                list(targets=c(0), width='600')
+            )
+        )
+    )
 
 }
 
