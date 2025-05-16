@@ -1,5 +1,4 @@
 ## NOTES
-# TODO -> cohenrence in snake/camel case
 # revoir le format des réponses -> stocker dans un format plus lisible par R, ou un json simplifié -> question > pays > score + un tableau a part avec les tags
 ## (suite) en gros on check les tags, ca renvoie quelles questions sont ON et lesquelles sont OFF, puis il n'y a plus qu'à récupérer et additionner les scores
 
@@ -26,23 +25,24 @@ library(gapminder)
 library(bslib)
 library(thematic)
 library(stringr)
+library(DT)
 
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
-#options(shiny.host = "148.110.159.160")
+#options(shiny.host = "148.110.159.160") ## dev
 options(shiny.port = 8180)
 
-# add resource directory to server
-shiny::addResourcePath('www', '/srv/shiny-server/www')
+# Add resource directory to server
+shiny::addResourcePath('www', '/srv/shiny-server/www') ## !! causes issues on Docker on Windows? --> remove and put absolute paths everywhere?
 
-# set app files directory
+# Set the app files directory
 appFilesDirectory = "/home/shiny-app/files"
 
-## for layout --> see help at https://shiny.posit.co/r/articles/build/layout-guide/
-## jamrai logo colors: #0fdbd5, #008aab, #26cad3
+## For layout --> see help at https://shiny.posit.co/r/articles/build/layout-guide/
+## JAMRAI logo colors: #0fdbd5, #008aab, #26cad3
 
-# create custom theme based on Bootstrap
+# Create custom theme based on Bootstrap
 custom_theme <- bs_theme(
     version = 5,
     #bg = "#ffffff",
@@ -53,7 +53,7 @@ custom_theme <- bs_theme(
     #"navbar-bg" = "rgba(0, 0, 0, 0)"
 )
 
-# graph layout theme with Thematic
+# Graph layout theme with Thematic
 thematic_shiny(
     bg = "auto",
     fg = "auto",
@@ -66,199 +66,71 @@ thematic_shiny(
 )
 
 
-## DATA LOAD ##
+## DATA LOAD AND PREPARAATION ##
 
-# import logos as variables
+# Import logos as variables
 jamraiLogoHeaderLong      <- file.path("www/logos/TRANSPARENT_LONG2.png")
 jamraiLogoHeaderRect      <- file.path("www/logos/TRANSPARENT_RECTANGULAR.png")
 jamraiLogoHeaderRectWhite <- file.path("www/logos/TRANSPARENT_LONG1_WHITE-480x107.png")
 euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
 
-# import Europe polygons
+# Import Europe polygons
 #geojsonEurope = FROM_GeoJson(file.path("/home/shiny-app/files/data/europe.geojson")) ## not working
 #geojsonEurope2 = geojson_read(file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
 geojsonEurope = rjson::fromJSON(file = file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
 
-## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries
+## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries (modified to include only european countries)
 
-
-# import survey questions and replies from JSON
-surveyDataFile <- file.path("/home/shiny-app/files/data/replies_formatted.json")
+# Import survey questions and replies from JSON
+surveyDataFile <- file.path("/home/shiny-app/files/data/OUT_questions_and_replies.json")
 surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
-surveyDataHash <- hash(surveyData)
+##surveyDataHash <- hash(surveyData) ##unused
 
+# Import survey score table from CSV - set first colums as row names
+countryScoreTable <- read.csv("/home/shiny-app/files/data/OUT_country_scores.csv", header=TRUE) #row.names = 1,
 
-# prepare data
-
-# europe country list
+# Europe country list
 euroCountryList <- c()
 for (country in geojsonEurope$features){
     euroCountryList <- c(euroCountryList, country$id)
 }
 #euroCountryDf <- data.frame(country=euroCountryList, presence=rep(1, length(euroCountryList)))
 
-# variables for data parsing -- might need to be updated for future versions of the survey
+# Country question index (might change in future versions of the survey)
 countryQuestionIndex <- 3
 
-# participating country list
-participatingCountries <- colnames(as.data.frame(surveyData[[countryQuestionIndex]][["possible_answers"]]))
-participatingCountries <- str_replace_all(participatingCountries, "\\.", " ")
+# Participating country list
+participatingCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["possible_answers"]])), "\\.", " ")
+##participatingCountries <- str_replace_all(participatingCountries, "\\.", " ") ##remove if working
 
-# not participating countries (grey on the map)
-nonParticipatingCountries <- setdiff(euroCountryList, participatingCountries)
+# Countries that have replied
+repliedCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["actual_answers"]])), "\\.", " ")
 
-# set df for map results layer (color based on score, set score to zero by default)
-countryScoresDf <- data.frame(
-    country       = participatingCountries,
-    totalScore    = rep(0, length(participatingCountries)),
-    scoreSection1 = rep(0, length(participatingCountries)),
-    scoreSection2 = rep(0, length(participatingCountries)),
-    scoreSection3 = rep(0, length(participatingCountries))
-)
+# Not-participating countries (grey on the map)
+nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
-# initialise df for score gap between actual and possible score
-scoreGapDf <- data.frame(
-    country          = participatingCountries,
-    scoreGap         = rep(0, length(participatingCountries)),
-    scoreGapSection1 = rep(0, length(participatingCountries)),
-    scoreGapSection2 = rep(0, length(participatingCountries)),
-    scoreGapSection3 = rep(0, length(participatingCountries))
-)
-
-# initialize sum of all questions coefficient => max score
-maxScore = 0
-maxScoreSection1 = 0
-maxScoreSection2 = 0
-maxScoreSection3 = 0
+# Filters : pathogens under surveillance / antibiotics / sample types
+pathogenList <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "VRE", "S. pneumoniae", "H. influenzae", "C. difficile") # VRE -> "E. faecium", "E. faecalis"
+antibioticList <- c("Carbapenem", "3GC", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
+sampleTypeList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool")
 
 # Filters : set sections
 sections <- c("Section 1", "Section 2", "Section 3")
-
-
-# SCORES CALCULATION
-
-for (surveyQuestion in ls(surveyDataHash)) {
-    ##surveyQuestion  --> KEY
-    ##surveyDataHash[[surveyQuestion]]  --> VALUE
-
-    coefficientThisQuestion <- surveyDataHash[[surveyQuestion]][["coefficient"]]
-    maxScore = maxScore + coefficientThisQuestion
-    
-    # get section tag + calculate max score section-secific
-    if ("Section1" %in% surveyDataHash[[surveyQuestion]][["tags"]]) {
-        sectionColumn <- "scoreSection1"
-        scoreGapSectionColumn <- "scoreGapSection1"
-        maxScoreSection1 = maxScoreSection1 + coefficientThisQuestion
-    } else if ("Section2" %in% surveyDataHash[[surveyQuestion]][["tags"]]) {
-        sectionColumn <- "scoreSection2"
-        scoreGapSectionColumn <- "scoreGapSection2"
-        maxScoreSection2 = maxScoreSection2 + coefficientThisQuestion
-    } else if ("Section3" %in% surveyDataHash[[surveyQuestion]][["tags"]]) {
-        sectionColumn <- "scoreSection3"
-        scoreGapSectionColumn <- "scoreGapSection3"
-        maxScoreSection3 = maxScoreSection3 + coefficientThisQuestion
-    } else {
-        # skip section 0 questions (or questions without section if any)
-        next
-    }
-    
-    # treat differently multiple choice questions
-    if (surveyDataHash[[surveyQuestion]][["type"]] == "MultipleChoice") {
-
-        # take actual answers, loop over country, then loop over their answers, then check the score of that answer, add it to the country's score
-        for (country in participatingCountries) {
-            for (answer in ls(surveyDataHash[[surveyQuestion]][["actual_answers"]])) {
-                if (answer == country) {
-                    # loop over all answers for this question
-                    scoreThisQuestion <- 0 # (re)set
-                    for (subAnswer in surveyDataHash[[surveyQuestion]][["actual_answers"]][[answer]]) {
-                        # for each answer, get score
-                        for (possibleAnswer in ls(surveyDataHash[[surveyQuestion]][["possible_answers"]])) {
-                            # get score for this reply (integrate coefficient)
-                            if (possibleAnswer == subAnswer) {
-                                scoreThisReply <- surveyDataHash[[surveyQuestion]][["possible_answers"]][[possibleAnswer]]
-                                if (scoreThisReply != "null") {
-                                    scoreThisQuestion <- scoreThisQuestion + (scoreThisReply * as.numeric(coefficientThisQuestion))
-                                    #old countryScoresDf$totalScore[countryScoresDf$country == country] <- countryScoresDf$totalScore[countryScoresDf$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
-                                } else {
-                                    # if null -> add max score for this question (= coefficient) as score gap
-                                    ## note: "null" in multiple choice -> "do not know" => should be the ONLY reply, thus whole coefficient for this question can in theory be added to the score gap
-                                    scoreGapDf$scoreGap[scoreGapDf$country == country] <- scoreGapDf$scoreGap[scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-                                    scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] <- scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-                                }
-                            }
-                        }
-                    }
-                    # add score for this question to total score (cap to 1) for this country + for this section
-                    if (scoreThisQuestion > 1) {
-                        scoreThisQuestion <- 1
-                    }
-                    # -> total
-                    countryScoresDf$totalScore[countryScoresDf$country == country] <- countryScoresDf$totalScore[countryScoresDf$country == country] + scoreThisQuestion
-                    # -> section
-                    countryScoresDf[[sectionColumn]][countryScoresDf$country == country] <- countryScoresDf[[sectionColumn]][countryScoresDf$country == country] + scoreThisQuestion
-                }
-            }
-        }
-
-        next
-    }
-
-    # not multiple-choice
-    for (country in participatingCountries) {
-
-        # reset
-        replyThisCountry <- "" ## useful??
-        scoreThisReply <- 0
-
-        # get the reply for this country ## can't get it without looping because can't use variable after '$'
-        for (answer in ls(surveyDataHash[[surveyQuestion]][["actual_answers"]])) {
-            if (answer == country) {
-                replyThisCountry <- surveyDataHash[[surveyQuestion]][["actual_answers"]][[answer]]
-            }
-        }
-
-        # loop over possible answers to get the score for this reply
-        for (possibleAnswer in ls(surveyDataHash[[surveyQuestion]][["possible_answers"]])) {
-            # get score for this reply (integrate coefficient)
-            if (possibleAnswer == replyThisCountry) {
-                scoreThisReply <- surveyDataHash[[surveyQuestion]][["possible_answers"]][[possibleAnswer]]
-            }
-        }
-
-        if (scoreThisReply != "null") {
-            # if not null -> add score to total score (total and section)
-            countryScoresDf$totalScore[countryScoresDf$country == country] <- countryScoresDf$totalScore[countryScoresDf$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
-            countryScoresDf[[sectionColumn]][countryScoresDf$country == country] <- countryScoresDf[[sectionColumn]][countryScoresDf$country == country] + (scoreThisReply * as.numeric(coefficientThisQuestion))
-        } else {
-            # if null -> add max score for this question (= coefficient) as score gap
-            scoreGapDf$scoreGap[scoreGapDf$country == country] <- scoreGapDf$scoreGap[scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-            scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] <- scoreGapDf[[scoreGapSectionColumn]][scoreGapDf$country == country] + as.numeric(coefficientThisQuestion)
-        }
-        
-    }
-
-}
-
-
-# REACTIVATE TO DISPLAY THE 'MAX SCORES'country reply rate (bigger score = less 'do not know') -> countryMaxScore(=maxScore-countryScoreGap) / maxScore
-#for (country in countryScoresDf$country) {
-#    countryScoresDf$totalScore[countryScoresDf$country == country] <- (maxScore - scoreGapDf$scoreGap[scoreGapDf$country == country]) / maxScore
-#}
-
-
-## TEMP -> set countries with score = 0 as non-participating
-countryScoresDf <- countryScoresDf[countryScoresDf$totalScore != 0,]
-nonParticipatingCountries <- setdiff(euroCountryList, countryScoresDf$country)
+sectionDefinitions <- data.frame(
+    "Section 1" = "Treatment and diagnostic guidelines, Antimicrobial Susceptibility Testing (AST) and genotypic confirmation.",
+    "Section 2" = "Whole genome sequencing (WGS) at national reference/expert laboratory",
+    "Section 3" = "Data flow of national AMR surveillance system(s)"
+)
+sectionInfoText     <- "Section 1: Treatment and diagnostic guidelines, Antimicrobial Susceptibility Testing (AST) and genotypic confirmation.\nSection 2: Whole genome sequencing (WGS) at national reference/expert laboratory\nSection 3: Data flow of national AMR surveillance system(s)"
+pathogensInfoText   <- "Unselect all pathogens to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus one one or several pathogens, select the pathogen(s) you need."
+antibioticsInfoText <- "Unselect all antibiotics to ignore if questions are antibiotic-specific or not.\nTo keep only antibiotic-specific questions, select all.\nTo focus one one or several antibiotics, select the antibiotic(s) you need."
+sampleTypeInfoText  <- "Unselect all sample types to ignore if questions are type-specific or not.\nTo keep only type-specific questions, select all.\nTo focus one one or several sample type, select the type(s) you need."
 
 
 ## USER INTERFACE ##
 
 # user interface
 ui <- shinyUI(fluidPage(
-
-    # dark mode hidden input (required)
-    input_dark_mode(id = "mode") %>% tagAppendAttributes(class="hidden"),
 
     # set theme
     theme = custom_theme,
@@ -269,11 +141,20 @@ ui <- shinyUI(fluidPage(
     # import JS
     includeScript("/srv/shiny-server/www/js/script.js"),
 
+    # add favicon
+    tags$head(tags$link(rel="shortcut icon", href=file.path("www/favicons/jamrai_favicon_32x32.png"))),
+
+    # dark mode hidden input (required)
+    input_dark_mode(
+        id = "mode",
+        class = "hidden"
+    ),
+
     # navigation bar
     page_navbar(
 
         nav_item(
-            class="navbar-header",
+            class = "navbar-header",
             "ENAMReS - European National AMR Surveillance"
         ),
 
@@ -297,7 +178,7 @@ ui <- shinyUI(fluidPage(
             tags$span(
                 bsicons::bs_icon("file-earmark-code"), "Source code"
             ),
-            href = "https://github.com/",
+            href = "https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard",
             target = "_blank"
             )
         ),
@@ -322,194 +203,152 @@ ui <- shinyUI(fluidPage(
     ),
 
     # spacer - prevents overlapping of header and navbar
-    div() %>% tagAppendAttributes(class="top-spacer"),
+    div(
+        class = "top-spacer"
+    ),
 
-    # side bar (filters)
+    # Layout type
     sidebarLayout(
 
         position = "left",
 
-        # sidebar content
+        # side bar (filters)
         sidebarPanel(
+            class = "sidebar-panel",
+            width = 2,
 
             # logo
-            img(src=jamraiLogoHeaderRect) %>% tagAppendAttributes(class="jamrai-logo-header"),
+            img(
+                src = jamraiLogoHeaderRect,
+                class = "jamrai-logo-header"
+            ),
 
-            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
+            hr(
+                class = "hr-filters-separator"
+            ),
 
-            # Country selection
-            tags$div(
-                tags$div(
-                    class = "filter-header-container",
-                    tags$div(
-                        class = "filter-header-left-part",
-                        tags$button(
-                            id = "select-all-countries",
-                            bsicons::bs_icon("check-all"),
-                            onclick = "selectAllCountries()",
-                            class = "btn btn-default btn-sm btn-primary select-all-button"
-                        ),
-                        tags$h4(
-                            class = "filter-header-text",
-                            "Countries"
-                        )
-                    ),
+            tags$span(
+                class = "reset-filters-wrapper",
+                actionButton("resetFilters", "Reset filters")
+            ),
+
+            accordion(
+
+                accordion_panel(
+                    "Sections",
                     tags$button(
-                        id = "hide-country-selection",
-                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
-                        onclick = "hideShow(\"hide-country-selection\", \"country-filter-container\")",
-                        class = "hide-show-button"
+                        class = "info-button",
+                        #title = sectionInfoText,
+                        "?"
+                    ),
+                    tags$span(
+                        class = "info-sections",
+                        sectionInfoText
+                    ),
+                    checkboxGroupInput(
+                        inputId  = "sectionsSelection",
+                        label    = "",
+                        choices  = sections,
+                        selected = sections,
+                        inline   = FALSE,
+                        width    = NULL
+                    )
+                ),
+                hr(
+                    class = "hr-filters-separator"
+                ),
+                accordion_panel(
+                    "Countries",
+                    actionLink("selectAllCountries", "Select All"),
+                    checkboxGroupInput(
+                        inputId  = "countriesSelection",
+                        label    = "",
+                        choices  = participatingCountries,
+                        selected = participatingCountries,
+                        inline   = FALSE,
+                        width    = NULL
+                    )
+                ),
+                hr(
+                    class = "hr-filters-separator"
+                ),
+                accordion_panel(
+                    "Pathogens",
+                    actionLink("selectAllPathogens", "Select All"),
+                    tags$button(
+                        class = "info-button",
+                        #title = pathogensInfoText,
+                        "?"
+                    ),
+                    tags$span(
+                        class = "info-sections",
+                        pathogensInfoText
+                    ),
+                    checkboxGroupInput(
+                        inputId  = "pathogensSelection",
+                        label    = "",
+                        choices  = pathogenList,
+                        selected = c(),
+                        inline   = FALSE,
+                        width    = NULL
+                    )
+                ),
+                hr(
+                    class = "hr-filters-separator"
+                ),
+                accordion_panel(
+                    "Antibiotics",
+                    actionLink("selectAllAntibiotics", "Select All"),
+                    tags$button(
+                        class = "info-button",
+                        #title = antibioticsInfoText,
+                        "?"
+                    ),
+                    tags$span(
+                        class = "info-sections",
+                        antibioticsInfoText
+                    ),
+                    class = "country-filter-container",
+                    checkboxGroupInput(
+                        inputId  = "antibioticsSelection",
+                        label    = "",
+                        choices  = antibioticList,
+                        selected = c(),
+                        inline   = FALSE,
+                        width    = NULL
+                    )
+                    
+                ),
+                hr(
+                    class = "hr-filters-separator"
+                ),
+                accordion_panel(
+                    "Sample type",
+                    actionLink("selectAllSampleTypes", "Select All"),
+                    tags$button(
+                        class = "info-button",
+                        #title = sampleTypeInfoText,
+                        "?"
+                    ),
+                    tags$span(
+                        class = "info-sections",
+                        sampleTypeInfoText
+                    ),
+                    checkboxGroupInput(
+                        inputId  = "sampleTypesSelection",
+                        label    = "",
+                        choices  = sampleTypeList,
+                        selected = c(),
+                        inline   = FALSE,
+                        width    = NULL
                     )
                 )
-            ),
-            tags$div(
-                id="country-filter-container",
-                style = "display:none;",
-                checkboxGroupInput(
-                    inputId  = "countriesSelection",
-                    label    = "",
-                    choices  = participatingCountries,
-                    selected = participatingCountries,
-                    inline   = FALSE,
-                    width    = NULL
-                )
-            ) %>% tagAppendAttributes(class="filter-scroll-box"),
+            )
+        ),
 
-            # Section selection
-            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
-
-            tags$div(
-                tags$div(
-                    class = "filter-header-container",
-                    tags$div(
-                        class = "filter-header-left-part",
-                        tags$button(
-                            id = "select-all-section",
-                            bsicons::bs_icon("check-all"),
-                            onclick = "selectAllSections()",
-                            class = "btn btn-default btn-sm btn-primary select-all-button"
-                        ),
-                        tags$h4(
-                            class = "filter-header-text",
-                            "Sections"
-                        )
-                    ),
-                    tags$button(
-                        id = "hide-sections-selection",
-                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
-                        onclick = "hideShow(\"hide-sections-selection\", \"section-filter-container\")",
-                        class = "hide-show-button"
-                    )
-                )
-            ),
-            tags$div(
-                id="section-filter-container",
-                style = "display:none;",
-                checkboxGroupInput(
-                    inputId  = "sectionsSelection",
-                    label    = "",
-                    choices  = sections,
-                    selected = sections,
-                    inline   = FALSE,
-                    width    = NULL
-                )
-            ) %>% tagAppendAttributes(class="filter-scroll-box"),
-
-            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
-
-            # Pathogen selection
-            tags$div(
-                tags$div(
-                    class = "filter-header-container",
-                    tags$div(
-                        class = "filter-header-left-part",
-                        tags$button(
-                            id = "select-all-pathogens",
-                            bsicons::bs_icon("check-all"),
-                            onclick = "selectAllPathogens()",
-                            class = "btn btn-default btn-sm btn-primary select-all-button"
-                        ),
-                        tags$h4(
-                            class = "filter-header-text",
-                            "Pathogens"
-                        )
-                    ),
-                    tags$button(
-                        id = "hide-pathogen-selection",
-                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
-                        onclick = "hideShow(\"hide-pathogen-selection\", \"pathogen-filter-container\")",
-                        class = "hide-show-button"
-                    )
-                )
-            ),
-            tags$div(
-                id="pathogen-filter-container",
-                style = "display:none;",
-                checkboxGroupInput(
-                    inputId  = "pathogensSelection",
-                    label    = "",
-                    choices  = c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumanii", "S. aureus", "E. faecium", "E. faecalis", "S. pneumoniae", "H. influenzae"),
-                    selected = c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumanii", "S. aureus", "E. faecium", "E. faecalis", "S. pneumoniae", "H. influenzae"),
-                    inline   = FALSE,
-                    width    = NULL
-                )
-            ) %>% tagAppendAttributes(class="filter-scroll-box"),
-
-            # Antibiotics selection
-            hr() %>% tagAppendAttributes(class="hr-filters-separator"),
-
-            tags$div(
-                tags$div(
-                    class = "filter-header-container",
-                    tags$div(
-                        class = "filter-header-left-part",
-                        tags$button(
-                            id = "select-all-antibiotics",
-                            bsicons::bs_icon("check-all"),
-                            onclick = "selectAllAntibiotics()",
-                            class = "btn btn-default btn-sm btn-primary select-all-button"
-                        ),
-                        tags$h4(
-                            class = "filter-header-text",
-                            "Antibiotics"
-                        )
-                    ),
-                    tags$button(
-                        id = "hide-antibiotics-selection",
-                        bsicons::bs_icon("chevron-right", icon_type = "solid"),
-                        onclick = "hideShow(\"hide-antibiotics-selection\", \"antibiotic-filter-container\")",
-                        class = "hide-show-button"
-                    )
-                )
-            ),
-            tags$div(
-                id="antibiotic-filter-container",
-                style = "display:none;",
-                checkboxGroupInput(
-                    inputId  = "antibioticsSelection",
-                    label    = "",
-                    choices  = c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin"),
-                    selected = c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin"),
-                    inline   = FALSE,
-                    width    = NULL
-                )
-            ) %>% tagAppendAttributes(class="filter-scroll-box")
-
-            
-            #sliderInput(
-            #    inputId = "yearSlider",
-            #    label   = "Year",
-            #    min     = 2020,
-            #    max     = 2024,
-            #    value   = c(2020, 2024),
-            #    step    = 1,
-            #    width   = "256px"
-            #)
-
-        ) %>% tagAppendAttributes(class="width-16"),
-
-        # main dashboard container
+        # main panel
         mainPanel(
+            width = 10,
 
             # tabs
             tabsetPanel(
@@ -518,47 +357,108 @@ ui <- shinyUI(fluidPage(
                 tabPanel(
                     tags$span(
                         bsicons::bs_icon("globe-europe-africa"),
-                        tags$span("Map") %>% tagAppendAttributes(class="tab-text")
+                        tags$span(
+                            class = "tab-text",
+                            "Map"
+                        )
                     ),
 
                     fluidRow(
-                        
-                        tags$div(
-                            plotlyOutput(outputId = "plotlyMap")
-                        ) %>% tagAppendAttributes(class="map-container"),
 
-                        tags$span(
-                            "Map source: ",
-                            tags$a(
-                                href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
-                                "Eurostat",
-                                target = "_blank"
+                        class = "map-tab-container",
+
+                        column(
+                            width = 9,
+                            tags$div(
+                                class = "map-and-source-container",
+                                tags$div(
+                                    class = "map-container",
+                                    plotlyOutput(outputId = "plotlyMap", width = "100%", height = "780")
+                                ),
+                                tags$div(
+                                    class = "map-source-text",
+                                    "Map source: ",
+                                    tags$a(
+                                        href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
+                                        "Eurostat",
+                                        target = "_blank"
+                                    )
+                                )
+                            ),
+                        ),
+
+                        column(
+                            width = 3,
+                            ## ici ajouter toutes les infos nécessaires
+                            tags$div(
+                                class = "map-info-container",
+                                HTML("<i>See the \"Info\" tab for information about scores</i>"),
+                                DT::dataTableOutput("scoresTable")
+
                             )
-                        ) %>% tagAppendAttributes(class="map-source-text")
+                        )
+                        
                     )
+                ),
+
+                # survey results
+                tabPanel(
+                    tags$span(
+                        bsicons::bs_icon("journal-check"),
+                        tags$span(
+                            class = "tab-text",
+                            "Survey results"
+                        )
+                    ),
+                    DT::dataTableOutput("resultsTable"),#, width="4800px"
+                    #DTOutput("resultsTable") # a tester
                 ),
 
                 # plots
                 tabPanel(
                     tags$span(
                         bsicons::bs_icon("bar-chart"),
-                        tags$span("Dashboard") %>% tagAppendAttributes(class="tab-text")
+                        tags$span(
+                            class = "tab-text",
+                            "Dashboard"
+                        )
                     ),
                     fluidRow(
                         #
                     )
                 ),
 
+                # info
                 tabPanel(
                     tags$span(
-                        bsicons::bs_icon("table"),
-                        tags$span("Dataset") %>% tagAppendAttributes(class="tab-text")
+                        bsicons::bs_icon("info-circle"),
+                        tags$span(
+                            class = "tab-text",
+                            "Info"
+                        )
                     ),
-                    tableOutput("myTable")
+                    fluidRow(
+                        tags$div(
+                            class = "about-container",
+                            includeHTML("/srv/shiny-server/www/html/about.html")
+                        )
+                    )
                 )
+
+                # dataset
+                #tabPanel(
+                #    tags$span(
+                #        bsicons::bs_icon("table"),
+                #        tags$span(
+                #            class = "tab-text",
+                #            "Dataset"
+                #        )
+                #    ),
+                #    tableOutput("myTable")
+                #)
             ),
-        ) %>% tagAppendAttributes(class="main-panel")
-    ) %>% tagAppendAttributes(class="main-box"),
+        )
+    ),
 
     # footer
     fluidRow(
@@ -572,97 +472,246 @@ ui <- shinyUI(fluidPage(
 
 server <- function(input, output, session) {
 
-    convertInputToHeader <- function(sectionFilterInput, whichDf) {
-        # convert the section names from the input to the names of the columns in the scores data frame
+    ## OBSERVE ##
 
-        activeSectionNamesAsInScoresDf <- c()
+    # "Reset filters" button
+    observeEvent(input$resetFilters, {
+        updateCheckboxGroupInput(session, "sectionsSelection", choices = c("Section 1", "Section 2", "Section 3"), selected = c("Section 1", "Section 2", "Section 3"))
+        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
+        updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList)
+        updateCheckboxGroupInput(session, "sampleTypesSelection", choices = sampleTypeList)
+    })
 
-        if (whichDf == "raw") {
-            for (sectionName in sectionFilterInput) {
-                if (sectionName == "Section 1") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreSection1")
-                } else if (sectionName == "Section 2") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreSection2")
-                } else if (sectionName == "Section 3") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreSection3")
-                } else {
-                    print("error in function convertInputToHeader()")
+    # "Select all" button for countries
+    observe({
+        if (input$selectAllCountries == 0) {
+            return(NULL)
+        } else if (input$selectAllCountries%%2 == 0) {
+            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries)
+        } else {
+            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
+        }
+    })
+
+    # "Select all" button for pathogens
+    observe({
+        if (input$selectAllPathogens == 0) {
+            return(NULL)
+        } else if (input$selectAllPathogens%%2 == 0) {
+            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
+        } else {
+            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
+        }
+    })
+
+    # "Select all" button for antibiotics
+    observe({
+        if (input$selectAllAntibiotics == 0) {
+            return(NULL)
+        } else if (input$selectAllAntibiotics%%2 == 0) {
+            updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList)
+        } else {
+            updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList, selected = antibioticList)
+        }
+    })
+
+    # "Select all" button for sample types
+    observe({
+        if (input$selectAllSampleTypes == 0) {
+            return(NULL)
+        } else if (input$selectAllSampleTypes%%2 == 0) {
+            updateCheckboxGroupInput(session, "sampleTypesSelection", choices = sampleTypeList)
+        } else {
+            updateCheckboxGroupInput(session, "sampleTypesSelection", choices = sampleTypeList, selected = sampleTypeList)
+        }
+    })
+
+
+    ## FUNCTIONS ##
+
+    # Calculates country scores based on filters
+    getCountryScores <- function() {
+
+        # initiate output vector
+        ##countryScores <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        countryScores <- rep(0, length(repliedCountries))
+        ##countryMaxScores <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        countryMaxScores <- rep(0, length(repliedCountries))
+        ##countryScoreRatios <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        countryScoreRatios <- rep(0, length(repliedCountries))
+
+        # loop over questions
+        for (column in 2:ncol(countryScoreTable)) { # skip col 1 = country name
+
+            ## check if question must be taken or not ##
+
+            # get tags as vector
+            tagsThisQuestion <- str_split(str_replace_all(countryScoreTable[2, column], c("\\[" = "", "\\]" = "", "'" = "")), ", ")
+
+            # sections
+            if (length(input$sectionsSelection) == 0) { # no section selected -> all zeros and stop
+                return(rep(0, length(intersect(repliedCountries, input$countriesSelection))))
+            }
+
+            # no match between selected sections and question tags -> skip the question
+            if (length(intersect(input$sectionsSelection, tagsThisQuestion[[1]])) == 0) {
+                next
+            }
+
+            # pathogens
+            # if no pathogens selected -> ignore pathogen tags and go to next filter ;
+            # if at least one selected -> check for presence of the tags
+            if (length(input$pathogensSelection) > 0) {
+                # no match between selected pathogens and question tags -> skip the question
+                if (length(intersect(input$pathogensSelection, tagsThisQuestion[[1]])) == 0) {
+                    next
                 }
             }
-        } else if (whichDf == "gap") {
-            for (sectionName in sectionFilterInput) {
-                if (sectionName == "Section 1") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreGapSection1")
-                } else if (sectionName == "Section 2") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreGapSection2")
-                } else if (sectionName == "Section 3") {
-                    activeSectionNamesAsInScoresDf <- c(activeSectionNamesAsInScoresDf, "scoreGapSection3")
-                } else {
-                    print("error in function convertInputToHeader()")
+
+            # antibiotics
+            # if no antibiotic selected -> ignore tags and go to next filter ;
+            # if at least one selected -> check for presence of the tags
+            if (length(input$antibioticsSelection) > 0) {
+                # no match between selected antibiotics and question tags -> skip the question
+                if (length(intersect(input$antibioticsSelection, tagsThisQuestion[[1]])) == 0) {
+                    next
                 }
+            }
+
+            # sample types
+            # if no sample type selected -> ignore tags ;
+            # if at least one selected -> check for presence of the tags
+            if (length(input$sampleTypesSelection) > 0) {
+                # no match between selected sample types and question tags -> skip the question
+                if (length(intersect(input$sampleTypesSelection, tagsThisQuestion[[1]])) == 0) {
+                    next
+                }
+            }
+
+            # all filters passed -> question taken -> loop over countries
+            ##for (row in seq(3, nrow(countryScoreTable))) { # starts at row 3 ; by step of 2 (3, 5, 7, etc.) ##OLD
+            for (row in 1:((nrow(countryScoreTable)/2) - 1)) {
+                # if country is not selected -> skip the country
+                if (!(countryScoreTable[(row * 2) + 1, 1] %in% input$countriesSelection)) {
+                    next
+                }
+                # if country taken, add score and max score to respective vectors
+                countryScores[row] <- countryScores[row] + as.double(countryScoreTable[(row * 2) + 1, column])
+                countryMaxScores[row] <- countryMaxScores[row] + as.double(countryScoreTable[(row * 2) + 2, column]) # line just below
             }
         }
+    
+        # calculate score ratios
+        for (i in 1:length(countryScoreRatios)) {
+            if (is.na(countryScores[i])) next
+            countryScoreRatios[i] <- countryScores[i] / countryMaxScores[i]
+        }
 
-        return(activeSectionNamesAsInScoresDf)
+        # remove NaNs from vector
+        countryScoreRatios <- countryScoreRatios[!is.na(countryScoreRatios)]
+
+        # in case empty...
+        if (length(countryScoreRatios) == 0) {
+            countryScoreRatios <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
+        }
+
+        return(list(countryScoreRatios, countryScores, countryMaxScores))
+
+    }
+
+    createResultsTable <- function() {
+
+        ## ajouter conditions de creation du DF en fonction des filtres actifs
         
-    }
+        questions <- c()
+        tags <- c()
 
-    getCoutryScores <- function() {
-        # calculate country scores based on filters
+        mandatoryTags <- c()
 
-        countryScores <- c()
+        # loop once over questions to retrieve question titles qnd tags
+        i <- 1
+        for (question in surveyData) {
+            if ("Section 0" %in% question$tags) next # skip section 0
 
-        for (country in input$countriesSelection) {
-            if (country %in% countryScoresDf$country) {
-                # calculate score
-                rawScore <- sum(countryScoresDf[countryScoresDf$country == country, convertInputToHeader(input$sectionsSelection, "raw")])
-                
-                maxScore <- 0
-                if ("Section 1" %in% input$sectionsSelection) {
-                    maxScore <- maxScore + maxScoreSection1
-                }
-                if ("Section 2" %in% input$sectionsSelection) {
-                    maxScore <- maxScore + maxScoreSection2
-                }
-                if ("Section 3" %in% input$sectionsSelection) {
-                    maxScore <- maxScore + maxScoreSection3
-                }
-                maxScore <- maxScore - sum(scoreGapDf[scoreGapDf$country == country, convertInputToHeader(input$sectionsSelection, "gap")])
+            if (length(intersect(input$sectionsSelection, question$tags)) == 0) next # skip sections that are not selected
 
-                countryScores <- c(countryScores, rawScore/maxScore)
+            if (length(input$pathogensSelection != 0)) {
+                mandatoryTags <- append(mandatoryTags, input$pathogensSelection)
             }
+            if (length(input$antibioticsSelection != 0)) {
+                mandatoryTags <- append(mandatoryTags, input$antibioticsSelection)
+            }
+            if (length(input$sampleTypesSelection != 0)) {
+                mandatoryTags <- append(mandatoryTags, input$sampleTypesSelection)
+            }
+
+            if ((length(intersect(mandatoryTags, question$tags)) == 0) & (length(mandatoryTags) > 0)) next # skip questions without selected tags
+
+            questions <- append(questions, question$title)
+            tags <- append(tags, toString(question$tags))
         }
 
-        ## ACTIVATE TO SHOW PARTICIPATION
-        #replied <- c()
-        #for (countryScore in countryScores) {
-        #    if (countryScore > 0) {
-        #        replied <- c(replied, 1)
-        #    } else {
-        #        replied <- c(replied, 0)
-        #    }
-        #}
-        #return(replied)
+        # add columns to DF
+        resultsTable <- data.frame("Question" = questions, Tags = tags)
 
-        return(countryScores)
+        # loop over selected countries
+        for (country in input$countriesSelection) {
+
+            # (re)set country replies vector
+            countryReplies <- c()
+
+            # loop over questions
+            for (question in surveyData) {
+                if ("Section 0" %in% question$tags) next # skip section 0
+
+                if (length(intersect(input$sectionsSelection, question$tags)) == 0) next # skip sections that are not selected
+
+                if (length(input$pathogensSelection != 0)) {
+                    mandatoryTags <- append(mandatoryTags, input$pathogensSelection)
+                }
+                if (length(input$antibioticsSelection != 0)) {
+                    mandatoryTags <- append(mandatoryTags, input$antibioticsSelection)
+                }
+                if (length(input$sampleTypesSelection != 0)) {
+                    mandatoryTags <- append(mandatoryTags, input$sampleTypesSelection)
+                }
+
+                if ((length(intersect(mandatoryTags, question$tags)) == 0) & (length(mandatoryTags) > 0)) next # skip questions without selected tags
+
+                if (length(question$actual_answers[[country]]) == 0) {
+                    countryReplies <- append(countryReplies, NA)
+
+                } else {
+                    countryReplies <- append(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
+                }
+            }
+
+            # append column to DF
+
+            resultsTable[[country]] <- countryReplies
+        }
+
+        return(resultsTable)
     }
 
-    coutryScores <- reactive({
-        getCoutryScores()
+
+    ## REACTIVE ##
+
+    countryScores <- reactive({
+        getCountryScores()
     })
 
     getNonParticipatingCountries <- reactive({
-        c(setdiff(countryScoresDf$country, input$countriesSelection), nonParticipatingCountries)
+        c(setdiff(repliedCountries, input$countriesSelection), nonParticipatingCountries)
     })
 
-    # EXAMPLE - custom common properties for charts
-    chart_theme <- ggplot2::theme(
-        plot.title   = element_text(hjust = 0.5, size = 20, face = "bold"),
-        axis.title.x = element_text(size = 15),
-        axis.title.y = element_text(size = 15),
-        axis.text.x  = element_text(size = 12),
-        axis.text.y  = element_text(size = 12)
-    )
+    getParticipatingCountries <- reactive({
+        data.frame("Country"=intersect(repliedCountries, input$countriesSelection), "Score"=round(countryScores()[[2]], 2), "Max"=round(countryScores()[[3]], 2), "Ratio"=round(countryScores()[[1]], 2))
+    })
+
+
+    ## OUTPUTS ##
 
     output$plotlyMap <- renderPlotly({
         if (input$dark_mode == "dark") {
@@ -676,16 +725,16 @@ server <- function(input, output, session) {
         }
         #countryReplies %>%
         map <- plot_ly(
-            #width=,
-            height=800
+            #height = 800,
+            #width = 800
         )
 
         map <- map %>% add_trace( # displays results
             type='choropleth',
             #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
             geojson=geojsonEurope,
-            locations=intersect(countryScoresDf$country, input$countriesSelection),#countryScoresDf$country,#input$countriesSelection, ## to do -> formule qui ajoute/retire des pays de countryscoresdf en fonction de input$countriesSelection
-            z=coutryScores(),
+            locations=intersect(repliedCountries, input$countriesSelection),
+            z=countryScores()[[1]],
             zmin=0,
             zmax=1, #max(countryScoresDf$totalScore) * 1.1,
             #showlegend=TRUE,
@@ -700,6 +749,7 @@ server <- function(input, output, session) {
                 thickness=20, #default 30
                 color=themeBgColor,
                 tickcolor=themeFgColor,
+                x=0.05,
                 y=0.8,
                 tickfont=list(
                     color=themeFgColor
@@ -754,15 +804,43 @@ server <- function(input, output, session) {
                     scale=1.7  # initial zoom
                 ),
                 center=list(
-                    lat=54, # 50 trop a en haut
-                    lon=14 # 10 top a droite
+                    lat=54,
+                    lon=14
                 )
             ),
-            paper_bgcolor = "rgba(0,0,0,0)",#themeBgColor, # bg color - outside map
-            margin=list(t=0, r=0,  l=0, b=0),
+            paper_bgcolor = "rgba(0, 0, 0, 0)",#themeBgColor, # bg color - outside map
+            margin=list(
+                t=32,
+                r=0,
+                l=0,
+                b=32
+            ),
             autosize=TRUE
         )
     })
+
+    output$scoresTable <- DT::renderDT(
+        getParticipatingCountries(),
+        rownames = FALSE,
+        options=list(
+            dom = 't',
+            pageLength = 100
+        )
+    )
+
+    output$resultsTable <- DT::renderDT(
+        createResultsTable(),
+        rownames = FALSE,
+        #colnames = c(c("Questions", "Tags"), input$countriesSelection),
+        options=list(
+            autowidth=TRUE,
+            scrollX=TRUE,
+            pageLength = 10
+            #columnDefs = list(
+            #    list(targets=c(0), width='400')
+            #)
+        )
+    )
 
 }
 

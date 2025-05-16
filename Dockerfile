@@ -24,8 +24,8 @@ RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'shinyWidg
 RUN R -e "install.packages(c('readxl', 'rjson', 'jsonlite', 'hash'))"
 ## map
 ##RUN R -e "install.packages(c())"
-## plots
-RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly'))"
+## plots and tables
+RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly', 'DT'))"
 ## style
 RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
 ## 
@@ -33,15 +33,17 @@ RUN R -e "install.packages(c('remotes', 'sf'))"
 ## removed
 ## RUN R -e "install.packages(c('remotes', 'sf', 'geos', 'gdal', 'geojsonR', 'geojsonio', 'leaflet'))"
 
-
 # Copy the Shiny app code
-#COPY app.R /home/shiny-app/app.R
+#COPY app.R /home/shiny-app/app.R                             ## mounted in docker compose
 COPY files/data/* /home/shiny-app/files/data/
 COPY files/logos/* /srv/shiny-server/www/logos/
-#COPY files/css/style.css /srv/shiny-server/www/css/style.css
+COPY files/html/* /srv/shiny-server/www/html/
+COPY files/favicons/* /srv/shiny-server/www/favicons/
+#COPY files/css/style.css /srv/shiny-server/www/css/style.css ## mounted in docker compose
+#COPY files/js/script.js /srv/shiny-server/www/js/script.js   ## mounted in docker compose
 
 # Expose the application port
 EXPOSE 8180
 
-# Run the R Shiny app
-#CMD Rscript /home/shiny-app/app.R
+# Run the R Shiny app ## -> command in docker-compose.yaml
+#CMD Rscript /home/shiny-app/app.R # run from docker compose
