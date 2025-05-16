@@ -1,4 +1,4 @@
-/**/
+/*
 
 hideShow = function(buttonId, elementId) {
     if (document.getElementById(elementId).style.display == "none") {
@@ -73,3 +73,4 @@ selectAllSections = function() {
         }
     }
 };
+*/

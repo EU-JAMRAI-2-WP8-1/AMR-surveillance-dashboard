@@ -38,6 +38,7 @@ RUN R -e "install.packages(c('remotes', 'sf'))"
 COPY files/data/* /home/shiny-app/files/data/
 COPY files/logos/* /srv/shiny-server/www/logos/
 COPY files/html/* /srv/shiny-server/www/html/
+COPY files/favicons/* /srv/shiny-server/www/favicons/
 #COPY files/css/style.css /srv/shiny-server/www/css/style.css ## mounted in docker compose
 #COPY files/js/script.js /srv/shiny-server/www/js/script.js   ## mounted in docker compose
 

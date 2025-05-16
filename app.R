@@ -82,12 +82,12 @@ geojsonEurope = rjson::fromJSON(file = file.path("/home/shiny-app/files/data/CNT
 ## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries (modified to include only european countries)
 
 # Import survey questions and replies from JSON
-surveyDataFile <- file.path("/home/shiny-app/files/data/replies_formatted.json")
+surveyDataFile <- file.path("/home/shiny-app/files/data/OUT_questions_and_replies.json")
 surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
 ##surveyDataHash <- hash(surveyData) ##unused
 
 # Import survey score table from CSV - set first colums as row names
-countryScoreTable <- read.csv("/home/shiny-app/files/data/country_reply_scores.csv", header=TRUE) #row.names = 1,
+countryScoreTable <- read.csv("/home/shiny-app/files/data/OUT_country_scores.csv", header=TRUE) #row.names = 1,
 
 # Europe country list
 euroCountryList <- c()
@@ -110,9 +110,9 @@ repliedCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQu
 nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / antibiotics / sample types
-pathogenList <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium", "E. faecalis", "S. pneumoniae", "H. influenzae", "C. difficile")
-antibioticList <- c("carbapenem", "3GC", "colistin", "methicillin", "vancomycin", "penicillin", "macrolide", "ampicillin")
-sampleTypeList <- c("blood", "urine", "respiratory tract", "soft tissue", "screening", "stool")
+pathogenList <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "VRE", "S. pneumoniae", "H. influenzae", "C. difficile") # VRE -> "E. faecium", "E. faecalis"
+antibioticList <- c("Carbapenem", "3GC", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
+sampleTypeList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool")
 
 # Filters : set sections
 sections <- c("Section 1", "Section 2", "Section 3")
@@ -122,9 +122,9 @@ sectionDefinitions <- data.frame(
     "Section 3" = "Data flow of national AMR surveillance system(s)"
 )
 sectionInfoText     <- "Section 1: Treatment and diagnostic guidelines, Antimicrobial Susceptibility Testing (AST) and genotypic confirmation.\nSection 2: Whole genome sequencing (WGS) at national reference/expert laboratory\nSection 3: Data flow of national AMR surveillance system(s)"
-pathogensInfoText   <- "Unselect all filters to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus one one or several pathogens, select the pathogen(s) you need."
-antibioticsInfoText <- "Unselect all filters to ignore if questions are antibiotic-specific or not.\nTo keep only antibiotic-specific questions, select all.\nTo focus one one or several antibiotics, select the antibiotic(s) you need."
-sampleTypeInfoText  <- "Unselect all filters to ignore if questions are type-specific or not.\nTo keep only type-specific questions, select all.\nTo focus one one or several sample type, select the type(s) you need."
+pathogensInfoText   <- "Unselect all pathogens to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus one one or several pathogens, select the pathogen(s) you need."
+antibioticsInfoText <- "Unselect all antibiotics to ignore if questions are antibiotic-specific or not.\nTo keep only antibiotic-specific questions, select all.\nTo focus one one or several antibiotics, select the antibiotic(s) you need."
+sampleTypeInfoText  <- "Unselect all sample types to ignore if questions are type-specific or not.\nTo keep only type-specific questions, select all.\nTo focus one one or several sample type, select the type(s) you need."
 
 
 ## USER INTERFACE ##
@@ -140,6 +140,9 @@ ui <- shinyUI(fluidPage(
 
     # import JS
     includeScript("/srv/shiny-server/www/js/script.js"),
+
+    # add favicon
+    tags$head(tags$link(rel="shortcut icon", href=file.path("www/favicons/jamrai_favicon_32x32.png"))),
 
     # dark mode hidden input (required)
     input_dark_mode(
@@ -389,12 +392,39 @@ ui <- shinyUI(fluidPage(
                             ## ici ajouter toutes les infos nécessaires
                             tags$div(
                                 class = "map-info-container",
-                                #HTML("INFO SCORES<br>The score displayed on the map reflects the status of AMR surveillance in the countries participating in the JAMRAI-II project.<br>"),
+                                HTML("<i>See the \"Info\" tab for information about scores</i>"),
                                 DT::dataTableOutput("scoresTable")
 
                             )
                         )
                         
+                    )
+                ),
+
+                # survey results
+                tabPanel(
+                    tags$span(
+                        bsicons::bs_icon("journal-check"),
+                        tags$span(
+                            class = "tab-text",
+                            "Survey results"
+                        )
+                    ),
+                    DT::dataTableOutput("resultsTable"),#, width="4800px"
+                    #DTOutput("resultsTable") # a tester
+                ),
+
+                # plots
+                tabPanel(
+                    tags$span(
+                        bsicons::bs_icon("bar-chart"),
+                        tags$span(
+                            class = "tab-text",
+                            "Dashboard"
+                        )
+                    ),
+                    fluidRow(
+                        #
                     )
                 ),
 
@@ -413,45 +443,19 @@ ui <- shinyUI(fluidPage(
                             includeHTML("/srv/shiny-server/www/html/about.html")
                         )
                     )
-                ),
-
-                # plots
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("bar-chart"),
-                        tags$span(
-                            class = "tab-text",
-                            "Dashboard"
-                        )
-                    ),
-                    fluidRow(
-                        #
-                    )
-                ),
-
-                # survey results
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("journal-check"),
-                        tags$span(
-                            class = "tab-text",
-                            "Survey results"
-                        )
-                    ),
-                    dataTableOutput("resultsTable", , width="6000px")
-                ),
+                )
 
                 # dataset
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("table"),
-                        tags$span(
-                            class = "tab-text",
-                            "Dataset"
-                        )
-                    ),
-                    tableOutput("myTable")
-                )
+                #tabPanel(
+                #    tags$span(
+                #        bsicons::bs_icon("table"),
+                #        tags$span(
+                #            class = "tab-text",
+                #            "Dataset"
+                #        )
+                #    ),
+                #    tableOutput("myTable")
+                #)
             ),
         )
     ),
@@ -472,11 +476,11 @@ server <- function(input, output, session) {
 
     # "Reset filters" button
     observeEvent(input$resetFilters, {
-        updateCheckboxGroupInput(session, "sectionsSelection", choices = c("Section 1", "Section 2", "Section 3"))
-        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries)
-        updateCheckboxGroupInput(session, "pathogensSelection", choices = c())
-        updateCheckboxGroupInput(session, "antibioticsSelection", choices = c())
-        updateCheckboxGroupInput(session, "sampleTypesSelection", choices = c())
+        updateCheckboxGroupInput(session, "sectionsSelection", choices = c("Section 1", "Section 2", "Section 3"), selected = c("Section 1", "Section 2", "Section 3"))
+        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
+        updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList)
+        updateCheckboxGroupInput(session, "sampleTypesSelection", choices = sampleTypeList)
     })
 
     # "Select all" button for countries
@@ -612,7 +616,7 @@ server <- function(input, output, session) {
             countryScoreRatios <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
         }
 
-        return(countryScoreRatios)
+        return(list(countryScoreRatios, countryScores, countryMaxScores))
 
     }
 
@@ -703,7 +707,7 @@ server <- function(input, output, session) {
     })
 
     getParticipatingCountries <- reactive({
-        data.frame("Country"=intersect(repliedCountries, input$countriesSelection), "Score"=round(countryScores(), 2))
+        data.frame("Country"=intersect(repliedCountries, input$countriesSelection), "Score"=round(countryScores()[[2]], 2), "Max"=round(countryScores()[[3]], 2), "Ratio"=round(countryScores()[[1]], 2))
     })
 
 
@@ -730,7 +734,7 @@ server <- function(input, output, session) {
             #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
             geojson=geojsonEurope,
             locations=intersect(repliedCountries, input$countriesSelection),
-            z=countryScores(),
+            z=countryScores()[[1]],
             zmin=0,
             zmax=1, #max(countryScoresDf$totalScore) * 1.1,
             #showlegend=TRUE,
@@ -827,13 +831,14 @@ server <- function(input, output, session) {
     output$resultsTable <- DT::renderDT(
         createResultsTable(),
         rownames = FALSE,
+        #colnames = c(c("Questions", "Tags"), input$countriesSelection),
         options=list(
             autowidth=TRUE,
             scrollX=TRUE,
-            pageLength = 10,
-            columnDefs = list(
-                list(targets=c(0), width='600')
-            )
+            pageLength = 10
+            #columnDefs = list(
+            #    list(targets=c(0), width='400')
+            #)
         )
     )
 

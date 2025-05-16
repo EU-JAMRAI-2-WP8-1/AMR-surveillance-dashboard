@@ -148,8 +148,22 @@
 
 .tabbable > .tab-content {
     padding: 12px;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
+
+#resultsTable {
+    font-size: 0.9rem !important;
+}
+
+
+#resultsTable tr > th {
+    min-width: 140px;
+}
+
+#resultsTable tr > th:first-child {
+    min-width: 540px;
+}
+
 
 /* OVERWRITE PLOTLY DEFAULT */
 
@@ -158,7 +172,7 @@
 
 .navbar-header {
     font-weight: bold;
-    color: "#008aab";
+    /*color: #008aab;*/
 }
 
 .top-spacer {
@@ -251,24 +265,13 @@
 }
 
 .map-info-container {
-    padding: 12px;
+    padding-right: 12px;
 }
 
 .about-container {
     padding: 36px;
 }
 
-.results-table {
-    padding: 24px;
-    overflow-x: scroll;
-    overflow-y: scroll;
-}
-
-.results-table-wrapper {
-    padding: 24px;
-    overflow-x: scroll;
-    overflow-y: scroll;
-}
 
 /* FOOTER */
 
