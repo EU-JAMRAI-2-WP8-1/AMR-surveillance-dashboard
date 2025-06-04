@@ -106,15 +106,15 @@ repliedCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQu
 # Not-participating countries (grey on the map)
 nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
-# Filters : pathogens under surveillance / antibiotics / culture materials
+# Filters : pathogens under surveillance / resistances / culture materials
 sectionList         <- c("National surveillance of AMR", "Surveillance with WGS", "National guidance linked to AMR") # order is reverted compared to the survey (3, 2, 1)
 pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "VRE", "S. pneumoniae", "H. influenzae", "C. difficile") # VRE -> "E. faecium", "E. faecalis"
-antibioticList      <- c("Carbapenem", "3GC", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
+resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
 cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool")
 
 # info text
 pathogensInfoText       <- "Unselect all pathogens to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus one one or several pathogens, select the pathogen(s) you need."
-antibioticsInfoText     <- "Unselect all antibiotics to ignore if questions are antibiotic-specific or not.\nTo keep only antibiotic-specific questions, select all.\nTo focus one one or several antibiotics, select the antibiotic(s) you need."
+resistancesInfoText     <- "Unselect all resistances to ignore if questions are resistance-specific or not.\nTo keep only resistance-specific questions, select all.\nTo focus one one or several resistances, select the resistance(s) you need."
 cultureMaterialInfoText <- "Unselect all culture materials to ignore if questions are material-specific or not.\nTo keep only material-specific questions, select all.\nTo focus one one or several culture material, select the one(s) you need."
 
 # get all questions (short titles) for question filter
@@ -128,8 +128,7 @@ for (question in surveyData) {
 }
 
 # initiate dicrete colors sequence for maps and plots
-colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#ff9f1c", "#1982c4") ## maybe too short, to check + change to better colors (jamrai-like)
-
+colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#000000") ## maybe too short, to check + change to better colors (jamrai-like)
 
 ## USER INTERFACE ##
 
@@ -159,7 +158,8 @@ ui <- shinyUI(fluidPage(
 
         nav_item(
             class = "navbar-header",
-            "ENAMReS - European National AMR Surveillance"
+            #"ENAMReS - European National AMR Surveillance"
+            HTML("<span style=\"color:#ff4444\">[TEST VERSION]</span><span> National surveillance of antimicrobial resistance (AMR) in humans in Europe 2025</span>")
         ),
 
         nav_spacer(),
@@ -301,22 +301,22 @@ ui <- shinyUI(fluidPage(
                     class = "hr-filters-separator"
                 ),
                 accordion_panel(
-                    "Antibiotics",
-                    actionLink("selectAllAntibiotics", "Select All"),
+                    "Resistances",
+                    actionLink("selectAllResistances", "Select All"),
                     tags$button(
                         class = "info-button",
-                        #title = antibioticsInfoText,
+                        #title = resistancesInfoText,
                         "?"
                     ),
                     tags$span(
                         class = "info-sections",
-                        antibioticsInfoText
+                        resistancesInfoText
                     ),
                     class = "country-filter-container",
                     checkboxGroupInput(
-                        inputId  = "antibioticsSelection",
+                        inputId  = "resistancesSelection",
                         label    = "",
-                        choices  = antibioticList,
+                        choices  = resistanceList,
                         selected = c(),
                         inline   = FALSE,
                         width    = NULL
@@ -357,13 +357,81 @@ ui <- shinyUI(fluidPage(
             # tabs
             tabsetPanel(
 
-                # map
+                # plots
                 tabPanel(
                     tags$span(
+                        #bsicons::bs_icon("bar-chart"),
                         bsicons::bs_icon("globe-europe-africa"),
                         tags$span(
                             class = "tab-text",
-                            "Map"
+                            "Map" #"Dashboard"
+                        )
+                    ),
+                    fluidRow(
+                        
+                        column(
+                            width = 5,
+                            selectInput(
+                                inputId   = "questionSelection",
+                                label     = "Select a question - use the filter panel to narrow the selection",
+                                choices   = c("Participating countries", allShortTitles),
+                                selected  = c("Participating countries"),
+                                multiple  = FALSE,
+                                selectize = FALSE,
+                                width     = "99%",
+                                size      = 1
+                            ),
+                            tags$div(
+                                class = "",
+                                #plotlyOutput(outputId = "dashboardPlot", width = "100%", height = "520")
+                                plotOutput("dashboardPlot")
+                            )
+                        ),
+                        column(
+                            width = 7,
+                            tags$div(
+                                class = "",
+                                plotlyOutput(outputId = "dashboardMap", width = "100%", height = "780px")
+                            ),
+                            tags$div(
+                                class = "map-source-text",
+                                "Map source: ",
+                                tags$a(
+                                    href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
+                                    "Eurostat",
+                                    target = "_blank"
+                                )
+                            )
+                        )#,
+                        
+                        #column(
+                        #    width = 1,
+                        #    tags$div(
+                        #        class = ""
+                        #    )
+                        #)
+                    )
+                ),
+
+                # survey results
+                tabPanel(
+                    tags$span(
+                        bsicons::bs_icon("journal-check"),
+                        tags$span(
+                            class = "tab-text",
+                            "Survey results"
+                        )
+                    ),
+                    DT::dataTableOutput("resultsTable")
+                ),
+
+                # map
+                tabPanel(
+                    tags$span(
+                        bsicons::bs_icon("speedometer2"),
+                        tags$span(
+                            class = "tab-text",
+                            "Joints results"
                         )
                     ),
 
@@ -377,7 +445,7 @@ ui <- shinyUI(fluidPage(
                                 class = "map-and-source-container",
                                 tags$div(
                                     class = "map-container",
-                                    plotlyOutput(outputId = "scoresMap", width = "100%", height = "780")
+                                    plotlyOutput(outputId = "scoresMap", width = "100%", height = "780px")
                                 ),
                                 tags$div(
                                     class = "map-source-text",
@@ -402,72 +470,6 @@ ui <- shinyUI(fluidPage(
                             )
                         )
                         
-                    )
-                ),
-
-                # survey results
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("journal-check"),
-                        tags$span(
-                            class = "tab-text",
-                            "Survey results"
-                        )
-                    ),
-                    DT::dataTableOutput("resultsTable"),#, width="4800px"
-                    #DTOutput("resultsTable") # a tester
-                ),
-
-                # plots
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("bar-chart"),
-                        tags$span(
-                            class = "tab-text",
-                            "Dashboard"
-                        )
-                    ),
-                    fluidRow(
-                        selectInput(
-                                inputId   = "questionSelection",
-                                label     = "Select a question - use the filter panel to narrow the selection",
-                                choices   = allShortTitles,
-                                selected  = c(),
-                                multiple  = FALSE,
-                                selectize = FALSE,
-                                width     = "99%",
-                                size      = 1
-                        ),
-                        column(
-                            width = 6,
-                            tags$div(
-                                class = "",
-                                plotlyOutput(outputId = "dashboardMap", width = "100%", height = "680px")
-                            ),
-                            tags$div(
-                                class = "map-source-text",
-                                "Map source: ",
-                                tags$a(
-                                    href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
-                                    "Eurostat",
-                                    target = "_blank"
-                                )
-                            )
-                        ),
-                        column(
-                            width = 5,
-                            tags$div(
-                                class = "",
-                                #plotlyOutput(outputId = "dashboardPlot", width = "100%", height = "520")
-                                plotOutput("dashboardPlot")
-                            )
-                        ),
-                        column(
-                            width = 1,
-                            tags$div(
-                                class = ""
-                            )
-                        )
                     )
                 ),
 
@@ -522,53 +524,62 @@ server <- function(input, output, session) {
         updateCheckboxGroupInput(session, "sectionsSelection", choices = sectionList, selected = sectionList)
         updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
         updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
-        updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList)
+        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList)
         updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList)
     })
 
     # "Select all" button for countries
-    observe({
-        if (input$selectAllCountries == 0) {
-            return(NULL)
-        } else if (input$selectAllCountries%%2 == 0) {
-            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries)
+    observeEvent(input$selectAllCountries, {
+        if ((length(participatingCountries) - length(input$countriesSelection)) < 2) {
+            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = c())
         } else {
             updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
         }
     })
 
     # "Select all" button for pathogens
-    observe({
-        if (input$selectAllPathogens == 0) {
-            return(NULL)
-        } else if (input$selectAllPathogens%%2 == 0) {
-            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
+    observeEvent(input$selectAllPathogens, {
+        if ((length(pathogenList) - length(input$pathogensSelection)) < 2) {
+            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = c())
         } else {
             updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
         }
     })
 
-    # "Select all" button for antibiotics
-    observe({
-        if (input$selectAllAntibiotics == 0) {
-            return(NULL)
-        } else if (input$selectAllAntibiotics%%2 == 0) {
-            updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList)
+    # "Select all" button for resistances
+    observeEvent(input$selectAllResistances, {
+        if ((length(resistanceList) - length(input$resistancesSelection)) < 2) {
+            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList)
         } else {
-            updateCheckboxGroupInput(session, "antibioticsSelection", choices = antibioticList, selected = antibioticList)
+            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
         }
     })
 
     # "Select all" button for culture materials
-    observe({
-        if (input$selectAllCultureMaterials == 0) {
-            return(NULL)
-        } else if (input$selectAllCultureMaterials%%2 == 0) {
+    observeEvent(input$selectAllCultureMaterials, {
+        if ((length(cultureMaterialList) - length(input$cultureMaterialsSelection)) < 2) {
             updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList)
         } else {
             updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
         }
     })
+
+    # update the question selection list
+    observeEvent(input$sectionsSelection, {
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+    }, ignoreNULL = FALSE)
+
+    observeEvent(input$pathogensSelection, {
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+    }, ignoreNULL = FALSE)
+
+    observeEvent(input$resistancesSelection, {
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+    }, ignoreNULL = FALSE)
+
+    observeEvent(input$cultureMaterialsSelection, {
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+    }, ignoreNULL = FALSE)
 
 
     ## FUNCTIONS ##
@@ -576,69 +587,48 @@ server <- function(input, output, session) {
     # Calculates country scores based on filters
     getCountryScores <- function() {
 
+        ### this function returns a list
+        #     - scores (ratios on 1) for each country (vector)
+        #     - max scores (vector)
+        #     - amount of questions active (numeric)
+
+        # check sections: if none selected -> all zeros and stop
+        if (length(input$sectionsSelection) == 0) { # 
+            return(
+                list(
+                    rep(0, length(intersect(repliedCountries, input$countriesSelection))),
+                    rep(0, length(intersect(repliedCountries, input$countriesSelection))),
+                    0 
+                )
+            )
+        }
+
         # initiate output vector
         countryScores <- rep(0, length(repliedCountries))
         countryMaxScores <- rep(0, length(repliedCountries))
-        ##countryScoreRatios <- rep(0, length(repliedCountries))
+
+        # initiate questions counter (counts based on coefficient, 1 Complex Table question = 1 question)
+        activeQuestionsAmount <- 0
 
         # loop over questions
         for (column in 2:ncol(countryScoreTable)) { # skip col 1 = country name
 
             ## check if question must be taken or not ##
 
-            # get tags as vector
-            tagsThisQuestion <- str_split(str_replace_all(countryScoreTable[2, column], c("\\[" = "", "\\]" = "", "'" = "")), ", ")
+            # if question not in selected question list, skip it
+            if (!(countryScoreTable[1, column] %in% activeQuestionTitles())) next
 
-            # sections
-            if (length(input$sectionsSelection) == 0) { # no section selected -> all zeros and stop
-                return(rep(0, length(intersect(repliedCountries, input$countriesSelection))))
-            }
+            activeQuestionsAmount <- activeQuestionsAmount + as.double(countryScoreTable[3, column])
 
-            # no match between selected sections and question tags -> skip the question
-            if (length(intersect(input$sectionsSelection, tagsThisQuestion[[1]])) == 0) {
-                next
-            }
-
-            # pathogens
-            # if no pathogens selected -> ignore pathogen tags and go to next filter ;
-            # if at least one selected -> check for presence of the tags
-            if (length(input$pathogensSelection) > 0) {
-                # no match between selected pathogens and question tags -> skip the question
-                if (length(intersect(input$pathogensSelection, tagsThisQuestion[[1]])) == 0) {
-                    next
-                }
-            }
-
-            # antibiotics
-            # if no antibiotic selected -> ignore tags and go to next filter ;
-            # if at least one selected -> check for presence of the tags
-            if (length(input$antibioticsSelection) > 0) {
-                # no match between selected antibiotics and question tags -> skip the question
-                if (length(intersect(input$antibioticsSelection, tagsThisQuestion[[1]])) == 0) {
-                    next
-                }
-            }
-
-            # culture materials
-            # if no culture material selected -> ignore tags ;
-            # if at least one selected -> check for presence of the tags
-            if (length(input$cultureMaterialsSelection) > 0) {
-                # no match between selected culture materials and question tags -> skip the question
-                if (length(intersect(input$cultureMaterialsSelection, tagsThisQuestion[[1]])) == 0) {
-                    next
-                }
-            }
-
-            # all filters passed -> question taken -> loop over countries
-            ##for (row in seq(3, nrow(countryScoreTable))) { # starts at row 3 ; by step of 2 (3, 5, 7, etc.) ##OLD
-            for (row in 1:((nrow(countryScoreTable)/2) - 1)) {
+            # loop over countries
+            for (row in 1:(((nrow(countryScoreTable) - 3) / 2))) { # -3 -> ignore question title, tags and coefficient rows ; /2 because 2 lines per country (score + max score)
                 # if country is not selected -> skip the country
-                if (!(countryScoreTable[(row * 2) + 1, 1] %in% input$countriesSelection)) {
+                if (!(countryScoreTable[(row * 2) + 2, 1] %in% input$countriesSelection)) {
                     next
                 }
                 # if country taken, add score and max score to respective vectors
-                countryScores[row] <- countryScores[row] + as.double(countryScoreTable[(row * 2) + 1, column])
-                countryMaxScores[row] <- countryMaxScores[row] + as.double(countryScoreTable[(row * 2) + 2, column]) # line just below
+                countryScores[row] <- countryScores[row] + as.double(countryScoreTable[(row * 2) + 2, column])
+                countryMaxScores[row] <- countryMaxScores[row] + as.double(countryScoreTable[(row * 2) + 3, column]) # line just below
             }
         }
 
@@ -653,7 +643,7 @@ server <- function(input, output, session) {
             if (countryMaxScores[i] != 0) {
                 countryScoreRatios <- c(countryScoreRatios, countryScores[i] / countryMaxScores[i])
                 countryScoresClean <- c(countryScoresClean, countryScores[i])
-                countryMaxScoresClean <- c(countryMaxScoresClean, countryMaxScores[i])
+                countryMaxScoresClean <- c(countryMaxScoresClean, countryMaxScores[i]/activeQuestionsAmount)
             }
         }
 
@@ -662,43 +652,33 @@ server <- function(input, output, session) {
             countryScoreRatios <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
         }
 
-        return(list(countryScoreRatios, countryScoresClean, countryMaxScoresClean))
+        return(list(countryScoreRatios, countryMaxScoresClean))
 
     }
 
     createResultsTable <- function() {
 
-        ## ajouter conditions de creation du DF en fonction des filtres actifs
+        # returns a datafrme for the Survey Results tab
         
+        # initiate vectors
         questions <- c()
         tags <- c()
 
-        mandatoryTags <- c()
+        # get active questions (titles)
+        activeQuestions <- activeQuestionTitles()
 
         # loop once over questions to retrieve question titles and tags
         for (question in surveyData) {
-            if ("Section 0" %in% question$tags) next # skip section 0
 
-            if (length(intersect(input$sectionsSelection, question$tags)) == 0) next # skip sections that are not selected
-
-            if (length(input$pathogensSelection != 0)) {
-                mandatoryTags <- append(mandatoryTags, input$pathogensSelection)
-            }
-            if (length(input$antibioticsSelection != 0)) {
-                mandatoryTags <- append(mandatoryTags, input$antibioticsSelection)
-            }
-            if (length(input$cultureMaterialsSelection != 0)) {
-                mandatoryTags <- append(mandatoryTags, input$cultureMaterialsSelection)
+            if (question$title %in% activeQuestions) {
+                questions <- c(questions, question$title)
+                tags <- c(tags, toString(question$tags))
             }
 
-            if ((length(intersect(mandatoryTags, question$tags)) == 0) & (length(mandatoryTags) > 0)) next # skip questions without selected tags
-
-            questions <- append(questions, question$title)
-            tags <- append(tags, toString(question$tags))
         }
 
         # add columns to DF
-        resultsTable <- data.frame("Question" = questions, Tags = tags)
+        resultsTable <- data.frame("Question" = questions, "Tags" = tags)
 
         # loop over selected countries
         for (country in input$countriesSelection) {
@@ -708,44 +688,39 @@ server <- function(input, output, session) {
 
             # loop over questions
             for (question in surveyData) {
-                if ("Section 0" %in% question$tags) next # skip section 0
 
-                if (length(intersect(input$sectionsSelection, question$tags)) == 0) next # skip sections that are not selected
+                if (question$title %in% activeQuestions) {
 
-                if (length(input$pathogensSelection != 0)) {
-                    mandatoryTags <- append(mandatoryTags, input$pathogensSelection)
-                }
-                if (length(input$antibioticsSelection != 0)) {
-                    mandatoryTags <- append(mandatoryTags, input$antibioticsSelection)
-                }
-                if (length(input$cultureMaterialsSelection != 0)) {
-                    mandatoryTags <- append(mandatoryTags, input$cultureMaterialsSelection)
-                }
+                    if (length(question$actual_answers[[country]]) == 0) {
+                        countryReplies <- c(countryReplies, NA)
 
-                if ((length(intersect(mandatoryTags, question$tags)) == 0) & (length(mandatoryTags) > 0)) next # skip questions without selected tags
-
-                if (length(question$actual_answers[[country]]) == 0) {
-                    countryReplies <- append(countryReplies, NA)
-
-                } else {
-                    countryReplies <- append(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
+                    } else {
+                        countryReplies <- c(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
+                    }
                 }
             }
-
-            # append column to DF
 
             resultsTable[[country]] <- countryReplies
         }
 
         return(resultsTable)
+
     }
 
     getSingleQuestionReplies <- function() {
         # 
 
-        # init
-        currentShortTitle <- ""
-        isAComplexTableQuestion <- FALSE # default
+        # if selected question is "Participqting countries", just return output
+        if (input$questionSelection == "Participating countries"){
+            return(
+                list(
+                    rep(1, length(intersect(repliedCountries, input$countriesSelection))),
+                    colorSequence[1],
+                    c("Yes"),
+                    c(length(intersect(repliedCountries, input$countriesSelection)), 0)
+                )
+            )
+        }
 
         # loop over questions to find it/them
         for (question in surveyData) {
@@ -753,35 +728,7 @@ server <- function(input, output, session) {
             if (
                 (question[["short_title"]] == input$questionSelection) # check question selection
                 & (question[["type"]] == "SingleChoice") # check type
-                #& (length(intersect(input$pathogensSelection, question[["tags"]]) != 0)) # check pathogens selection - this is only needed for Complex Table questions
-                #& (length(intersect(input$antibioticsSelection, question[["tags"]]) != 0)) # check antibiotics selection - this is only needed for Complex Table questions
-                #& (length(intersect(input$cultureMaterialsSelection, question[["tags"]]) != 0)) # check material selection - this is only needed for Complex Table questions
             ) {
-
-                # conditions for complex tables
-                if (question[["short_title"]] == currentShortTitle) {
-                    # means that it's a Complex Table question (twice the same short title in a row)
-                    # data must be gathered between all subquestions
-                    # possible answers remain, current short title remains
-
-                    isAComplexTableQuestion <- TRUE
-
-                    ### on doit ajouter les actual answers recupérées a l'iteration 1 de la CTQ avec celles de celle ci et des précédentes
-                    actualAnswers <- question[["actual_answers"]]
-
-                    ## CTQ -> cannot return one answer per country / either need to filtrate to keep only one or return a different kind of object (like the score)
-
-
-                    next
-
-                }
-                
-                # complex table subquestion series is finished -> end loop
-                if (isAComplexTableQuestion) break
-
-                # not Complex Table Questions
-
-                currentShortTitle <- question[["short_title"]]
 
                 # get possible answers
                 possibleAnswers <- question[["possible_answers"]]
@@ -789,14 +736,15 @@ server <- function(input, output, session) {
                 # get country answers
                 actualAnswers <- question[["actual_answers"]]
 
-                # change replies to numeric mathcing color scale
-                answersNumericReference <- (1:length(possibleAnswers))## + 0.5
+                # change replies to numeric matching color scale
+                answersNumericReference <- (1:length(possibleAnswers))
                 answersNumeric <- c()
 
-                for (answer in actualAnswers) {
+                for (answer in names(actualAnswers)) {
+                    ##anchor
                     i <- 1
-                    for (possibleAnswer in possibleAnswers) {
-                        if (possibleAnswers[[answer]] == possibleAnswer) {
+                    for (possibleAnswer in names(possibleAnswers)) {
+                        if (actualAnswers[[answer]] == possibleAnswer) {
                             answersNumeric <- c(answersNumeric, answersNumericReference[i])
                         }
                         i <- i + 1
@@ -821,20 +769,11 @@ server <- function(input, output, session) {
                 }
 
                 # for map: create a custom discrete color scale
-                #colorBarSequence <- c()
-                #for (i in (1:(length(possibleAnswers)+1))) {
-                #    colorBarSequence <- c(colorBarSequence, i)
-                #    colorBarSequence <- c(colorBarSequence, i)
-                #}
-                #customColorScale <- data.frame(z = colorBarSequence, col = rep(colorSequence[1:(length(possibleAnswers)+1)], each=2), stringsAsFactors=FALSE)
                 customColorScale <- colorSequence[1:length(possibleAnswerText)]
 
                 # sum each possible answer occurence for plot
                 ## TODO
-
-                ## ANCHOR - to be deleetd
                 
-
                 return(list(answersNumeric, customColorScale, possibleAnswerText, possibleAnswerOccurences))
 
             }
@@ -842,9 +781,7 @@ server <- function(input, output, session) {
             else if ((question[["short_title"]] == input$questionSelection) & (question[["type"]] == "MultipleChoice")) {
                 print("TODO")
                 ## pour le plot, juste additionner tout
-                ## pour la carte? une couleur par combinaison ca fait trop
-                ## on pourrait ajouter les petits cercles (markers) avec plusieurs couleurs, mais vraiment très très compliqué
-                ## je dirais qu'il fafudrait remplacer la map par un stacked bar plot quand une multiple choice est sélectionné
+                ## remplacer la map par un stacked bar plot (ou autre) quand une multiple choice est sélectionné
             }
 
             else if ((question[["short_title"]] == input$questionSelection) & (question[["type"]] == "FreeText")) {
@@ -855,6 +792,44 @@ server <- function(input, output, session) {
 
         return("todo")
         
+    }
+
+    getActiveQuestions <- function() {
+
+        # used to filter the question selection list
+
+        activeQuestionTitles <- c()
+        activeQuestionShortTitles <- c()
+
+        for (question in surveyData) {
+
+            # skip section 0
+            if ("Section 0" %in% question$tags) next
+
+            # skip sections that are not selected
+            if (length(intersect(input$sectionsSelection, question$tags)) == 0) next
+
+            # check if question tags and active filters do match
+            if (
+                (length(input$pathogensSelection) != 0) & (length(intersect(input$pathogensSelection, question$tags)) == 0)
+            ) next
+
+            if (
+                (length(input$resistancesSelection) != 0) & (length(intersect(input$resistancesSelection, question$tags)) == 0)
+            ) next
+
+            if (
+                (length(input$cultureMaterialsSelection) != 0) & (length(intersect(input$cultureMaterialsSelection, question$tags)) == 0)
+            ) next
+
+            # question has to be taken -> append short title to the vector
+            activeQuestionTitles <- c(activeQuestionTitles, question[["title"]])
+            activeQuestionShortTitles <- c(activeQuestionShortTitles, question[["short_title"]])
+            
+        }
+
+        return(list(activeQuestionTitles, activeQuestionShortTitles))
+
     }
 
 
@@ -868,16 +843,23 @@ server <- function(input, output, session) {
         getSingleQuestionReplies()
     })
 
+    activeQuestionShortTitles <- reactive({
+        getActiveQuestions()[[2]]
+    })
+
+    activeQuestionTitles <- reactive({
+        getActiveQuestions()[[1]]
+    })
+
     getNonParticipatingCountries <- reactive({
         c(setdiff(repliedCountries, input$countriesSelection), nonParticipatingCountries)
     })
 
     getParticipatingCountries <- reactive({
-        ## OLD data.frame("Country"=intersect(repliedCountries, input$countriesSelection), "Score"=round(countryScores()[[2]], 2), "Max"=round(countryScores()[[3]], 2), "Ratio"=round(countryScores()[[1]], 2))
         data.frame(
             "Country" = intersect(repliedCountries, input$countriesSelection),
-            "Score" = round(countryScores()[[1]],2),
-            "Answered" = round((countryScores()[[3]] / 0.31), 1) ## !! magic number (31) - then /100 because in percent
+            "Score" = round(countryScores()[[1]]* 100, 1),
+            "Answered" = round((countryScores()[[2]] / (length(activeQuestionTitles) / 100)), 1)
         )
     })
 
@@ -901,98 +883,98 @@ server <- function(input, output, session) {
         )
 
         scoresMap <- scoresMap %>% add_trace( # displays results
-            type='choropleth',
+            type = 'choropleth',
             #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
-            geojson=geojsonEurope,
-            locations=intersect(repliedCountries, input$countriesSelection),
-            z=countryScores()[[1]],
-            zmin=0,
-            zmax=1, #max(countryScoresDf$totalScore) * 1.1,
-            #showlegend=TRUE,
-            #autocolorscale=FALSE,
-            showscale=TRUE,
-            colors=c("#cc8888", "#dddd77", "#0fdbd5"),
-            reversescale=FALSE,
-            colorbar=list(
-                #outlinecolor=rgba(0,0,0,0),
-                outlinewidth=0,
-                thickness=20, #default 30
-                color=themeBgColor,
-                tickcolor=themeFgColor,
-                x=0.05,
-                y=0.8,
-                tickfont=list(
-                    color=themeFgColor
+            geojson = geojsonEurope,
+            locations = intersect(repliedCountries, input$countriesSelection),
+            z = countryScores()[[1]] * 100,
+            zmin = 0,
+            zmax = 100,
+            #showlegend = TRUE,
+            #autocolorscale = FALSE,
+            showscale = TRUE,
+            colors = c("#cc8888", "#d5b47f", "#dddd77", "#0fdbd5", "#008aab"),
+            reversescale = FALSE,
+            colorbar = list(
+                #outlinecolor = rgba(0,0,0,0),
+                outlinewidth = 0,
+                thickness = 20, #default 30
+                color = themeBgColor,
+                tickcolor = themeFgColor,
+                x = 0.05,
+                y = 0.8,
+                tickfont = list(
+                    color = themeFgColor
                 ),
-                title=list(
-                    text="Score",
-                    font=list(
-                        color=themeFgColor
+                title = list(
+                    text = "Score",
+                    font = list(
+                        color = themeFgColor
                     )
                 )
             ),
-            marker=list(
-                line=list(
-                    width=1.4,
-                    color=themeBgColor
+            marker = list(
+                line = list(
+                    width = 1.4,
+                    color = themeBgColor
                 )
             )
         )
 
         scoresMap <- scoresMap %>% add_trace( # non-participating countries
-            name="Not participating",
-            type='choropleth',
-            geojson=geojsonEurope,
-            #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson
-            locations=getNonParticipatingCountries(),
-            z=rep(0.7, length(getNonParticipatingCountries())),
-            zmin=0,
-            zmax=1,
-            showscale=FALSE,
-            colorscale="Greys",
-            #colors=c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
-            marker=list(
-                line=list(
-                    width=1.4,
-                    color=themeBgColor
+            name = "Not participating",
+            type = "choropleth",
+            geojson = geojsonEurope,
+            #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson
+            locations = getNonParticipatingCountries(),
+            z = rep(0.7, length(getNonParticipatingCountries())),
+            zmin = 0,
+            zmax = 1,
+            showscale = FALSE,
+            colorscale = "Greys",
+            #colors = c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
+            marker = list(
+                line = list(
+                    width = 1.4,
+                    color = themeBgColor
                 )
             )
         )
 
         scoresMap <- scoresMap %>% layout(
             geo = list(
-                scope="europe",
-                showcountries=FALSE, # hide default map
-                showframe=FALSE, # hide default map
-                showland=FALSE, # hide default map
-                #landcolor="#cccccc", # inside countries
-                #countrycolor=themeBgColor, # lines
+                scope = "europe",
+                showcountries = FALSE, # hide default map
+                showframe = FALSE, # hide default map
+                showland = FALSE, # hide default map
+                #landcolor = "#cccccc", # inside countries
+                #countrycolor = themeBgColor, # lines
                 bgcolor = "rgba(0,0,0,0)", # bg color - inside map
-                #coastlinecolor="#fff",
-                showcoastline=FALSE,
-                projection=list(
-                    scale=1.7  # initial zoom
+                #coastlinecolor = "#fff",
+                showcoastline = FALSE,
+                projection = list(
+                    scale = 1.7  # initial zoom
                 ),
-                center=list(
-                    lat=54,
-                    lon=14
+                center = list(
+                    lat = 54,
+                    lon = 14
                 )
             ),
-            paper_bgcolor = "rgba(0, 0, 0, 0)",#themeBgColor, # bg color - outside map
-            margin=list(
-                t=32,
-                r=0,
-                l=0,
-                b=32
+            paper_bgcolor = "rgba(0, 0, 0, 0)", # bg color - outside map (here transparent)
+            margin = list(
+                t = 32,
+                r = 0,
+                l = 0,
+                b = 32
             ),
-            autosize=TRUE
+            autosize = TRUE
         )
     })
 
     output$scoresTable <- DT::renderDT(
         getParticipatingCountries(),
         rownames = FALSE,
-        colnames = c("Score", "% Answered"),
+        colnames = c("Score (/100)", "% Answered"),
         options=list(
             dom = 't',
             pageLength = 100
@@ -1003,9 +985,9 @@ server <- function(input, output, session) {
         createResultsTable(),
         rownames = FALSE,
         #colnames = c(c("Questions", "Tags"), input$countriesSelection),
-        options=list(
-            autowidth=TRUE,
-            scrollX=TRUE,
+        options = list(
+            autowidth = TRUE,
+            scrollX = TRUE,
             pageLength = 10
             #columnDefs = list(
             #    list(targets=c(0), width='400')
@@ -1013,9 +995,17 @@ server <- function(input, output, session) {
         )
     )
 
+    # 
+    output$downloadData <- downloadHandler(
+        filename = "test.csv",
+        content = function(file) {
+            write.csv(mytable(), file, row.names = FALSE)
+        }
+    ) # voir https://stackoverflow.com/questions/62926097/download-a-table-created-in-shiny
+
     output$dashboardMap <- renderPlotly({
 
-        if (input$dark_mode == "dark") { ####...
+        if (input$dark_mode == "dark") {
             themeBgColor = "#1D1F21"
             themeFgColor = "#ffffff"
         } else {
@@ -1029,103 +1019,94 @@ server <- function(input, output, session) {
         )
 
         dashboardMap <- dashboardMap %>% add_trace( # displays results
-            type='choropleth',
-            #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
-            geojson=geojsonEurope,
-            locations=intersect(repliedCountries, input$countriesSelection),
-            z=countryReplies()[[1]], ## normalement cest COLOR au singulier mais marche pas, ici ca retourne todo donc on nest pas dans le bon IF dans la focntion
-            zmin=1,
-            zmax=length(countryReplies()[[2]]),
-            showlegend=TRUE,
-            #autocolorscale=FALSE,
-            showscale=FALSE,
-            #colorscale=countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
-            reversescale=FALSE,
-            colors=countryReplies()[[2]],
-            colorbar=list(
-                tickvals=1:length(countryReplies()[[2]]),
-                ticktext=countryReplies()[[3]],
-                #outlinecolor=rgba(0,0,0,0),
-                outlinewidth=0,
-                thickness=20, #default 30
-                color=themeBgColor,
-                tickcolor=themeFgColor,
-                x=0.05,
-                y=0.8,
-                tickfont=list(
-                    color=themeFgColor
+            type = 'choropleth',
+            #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
+            geojson = geojsonEurope,
+            locations = intersect(repliedCountries, input$countriesSelection),
+            z = countryReplies()[[1]],
+            zmin = 1,
+            zmax = length(countryReplies()[[2]]),
+            showlegend = TRUE,
+            #autocolorscale = FALSE,
+            showscale = FALSE,
+            #colorscale = countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
+            reversescale = FALSE,
+            colors = countryReplies()[[2]],
+            colorbar = list(
+                tickvals = 1:length(countryReplies()[[2]]),
+                ticktext = countryReplies()[[3]],
+                #outlinecolor = rgba(0,0,0,0),
+                outlinewidth = 0,
+                thickness = 20, #default 30
+                color = themeBgColor,
+                tickcolor = themeFgColor,
+                x = 0.05,
+                y = 0.8,
+                tickfont = list(
+                    color = themeFgColor
                 ),
-                title=list(
-                    text="Reply",
-                    font=list(
-                        color=themeFgColor
+                title = list(
+                    text = "Reply",
+                    font = list(
+                        color = themeFgColor
                     )
                 )
             ),
-            marker=list(
-                line=list(
-                    width=1,
-                    color=themeBgColor
+            marker = list(
+                line = list(
+                    width = 1,
+                    color = themeBgColor
                 )
             )
         )
 
         dashboardMap <- dashboardMap %>% add_trace( # non-participating countries
-            name="Not participating",
-            type='choropleth',
-            geojson=geojsonEurope,
-            #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson
-            locations=getNonParticipatingCountries(),
-            z=rep(0.7, length(getNonParticipatingCountries())),
-            zmin=0,
-            zmax=1,
-            showscale=FALSE,
-            colorscale="Greys",
-            #colors=c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
-            marker=list(
-                line=list(
-                    width=1,
-                    color=themeBgColor
+            name = "Not participating",
+            type = 'choropleth',
+            geojson = geojsonEurope,
+            #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson
+            locations = getNonParticipatingCountries(),
+            z = rep(0.7, length(getNonParticipatingCountries())),
+            zmin = 0,
+            zmax = 1,
+            showscale = FALSE,
+            colorscale = "Greys",
+            #colors = c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
+            marker = list(
+                line = list(
+                    width = 1,
+                    color = themeBgColor
                 )
             )
         )
 
         dashboardMap <- dashboardMap %>% layout(
             geo = list(
-                scope="europe",
-                showcountries=FALSE, # hide default map
-                showframe=FALSE, # hide default map
-                showland=FALSE, # hide default map
-                #landcolor="#cccccc", # inside countries
-                #countrycolor=themeBgColor, # lines
-                bgcolor = "rgba(0,0,0,0)", # bg color - inside map
-                #coastlinecolor="#fff",
-                showcoastline=FALSE,
-                projection=list(
-                    scale=1.7  # initial zoom
+                scope = "europe",
+                showcountries = FALSE, # hide default map
+                showframe = FALSE, # hide default map
+                showland = FALSE, # hide default map
+                #landcolor = "#cccccc", # inside countries
+                #countrycolor = themeBgColor, # lines
+                bgcolor = "rgba(0, 0, 0, 0)", # bg color - inside map (here transparent)
+                #coastlinecolor = "#fff",
+                showcoastline = FALSE,
+                projection = list(
+                    scale = 1.7  # initial zoom
                 ),
-                center=list(
-                    lat=54,
-                    lon=10 ##14
+                center = list(
+                    lat = 54,
+                    lon = 12
                 )
             ),
-            paper_bgcolor = "rgba(0, 0, 0, 0)",#themeBgColor, # bg color - outside map
-            margin=list(
-                t=32,
-                r=0,
-                l=0,
-                b=32
+            paper_bgcolor = "rgba(0, 0, 0, 0)", # bg color - outside map (here transparent)
+            margin = list(
+                t = 32,
+                r = 0,
+                l = 0,
+                b = 32
             ),
-            autosize=TRUE
-        )
-    })
-
-    output$test <- renderPlotly({ ##TEST with plotly
-        fig <- plot_ly(
-            x = countryReplies()[[3]],
-            y = c(20, 14, 23),
-            name = "SF Zoo",
-            type = "bar"
+            autosize = TRUE
         )
     })
 
@@ -1133,16 +1114,17 @@ server <- function(input, output, session) {
         ggplot(
             data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
             aes(
-                x=reply,
-                y=occurences
+                x = reply,
+                y = occurences
             )
         ) +
         geom_bar(
-            aes(x=reply, y=occurences),
-            stat="identity",
-            fill=countryReplies()[[2]],
+            aes(x = reply, y = occurences),
+            stat = "identity",
+            fill = countryReplies()[[2]],
             width = 0.4
         ) +
+        scale_y_reverse() +
         coord_flip() +
         labs(
             x = "Replies", y = "Occurences"
@@ -1152,17 +1134,17 @@ server <- function(input, output, session) {
                 is_long <- nchar(x) > 44
                 x[is_long] <- paste0(substr(x[is_long], 1, 40), "\n", substr(x[is_long], 41, nchar(x)))
                 x
-            }
+            },
+            position = "top"
         ) +
         theme(
             axis.title.y = element_blank(),       # y axis label (remove)
             axis.title.x = element_text(size=16), # x axis label
-            axis.text.y = element_text(size=18),    # axis ticks
+            axis.text.y = element_text(size=18),  # axis ticks
             axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate 
         )
     }, height = 700
     )
-
 
 }
 
