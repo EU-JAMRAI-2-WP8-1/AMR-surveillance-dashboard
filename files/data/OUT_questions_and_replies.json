@@ -125,7 +125,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Blood"
         ],
         "possible_answers": {
@@ -170,7 +170,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Urine"
         ],
         "possible_answers": {
@@ -215,7 +215,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Urine"
         ],
         "possible_answers": {
@@ -260,7 +260,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -305,7 +305,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -350,7 +350,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Soft tissue"
         ],
         "possible_answers": {
@@ -395,7 +395,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Results from routine AST available in the national AMR surveillance system.": 1,
@@ -544,7 +544,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -663,7 +663,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Blood"
         ],
         "possible_answers": {
@@ -708,7 +708,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Urine"
         ],
         "possible_answers": {
@@ -753,7 +753,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Urine"
         ],
         "possible_answers": {
@@ -798,7 +798,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -843,7 +843,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -888,7 +888,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National guidance linked to AMR",
+            "National guidance",
             "Soft tissue"
         ],
         "possible_answers": {
@@ -933,7 +933,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -1047,7 +1047,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Yes, national guidance in place for all included pathogens (excluding C. difficile).": 1,
@@ -1092,7 +1092,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -1203,7 +1203,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "All clinical microbiological laboratories.": 1,
@@ -1313,7 +1313,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Yes.": 0,
@@ -1357,7 +1357,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Yes, national guidance in place for all included pathogens.": 1,
@@ -1404,7 +1404,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -1516,7 +1516,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance linked to AMR"
+            "National guidance"
         ],
         "possible_answers": {
             "All clinical microbiological laboratories.": 1,
@@ -1635,7 +1635,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes, both WGS and bioinformatics are performed in-house.": 1,
@@ -1682,7 +1682,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "E. coli",
             "Carbapenem"
         ],
@@ -1729,7 +1729,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "E. coli",
             "3rd-generation Cephalosporin"
         ],
@@ -1776,7 +1776,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "E. coli",
             "Colistin"
         ],
@@ -1823,7 +1823,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "K. pneumoniae",
             "Carbapenem"
         ],
@@ -1870,7 +1870,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "K. pneumoniae",
             "3rd-generation Cephalosporin"
         ],
@@ -1917,7 +1917,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "K. pneumoniae",
             "Colistin"
         ],
@@ -1964,7 +1964,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "P. aeruginosa",
             "Carbapenem"
         ],
@@ -2011,7 +2011,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "A. baumanii",
             "Carbapenem"
         ],
@@ -2058,7 +2058,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "S. aureus",
             "Methicillin"
         ],
@@ -2105,7 +2105,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "VRE",
             "Vancomycin"
         ],
@@ -2152,7 +2152,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "S. pneumoniae",
             "Penicillin"
         ],
@@ -2199,7 +2199,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "H. influenzae",
             "Ampicillin"
         ],
@@ -2246,7 +2246,7 @@
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
-            "Surveillance with WGS",
+            "National genomic surveillance",
             "C. difficile"
         ],
         "possible_answers": {
@@ -2292,7 +2292,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes.": 1,
@@ -2338,7 +2338,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes, raw read data.": 1,
@@ -2447,7 +2447,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Lack of infrastructure to submit WGS data.": 1,
@@ -2567,7 +2567,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Identification of the pathogen(s) causing infection/carriage for diagnostic purposes.": 0.5,
@@ -2727,7 +2727,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes.": 1,
@@ -2775,7 +2775,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes, we have a data sharing/analysis pipeline set-up for this analysis.": 1,
@@ -2823,7 +2823,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Not applicable": "null",
@@ -2976,7 +2976,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Number of reads.": 0.1,
@@ -3178,7 +3178,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Inhouse pipeline; open access tools only.": 1,
@@ -3282,7 +3282,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Not applicable.": "null",
@@ -3387,7 +3387,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes, annually.": 1,
@@ -3433,7 +3433,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes.": 1,
@@ -3478,7 +3478,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Inhouse storage.": 1,
@@ -3523,7 +3523,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Yes, all data.": 1,
@@ -3568,7 +3568,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {
             "Technical infrastructure relating to sequencing instruments.": 1,
@@ -3747,7 +3747,7 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "Surveillance with WGS"
+            "National genomic surveillance"
         ],
         "possible_answers": {},
         "actual_answers": {
@@ -3787,7 +3787,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Carbapenem",
             "Blood"
@@ -3834,7 +3834,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Carbapenem",
             "Urine"
@@ -3881,7 +3881,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Carbapenem",
             "Respiratory tract"
@@ -3928,7 +3928,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Carbapenem",
             "Screening"
@@ -3975,7 +3975,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Colistin",
             "Blood"
@@ -4022,7 +4022,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "3rd-generation Cephalosporin",
             "Blood"
@@ -4069,7 +4069,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "3rd-generation Cephalosporin",
             "Urine"
@@ -4116,7 +4116,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "3rd-generation Cephalosporin",
             "Respiratory tract"
@@ -4163,7 +4163,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "3rd-generation Cephalosporin",
             "Screening"
@@ -4210,7 +4210,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Colistin",
             "Screening"
@@ -4257,7 +4257,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Carbapenem",
             "Screening"
@@ -4304,7 +4304,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "3rd-generation Cephalosporin",
             "Screening"
@@ -4351,7 +4351,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Colistin",
             "Screening"
@@ -4398,7 +4398,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "C. difficile",
             "Stool"
         ],
@@ -4444,7 +4444,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Ampicillin",
             "Screening"
@@ -4491,7 +4491,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Penicillin",
             "Screening"
@@ -4538,7 +4538,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Vancomycin",
             "Screening"
@@ -4585,7 +4585,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Carbapenem",
             "Screening"
@@ -4632,7 +4632,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Carbapenem",
             "Screening"
@@ -4679,7 +4679,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin",
             "Screening"
@@ -4726,7 +4726,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Colistin",
             "Urine"
@@ -4773,7 +4773,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Colistin",
             "Respiratory tract"
@@ -4820,7 +4820,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Carbapenem",
             "Respiratory tract"
@@ -4867,7 +4867,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Carbapenem",
             "Urine"
@@ -4914,7 +4914,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Carbapenem",
             "Blood"
@@ -4961,7 +4961,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "3rd-generation Cephalosporin",
             "Blood"
@@ -5008,7 +5008,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "3rd-generation Cephalosporin",
             "Urine"
@@ -5055,7 +5055,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "3CG",
             "Respiratory tract"
@@ -5102,7 +5102,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Colistin",
             "Respiratory tract"
@@ -5149,7 +5149,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Colistin",
             "Urine"
@@ -5196,7 +5196,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Colistin",
             "Blood"
@@ -5243,7 +5243,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Carbapenem",
             "Blood"
@@ -5290,7 +5290,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Carbapenem",
             "Urine"
@@ -5337,7 +5337,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Carbapenem",
             "Soft tissue"
@@ -5384,7 +5384,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Carbapenem",
             "Respiratory tract"
@@ -5431,7 +5431,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Carbapenem",
             "Respiratory tract"
@@ -5478,7 +5478,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Carbapenem",
             "Blood"
@@ -5525,7 +5525,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Carbapenem",
             "Urine"
@@ -5572,7 +5572,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Carbapenem",
             "Soft tissue"
@@ -5619,7 +5619,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin",
             "Respiratory tract"
@@ -5666,7 +5666,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin",
             "Respiratory tract"
@@ -5713,7 +5713,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Penicillin",
             "Respiratory tract"
@@ -5760,7 +5760,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Ampicillin",
             "Respiratory tract"
@@ -5807,7 +5807,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Penicillin",
             "Respiratory tract"
@@ -5854,7 +5854,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Ampicillin",
             "Respiratory tract"
@@ -5901,7 +5901,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin",
             "Soft tissue"
@@ -5948,7 +5948,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin",
             "Urine"
@@ -5995,7 +5995,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin",
             "Blood"
@@ -6042,7 +6042,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Vancomycin",
             "Blood"
@@ -6089,7 +6089,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Vancomycin",
             "Urine"
@@ -6136,7 +6136,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Penicillin",
             "Blood"
@@ -6183,7 +6183,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Penicillin",
             "Urine"
@@ -6230,7 +6230,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Ampicillin",
             "Blood"
@@ -6277,7 +6277,7 @@
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Ampicillin",
             "Urine"
@@ -6324,7 +6324,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Carbapenem"
         ],
@@ -6373,7 +6373,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Carbapenem"
         ],
@@ -6422,7 +6422,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "3rd-generation Cephalosporin"
         ],
@@ -6471,7 +6471,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Colistin"
         ],
@@ -6520,7 +6520,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "3rd-generation Cephalosporin"
         ],
@@ -6569,7 +6569,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Colistin"
         ],
@@ -6618,7 +6618,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Carbapenem"
         ],
@@ -6667,7 +6667,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "3rd-generation Cephalosporin"
         ],
@@ -6716,7 +6716,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Colistin"
         ],
@@ -6765,7 +6765,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Carbapenem"
         ],
@@ -6814,7 +6814,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Carbapenem"
         ],
@@ -6863,7 +6863,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin"
         ],
@@ -6912,7 +6912,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Vancomycin"
         ],
@@ -6961,7 +6961,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Penicillin"
         ],
@@ -7010,7 +7010,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Ampicillin"
         ],
@@ -7059,7 +7059,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "C. difficile"
         ],
         "possible_answers": {
@@ -7107,7 +7107,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Carbapenem"
         ],
@@ -7156,7 +7156,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "3rd-generation Cephalosporin"
         ],
@@ -7205,7 +7205,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Colistin"
         ],
@@ -7254,7 +7254,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Carbapenem"
         ],
@@ -7303,7 +7303,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Carbapenem"
         ],
@@ -7352,7 +7352,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Methicillin"
         ],
@@ -7401,7 +7401,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Vancomycin"
         ],
@@ -7450,7 +7450,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Penicillin"
         ],
@@ -7499,7 +7499,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Ampicillin"
         ],
@@ -7548,7 +7548,7 @@
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "C. difficile"
         ],
         "possible_answers": {
@@ -7596,7 +7596,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Blood"
         ],
@@ -7645,7 +7645,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Blood"
         ],
@@ -7694,7 +7694,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Blood"
         ],
@@ -7743,7 +7743,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Blood"
         ],
@@ -7792,7 +7792,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Blood"
         ],
@@ -7841,7 +7841,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Blood"
         ],
@@ -7890,7 +7890,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Blood"
         ],
@@ -7939,7 +7939,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Blood"
         ],
@@ -7988,7 +7988,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Urine"
         ],
@@ -8037,7 +8037,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Urine"
         ],
@@ -8086,7 +8086,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Urine"
         ],
@@ -8135,7 +8135,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Urine"
         ],
@@ -8184,7 +8184,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Urine"
         ],
@@ -8233,7 +8233,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Urine"
         ],
@@ -8282,7 +8282,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Urine"
         ],
@@ -8331,7 +8331,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Urine"
         ],
@@ -8380,7 +8380,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Soft tissue"
         ],
@@ -8429,7 +8429,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Soft tissue"
         ],
@@ -8478,7 +8478,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Soft tissue"
         ],
@@ -8527,7 +8527,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Respiratory tract"
         ],
@@ -8576,7 +8576,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Respiratory tract"
         ],
@@ -8625,7 +8625,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Respiratory tract"
         ],
@@ -8674,7 +8674,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Respiratory tract"
         ],
@@ -8723,7 +8723,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Respiratory tract"
         ],
@@ -8772,7 +8772,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Respiratory tract"
         ],
@@ -8821,7 +8821,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Respiratory tract"
         ],
@@ -8870,7 +8870,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Respiratory tract"
         ],
@@ -8919,7 +8919,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Respiratory tract"
         ],
@@ -8968,7 +8968,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Respiratory tract"
         ],
@@ -9017,7 +9017,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "C. difficile",
             "Stool"
         ],
@@ -9066,7 +9066,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Blood"
         ],
@@ -9113,7 +9113,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "soft tisse"
         ],
@@ -9160,7 +9160,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Blood"
         ],
@@ -9207,7 +9207,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Blood"
         ],
@@ -9254,7 +9254,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Blood"
         ],
@@ -9301,7 +9301,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Blood"
         ],
@@ -9348,7 +9348,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Blood"
         ],
@@ -9395,7 +9395,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Blood"
         ],
@@ -9442,7 +9442,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Blood"
         ],
@@ -9489,7 +9489,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Urine"
         ],
@@ -9536,7 +9536,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Urine"
         ],
@@ -9583,7 +9583,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Urine"
         ],
@@ -9630,7 +9630,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Urine"
         ],
@@ -9677,7 +9677,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Urine"
         ],
@@ -9724,7 +9724,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Urine"
         ],
@@ -9771,7 +9771,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Urine"
         ],
@@ -9818,7 +9818,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Urine"
         ],
@@ -9865,7 +9865,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Soft tissue"
         ],
@@ -9912,7 +9912,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Soft tissue"
         ],
@@ -9959,7 +9959,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Respiratory tract"
         ],
@@ -10006,7 +10006,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Respiratory tract"
         ],
@@ -10053,7 +10053,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Respiratory tract"
         ],
@@ -10100,7 +10100,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Respiratory tract"
         ],
@@ -10147,7 +10147,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Respiratory tract"
         ],
@@ -10194,7 +10194,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Respiratory tract"
         ],
@@ -10241,7 +10241,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Respiratory tract"
         ],
@@ -10288,7 +10288,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Respiratory tract"
         ],
@@ -10335,7 +10335,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Respiratory tract"
         ],
@@ -10382,7 +10382,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Respiratory tract"
         ],
@@ -10429,7 +10429,7 @@
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "C. difficile",
             "Stool"
         ],
@@ -10476,7 +10476,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "Urine"
         ],
         "possible_answers": {
@@ -10523,7 +10523,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "Soft tissue"
         ],
         "possible_answers": {
@@ -10570,7 +10570,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -10617,7 +10617,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -10664,7 +10664,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "Stool"
         ],
         "possible_answers": {
@@ -10711,7 +10711,7 @@
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "Blood"
         ],
         "possible_answers": {
@@ -10758,7 +10758,7 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -10802,7 +10802,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Blood",
             "3rd-generation Cephalosporin"
@@ -10987,7 +10987,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Blood",
             "Colistin"
@@ -11171,7 +11171,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Blood",
             "Colistin"
@@ -11358,7 +11358,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Blood",
             "Carbapenem"
@@ -11570,7 +11570,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Blood",
             "3rd-generation Cephalosporin"
@@ -11757,7 +11757,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Blood",
             "Carbapenem"
@@ -11956,7 +11956,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Blood",
             "Carbapenem"
@@ -12156,7 +12156,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Blood",
             "Methicillin"
@@ -12360,7 +12360,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Blood",
             "Penicillin"
@@ -12546,7 +12546,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Blood",
             "Ampicillin"
@@ -12714,7 +12714,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Urine",
             "Carbapenem"
@@ -12903,7 +12903,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Urine",
             "Colistin"
@@ -13071,7 +13071,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Urine",
             "Carbapenem"
@@ -13266,7 +13266,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Urine",
             "3rd-generation Cephalosporin"
@@ -13425,7 +13425,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Urine",
             "Colistin"
@@ -13589,7 +13589,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Urine",
             "Carbapenem"
@@ -13763,7 +13763,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Urine",
             "Carbapenem"
@@ -13935,7 +13935,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Urine",
             "Methicillin"
@@ -14110,7 +14110,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Urine",
             "Vancomycin"
@@ -14273,7 +14273,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "soft tisse",
             "Carbapenem"
@@ -14448,7 +14448,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Soft tissue",
             "Carbapenem"
@@ -14619,7 +14619,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Soft tissue",
             "Methicillin"
@@ -14796,7 +14796,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Respiratory tract",
             "Methicillin"
@@ -14963,7 +14963,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Respiratory tract",
             "Penicillin"
@@ -15120,7 +15120,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Respiratory tract",
             "Ampicillin"
@@ -15269,7 +15269,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Respiratory tract",
             "Carbapenem"
@@ -15444,7 +15444,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Respiratory tract",
             "3rd-generation Cephalosporin"
@@ -15593,7 +15593,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Respiratory tract",
             "Colistin"
@@ -15750,7 +15750,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Respiratory tract",
             "Carbapenem"
@@ -15928,7 +15928,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Respiratory tract",
             "3CG"
@@ -16077,7 +16077,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Respiratory tract",
             "Colistin"
@@ -16230,7 +16230,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Respiratory tract",
             "Carbapenem"
@@ -16398,7 +16398,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Respiratory tract",
             "Methicillin"
@@ -16566,7 +16566,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. pneumoniae",
             "Respiratory tract",
             "Penicillin"
@@ -16722,7 +16722,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "H. influenzae",
             "Respiratory tract",
             "Ampicillin"
@@ -16868,7 +16868,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "C. difficile",
             "Stool"
         ],
@@ -17046,7 +17046,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Screening",
             "Carbapenem"
@@ -17217,7 +17217,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Screening",
             "3rd-generation Cephalosporin"
@@ -17365,7 +17365,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Screening",
             "Colistin"
@@ -17520,7 +17520,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Screening",
             "Carbapenem"
@@ -17691,7 +17691,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "P. aeruginosa",
             "Screening",
             "Carbapenem"
@@ -17858,7 +17858,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "S. aureus",
             "Screening",
             "Methicillin"
@@ -18019,7 +18019,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Screening",
             "Vancomycin"
@@ -18175,7 +18175,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Blood",
             "Carbapenem"
@@ -18386,7 +18386,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Screening",
             "3rd-generation Cephalosporin"
@@ -18534,7 +18534,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "E. coli",
             "Urine",
             "3CG"
@@ -18700,7 +18700,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "VRE",
             "Blood",
             "Vancomycin"
@@ -18890,7 +18890,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Respiratory tract",
             "Carbapenem"
@@ -19058,7 +19058,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "K. pneumoniae",
             "Screening",
             "Colistin"
@@ -19213,7 +19213,7 @@
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
-            "National surveillance of AMR",
+            "National surveillance",
             "A. baumanii",
             "Screening",
             "Carbapenem"
@@ -19381,7 +19381,7 @@
         "type": "SingleChoice",
         "coefficient": 0.5,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -19424,7 +19424,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19467,7 +19467,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19481,7 +19481,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19524,7 +19524,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19567,7 +19567,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19610,7 +19610,7 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19653,7 +19653,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted\u00a0continuously or with close regular intervals (at least once a month)": "null",
@@ -19759,7 +19759,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -19860,7 +19860,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -19962,7 +19962,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -20063,7 +20063,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -20163,7 +20163,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20278,7 +20278,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20386,7 +20386,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20492,7 +20492,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20602,7 +20602,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20709,7 +20709,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20813,7 +20813,7 @@
         "type": "SingleChoice",
         "coefficient": 0.5,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -20856,7 +20856,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": 0,
@@ -20961,7 +20961,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -21068,7 +21068,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "There is no need, one system collects all information at national level": 1,
@@ -21178,7 +21178,7 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {},
         "actual_answers": {
@@ -21218,7 +21218,7 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "Data is published automatically in a real-time dashboard via direct integration between the AMR surveillance system and the dashboard.": 1,
@@ -21341,7 +21341,7 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {},
         "actual_answers": {
@@ -21381,7 +21381,7 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {
             "The indicators and/or frequency for when a clinical sample is taken for microbiological culture varies between healthcare facilities \u2013 makes it hard to know if measured resistance levels are representative.": "null",
@@ -21540,7 +21540,7 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "National surveillance of AMR"
+            "National surveillance"
         ],
         "possible_answers": {},
         "actual_answers": {
