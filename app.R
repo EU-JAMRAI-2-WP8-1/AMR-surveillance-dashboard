@@ -57,22 +57,22 @@ thematic_shiny(
 ## DATA LOAD AND PREPARATION ##
 
 # Import logos as variables
-jamraiLogoHeaderLong      <- file.path("www/TRANSPARENT_LONG2.png")
-jamraiLogoHeaderRect      <- file.path("www/TRANSPARENT_RECTANGULAR.png")
-jamraiLogoHeaderRectWhite <- file.path("www/TRANSPARENT_LONG1_WHITE-480x107.png")
-euLogoFundWhite           <- file.path("www/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
+#jamraiLogoHeaderLong      <- file.path("www/logos/TRANSPARENT_LONG2.png")
+#jamraiLogoHeaderRect      <- file.path("www/logos/TRANSPARENT_RECTANGULAR.png")
+#jamraiLogoHeaderRectWhite <- file.path("www/logos/TRANSPARENT_LONG1_WHITE-480x107.png")
+#euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
 
 # Import Europe polygons
-geojsonEurope = rjson::fromJSON(file = file.path("./files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
+geojsonEurope = rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
 
 ## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries (modified to include only european countries)
 
 # Import survey questions and replies from JSON
-surveyDataFile <- file.path("./files/data/OUT_questions_and_replies.json")
+surveyDataFile <- file.path("www/data/OUT_questions_and_replies.json")
 surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
 
 # Import survey score table from CSV - set first column as row names
-countryScoreTable <- read.csv("./files/data/OUT_country_scores.csv", header=TRUE) #row.names = 1,
+countryScoreTable <- read.csv("www/data/OUT_country_scores.csv", header=TRUE) #row.names = 1,
 
 # Europe country list
 euroCountryList <- c()
@@ -103,14 +103,18 @@ pathogensInfoText       <- "Unselect all pathogens to ignore if questions are pa
 resistancesInfoText     <- "Unselect all resistances to ignore if questions are resistance-specific or not.\nTo keep only resistance-specific questions, select all.\nTo focus one one or several resistances, select the resistance(s) you need."
 cultureMaterialInfoText <- "Unselect all culture materials to ignore if questions are material-specific or not.\nTo keep only material-specific questions, select all.\nTo focus one one or several culture material, select the one(s) you need."
 
-# get all questions (short titles) for question filter
+# get all questions (short titles) for question filter + set list of multiple choice questions (short titles)
 allShortTitles <- c()
+multipleChoiceShortTitles <- c()
 for (question in surveyData) {
-
     if (question$coefficient == "0") next # skip question without scores
     if ("Section 0" %in% question$tags) next # skip section 0
     if (question$short_title %in% allShortTitles) next # skip if alredy in (as matrix question have the same short title)
     allShortTitles <- c(allShortTitles, question$short_title)
+
+    if (question$type == "MultipleChoice") {
+        multipleChoiceShortTitles <- c(multipleChoiceShortTitles, question$short_title)
+    }
 }
 
 # initiate dicrete colors sequence for maps and plots
@@ -125,77 +129,77 @@ ui <- shinyUI(fluidPage(
     theme = custom_theme,
 
     # import CSS
-    includeCSS(file.path("./files/css/style.css")),
+    includeCSS(file.path("www/css/style.css")),
 
     # import JS
-    includeScript("./files/js/script.js"),
+    includeScript("www/js/script.js"),
 
     # add favicon
-    tags$head(tags$link(rel="shortcut icon", href=file.path("www/jamrai_favicon_32x32.png"))),
+    tags$head(tags$link(rel="shortcut icon", href=file.path("www/favicons/jamrai_favicon_32x32.png"))),
 
     # dark mode hidden input (required)
-    input_dark_mode(
-        id = "mode",
-        class = "hidden"
-    ),
+    #input_dark_mode(
+    #    id = "mode",
+    #    class = "hidden"
+    #),
 
     # navigation bar
-    page_navbar(
+    #page_navbar(
 
-        nav_item(
-            class = "navbar-header",
-            #"ENAMReS - European National AMR Surveillance"
-            HTML("<span style=\"color:#ff4444\">[TEST VERSION]</span><span> National surveillance of antimicrobial resistance (AMR) in humans in Europe 2025</span>")
-        ),
+        #nav_item(
+        #    class = "navbar-header",
+        #    #"ENAMReS - European National AMR Surveillance"
+        #    HTML("<span style=\"color:#ff4444\">[TEST VERSION]</span><span> National surveillance of antimicrobial resistance (AMR) in humans in Europe 2025</span>")
+        #),
 
-        nav_spacer(),
+        #nav_spacer(),
 
         # button - link to JAMRAI website
-        nav_item(
-            tags$a(
-            tags$span(
-                bsicons::bs_icon("cursor"),
-                "JAMRAI"
-            ),
-            href = "https://eu-jamrai.eu/",
-            target = "_blank"
-            )
-        ),
+        #nav_item(
+        #    tags$a(
+        #    tags$span(
+        #        bsicons::bs_icon("cursor"),
+        #        "JAMRAI"
+        #    ),
+        #    href = "https://eu-jamrai.eu/",
+        #    target = "_blank"
+        #    )
+        #),
 
         # button - link to GitHub repo
-        nav_item(
-            tags$a(
-            tags$span(
-                bsicons::bs_icon("file-earmark-code"), "Source code"
-            ),
-            href = "https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard",
-            target = "_blank"
-            )
-        ),
+        #nav_item(
+        #    tags$a(
+        #    tags$span(
+        #        bsicons::bs_icon("file-earmark-code"), "Source code"
+        #    ),
+        #    href = "https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard",
+        #    target = "_blank"
+        #    )
+        #),
 
         # button - triggers download of source data
-        nav_item(
-            tags$a(
-            tags$span(
-                bsicons::bs_icon("file-earmark-arrow-down"), "Download data"
-            ),
-            href = "https://github.com/",
-            target = "_blank"
-            )
-        ),
+        #nav_item(
+        #    tags$a(
+        #    tags$span(
+        #        bsicons::bs_icon("file-earmark-arrow-down"), "Download data"
+        #    ),
+        #    href = "https://github.com/",
+        #    target = "_blank"
+        #    )
+        #),
 
         # light/dark mode toggle
-        nav_item(
-            input_dark_mode(id = "dark_mode", mode = NULL)
-        ),
+        #nav_item(
+        #    input_dark_mode(id = "dark_mode", mode = NULL)
+        #),
 
-        position = c("fixed-top")
-    ),
+        #position = c("fixed-top")
+    #),
 
     # spacer - prevents overlapping of header and navbar
-    div(
-        class = "top-spacer"
-    ),
+    #div(
+    #    class = "top-spacer"
+    #),
 
     # Layout type
     sidebarLayout(
@@ -208,14 +212,14 @@ ui <- shinyUI(fluidPage(
             width = 2,
 
             # logo
-            img(
-                src = jamraiLogoHeaderRect,
-                class = "jamrai-logo-header"
-            ),
+            #img(
+            #    src = jamraiLogoHeaderRect,
+            #    class = "jamrai-logo-header"
+            #),
 
-            hr(
-                class = "hr-filters-separator"
-            ),
+            #hr(
+            #    class = "hr-filters-separator"
+            #),
 
             tags$span(
                 class = "reset-filters-wrapper",
@@ -369,7 +373,6 @@ ui <- shinyUI(fluidPage(
                             ),
                             tags$div(
                                 class = "",
-                                #plotlyOutput(outputId = "dashboardPlot", width = "100%", height = "520")
                                 plotOutput("dashboardPlot")
                             )
                         ),
@@ -471,7 +474,9 @@ ui <- shinyUI(fluidPage(
                     fluidRow(
                         tags$div(
                             class = "about-container",
-                            includeHTML("./files/html/about.html")
+                            includeHTML("www/html/about.html"),
+                            HTML("<br>"),
+                            includeHTML("www/html/legal.html"),
                         )
                     )
                 )
@@ -492,10 +497,10 @@ ui <- shinyUI(fluidPage(
     ),
 
     # footer
-    fluidRow(
-        img(src=jamraiLogoHeaderRectWhite) %>% tagAppendAttributes(class="width-auto footer-image"),
-        img(src=euLogoFundWhite) %>% tagAppendAttributes(class="width-auto footer-image")
-    ) %>% tagAppendAttributes(class="footer-box")
+    #fluidRow(
+    #    img(src=jamraiLogoHeaderRectWhite) %>% tagAppendAttributes(class="width-auto footer-image"),
+    #    img(src=euLogoFundWhite) %>% tagAppendAttributes(class="width-auto footer-image")
+    #) %>% tagAppendAttributes(class="footer-box")
 ))
 
 
@@ -727,7 +732,6 @@ server <- function(input, output, session) {
                 answersNumeric <- c()
 
                 for (answer in names(actualAnswers)) {
-                    ##anchor
                     i <- 1
                     for (possibleAnswer in names(possibleAnswers)) {
                         if (actualAnswers[[answer]] == possibleAnswer) {
@@ -853,15 +857,19 @@ server <- function(input, output, session) {
     ## OUTPUTS ##
 
     output$scoresMap <- renderPlotly({
-        if (input$dark_mode == "dark") { ##### make global, for use in other outputs
-            themeBgColor = "#1D1F21"
-            themeFgColor = "#ffffff"
-            #themeSoftGrey = 0.3
-        } else {
-            themeBgColor = "#ffffff"
-            themeFgColor = "#1D1F21"
-            #themeSoftGrey = 0.7
-        }
+        #if (input$dark_mode == "dark") {
+        #    themeBgColor = "#1D1F21"
+        #    themeFgColor = "#ffffff"
+        #    #themeSoftGrey = 0.3
+        #} else {
+        #    themeBgColor = "#ffffff"
+        #    themeFgColor = "#1D1F21"
+        #    #themeSoftGrey = 0.7
+        #}
+
+        themeBgColor = "#ffffff"
+        themeFgColor = "#1D1F21"
+
         #countryReplies %>%
         scoresMap <- plot_ly(
             #height = 800,
@@ -991,13 +999,20 @@ server <- function(input, output, session) {
 
     output$dashboardMap <- renderPlotly({
 
-        if (input$dark_mode == "dark") {
-            themeBgColor = "#1D1F21"
-            themeFgColor = "#ffffff"
-        } else {
-            themeBgColor = "#ffffff"
-            themeFgColor = "#1D1F21"
+        #if (input$dark_mode == "dark") {
+        #    themeBgColor = "#1D1F21"
+        #    themeFgColor = "#ffffff"
+        #} else {
+        #    themeBgColor = "#ffffff"
+        #    themeFgColor = "#1D1F21"
+        #}
+
+        if (input$questionSelection %in% multipleChoiceShortTitles){
+            return(NULL)
         }
+
+        themeBgColor = "#ffffff"
+        themeFgColor = "#1D1F21"
 
         dashboardMap <- plot_ly(
             #height = 800,
@@ -1096,7 +1111,12 @@ server <- function(input, output, session) {
         )
     })
 
-    output$dashboardPlot <- renderPlot({ 
+    output$dashboardPlot <- renderPlot({
+
+        if (input$questionSelection == "Participating countries"){
+            return(NULL)
+        }
+
         ggplot(
             data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
             aes(

@@ -1,0 +1,338 @@
+
+/* GENERAL */
+
+.width-auto {
+    width: auto;
+}
+
+.width-16 {
+    width: 16%;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.vertical-line {
+    height: 64px;
+    width: 0;
+    border-left: 1px solid rgba(127, 127, 127, 0.25);
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+.jamrai-blue {
+    background-color:#0fdbd5;
+}
+
+.soft-red {
+    background-color:#cc8888;
+}
+
+.soft-grey {
+    background-color:#cccccc;
+}
+
+.info-button {
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+    font-weight: bold;
+    background-color: #008aab;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: help !important;
+}
+
+.info-button:hover {
+    background-color: #0fdbd5;
+}
+
+.info-sections {
+    display: none;
+    position: absolute;
+    background-color: rgba(127, 127, 127, 1);
+    width: 256px;
+    left: 64px;
+    border-radius: 0 0 4px 4px;
+    padding: 4px;
+    z-index: 999;
+
+}
+
+.info-button:hover + .info-sections {
+    display: block;
+}
+
+
+/* OVERWRITE BOOTSTRAP */
+
+.nav > li {
+    list-style-type: none;
+}
+
+.navbar {
+    flex-grow: 1;
+    width: auto;
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.navbar.navbar-default {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-bs-theme="dark"] .navbar.navbar-default {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.nav-tabs {
+    background-color: rgba(127, 127, 127, 0.25) !important;
+    --bs-nav-tabs-border-width: 0 !important;
+    --bs-nav-tabs-border-radius: 0 !important;
+}
+
+.nav-item {
+    border: 0;
+}
+
+.accordion {
+    --bs-accordion-bg: rgba(0, 0, 0, 0);
+    --bs-accordion-border-width: 0;
+}
+
+.row > .col-sm-2 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.row > .col-sm-10 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/* OVERWRITE SHINY DEFAULT */
+
+.hr-small-margin {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.hr-filters-separator {
+    margin-left: 24px !important;
+    margin-right: 24px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.accordion-title {
+    font-size: 1.5rem !important;
+}
+
+.pagination > li {
+    padding: 12px;
+}
+
+.map-tab-container .dataTable > tbody > tr > td {
+    padding: 1px !important;
+}
+
+.map-tab-container .dataTable > tfoot {
+    display: none;
+}
+
+.tabbable > .tab-content {
+    padding: 12px;
+    overflow-x: auto;
+}
+
+#resultsTable {
+    font-size: 0.9rem !important;
+}
+
+
+#resultsTable tr > th {
+    min-width: 140px;
+}
+
+#resultsTable tr > th:first-child {
+    min-width: 540px;
+}
+
+
+/* OVERWRITE PLOTLY DEFAULT */
+
+
+/* HEADER / NAVBAR */
+
+.navbar-header {
+    font-weight: bold;
+    /*color: #008aab;*/
+}
+
+.top-spacer {
+    width: 100%;
+    height: 55px;
+    opacity: 0;
+}
+
+.header-box {
+    display: flex;
+    flex-direction: row;
+    margin: 12px;
+    align-items: center;
+}
+
+.main-title {
+    font-size: 36px;
+}
+
+.jamrai-logo-header {
+    height: 100%;
+    width: 100%;
+    padding: 16px;
+}
+
+/* FILTERS */
+
+.sidebar-panel {
+    padding: 0 !important;
+    border: 0;
+    min-width: 200px;
+    background-color: #f0f0f0;
+}
+
+.reset-filters-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+}
+
+/*#resetFilters {
+
+}*/
+
+#countriesSelection {
+    height: 280px;
+    overflow-y: scroll;
+}
+
+#section-filter-container {
+    height: 100px;
+    overflow-y: visible;
+}
+
+#pathogen-filter-container {
+    height: 280px;
+    overflow-y: scroll;
+}
+
+#antibiotic-filter-container {
+    height: 280px;
+    overflow-y: scroll;
+}
+
+
+/* MAIN SECTION */
+
+.map-tab-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    --bs-gutter-x: 0 !important; /**/
+}
+
+.map-and-source-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.leaflet-container {
+    background: #ffffff;
+    outline: 0;
+}
+
+[data-bs-theme="dark"] .leaflet-container {
+    background: #1d1f21;
+    outline: 0;
+}
+
+.map-source-text {
+    padding-left: 36px;
+}
+
+.map-info-container {
+    padding-right: 12px;
+}
+
+.about-container {
+    padding: 36px;
+}
+
+
+/* FOOTER */
+
+.footer-box {
+    display: flex;
+    flex-direction: row;
+    margin-top: 12px;
+    background-color: #303030;
+}
+
+.footer-image {
+    margin: 12px;
+}
+
+.jamrai-logo-footer {
+    width: 264px;
+    margin-left: 24px;
+}
+
+.eu-logo-footer {
+    width: 264px;
+    margin-left: 24px;
+}
+
+
+/* RESPONSIVE */
+
+@media screen and (orientation:portrait) {
+
+    /* GENERAL */
+
+    .width-16 {
+        width: 100%;
+    }
+
+    /* SPECIFIC */
+
+    .header-box {
+        display: flex;
+        flex-direction: row; /*column;*/
+        margin: 12px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .jamrai-logo-header-long {
+        display: none;
+    }
+    
+    .jamrai-logo-header-rect {
+        display: block;
+        height: 128px;
+        width: auto;
+        margin-top: 32px;
+        margin-bottom: 24px;
+    }
+
+
+    .tab-text {
+        display: none;
+    }
+}
