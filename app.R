@@ -1,43 +1,31 @@
-## NOTES
-# revoir le format des réponses -> stocker dans un format plus lisible par R, ou un json simplifié -> question > pays > score + un tableau a part avec les tags
-## (suite) en gros on check les tags, ca renvoie quelles questions sont ON et lesquelles sont OFF, puis il n'y a plus qu'à récupérer et additionner les scores
 
 ## SETUP ##
 
 # import libraries
-library(shiny)
-library(shinyWidgets)
-#library(sf)
-library(readxl)
-library(rjson)
-library(jsonlite)
-library(dplyr)
-#library(hash)
-#library(countrycode)
-library(ggplot2)
-library(echarts4r)
-library(plotly)
-#library(RColorBrewer)
-#library(geojsonR)
-#library(geojsonio)
-#library(leaflet)
-library(gapminder)
-library(bslib)
-library(thematic)
-library(stringr)
-library(DT)
-
+require(shiny)
+require(shinyWidgets)
+require(readxl)
+require(rjson)
+require(jsonlite)
+require(dplyr)
+require(ggplot2)
+require(plotly)
+require(gapminder)
+require(bslib)
+require(thematic)
+require(stringr)
+require(DT)
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
-#options(shiny.host = "148.110.159.160") ## dev
 options(shiny.port = 8180)
 
 # Add resource directory to server
-shiny::addResourcePath('www', '/srv/shiny-server/www') ## !! causes issues on Docker on Windows? --> remove and put absolute paths everywhere?
+#shiny::addResourcePath('www', '/srv/shiny-server/www')
+shiny::addResourcePath(prefix = 'www', directoryPath = './www')
 
 # Set the app files directory
-appFilesDirectory = "/home/shiny-app/files"
+#appFilesDirectory = "/home/shiny-app/files"
 
 ## For layout --> see help at https://shiny.posit.co/r/articles/build/layout-guide/
 ## JAMRAI logo colors: #0fdbd5, #008aab, #26cad3
@@ -69,24 +57,22 @@ thematic_shiny(
 ## DATA LOAD AND PREPARATION ##
 
 # Import logos as variables
-jamraiLogoHeaderLong      <- file.path("www/logos/TRANSPARENT_LONG2.png")
-jamraiLogoHeaderRect      <- file.path("www/logos/TRANSPARENT_RECTANGULAR.png")
-jamraiLogoHeaderRectWhite <- file.path("www/logos/TRANSPARENT_LONG1_WHITE-480x107.png")
-euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
+jamraiLogoHeaderLong      <- file.path("www/TRANSPARENT_LONG2.png")
+jamraiLogoHeaderRect      <- file.path("www/TRANSPARENT_RECTANGULAR.png")
+jamraiLogoHeaderRectWhite <- file.path("www/TRANSPARENT_LONG1_WHITE-480x107.png")
+euLogoFundWhite           <- file.path("www/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
 
 # Import Europe polygons
-#geojsonEurope = FROM_GeoJson(file.path("/home/shiny-app/files/data/europe.geojson")) ## not working
-#geojsonEurope2 = geojson_read(file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
-geojsonEurope = rjson::fromJSON(file = file.path("/home/shiny-app/files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
+geojsonEurope = rjson::fromJSON(file = file.path("./files/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
 
 ## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries (modified to include only european countries)
 
 # Import survey questions and replies from JSON
-surveyDataFile <- file.path("/home/shiny-app/files/data/OUT_questions_and_replies.json")
+surveyDataFile <- file.path("./files/data/OUT_questions_and_replies.json")
 surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
 
 # Import survey score table from CSV - set first column as row names
-countryScoreTable <- read.csv("/home/shiny-app/files/data/OUT_country_scores.csv", header=TRUE) #row.names = 1,
+countryScoreTable <- read.csv("./files/data/OUT_country_scores.csv", header=TRUE) #row.names = 1,
 
 # Europe country list
 euroCountryList <- c()
@@ -139,13 +125,13 @@ ui <- shinyUI(fluidPage(
     theme = custom_theme,
 
     # import CSS
-    includeCSS(file.path("/srv/shiny-server/www/css/style.css")),
+    includeCSS(file.path("./files/css/style.css")),
 
     # import JS
-    includeScript("/srv/shiny-server/www/js/script.js"),
+    includeScript("./files/js/script.js"),
 
     # add favicon
-    tags$head(tags$link(rel="shortcut icon", href=file.path("www/favicons/jamrai_favicon_32x32.png"))),
+    tags$head(tags$link(rel="shortcut icon", href=file.path("www/jamrai_favicon_32x32.png"))),
 
     # dark mode hidden input (required)
     input_dark_mode(
@@ -485,7 +471,7 @@ ui <- shinyUI(fluidPage(
                     fluidRow(
                         tags$div(
                             class = "about-container",
-                            includeHTML("/srv/shiny-server/www/html/about.html")
+                            includeHTML("./files/html/about.html")
                         )
                     )
                 )
