@@ -2106,7 +2106,7 @@
         "coefficient": 0.077,
         "tags": [
             "National genomic surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Vancomycin"
         ],
         "possible_answers": {
@@ -2771,7 +2771,7 @@
     },
     "25": {
         "title": "Can the national reference/expert laboratory perform a joint analysis with WGS data from another sector if e.g. an outbreak is identified? Pick the scenario that suits your system the best concerning national outbreaks. Examples could be food production, veterinary medicine, etc.",
-        "short_title": "Posibility for joint analysis between NRL and other sector?",
+        "short_title": "Possibility for joint analysis between NRL and other sector?",
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
@@ -3278,7 +3278,7 @@
     },
     "29": {
         "title": "If applicable, for which purpose can metagenomics sequencing of primary samples be used at the national reference/expert laboratory? (Tick all that apply)Metagenomics sequencing refers to the analysis of the total microbial genomic from a biological sample.",
-        "short_title": "Posibility for metagenomic sequencing/analysis at NRL?",
+        "short_title": "Possibility for metagenomic sequencing/analysis at NRL?",
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
@@ -4539,7 +4539,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Vancomycin",
             "Screening"
         ],
@@ -6043,7 +6043,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Vancomycin",
             "Blood"
         ],
@@ -6090,7 +6090,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Vancomycin",
             "Urine"
         ],
@@ -6913,7 +6913,7 @@
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Vancomycin"
         ],
         "possible_answers": {
@@ -7402,7 +7402,7 @@
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Vancomycin"
         ],
         "possible_answers": {
@@ -7842,7 +7842,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Blood"
         ],
         "possible_answers": {
@@ -8234,7 +8234,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Urine"
         ],
         "possible_answers": {
@@ -9349,7 +9349,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Blood"
         ],
         "possible_answers": {
@@ -9725,7 +9725,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Urine"
         ],
         "possible_answers": {
@@ -14111,7 +14111,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Urine",
             "Vancomycin"
         ],
@@ -18020,7 +18020,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Screening",
             "Vancomycin"
         ],
@@ -18701,7 +18701,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "VRE",
+            "Enterococcus faecium/faecalis",
             "Blood",
             "Vancomycin"
         ],

@@ -94,7 +94,7 @@ nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / resistances / culture materials
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
-pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "VRE", "S. pneumoniae", "H. influenzae", "C. difficile") # VRE -> "E. faecium", "E. faecalis"
+pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "Enterococcus faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile") # VRE -> "E. faecium", "E. faecalis"
 resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
 cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool")
 
@@ -109,6 +109,7 @@ multipleChoiceShortTitles <- c()
 for (question in surveyData) {
     if (question$coefficient == "0") next # skip question without scores
     if ("Section 0" %in% question$tags) next # skip section 0
+    if (question$type == "FreeText") next # skip free text questions
     if (question$short_title %in% allShortTitles) next # skip if alredy in (as matrix question have the same short title)
     allShortTitles <- c(allShortTitles, question$short_title)
 
@@ -118,7 +119,7 @@ for (question in surveyData) {
 }
 
 # initiate dicrete colors sequence for maps and plots
-colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#000000") ## maybe too short, to check + change to better colors (jamrai-like)
+colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000")
 
 ## USER INTERFACE ##
 
@@ -732,6 +733,7 @@ server <- function(input, output, session) {
                 answersNumeric <- c()
 
                 for (answer in names(actualAnswers)) {
+                    if (!(answer %in% input$countriesSelection)) next # skip if country not selected
                     i <- 1
                     for (possibleAnswer in names(possibleAnswers)) {
                         if (actualAnswers[[answer]] == possibleAnswer) {
@@ -751,6 +753,7 @@ server <- function(input, output, session) {
                     # get occurences of each possible reply
                     occurencesCounter <- 0
                     for (answer in names(actualAnswers)) {
+                        if (!(answer %in% input$countriesSelection)) next # skip if country not selected
                         if (actualAnswers[[answer]] == possibleAnswer) {
                             occurencesCounter <- occurencesCounter + 1
                         }
@@ -761,26 +764,61 @@ server <- function(input, output, session) {
                 # for map: create a custom discrete color scale
                 customColorScale <- colorSequence[1:length(possibleAnswerText)]
 
-                # sum each possible answer occurence for plot
-                ## TODO
+                # convert to percentage
+                possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
                 
-                return(list(answersNumeric, customColorScale, possibleAnswerText, possibleAnswerOccurences))
+                return(
+                    list(
+                        answersNumeric,
+                        customColorScale,
+                        possibleAnswerText,
+                        possibleAnswerPercentReplied
+                    )
+                )
 
             }
 
             else if ((question[["short_title"]] == input$questionSelection) & (question[["type"]] == "MultipleChoice")) {
-                print("TODO")
-                ## pour le plot, juste additionner tout
-                ## remplacer la map par un stacked bar plot (ou autre) quand une multiple choice est sélectionné
-            }
 
-            else if ((question[["short_title"]] == input$questionSelection) & (question[["type"]] == "FreeText")) {
-                print("todo") ## les questions free text ne devraient pas apparaitre du tout dans la sélection
-            }
+                # get possible answers
+                possibleAnswers <- question[["possible_answers"]]
 
+                # get country answers and stack them in a single vector
+                actualAnswers <- question[["actual_answers"]]
+                allActualAnswers <- c()
+                for (country in names(actualAnswers)) {
+                    allActualAnswers <- c(allActualAnswers, actualAnswers[[country]])
+                }
+
+                # loop over possible answers and get occurence of each
+                possibleAnswerOccurences <- c()
+                possibleAnswerText <- c()
+                for (possibleAnswer in names(possibleAnswers)) {
+                    possibleAnswerText <- c(possibleAnswerText, possibleAnswer)
+                    possibleAnswerOccurences <- c(possibleAnswerOccurences, sum(allActualAnswers == possibleAnswer))
+                }
+
+                possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
+                
+                return(
+                    list(
+                        answersNumeric = NULL, # not used for MultipleChoice, only for the map
+                        customColorScale = colorSequence[1:length(possibleAnswerText)],
+                        possibleAnswerText,
+                        possibleAnswerPercentReplied
+                    )
+                )
+            }
         }
 
-        return("todo")
+        return(
+            list(
+                answersNumeric = NULL,
+                customColorScale = NULL,
+                possibleAnswerText = NULL,
+                possibleAnswerOccurences = NULL
+            )
+        )
         
     }
 
@@ -798,6 +836,9 @@ server <- function(input, output, session) {
 
             # skip sections that are not selected
             if (length(intersect(input$sectionsSelection, question$tags)) == 0) next
+
+            # skip free text questions
+            if (question$type == "FreeText") next
 
             # check if question tags and active filters do match
             if (
@@ -884,6 +925,8 @@ server <- function(input, output, session) {
             z = countryScores()[[1]] * 100,
             zmin = 0,
             zmax = 100,
+            text = intersect(repliedCountries, input$countriesSelection),
+            hoverinfo = "text+z",
             #showlegend = TRUE,
             #autocolorscale = FALSE,
             showscale = TRUE,
@@ -924,6 +967,8 @@ server <- function(input, output, session) {
             z = rep(0.7, length(getNonParticipatingCountries())),
             zmin = 0,
             zmax = 1,
+            text = getNonParticipatingCountries(),
+            hoverinfo = "text",
             showscale = FALSE,
             colorscale = "Greys",
             #colors = c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
@@ -1007,10 +1052,6 @@ server <- function(input, output, session) {
         #    themeFgColor = "#1D1F21"
         #}
 
-        if (input$questionSelection %in% multipleChoiceShortTitles){
-            return(NULL)
-        }
-
         themeBgColor = "#ffffff"
         themeFgColor = "#1D1F21"
 
@@ -1019,96 +1060,117 @@ server <- function(input, output, session) {
             #width = 800
         )
 
-        dashboardMap <- dashboardMap %>% add_trace( # displays results
-            type = 'choropleth',
-            #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
-            geojson = geojsonEurope,
-            locations = intersect(repliedCountries, input$countriesSelection),
-            z = countryReplies()[[1]],
-            zmin = 1,
-            zmax = length(countryReplies()[[2]]),
-            showlegend = TRUE,
-            #autocolorscale = FALSE,
-            showscale = FALSE,
-            #colorscale = countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
-            reversescale = FALSE,
-            colors = countryReplies()[[2]],
-            colorbar = list(
-                tickvals = 1:length(countryReplies()[[2]]),
-                ticktext = countryReplies()[[3]],
-                #outlinecolor = rgba(0,0,0,0),
-                outlinewidth = 0,
-                thickness = 20, #default 30
-                color = themeBgColor,
-                tickcolor = themeFgColor,
-                x = 0.05,
-                y = 0.8,
-                tickfont = list(
-                    color = themeFgColor
+        if (input$questionSelection %in% multipleChoiceShortTitles){
+            
+            dashboardMap <- dashboardMap(
+                data = data.frame(
+                    "Country" = intersect(repliedCountries, input$countriesSelection),
+                    "Reply" = countryReplies()[[3]],
+                    "Occurences" = countryReplies()[[4]]
                 ),
-                title = list(
-                    text = "Reply",
-                    font = list(
+                type = "bar"
+            )
+
+        } else {
+
+            dashboardMap <- dashboardMap %>% add_trace( # displays results
+                type = 'choropleth',
+                #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
+                geojson = geojsonEurope,
+                locations = intersect(repliedCountries, input$countriesSelection),
+                z = countryReplies()[[1]],
+                zmin = 1,
+                zmax = length(countryReplies()[[2]]),
+                text = intersect(repliedCountries, input$countriesSelection),
+                hoverinfo = "text",
+                showlegend = TRUE,
+                #autocolorscale = FALSE,
+                showscale = FALSE,
+                #colorscale = countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
+                reversescale = FALSE,
+                colors = countryReplies()[[2]],
+                colorbar = list(
+                    tickvals = 1:length(countryReplies()[[2]]),
+                    ticktext = countryReplies()[[3]],
+                    #outlinecolor = rgba(0,0,0,0),
+                    outlinewidth = 0,
+                    thickness = 20, #default 30
+                    color = themeBgColor,
+                    tickcolor = themeFgColor,
+                    x = 0.05,
+                    y = 0.8,
+                    tickfont = list(
                         color = themeFgColor
+                    ),
+                    title = list(
+                        text = "Reply",
+                        font = list(
+                            color = themeFgColor
+                        )
+                    )
+                ),
+                marker = list(
+                    line = list(
+                        width = 1,
+                        color = themeBgColor
                     )
                 )
-            ),
-            marker = list(
-                line = list(
-                    width = 1,
-                    color = themeBgColor
+            )
+
+            dashboardMap <- dashboardMap %>% add_trace( # non-participating countries
+                name = "Not participating",
+                type = 'choropleth',
+                geojson = geojsonEurope,
+                #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson
+                locations = getNonParticipatingCountries(),
+                z = rep(0.7, length(getNonParticipatingCountries())),
+                zmin = 0,
+                zmax = 1,
+                text = getNonParticipatingCountries(),
+                hoverinfo = "text",
+                showscale = FALSE,
+                colorscale = "Greys",
+                #colors = c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
+                marker = list(
+                    line = list(
+                        width = 1,
+                        color = themeBgColor
+                    )
                 )
             )
-        )
 
-        dashboardMap <- dashboardMap %>% add_trace( # non-participating countries
-            name = "Not participating",
-            type = 'choropleth',
-            geojson = geojsonEurope,
-            #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson
-            locations = getNonParticipatingCountries(),
-            z = rep(0.7, length(getNonParticipatingCountries())),
-            zmin = 0,
-            zmax = 1,
-            showscale = FALSE,
-            colorscale = "Greys",
-            #colors = c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
-            marker = list(
-                line = list(
-                    width = 1,
-                    color = themeBgColor
-                )
-            )
-        )
-
-        dashboardMap <- dashboardMap %>% layout(
-            geo = list(
-                scope = "europe",
-                showcountries = FALSE, # hide default map
-                showframe = FALSE, # hide default map
-                showland = FALSE, # hide default map
-                #landcolor = "#cccccc", # inside countries
-                #countrycolor = themeBgColor, # lines
-                bgcolor = "rgba(0, 0, 0, 0)", # bg color - inside map (here transparent)
-                #coastlinecolor = "#fff",
-                showcoastline = FALSE,
-                projection = list(
-                    scale = 1.7  # initial zoom
+            dashboardMap <- dashboardMap %>% layout(
+                geo = list(
+                    scope = "europe",
+                    showcountries = FALSE, # hide default map
+                    showframe = FALSE, # hide default map
+                    showland = FALSE, # hide default map
+                    #landcolor = "#cccccc", # inside countries
+                    #countrycolor = themeBgColor, # lines
+                    bgcolor = "rgba(0, 0, 0, 0)", # bg color - inside map (here transparent)
+                    #coastlinecolor = "#fff",
+                    showcoastline = FALSE,
+                    projection = list(
+                        scale = 1.7  # initial zoom
+                    ),
+                    center = list(
+                        lat = 54,
+                        lon = 12
+                    )
                 ),
-                center = list(
-                    lat = 54,
-                    lon = 12
-                )
-            ),
-            paper_bgcolor = "rgba(0, 0, 0, 0)", # bg color - outside map (here transparent)
-            margin = list(
-                t = 32,
-                r = 0,
-                l = 0,
-                b = 32
-            ),
-            autosize = TRUE
-        )
+                paper_bgcolor = "rgba(0, 0, 0, 0)", # bg color - outside map (here transparent)
+                margin = list(
+                    t = 32,
+                    r = 0,
+                    l = 0,
+                    b = 32
+                ),
+                autosize = TRUE
+            )
+
+        }
+
+        
     })
 
     output$dashboardPlot <- renderPlot({
@@ -1133,13 +1195,46 @@ server <- function(input, output, session) {
         scale_y_reverse() +
         coord_flip() +
         labs(
-            x = "Replies", y = "Occurences"
+            x = "Replies", y = "% of selected countries"
         ) +
         scale_x_discrete(
-            labels = function(x) { ## a refaire en plus propre -> couper uniquement sur les espaces, couper tous les 20 caractères mais sur 3/4/... lignes si nécessaire, etc.
-                is_long <- nchar(x) > 44
-                x[is_long] <- paste0(substr(x[is_long], 1, 40), "\n", substr(x[is_long], 41, nchar(x)))
-                x
+            labels = function(x) {
+
+                if (max(nchar(x)) <= 24) { # no need to split
+                    return(x)
+                }
+
+                threshold <- min(c(ceiling(max(nchar(x))/3), 24)) # max 24 characters per line
+
+                # split long labels into 2 or 3 lines (4 is too much for quesstions with many replies)
+                for (i in 1:length(x)) {
+
+                    split <- strsplit(x[i], " ")[[1]] # split by space
+
+                    newLabel <- ""
+                    thisRow <- ""
+                    rowCount <- 1
+
+                    for (j in 1:length(split)) {
+                        newLabel <- paste0(newLabel, " ", split[j])
+                        thisRow <- paste0(thisRow, " ", split[j])
+                        if (nchar(thisRow) > threshold) {
+                            rowCount <- rowCount + 1
+                            if (rowCount > 3) { # max 3 lines
+                                newLabel <- paste0(newLabel, "...")
+                                break
+                            }
+                            newLabel <- paste0(newLabel, "\n") # new line
+                            thisRow <- ""
+                        }
+                    }
+
+                    x[i] <- newLabel
+
+                }
+
+                return(x)
+
             },
             position = "top"
         ) +
