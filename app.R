@@ -268,6 +268,30 @@ ui <- shinyUI(fluidPage(
                     class = "hr-filters-separator"
                 ),
                 accordion_panel(
+                    "Culture material",
+                    actionLink("selectAllCultureMaterials", "Select All"),
+                    tags$button(
+                        class = "info-button",
+                        #title = cultureMaterialInfoText,
+                        "?"
+                    ),
+                    tags$span(
+                        class = "info-sections",
+                        cultureMaterialInfoText
+                    ),
+                    checkboxGroupInput(
+                        inputId  = "cultureMaterialsSelection",
+                        label    = "",
+                        choices  = cultureMaterialList,
+                        selected = c(),
+                        inline   = FALSE,
+                        width    = NULL
+                    )
+                ),
+                hr(
+                    class = "hr-filters-separator"
+                ),
+                accordion_panel(
                     "Pathogens",
                     actionLink("selectAllPathogens", "Select All"),
                     tags$button(
@@ -313,30 +337,6 @@ ui <- shinyUI(fluidPage(
                         width    = NULL
                     )
                     
-                ),
-                hr(
-                    class = "hr-filters-separator"
-                ),
-                accordion_panel(
-                    "Culture material",
-                    actionLink("selectAllCultureMaterials", "Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = cultureMaterialInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        cultureMaterialInfoText
-                    ),
-                    checkboxGroupInput(
-                        inputId  = "cultureMaterialsSelection",
-                        label    = "",
-                        choices  = cultureMaterialList,
-                        selected = c(),
-                        inline   = FALSE,
-                        width    = NULL
-                    )
                 )
             )
         ),
@@ -1006,6 +1006,7 @@ server <- function(input, output, session) {
                 l = 0,
                 b = 32
             ),
+            dragmode = FALSE,
             autosize = TRUE
         )
     })
@@ -1062,15 +1063,8 @@ server <- function(input, output, session) {
 
         if (input$questionSelection %in% multipleChoiceShortTitles){
             
-            dashboardMap <- dashboardMap(
-                data = data.frame(
-                    "Country" = intersect(repliedCountries, input$countriesSelection),
-                    "Reply" = countryReplies()[[3]],
-                    "Occurences" = countryReplies()[[4]]
-                ),
-                type = "bar"
-            )
-
+            return(NULL)
+            
         } else {
 
             dashboardMap <- dashboardMap %>% add_trace( # displays results
@@ -1089,26 +1083,6 @@ server <- function(input, output, session) {
                 #colorscale = countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
                 reversescale = FALSE,
                 colors = countryReplies()[[2]],
-                colorbar = list(
-                    tickvals = 1:length(countryReplies()[[2]]),
-                    ticktext = countryReplies()[[3]],
-                    #outlinecolor = rgba(0,0,0,0),
-                    outlinewidth = 0,
-                    thickness = 20, #default 30
-                    color = themeBgColor,
-                    tickcolor = themeFgColor,
-                    x = 0.05,
-                    y = 0.8,
-                    tickfont = list(
-                        color = themeFgColor
-                    ),
-                    title = list(
-                        text = "Reply",
-                        font = list(
-                            color = themeFgColor
-                        )
-                    )
-                ),
                 marker = list(
                     line = list(
                         width = 1,
@@ -1165,6 +1139,7 @@ server <- function(input, output, session) {
                     l = 0,
                     b = 32
                 ),
+                dragmode = FALSE,
                 autosize = TRUE
             )
 
@@ -1178,72 +1153,75 @@ server <- function(input, output, session) {
         if (input$questionSelection == "Participating countries"){
             return(NULL)
         }
+        
+        else {
 
-        ggplot(
-            data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
-            aes(
-                x = reply,
-                y = occurences
-            )
-        ) +
-        geom_bar(
-            aes(x = reply, y = occurences),
-            stat = "identity",
-            fill = countryReplies()[[2]],
-            width = 0.4
-        ) +
-        scale_y_reverse() +
-        coord_flip() +
-        labs(
-            x = "Replies", y = "% of selected countries"
-        ) +
-        scale_x_discrete(
-            labels = function(x) {
+            ggplot(
+                data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
+                aes(
+                    x = reply,
+                    y = occurences
+                )
+            ) +
+            geom_bar(
+                aes(x = reply, y = occurences),
+                stat = "identity",
+                fill = countryReplies()[[2]],
+                width = 0.4
+            ) +
+            scale_y_reverse() +
+            coord_flip() +
+            labs(
+                x = "Replies", y = "% of selected countries"
+            ) +
+            scale_x_discrete(
+                labels = function(x) {
 
-                if (max(nchar(x)) <= 24) { # no need to split
-                    return(x)
-                }
-
-                threshold <- min(c(ceiling(max(nchar(x))/3), 24)) # max 24 characters per line
-
-                # split long labels into 2 or 3 lines (4 is too much for quesstions with many replies)
-                for (i in 1:length(x)) {
-
-                    split <- strsplit(x[i], " ")[[1]] # split by space
-
-                    newLabel <- ""
-                    thisRow <- ""
-                    rowCount <- 1
-
-                    for (j in 1:length(split)) {
-                        newLabel <- paste0(newLabel, " ", split[j])
-                        thisRow <- paste0(thisRow, " ", split[j])
-                        if (nchar(thisRow) > threshold) {
-                            rowCount <- rowCount + 1
-                            if (rowCount > 3) { # max 3 lines
-                                newLabel <- paste0(newLabel, "...")
-                                break
-                            }
-                            newLabel <- paste0(newLabel, "\n") # new line
-                            thisRow <- ""
-                        }
+                    if (max(nchar(x)) <= 24) { # no need to split
+                        return(x)
                     }
 
-                    x[i] <- newLabel
+                    threshold <- min(c(ceiling(max(nchar(x))/3), 24)) # max 24 characters per line
 
-                }
+                    # split long labels into 2 or 3 lines (4 is too much for quesstions with many replies)
+                    for (i in 1:length(x)) {
 
-                return(x)
+                        split <- strsplit(x[i], " ")[[1]] # split by space
 
-            },
-            position = "top"
-        ) +
-        theme(
-            axis.title.y = element_blank(),       # y axis label (remove)
-            axis.title.x = element_text(size=16), # x axis label
-            axis.text.y = element_text(size=18),  # axis ticks
-            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate 
-        )
+                        newLabel <- ""
+                        thisRow <- ""
+                        rowCount <- 1
+
+                        for (j in 1:length(split)) {
+                            newLabel <- paste0(newLabel, " ", split[j])
+                            thisRow <- paste0(thisRow, " ", split[j])
+                            if (nchar(thisRow) > threshold) {
+                                rowCount <- rowCount + 1
+                                if (rowCount > 3) { # max 3 lines
+                                    newLabel <- paste0(newLabel, "...")
+                                    break
+                                }
+                                newLabel <- paste0(newLabel, "\n") # new line
+                                thisRow <- ""
+                            }
+                        }
+
+                        x[i] <- newLabel
+
+                    }
+
+                    return(x)
+
+                },
+                position = "top"
+            ) +
+            theme(
+                axis.title.y = element_blank(),       # y axis label (remove)
+                axis.title.x = element_text(size=16), # x axis label
+                axis.text.y = element_text(size=18),  # axis ticks
+                axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate 
+            )
+        }
     }, height = 700
     )
 

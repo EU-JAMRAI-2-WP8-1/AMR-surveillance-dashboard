@@ -659,7 +659,7 @@
     },
     "9.1": {
         "title": "Is there national guidance on when to take samples for microbiological cultures and other analysis for the following suspected and/or confirmed infections? : Bloodstream infection",
-        "short_title": "National guidance for samplering suspected/confirmed bloodstream infections?",
+        "short_title": "National guidance for sampling suspected/confirmed bloodstream infections?",
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
@@ -704,7 +704,7 @@
     },
     "9.2": {
         "title": "Is there national guidance on when to take samples for microbiological cultures and other analysis for the following suspected and/or confirmed infections? : Uncomplicated UTI",
-        "short_title": "National guidance for samplering suspected/confirmed uncomplicated UTI?",
+        "short_title": "National guidance for sampling suspected/confirmed uncomplicated UTI?",
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
@@ -749,7 +749,7 @@
     },
     "9.3": {
         "title": "Is there national guidance on when to take samples for microbiological cultures and other analysis for the following suspected and/or confirmed infections? : Complicated UTI",
-        "short_title": "National guidance for samplering suspected/confirmed complicated UTI?",
+        "short_title": "National guidance for sampling suspected/confirmed complicated UTI?",
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
@@ -794,7 +794,7 @@
     },
     "9.4": {
         "title": "Is there national guidance on when to take samples for microbiological cultures and other analysis for the following suspected and/or confirmed infections? : Upper respiratory tract infection",
-        "short_title": "National guidance for samplering suspected/confirmed upper respiratory tract infection?",
+        "short_title": "National guidance for sampling suspected/confirmed upper respiratory tract infection?",
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
@@ -839,7 +839,7 @@
     },
     "9.5": {
         "title": "Is there national guidance on when to take samples for microbiological cultures and other analysis for the following suspected and/or confirmed infections? : Lower respiratory tract infection",
-        "short_title": "National guidance for samplering suspected/confirmed lower respiratory tract infection?",
+        "short_title": "National guidance for sampling suspected/confirmed lower respiratory tract infection?",
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
@@ -884,7 +884,7 @@
     },
     "9.6": {
         "title": "Is there national guidance on when to take samples for microbiological cultures and other analysis for the following suspected and/or confirmed infections? : Skin and soft tissue infection",
-        "short_title": "National guidance for samplering suspected/confirmed soft tissue/skin infection?",
+        "short_title": "National guidance for sampling suspected/confirmed soft tissue/skin infection?",
         "type": "SingleChoice",
         "coefficient": 0.167,
         "tags": [
