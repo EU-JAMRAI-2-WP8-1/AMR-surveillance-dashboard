@@ -107,7 +107,7 @@ cultureMaterialInfoText <- "Unselect all culture materials to ignore if question
 allShortTitles <- c()
 multipleChoiceShortTitles <- c()
 for (question in surveyData) {
-    if (question$coefficient == "0") next # skip question without scores
+    #if (question$coefficient == "0") next # skip question without scores
     if ("Section 0" %in% question$tags) next # skip section 0
     if (question$type == "FreeText") next # skip free text questions
     if (question$short_title %in% allShortTitles) next # skip if alredy in (as matrix question have the same short title)
@@ -120,6 +120,31 @@ for (question in surveyData) {
 
 # initiate dicrete colors sequence for maps and plots
 colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000")
+alternativeColorSequence <- c("#0fdbd5", "#f7c948", "#ff6f61", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # colors 2 and 3 reverted
+
+# create a dataset for participation map
+participationData <- data.frame(
+    "country" = euroCountryList,
+    "survey_participation" = rep(NA, length(euroCountryList))
+)
+for (country in euroCountryList) {
+    if (country %in% repliedCountries) {
+        participationData[participationData$country == country, "survey_participation"] <- 1 #"Yes"
+    } else if (country %in% participatingCountries) {
+        participationData[participationData$country == country, "survey_participation"] <- 2 #"No"
+    } else {
+        participationData[participationData$country == country, "survey_participation"] <- 3 #"Not in JAMRAI"
+    }
+}
+participationDataOccurrences <- data.frame(
+    "reply" = c("Yes", "No", "Not in JAMRAI"),
+    "occurences" = c(
+        sum(participationData$survey_participation == 1),
+        sum(participationData$survey_participation == 2),
+        sum(participationData$survey_participation == 3)
+    )
+)
+
 
 ## USER INTERFACE ##
 
@@ -258,7 +283,7 @@ ui <- shinyUI(fluidPage(
                     checkboxGroupInput(
                         inputId  = "countriesSelection",
                         label    = "",
-                        choices  = participatingCountries,
+                        choices  = sort(participatingCountries),
                         selected = participatingCountries,
                         inline   = FALSE,
                         width    = NULL
@@ -338,6 +363,9 @@ ui <- shinyUI(fluidPage(
                     )
                     
                 )
+            ),
+            tags$div(
+                class = "sidebar-filler"
             )
         ),
 
@@ -412,7 +440,10 @@ ui <- shinyUI(fluidPage(
                             "Survey results"
                         )
                     ),
-                    DT::dataTableOutput("resultsTable")
+                    DT::dataTableOutput("resultsTable"),
+                    tags$span(
+                        downloadButton("downloadData", "Download")
+                    )
                 ),
 
                 # map
@@ -762,7 +793,12 @@ server <- function(input, output, session) {
                 }
 
                 # for map: create a custom discrete color scale
-                customColorScale <- colorSequence[1:length(possibleAnswerText)]
+                if (substr(possibleAnswerText[3], 1, 2) == "No") {
+                    ## !! quick fix (to be replaced by better method) - put No reply in red by using color sscale where colors 2 and 3 are reverted
+                    customColorScale <- alternativeColorSequence[1:length(possibleAnswerText)]
+                } else {
+                    customColorScale <- colorSequence[1:length(possibleAnswerText)]
+                }
 
                 # convert to percentage
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
@@ -1037,11 +1073,12 @@ server <- function(input, output, session) {
 
     # 
     output$downloadData <- downloadHandler(
-        filename = "test.csv",
+        #filename = paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d%H%M%S"), ".csv"),
+        filename = paste0("amr_watch_europe-export.csv"),
         content = function(file) {
-            write.csv(mytable(), file, row.names = FALSE)
+            write.csv(createResultsTable(), file, row.names = FALSE)
         }
-    ) # voir https://stackoverflow.com/questions/62926097/download-a-table-created-in-shiny
+    )
 
     output$dashboardMap <- renderPlotly({
 
@@ -1061,11 +1098,40 @@ server <- function(input, output, session) {
             #width = 800
         )
 
-        if (input$questionSelection %in% multipleChoiceShortTitles){
+        if (input$questionSelection == "Participating countries") {
+
+            dashboardMap <- dashboardMap %>% add_trace( # displays results
+                type = 'choropleth',
+                #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
+                geojson = geojsonEurope,
+                locations = participationData$country,
+                z = participationData$survey_participation,
+                zmin = 1,
+                zmax = 3,
+                text = participationData$country,
+                hoverinfo = "text",
+                showlegend = FALSE,
+                #autocolorscale = FALSE,
+                showscale = FALSE,
+                #colorscale = countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
+                reversescale = FALSE,
+                colors = c(colorSequence[1], colorSequence[2], "#b3b3b3"),
+                marker = list(
+                    line = list(
+                        width = 1,
+                        color = themeBgColor
+                    )
+                )
+            )
+        }
+
+        else if (input$questionSelection %in% multipleChoiceShortTitles){
             
             return(NULL)
             
-        } else {
+        }
+        
+        else {
 
             dashboardMap <- dashboardMap %>% add_trace( # displays results
                 type = 'choropleth',
@@ -1077,7 +1143,7 @@ server <- function(input, output, session) {
                 zmax = length(countryReplies()[[2]]),
                 text = intersect(repliedCountries, input$countriesSelection),
                 hoverinfo = "text",
-                showlegend = TRUE,
+                showlegend = FALSE,
                 #autocolorscale = FALSE,
                 showscale = FALSE,
                 #colorscale = countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
@@ -1113,37 +1179,37 @@ server <- function(input, output, session) {
                 )
             )
 
-            dashboardMap <- dashboardMap %>% layout(
-                geo = list(
-                    scope = "europe",
-                    showcountries = FALSE, # hide default map
-                    showframe = FALSE, # hide default map
-                    showland = FALSE, # hide default map
-                    #landcolor = "#cccccc", # inside countries
-                    #countrycolor = themeBgColor, # lines
-                    bgcolor = "rgba(0, 0, 0, 0)", # bg color - inside map (here transparent)
-                    #coastlinecolor = "#fff",
-                    showcoastline = FALSE,
-                    projection = list(
-                        scale = 1.7  # initial zoom
-                    ),
-                    center = list(
-                        lat = 54,
-                        lon = 12
-                    )
-                ),
-                paper_bgcolor = "rgba(0, 0, 0, 0)", # bg color - outside map (here transparent)
-                margin = list(
-                    t = 32,
-                    r = 0,
-                    l = 0,
-                    b = 32
-                ),
-                dragmode = FALSE,
-                autosize = TRUE
-            )
-
         }
+
+        dashboardMap <- dashboardMap %>% layout(
+            geo = list(
+                scope = "europe",
+                showcountries = FALSE, # hide default map
+                showframe = FALSE, # hide default map
+                showland = FALSE, # hide default map
+                #landcolor = "#cccccc", # inside countries
+                #countrycolor = themeBgColor, # lines
+                bgcolor = "rgba(0, 0, 0, 0)", # bg color - inside map (here transparent)
+                #coastlinecolor = "#fff",
+                showcoastline = FALSE,
+                projection = list(
+                    scale = 1.7  # initial zoom
+                ),
+                center = list(
+                    lat = 54,
+                    lon = 12
+                )
+            ),
+            paper_bgcolor = "rgba(0, 0, 0, 0)", # bg color - outside map (here transparent)
+            margin = list(
+                t = 32,
+                r = 0,
+                l = 0,
+                b = 32
+            ),
+            dragmode = FALSE,
+            autosize = TRUE
+        )
 
         
     })
@@ -1151,12 +1217,25 @@ server <- function(input, output, session) {
     output$dashboardPlot <- renderPlot({
 
         if (input$questionSelection == "Participating countries"){
-            return(NULL)
+
+            dashboardPlot <- ggplot(
+                data = participationDataOccurrences,
+                aes(
+                    x = reply,
+                    y = occurences
+                )
+            ) +
+            geom_bar(
+                aes(x = factor(reply, level = rev(unique(reply))), y = occurences),
+                stat = "identity",
+                fill = c(colorSequence[1], colorSequence[2], "#b3b3b3"),
+                width = 0.4
+            )
         }
         
         else {
 
-            ggplot(
+            dashboardPlot <- ggplot(
                 data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
                 aes(
                     x = reply,
@@ -1164,64 +1243,69 @@ server <- function(input, output, session) {
                 )
             ) +
             geom_bar(
-                aes(x = reply, y = occurences),
+                aes(x = factor(reply, level = rev(unique(countryReplies()[[3]]))), y = occurences),
                 stat = "identity",
                 fill = countryReplies()[[2]],
                 width = 0.4
-            ) +
-            scale_y_reverse() +
-            coord_flip() +
-            labs(
-                x = "Replies", y = "% of selected countries"
-            ) +
-            scale_x_discrete(
-                labels = function(x) {
-
-                    if (max(nchar(x)) <= 24) { # no need to split
-                        return(x)
-                    }
-
-                    threshold <- min(c(ceiling(max(nchar(x))/3), 24)) # max 24 characters per line
-
-                    # split long labels into 2 or 3 lines (4 is too much for quesstions with many replies)
-                    for (i in 1:length(x)) {
-
-                        split <- strsplit(x[i], " ")[[1]] # split by space
-
-                        newLabel <- ""
-                        thisRow <- ""
-                        rowCount <- 1
-
-                        for (j in 1:length(split)) {
-                            newLabel <- paste0(newLabel, " ", split[j])
-                            thisRow <- paste0(thisRow, " ", split[j])
-                            if (nchar(thisRow) > threshold) {
-                                rowCount <- rowCount + 1
-                                if (rowCount > 3) { # max 3 lines
-                                    newLabel <- paste0(newLabel, "...")
-                                    break
-                                }
-                                newLabel <- paste0(newLabel, "\n") # new line
-                                thisRow <- ""
-                            }
-                        }
-
-                        x[i] <- newLabel
-
-                    }
-
-                    return(x)
-
-                },
-                position = "top"
-            ) +
-            theme(
-                axis.title.y = element_blank(),       # y axis label (remove)
-                axis.title.x = element_text(size=16), # x axis label
-                axis.text.y = element_text(size=18),  # axis ticks
-                axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate 
             )
         }
+
+        dashboardPlot <- dashboardPlot +
+        scale_y_reverse() +
+        coord_flip() +
+        labs(
+            x = "Replies", y = "% of selected countries"
+        ) +
+        scale_x_discrete(
+            labels = function(x) {
+
+                if (max(nchar(x)) <= 24) { # no need to split
+                    return(x)
+                }
+
+                threshold <- min(c(ceiling(max(nchar(x))/3), 24)) # max 24 characters per line
+
+                # split long labels into 2 or 3 lines (4 is too much for quesstions with many replies)
+                for (i in 1:length(x)) {
+
+                    split <- strsplit(x[i], " ")[[1]] # split by space
+
+                    newLabel <- ""
+                    thisRow <- ""
+                    rowCount <- 1
+
+                    for (j in 1:length(split)) {
+                        newLabel <- paste0(newLabel, " ", split[j])
+                        thisRow <- paste0(thisRow, " ", split[j])
+                        if (nchar(thisRow) > threshold) {
+                            rowCount <- rowCount + 1
+                            if (rowCount > 3) { # max 3 lines
+                                newLabel <- paste0(newLabel, "...")
+                                break
+                            }
+                            newLabel <- paste0(newLabel, "\n") # new line
+                            thisRow <- ""
+                        }
+                    }
+
+                    x[i] <- newLabel
+
+                }
+
+                return(x)
+
+            },
+            position = "top"
+        ) +
+        theme(
+            axis.title.y = element_blank(),       # y axis label (remove)
+            axis.title.x = element_text(size=16), # x axis label
+            axis.text.y = element_text(size=18),  # axis ticks
+            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate 
+        )
+
+        dashboardPlot
+
     }, height = 700
     )
 
