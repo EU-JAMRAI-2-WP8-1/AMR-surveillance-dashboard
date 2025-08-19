@@ -3,9 +3,10 @@ services:
     build: .
     image: shiny-app
     command: Rscript --verbose /home/shiny-app/app.R
+    working_dir: /srv/shiny-server
     volumes:
       - ./app.R:/home/shiny-app/app.R
-      - ./files/css/style.css:/srv/shiny-server/www/css/style.css
-      - ./files/js/script.js:/srv/shiny-server/www/js/script.js
+      - ./www/css/style.css:/srv/shiny-server/www/css/style.css
+      - ./www/js/script.js:/srv/shiny-server/www/js/script.js
     ports:
       - 8180:8180

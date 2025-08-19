@@ -21,8 +21,8 @@ options(shiny.host = "0.0.0.0")
 options(shiny.port = 8180)
 
 # Add resource directory to server
-#shiny::addResourcePath('www', '/srv/shiny-server/www')
-shiny::addResourcePath(prefix = 'www', directoryPath = './www')
+#shiny::addResourcePath(prefix = 'www', directoryPath = '/srv/shiny-server/www') ## DOCKER
+shiny::addResourcePath(prefix = 'www', directoryPath = './www') ## R
 
 # Set the app files directory
 #appFilesDirectory = "/home/shiny-app/files"
@@ -63,7 +63,7 @@ thematic_shiny(
 #euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
 
 # Import Europe polygons
-geojsonEurope = rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) ## working
+geojsonEurope = rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) # SHINY
 
 ## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries (modified to include only european countries)
 
@@ -72,7 +72,7 @@ surveyDataFile <- file.path("www/data/OUT_questions_and_replies.json")
 surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
 
 # Import survey score table from CSV - set first column as row names
-countryScoreTable <- read.csv("www/data/OUT_country_scores.csv", header=TRUE) #row.names = 1,
+countryScoreTable <- read.csv("www/data/OUT_country_scores.csv", header=TRUE)
 
 # Europe country list
 euroCountryList <- c()
@@ -80,7 +80,7 @@ for (country in geojsonEurope$features) {
     euroCountryList <- c(euroCountryList, country$id)
 }
 
-# Country question index (might change in future versions of the survey)
+# Country question index (/!\ might change in future versions of the survey)
 countryQuestionIndex <- 3
 
 # Participating country list
@@ -94,14 +94,14 @@ nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / resistances / culture materials
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
-pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile") # VRE -> "E. faecium", "E. faecalis"
+pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile")
 resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
 cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool")
 
 # info text
-pathogensInfoText       <- "Unselect all pathogens to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus one one or several pathogens, select the pathogen(s) you need."
-resistancesInfoText     <- "Unselect all resistances to ignore if questions are resistance-specific or not.\nTo keep only resistance-specific questions, select all.\nTo focus one one or several resistances, select the resistance(s) you need."
-cultureMaterialInfoText <- "Unselect all culture materials to ignore if questions are material-specific or not.\nTo keep only material-specific questions, select all.\nTo focus one one or several culture material, select the one(s) you need."
+pathogensInfoText       <- "Unselect all pathogens to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus on one or several pathogens, select the pathogen(s) you need."
+resistancesInfoText     <- "Unselect all resistances to ignore if questions are resistance-specific or not.\nTo keep only resistance-specific questions, select all.\nTo focus on one or several resistances, select the resistance(s) you need."
+cultureMaterialInfoText <- "Unselect all culture materials to ignore if questions are material-specific or not.\nTo keep only material-specific questions, select all.\nTo focus on one or several culture materials, select the one(s) you need."
 
 # get all questions (short titles) for question filter + set list of multiple choice questions (short titles)
 allShortTitles <- c()
@@ -120,7 +120,7 @@ for (question in surveyData) {
 
 # initiate dicrete colors sequence for maps and plots
 colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000")
-alternativeColorSequence <- c("#0fdbd5", "#f7c948", "#ff6f61", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # colors 2 and 3 reverted
+alternativeColorSequence <- c("#0fdbd5", "#f7c948", "#ff6f61", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # colors 2 and 3 reverted (quick fix for "No" reply at 3rd position)
 
 # create a dataset for participation map
 participationData <- data.frame(

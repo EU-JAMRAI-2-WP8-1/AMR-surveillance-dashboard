@@ -5,6 +5,11 @@
 
 ### For Linux:
 
+#### Using RStudio
+*todo*
+
+#### Using Docker
+
 - Install Docker (for Ubuntu, see: https://docs.docker.com/engine/install/ubuntu/)
 - Clone the repository on your PC
 
@@ -16,9 +21,14 @@
 
     `docker compose up`
 - Open a browser at "http://localhost:8180/"
-- To stop the application, press ctrl-c on the terminal
+- To stop the application, press `ctrl-c` on the terminal
 
 ### For Windows
+
+#### Using Rstudio
+*todo*
+
+#### Using Docker
 
 - Be sure that Git is installed on your PC (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - Install Docker Desktop for Windows, see instructions at https://docs.docker.com/desktop/setup/install/windows-install/

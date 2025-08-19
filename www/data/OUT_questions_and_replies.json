@@ -540,7 +540,7 @@
     },
     "8": {
         "title": "You answered \"no national guidance for empiric antibiotic treatment\" for one or several infections in the question above. Who or which institution(s) guide(s) and determine(s) empiric antibiotic treatment? (Tick all that apply)",
-        "short_title": "If not AST data, which institution(s) guide(s) and determine(s) empiric treatment? ",
+        "short_title": "If no national guidance, which institution(s) guide(s) and determine(s) empiric treatment? ",
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
@@ -929,7 +929,7 @@
     },
     "10": {
         "title": "You answered \u201cno national guidance on when to take samples for microbiological cultures\u201d for one or several infections in the question above: Who or which institution(s) guide(s) and determine(s) when a sample should be taken for microbiological cultures? (Tick all that apply)",
-        "short_title": "If no national guidance, which institution(s) guide(s) and determine(s) sampeling?",
+        "short_title": "If no national guidance, which institution(s) guide(s) and determine(s) sampling?",
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
@@ -2106,7 +2106,7 @@
         "coefficient": 0.077,
         "tags": [
             "National genomic surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Vancomycin"
         ],
         "possible_answers": {
@@ -4539,7 +4539,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Vancomycin",
             "Screening"
         ],
@@ -5057,7 +5057,7 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "3CG",
+            "3rd-generation Cephalosporin",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -6043,7 +6043,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Vancomycin",
             "Blood"
         ],
@@ -6090,7 +6090,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Vancomycin",
             "Urine"
         ],
@@ -6913,7 +6913,7 @@
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Vancomycin"
         ],
         "possible_answers": {
@@ -7402,7 +7402,7 @@
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Vancomycin"
         ],
         "possible_answers": {
@@ -7842,7 +7842,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Blood"
         ],
         "possible_answers": {
@@ -8234,7 +8234,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Urine"
         ],
         "possible_answers": {
@@ -9349,7 +9349,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Blood"
         ],
         "possible_answers": {
@@ -9725,7 +9725,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Urine"
         ],
         "possible_answers": {
@@ -14111,7 +14111,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Urine",
             "Vancomycin"
         ],
@@ -15931,7 +15931,7 @@
             "National surveillance",
             "K. pneumoniae",
             "Respiratory tract",
-            "3CG"
+            "3rd-generation Cephalosporin"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -18020,7 +18020,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Screening",
             "Vancomycin"
         ],
@@ -18537,7 +18537,7 @@
             "National surveillance",
             "E. coli",
             "Urine",
-            "3CG"
+            "3rd-generation Cephalosporin"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -18701,7 +18701,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Enterococcus faecium/faecalis",
+            "E. faecium/faecalis",
             "Blood",
             "Vancomycin"
         ],
