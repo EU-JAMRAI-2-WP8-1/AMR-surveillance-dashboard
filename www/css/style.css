@@ -114,6 +114,10 @@
     padding-right: 0;
 }
 
+.btn {
+    border-radius: 0 !important;
+}
+
 
 /* OVERWRITE SHINY DEFAULT */
 

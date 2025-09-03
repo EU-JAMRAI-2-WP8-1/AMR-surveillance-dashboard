@@ -61,7 +61,6 @@ thematic_shiny(
 #euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
 
 # Import Europe polygons
-##geojsonEurope = rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson"))
 geojsonEurope <- tryCatch({
     rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) # rjson
     ##jsonlite::read_json("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson") # jsonlite (unused -> slows down process)
@@ -74,7 +73,6 @@ geojsonEurope <- tryCatch({
 
 # Import survey questions and replies from JSON
 surveyDataFile <- file.path("www/data/OUT_questions_and_replies.json")
-##surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
 surveyData <- tryCatch({
     rjson::fromJSON(paste(readLines(surveyDataFile), collapse="")) # rjson
     ##jsonlite::fromJSON(surveyDataFile) # jsonlite
@@ -84,7 +82,6 @@ surveyData <- tryCatch({
 })
 
 # Import survey score table from CSV - set first column as row names
-##countryScoreTable <- read.csv("www/data/OUT_country_scores.csv", header=TRUE)
 countryScoreTable <- tryCatch({
     read.csv("www/data/OUT_country_scores.csv", header=TRUE)
 }, error = function(e) {
@@ -267,7 +264,7 @@ ui <- shinyUI(fluidPage(
 
             tags$span(
                 class = "reset-filters-wrapper",
-                actionButton("resetFilters", "Reset filters")
+                actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
             ),
 
             accordion(
@@ -460,7 +457,7 @@ ui <- shinyUI(fluidPage(
                     ),
                     DT::dataTableOutput("resultsTable"),
                     tags$span(
-                        downloadButton("downloadData", "Download")
+                        downloadButton("downloadData", "Download",class = "btn btn-outline-primary")
                     )
                 ),
 
@@ -500,7 +497,6 @@ ui <- shinyUI(fluidPage(
 
                         column(
                             width = 3,
-                            ## ici ajouter toutes les infos nécessaires
                             tags$div(
                                 class = "map-info-container",
                                 HTML("<i>See the \"Info\" tab for information about scores</i>"),
@@ -524,16 +520,13 @@ ui <- shinyUI(fluidPage(
                     fluidRow(
                         tags$div(
                             class = "about-container",
-                            ##includeHTML("www/html/about.html"),
-                            ##HTML("<br>"),
-                            ##includeHTML("www/html/legal.html"),
                             tryCatch({
                                 includeHTML("www/html/about.html")
                             }, error = function(e) {
                                 HTML("<p>About information unavailable</p>")
                             }),
                             HTML("<br><br>"),
-                            actionButton("showLegalModal", "Legal Information", class = "btn btn-outline-primary")
+                            actionButton("showLegalModal", "Legal Information", class = "btn btn-outline-primary", icon = icon("scale-balanced"))
                         )
                     )
                 )
@@ -865,10 +858,6 @@ server <- function(input, output, session) {
 
                 # get country answers and stack them in a single vector
                 actualAnswers <- question[["actual_answers"]]
-                ##allActualAnswers <- c()
-                ##for (country in names(actualAnswers)) {
-                ##    allActualAnswers <- c(allActualAnswers, actualAnswers[[country]])
-                ##}
                 allActualAnswers <- unlist(actualAnswers, use.names = FALSE)
 
                 # loop over possible answers and get occurence of each
@@ -954,14 +943,6 @@ server <- function(input, output, session) {
     countryReplies <- reactive({
         getSingleQuestionReplies()
     })
-
-    ##activeQuestionShortTitles <- reactive({
-    ##    getActiveQuestions()[[2]]
-    ##})
-
-    ##activeQuestionTitles <- reactive({
-    ##    getActiveQuestions()[[1]]
-    ##})
 
     activeQuestions <- reactive({
         getActiveQuestions()
