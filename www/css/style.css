@@ -56,13 +56,12 @@
 .info-sections {
     display: none;
     position: absolute;
-    background-color: rgba(127, 127, 127, 1);
+    background-color: #fff;
     width: 256px;
     left: 64px;
-    border-radius: 0 0 4px 4px;
     padding: 4px;
     z-index: 999;
-
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
 }
 
 .info-button:hover + .info-sections {

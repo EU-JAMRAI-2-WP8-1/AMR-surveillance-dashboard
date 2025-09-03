@@ -2,19 +2,17 @@
 ## SETUP ##
 
 # import libraries
-require(shiny)
-require(shinyWidgets)
-require(readxl)
-require(rjson)
-require(jsonlite)
-require(dplyr)
-require(ggplot2)
-require(plotly)
-require(gapminder)
-require(bslib)
-require(thematic)
-require(stringr)
-require(DT)
+library(shiny)
+library(shinyWidgets)
+#library(jsonlite)
+library(rjson)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(bslib)
+library(thematic)
+library(stringr)
+library(DT)
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
@@ -63,16 +61,36 @@ thematic_shiny(
 #euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
 
 # Import Europe polygons
-geojsonEurope = rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) # SHINY
+##geojsonEurope = rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson"))
+geojsonEurope <- tryCatch({
+    rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) # rjson
+    ##jsonlite::read_json("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson") # jsonlite (unused -> slows down process)
+}, error = function(e) {
+    showNotification("Error loading map data", type = "error")
+    return(list(features = list())) # Return empty structure
+})
 
 ## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries (modified to include only european countries)
 
 # Import survey questions and replies from JSON
 surveyDataFile <- file.path("www/data/OUT_questions_and_replies.json")
-surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
+##surveyData     <- rjson::fromJSON(paste(readLines(surveyDataFile), collapse=""))
+surveyData <- tryCatch({
+    rjson::fromJSON(paste(readLines(surveyDataFile), collapse="")) # rjson
+    ##jsonlite::fromJSON(surveyDataFile) # jsonlite
+}, error = function(e) {
+    showNotification("Error loading survey data", type = "error")
+    return(NULL)
+})
 
 # Import survey score table from CSV - set first column as row names
-countryScoreTable <- read.csv("www/data/OUT_country_scores.csv", header=TRUE)
+##countryScoreTable <- read.csv("www/data/OUT_country_scores.csv", header=TRUE)
+countryScoreTable <- tryCatch({
+    read.csv("www/data/OUT_country_scores.csv", header=TRUE)
+}, error = function(e) {
+    showNotification("Error loading country scores", type = "error")
+    return(data.frame()) # Return empty dataframe
+})
 
 # Europe country list
 euroCountryList <- c()
@@ -506,9 +524,16 @@ ui <- shinyUI(fluidPage(
                     fluidRow(
                         tags$div(
                             class = "about-container",
-                            includeHTML("www/html/about.html"),
-                            HTML("<br>"),
-                            includeHTML("www/html/legal.html"),
+                            ##includeHTML("www/html/about.html"),
+                            ##HTML("<br>"),
+                            ##includeHTML("www/html/legal.html"),
+                            tryCatch({
+                                includeHTML("www/html/about.html")
+                            }, error = function(e) {
+                                HTML("<p>About information unavailable</p>")
+                            }),
+                            HTML("<br><br>"),
+                            actionButton("showLegalModal", "Legal Information", class = "btn btn-outline-primary")
                         )
                     )
                 )
@@ -587,21 +612,35 @@ server <- function(input, output, session) {
         }
     })
 
+    # Legal information modal
+    observeEvent(input$showLegalModal, {
+        showModal(modalDialog(
+            title = "Legal Information",
+            tryCatch({
+                includeHTML("www/html/legal.html")
+            }, error = function(e) {
+                HTML("<p>Legal information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = modalButton("Close")
+        ))
+    })
+
     # update the question selection list
     observeEvent(input$sectionsSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
 
     observeEvent(input$pathogensSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
 
     observeEvent(input$resistancesSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
 
     observeEvent(input$cultureMaterialsSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestionShortTitles()), selected = c("Participating countries"))
+        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
 
 
@@ -639,7 +678,7 @@ server <- function(input, output, session) {
             ## check if question must be taken or not ##
 
             # if question not in selected question list, skip it
-            if (!(countryScoreTable[1, column] %in% activeQuestionTitles())) next
+            if (!(countryScoreTable[1, column] %in% activeQuestions()[[1]])) next
 
             activeQuestionsAmount <- activeQuestionsAmount + as.double(countryScoreTable[3, column])
 
@@ -688,7 +727,7 @@ server <- function(input, output, session) {
         tags <- c()
 
         # get active questions (titles)
-        activeQuestions <- activeQuestionTitles()
+        activeQuestions <- activeQuestions()[[1]]
 
         # loop once over questions to retrieve question titles and tags
         for (question in surveyData) {
@@ -733,7 +772,7 @@ server <- function(input, output, session) {
     getSingleQuestionReplies <- function() {
         # 
 
-        # if selected question is "Participqting countries", just return output
+        # if selected question is "Participating countries", just return output
         if (input$questionSelection == "Participating countries"){
             return(
                 list(
@@ -793,9 +832,14 @@ server <- function(input, output, session) {
                 }
 
                 # for map: create a custom discrete color scale
-                if (substr(possibleAnswerText[3], 1, 2) == "No") {
-                    ## !! quick fix (to be replaced by better method) - put No reply in red by using color sscale where colors 2 and 3 are reverted
-                    customColorScale <- alternativeColorSequence[1:length(possibleAnswerText)]
+                if (length(possibleAnswerText) > 2) {
+                    if (substr(possibleAnswerText[3], 1, 2) == "No") {
+                        ## !! quick fix (to be replaced by better method) - put No reply in red by using color sscale where colors 2 and 3 are reverted
+                        customColorScale <- alternativeColorSequence[1:length(possibleAnswerText)]
+                    }
+                    else {
+                        customColorScale <- colorSequence[1:length(possibleAnswerText)]
+                    }
                 } else {
                     customColorScale <- colorSequence[1:length(possibleAnswerText)]
                 }
@@ -821,10 +865,11 @@ server <- function(input, output, session) {
 
                 # get country answers and stack them in a single vector
                 actualAnswers <- question[["actual_answers"]]
-                allActualAnswers <- c()
-                for (country in names(actualAnswers)) {
-                    allActualAnswers <- c(allActualAnswers, actualAnswers[[country]])
-                }
+                ##allActualAnswers <- c()
+                ##for (country in names(actualAnswers)) {
+                ##    allActualAnswers <- c(allActualAnswers, actualAnswers[[country]])
+                ##}
+                allActualAnswers <- unlist(actualAnswers, use.names = FALSE)
 
                 # loop over possible answers and get occurence of each
                 possibleAnswerOccurences <- c()
@@ -910,12 +955,18 @@ server <- function(input, output, session) {
         getSingleQuestionReplies()
     })
 
-    activeQuestionShortTitles <- reactive({
-        getActiveQuestions()[[2]]
-    })
+    ##activeQuestionShortTitles <- reactive({
+    ##    getActiveQuestions()[[2]]
+    ##})
 
-    activeQuestionTitles <- reactive({
-        getActiveQuestions()[[1]]
+    ##activeQuestionTitles <- reactive({
+    ##    getActiveQuestions()[[1]]
+    ##})
+
+    activeQuestions <- reactive({
+        getActiveQuestions()
+        # use activeQuestions()[[1]] for titles
+        # use activeQuestions()[[2]] for short titles
     })
 
     getNonParticipatingCountries <- reactive({
@@ -926,7 +977,7 @@ server <- function(input, output, session) {
         data.frame(
             "Country" = intersect(repliedCountries, input$countriesSelection),
             "Score" = round(countryScores()[[1]]* 100, 1),
-            "Answered" = round((countryScores()[[2]] / (length(activeQuestionTitles) / 100)), 1)
+            "Answered" = round((countryScores()[[2]] / (length(activeQuestions()[[1]]) / 100)), 1)
         )
     })
 
