@@ -37,6 +37,10 @@
     background-color:#cccccc;
 }
 
+.medium-grey-text {
+    color:#888888;
+}
+
 .info-button {
     width: 24px;
     height: 24px;
@@ -340,6 +344,9 @@
         margin-bottom: 24px;
     }
 
+    .dashboard-map-box {
+        margin-top: 320px;
+    }
 
     .tab-text {
         display: none;

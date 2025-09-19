@@ -423,11 +423,11 @@ ui <- shinyUI(fluidPage(
                         column(
                             width = 7,
                             tags$div(
-                                class = "",
+                                class = "dashboard-map-box",
                                 plotlyOutput(outputId = "dashboardMap", width = "100%", height = "780px")
                             ),
                             tags$div(
-                                class = "map-source-text",
+                                class = "map-source-text medium-grey-text",
                                 "Map source: ",
                                 tags$a(
                                     href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
@@ -484,7 +484,7 @@ ui <- shinyUI(fluidPage(
                                     plotlyOutput(outputId = "scoresMap", width = "100%", height = "780px")
                                 ),
                                 tags$div(
-                                    class = "map-source-text",
+                                    class = "map-source-text medium-grey-text",
                                     "Map source: ",
                                     tags$a(
                                         href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
