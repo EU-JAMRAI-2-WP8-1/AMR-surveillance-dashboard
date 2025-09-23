@@ -958,7 +958,7 @@ server <- function(input, output, session) {
         data.frame(
             "Country" = intersect(repliedCountries, input$countriesSelection),
             "Score" = round(countryScores()[[1]]* 100, 1),
-            "Answered" = round((countryScores()[[2]] / (length(activeQuestions()[[1]]) / 100)), 1)
+            "Answered" = round(countryScores()[[2]] * 100, 1)
         )
     })
 

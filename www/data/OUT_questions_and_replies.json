@@ -2006,7 +2006,7 @@
         }
     },
     "19.8": {
-        "title": "Which of the following pathogens routinely undergo WGS as part of the national surveillance of AMR? : A. baumanii (carbapenem R and/or P) : WGS performed",
+        "title": "Which of the following pathogens routinely undergo WGS as part of the national surveillance of AMR? : A. baumannii (carbapenem R and/or P) : WGS performed",
         "short_title": "A. baumanii (carbapenem R and/or P) - WGS as part of AMR surveillance?",
         "type": "SingleChoice",
         "coefficient": 0.077,
@@ -4627,7 +4627,7 @@
         }
     },
     "36.19": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumanii (carbapenem R and/or P) : Screening",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Screening",
         "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - screening.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5426,7 +5426,7 @@
         }
     },
     "36.36": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumanii (carbapenem R and/or P) : Lower respiratory tract",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Lower respiratory tract",
         "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5473,7 +5473,7 @@
         }
     },
     "36.37": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumanii (carbapenem R and/or P) : Blood/CSF",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Blood/CSF",
         "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - blood.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5520,7 +5520,7 @@
         }
     },
     "36.38": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumanii (carbapenem R and/or P) : Urine",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Wound/Tissue swab",
         "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - urine.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5559,7 +5559,7 @@
             "Slovenia": "No",
             "Estonia": "Yes, mandatory",
             "Sweden": "Yes, voluntary",
-            "Ukraine": "No",
+            "Ukraine": "Yes, mandatory",
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
@@ -5567,7 +5567,7 @@
         }
     },
     "36.39": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumanii (carbapenem R and/or P) : Wound/Tissue swab",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Lower respiratory tract",
         "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - soft tissue.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5589,24 +5589,24 @@
             "Lithuania": "No",
             "Croatia": "No",
             "Netherlands": "Yes, voluntary",
-            "Ireland": "Yes, voluntary",
-            "Germany": "Yes, mandatory",
+            "Ireland": "Yes, mandatory",
+            "Germany": "Yes, voluntary",
             "Poland": "Yes, mandatory",
             "Italy": "No",
             "Greece": "Yes, voluntary",
             "France": "Yes, voluntary",
-            "Czechia": "Yes, voluntary",
+            "Czechia": "No",
             "Belgium": "Yes, mandatory",
             "Hungary": "Yes, mandatory",
-            "Finland": "No",
+            "Finland": "Yes, mandatory",
             "Luxembourg": "Yes, voluntary",
             "Malta": "Yes, voluntary",
             "Portugal": "No",
             "Norway": "Yes, mandatory",
             "Slovenia": "No",
             "Estonia": "Yes, mandatory",
-            "Sweden": "Yes, voluntary",
-            "Ukraine": "Yes, mandatory",
+            "Sweden": "Yes, mandatory",
+            "Ukraine": "No",
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
             "Latvia": "No",
@@ -5614,7 +5614,7 @@
         }
     },
     "36.40": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Lower respiratory tract",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Upper respiratory tract",
         "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5631,7 +5631,7 @@
         },
         "actual_answers": {
             "Bulgaria": "Yes, voluntary",
-            "Spain": "Yes, voluntary",
+            "Spain": "Yes, mandatory",
             "Austria": "Yes, voluntary",
             "Lithuania": "No",
             "Croatia": "No",
@@ -5661,7 +5661,7 @@
         }
     },
     "36.41": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Upper respiratory tract",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Lower respiratory tract",
         "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - upper respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5678,37 +5678,37 @@
         },
         "actual_answers": {
             "Bulgaria": "Yes, voluntary",
-            "Spain": "Yes, mandatory",
+            "Spain": "Yes, voluntary",
             "Austria": "Yes, voluntary",
             "Lithuania": "No",
             "Croatia": "No",
             "Netherlands": "Yes, voluntary",
-            "Ireland": "Yes, mandatory",
+            "Ireland": "Yes, voluntary",
             "Germany": "Yes, voluntary",
             "Poland": "Yes, mandatory",
             "Italy": "No",
             "Greece": "Yes, voluntary",
             "France": "Yes, voluntary",
-            "Czechia": "No",
-            "Belgium": "Yes, mandatory",
+            "Czechia": "Yes, voluntary",
+            "Belgium": "Yes, voluntary",
             "Hungary": "Yes, mandatory",
-            "Finland": "Yes, mandatory",
+            "Finland": "No",
             "Luxembourg": "Yes, voluntary",
             "Malta": "Yes, voluntary",
-            "Portugal": "No",
+            "Portugal": "Yes, voluntary",
             "Norway": "Yes, mandatory",
             "Slovenia": "No",
             "Estonia": "Yes, mandatory",
             "Sweden": "Yes, mandatory",
             "Ukraine": "No",
             "Slovak Republic": "Yes, voluntary",
-            "Denmark": "Yes, mandatory",
+            "Denmark": "No",
             "Latvia": "No",
-            "Iceland": "Yes, mandatory"
+            "Iceland": "Yes, voluntary"
         }
     },
     "36.42": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Lower respiratory tract",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Lower respiratory tract",
         "short_title": "Which pathogens are under mandatory national surveillance? Penicillin resistant S. pneumoniae - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5724,15 +5724,15 @@
             "No": 0
         },
         "actual_answers": {
-            "Bulgaria": "Yes, voluntary",
-            "Spain": "Yes, voluntary",
+            "Bulgaria": "No",
+            "Spain": "No",
             "Austria": "Yes, voluntary",
             "Lithuania": "No",
             "Croatia": "No",
             "Netherlands": "Yes, voluntary",
-            "Ireland": "Yes, voluntary",
+            "Ireland": "No",
             "Germany": "Yes, voluntary",
-            "Poland": "Yes, mandatory",
+            "Poland": "Yes, voluntary",
             "Italy": "No",
             "Greece": "Yes, voluntary",
             "France": "Yes, voluntary",
@@ -5743,10 +5743,10 @@
             "Luxembourg": "Yes, voluntary",
             "Malta": "Yes, voluntary",
             "Portugal": "Yes, voluntary",
-            "Norway": "Yes, mandatory",
+            "Norway": "Yes, voluntary",
             "Slovenia": "No",
             "Estonia": "Yes, mandatory",
-            "Sweden": "Yes, mandatory",
+            "Sweden": "Yes, voluntary",
             "Ukraine": "No",
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "No",
@@ -5755,7 +5755,7 @@
         }
     },
     "36.43": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Lower respiratory tract",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Upper respiratory tract",
         "short_title": "Which pathogens are under mandatory national surveillance? Ampicillin resistant H. influenzae - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
@@ -5771,53 +5771,6 @@
             "No": 0
         },
         "actual_answers": {
-            "Bulgaria": "No",
-            "Spain": "No",
-            "Austria": "Yes, voluntary",
-            "Lithuania": "No",
-            "Croatia": "No",
-            "Netherlands": "Yes, voluntary",
-            "Ireland": "No",
-            "Germany": "Yes, voluntary",
-            "Poland": "Yes, voluntary",
-            "Italy": "No",
-            "Greece": "Yes, voluntary",
-            "France": "Yes, voluntary",
-            "Czechia": "Yes, voluntary",
-            "Belgium": "Yes, voluntary",
-            "Hungary": "Yes, mandatory",
-            "Finland": "No",
-            "Luxembourg": "Yes, voluntary",
-            "Malta": "Yes, voluntary",
-            "Portugal": "Yes, voluntary",
-            "Norway": "Yes, voluntary",
-            "Slovenia": "No",
-            "Estonia": "Yes, mandatory",
-            "Sweden": "Yes, voluntary",
-            "Ukraine": "No",
-            "Slovak Republic": "Yes, voluntary",
-            "Denmark": "No",
-            "Latvia": "No",
-            "Iceland": "Yes, voluntary"
-        }
-    },
-    "36.44": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Upper respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? Penicillin resistant S. pneumoniae - upper respiratory tract.",
-        "type": "SingleChoice",
-        "coefficient": 0.019,
-        "tags": [
-            "National surveillance",
-            "S. pneumoniae",
-            "Penicillin",
-            "Respiratory tract"
-        ],
-        "possible_answers": {
-            "Yes, mandatory": 1,
-            "Yes, voluntary": 1,
-            "No": 0
-        },
-        "actual_answers": {
             "Bulgaria": "Yes, voluntary",
             "Spain": "Yes, voluntary",
             "Austria": "Yes, voluntary",
@@ -5848,15 +5801,15 @@
             "Iceland": "Yes, voluntary"
         }
     },
-    "36.45": {
+    "36.44": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Upper respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? Ampicillin resistant H. influenzae - upper respiratory tract.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Penicillin resistant S. pneumoniae - upper respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "H. influenzae",
-            "Ampicillin",
+            "S. pneumoniae",
+            "Penicillin",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -5895,16 +5848,16 @@
             "Iceland": "Yes, voluntary"
         }
     },
-    "36.46": {
+    "36.45": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Wound/Tissue swab",
-        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - soft tissue.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Ampicillin resistant H. influenzae - upper respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "S. aureus",
-            "Methicillin",
-            "Soft tissue"
+            "H. influenzae",
+            "Ampicillin",
+            "Respiratory tract"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -5942,63 +5895,16 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.47": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - Urine.",
-        "type": "SingleChoice",
-        "coefficient": 0.019,
-        "tags": [
-            "National surveillance",
-            "S. aureus",
-            "Methicillin",
-            "Urine"
-        ],
-        "possible_answers": {
-            "Yes, mandatory": 1,
-            "Yes, voluntary": 1,
-            "No": 0
-        },
-        "actual_answers": {
-            "Bulgaria": "Yes, voluntary",
-            "Spain": "Yes, mandatory",
-            "Austria": "Yes, voluntary",
-            "Lithuania": "No",
-            "Croatia": "No",
-            "Netherlands": "Yes, voluntary",
-            "Ireland": "Yes, mandatory",
-            "Germany": "Yes, voluntary",
-            "Poland": "No",
-            "Italy": "No",
-            "Greece": "Yes, voluntary",
-            "France": "Yes, voluntary",
-            "Czechia": "No",
-            "Belgium": "Yes, mandatory",
-            "Hungary": "Yes, mandatory",
-            "Finland": "Yes, mandatory",
-            "Luxembourg": "Yes, voluntary",
-            "Malta": "Yes, voluntary",
-            "Portugal": "No",
-            "Norway": "Yes, mandatory",
-            "Slovenia": "No",
-            "Estonia": "No",
-            "Sweden": "Yes, mandatory",
-            "Ukraine": "No",
-            "Slovak Republic": "Yes, voluntary",
-            "Denmark": "Yes, mandatory",
-            "Latvia": "No",
-            "Iceland": "Yes, mandatory"
-        }
-    },
-    "36.48": {
+    "36.46": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - soft tissue.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
             "S. aureus",
             "Methicillin",
-            "Blood"
+            "Soft tissue"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -6036,16 +5942,16 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.49": {
+    "36.47": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. faecium and/or E. faecalis (vancomycin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Vancomycin resistant Enterococci - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - Urine.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "E. faecium/faecalis",
-            "Vancomycin",
-            "Blood"
+            "S. aureus",
+            "Methicillin",
+            "Urine"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -6083,16 +5989,16 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.50": {
+    "36.48": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. faecium and/or E. faecalis (vancomycin R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Vancomycin resistant Enterococci - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - blood.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "E. faecium/faecalis",
-            "Vancomycin",
-            "Urine"
+            "S. aureus",
+            "Methicillin",
+            "Blood"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -6130,15 +6036,15 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.51": {
+    "36.49": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Penicillin resistant S. pneumoniae - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Vancomycin resistant Enterococci - blood.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "S. pneumoniae",
-            "Penicillin",
+            "E. faecium/faecalis",
+            "Vancomycin",
             "Blood"
         ],
         "possible_answers": {
@@ -6177,63 +6083,16 @@
             "Iceland": "Yes, voluntary"
         }
     },
-    "36.52": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Penicillin resistant S. pneumoniae - urine.",
-        "type": "SingleChoice",
-        "coefficient": 0.019,
-        "tags": [
-            "National surveillance",
-            "S. pneumoniae",
-            "Penicillin",
-            "Urine"
-        ],
-        "possible_answers": {
-            "Yes, mandatory": 1,
-            "Yes, voluntary": 1,
-            "No": 0
-        },
-        "actual_answers": {
-            "Bulgaria": "Yes, voluntary",
-            "Spain": "Yes, voluntary",
-            "Austria": "Yes, voluntary",
-            "Lithuania": "No",
-            "Croatia": "No",
-            "Netherlands": "Yes, voluntary",
-            "Ireland": "Yes, voluntary",
-            "Germany": "Yes, voluntary",
-            "Poland": "No",
-            "Italy": "No",
-            "Greece": "Yes, voluntary",
-            "France": "No",
-            "Czechia": "Yes, voluntary",
-            "Belgium": "No",
-            "Hungary": "Yes, mandatory",
-            "Finland": "No",
-            "Luxembourg": "Yes, voluntary",
-            "Malta": "Yes, voluntary",
-            "Portugal": "No",
-            "Norway": "Yes, mandatory",
-            "Slovenia": "No",
-            "Estonia": "Yes, mandatory",
-            "Sweden": "Yes, mandatory",
-            "Ukraine": "No",
-            "Slovak Republic": "Yes, voluntary",
-            "Denmark": "No",
-            "Latvia": "No",
-            "Iceland": "Yes, voluntary"
-        }
-    },
-    "36.53": {
+    "36.50": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Ampicillin resistant H. influenzae - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Vancomycin resistant Enterococci - urine.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "H. influenzae",
-            "Ampicillin",
-            "Blood"
+            "E. faecium/faecalis",
+            "Vancomycin",
+            "Urine"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -6267,53 +6126,6 @@
             "Ukraine": "Yes, mandatory",
             "Slovak Republic": "Yes, voluntary",
             "Denmark": "Yes, mandatory",
-            "Latvia": "No",
-            "Iceland": "Yes, voluntary"
-        }
-    },
-    "36.54": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Ampicillin resistant H. influenzae - urine.",
-        "type": "SingleChoice",
-        "coefficient": 0.019,
-        "tags": [
-            "National surveillance",
-            "H. influenzae",
-            "Ampicillin",
-            "Urine"
-        ],
-        "possible_answers": {
-            "Yes, mandatory": 1,
-            "Yes, voluntary": 1,
-            "No": 0
-        },
-        "actual_answers": {
-            "Bulgaria": "No",
-            "Spain": "No",
-            "Austria": "Yes, voluntary",
-            "Lithuania": "No",
-            "Croatia": "No",
-            "Netherlands": "Yes, voluntary",
-            "Ireland": "No",
-            "Germany": "Yes, voluntary",
-            "Poland": "No",
-            "Italy": "No",
-            "Greece": "Yes, voluntary",
-            "France": "No",
-            "Czechia": "No",
-            "Belgium": "Yes, voluntary",
-            "Hungary": "Yes, mandatory",
-            "Finland": "No",
-            "Luxembourg": "Yes, voluntary",
-            "Malta": "Yes, voluntary",
-            "Portugal": "No",
-            "Norway": "Yes, voluntary",
-            "Slovenia": "No",
-            "Estonia": "Yes, mandatory",
-            "Sweden": "Yes, voluntary",
-            "Ukraine": "No",
-            "Slovak Republic": "Yes, voluntary",
-            "Denmark": "No",
             "Latvia": "No",
             "Iceland": "Yes, voluntary"
         }
@@ -6809,7 +6621,7 @@
         }
     },
     "37.11": {
-        "title": "Which laboratories submit data for AST and genotypic confirmation for the following pathogens to your national AMR surveillance system(s)?AST data can be in any format (zones, MIC, SIR, aggregated). Genotypic confirmation refers to the identification of a resistance gene; e.g., NDM-1.CML: Clinical Microbiological Laboratory NRL: National Reference or Expert LaboratoryPlease select NRL if it is the only provider of AST and/or genotypic data. : A. baumanii (carbapenem R and/or P) : AST data",
+        "title": "Which laboratories submit data for AST and genotypic confirmation for the following pathogens to your national AMR surveillance system(s)?AST data can be in any format (zones, MIC, SIR, aggregated). Genotypic confirmation refers to the identification of a resistance gene; e.g., NDM-1.CML: Clinical Microbiological Laboratory NRL: National Reference or Expert LaboratoryPlease select NRL if it is the only provider of AST and/or genotypic data. : A. baumannii (carbapenem R and/or P) : AST data",
         "short_title": "AST data available on national level. Carbapenem resistant A. baumanii.",
         "type": "SingleChoice",
         "coefficient": 0.038,
@@ -7298,7 +7110,7 @@
         }
     },
     "37.21": {
-        "title": "Which laboratories submit data for AST and genotypic confirmation for the following pathogens to your national AMR surveillance system(s)?AST data can be in any format (zones, MIC, SIR, aggregated). Genotypic confirmation refers to the identification of a resistance gene; e.g., NDM-1.CML: Clinical Microbiological Laboratory NRL: National Reference or Expert LaboratoryPlease select NRL if it is the only provider of AST and/or genotypic data. : A. baumanii (carbapenem R and/or P) : Genotypic confirmation data",
+        "title": "Which laboratories submit data for AST and genotypic confirmation for the following pathogens to your national AMR surveillance system(s)?AST data can be in any format (zones, MIC, SIR, aggregated). Genotypic confirmation refers to the identification of a resistance gene; e.g., NDM-1.CML: Clinical Microbiological Laboratory NRL: National Reference or Expert LaboratoryPlease select NRL if it is the only provider of AST and/or genotypic data. : A. baumannii (carbapenem R and/or P) : Genotypic confirmation data",
         "short_title": "Genotypic confirmation data available on national level? Carbapenem resistant A. baumanii.",
         "type": "SingleChoice",
         "coefficient": 0.038,
@@ -7738,7 +7550,7 @@
         }
     },
     "38.4": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumanii : If data is submitted: Estimated range of population coverage",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumannii : If data is submitted: Estimated range of population coverage",
         "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - blood.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -8130,7 +7942,7 @@
         }
     },
     "38.12": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumanii : If data is submitted: Estimated range of population coverage",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumannii : If data is submitted: Estimated range of population coverage",
         "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - urine.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -8424,7 +8236,7 @@
         }
     },
     "38.18": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab A. baumanii : If data is submitted: Estimated range of population coverage",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab A. baumannii : If data is submitted: Estimated range of population coverage",
         "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - soft tissue.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -8816,7 +8628,7 @@
         }
     },
     "38.26": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Lower respiratory tract A. baumanii : If data is submitted: Estimated range of population coverage",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Lower respiratory tract A. baumannii : If data is submitted: Estimated range of population coverage",
         "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -9109,7 +8921,7 @@
         }
     },
     "38.32": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab A. baumanii : If data is submitted:Estimated geographical representativeness",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab A. baumannii : If data is submitted:Estimated geographical representativeness",
         "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - soft tissue.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -9253,7 +9065,7 @@
         }
     },
     "38.35": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumanii : If data is submitted:Estimated geographical representativeness",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumannii : If data is submitted:Estimated geographical representativeness",
         "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - blood.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -9637,7 +9449,7 @@
         }
     },
     "38.43": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumanii : If data is submitted:Estimated geographical representativeness",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumannii : If data is submitted:Estimated geographical representativeness",
         "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - urine.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -10261,7 +10073,7 @@
         }
     },
     "38.56": {
-        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Lower respiratory tract A. baumanii : If data is submitted:Estimated geographical representativeness",
+        "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Lower respiratory tract A. baumannii : If data is submitted:Estimated geographical representativeness",
         "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.033,
@@ -11981,7 +11793,7 @@
         }
     },
     "41.7": {
-        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF A. baumanii (carbapenem R and/or P) : Patient/case data available",
+        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF A. baumannii (carbapenem R and/or P) : Patient/case data available",
         "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - blood.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
@@ -13788,7 +13600,7 @@
         }
     },
     "41.17": {
-        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine A. baumanii (carbapenem R and/or P) : Patient/case data available",
+        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine A. baumannii (carbapenem R and/or P) : Patient/case data available",
         "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - urine.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
@@ -14473,7 +14285,7 @@
         }
     },
     "41.21": {
-        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Wound/tissue swab A. baumanii (carbapenem R and/or P) : Patient/case data available",
+        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Wound/tissue swab A. baumannii (carbapenem R and/or P) : Patient/case data available",
         "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - soft tissue.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
@@ -18915,7 +18727,7 @@
         }
     },
     "41.48": {
-        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Lower respiratory tract A. baumanii (carbapenem R and/or P) : Patient/case data available",
+        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Lower respiratory tract A. baumannii (carbapenem R and/or P) : Patient/case data available",
         "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - lower respiratory tract.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
@@ -19238,7 +19050,7 @@
         }
     },
     "41.50": {
-        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening A. baumanii (carbapenem R and/or P) : Patient/case data available",
+        "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening A. baumannii (carbapenem R and/or P) : Patient/case data available",
         "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - screening.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
