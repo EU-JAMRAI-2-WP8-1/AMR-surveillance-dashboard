@@ -108,6 +108,30 @@
     --bs-accordion-border-width: 0;
 }
 
+.accordion-icon {
+    font-size: 0.85em;
+}
+
+.accordion-icon-sections {
+    color: #008aab;
+}
+
+.accordion-icon-culture {
+    color: #d9534f;
+}
+
+.accordion-icon-pathogens {
+    color: #5cb85c;
+}
+
+.accordion-icon-resistances {
+    color: #f0ad4e;
+}
+
+.accordion-icon-countries {
+    color: #0fdbd5;
+}
+
 .row > .col-sm-2 {
     padding-left: 0;
     padding-right: 0;
@@ -164,13 +188,22 @@
 
 
 #resultsTable tr > th {
-    min-width: 140px;
+    min-width: 160px;
 }
 
 #resultsTable tr > th:first-child {
     min-width: 540px;
 }
 
+/* Question selection dropdown menu */
+#questionSelection + .selectize-control .selectize-dropdown-content {
+    max-height: 600px !important;
+}
+
+#questionSelection + .selectize-control .selectize-dropdown > .selectize-dropdown-content > div{
+    padding: 12px 8px 12px 8px !important;
+    border-bottom: 1px solid #e8e8e8;
+}
 
 /* OVERWRITE PLOTLY DEFAULT */
 

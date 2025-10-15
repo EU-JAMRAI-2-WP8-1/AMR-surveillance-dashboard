@@ -2007,12 +2007,12 @@
     },
     "19.8": {
         "title": "Which of the following pathogens routinely undergo WGS as part of the national surveillance of AMR? : A. baumannii (carbapenem R and/or P) : WGS performed",
-        "short_title": "A. baumanii (carbapenem R and/or P) - WGS as part of AMR surveillance?",
+        "short_title": "A. baumannii (carbapenem R and/or P) - WGS as part of AMR surveillance?",
         "type": "SingleChoice",
         "coefficient": 0.077,
         "tags": [
             "National genomic surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem"
         ],
         "possible_answers": {
@@ -4628,12 +4628,12 @@
     },
     "36.19": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - screening.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem",
             "Screening"
         ],
@@ -5427,12 +5427,12 @@
     },
     "36.36": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Lower respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - lower respiratory tract.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem",
             "Respiratory tract"
         ],
@@ -5474,12 +5474,12 @@
     },
     "36.37": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - blood.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem",
             "Blood"
         ],
@@ -5521,12 +5521,12 @@
     },
     "36.38": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Wound/Tissue swab",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - urine.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem",
             "Urine"
         ],
@@ -5568,12 +5568,12 @@
     },
     "36.39": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Lower respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumanii - soft tissue.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - soft tissue.",
         "type": "SingleChoice",
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem",
             "Soft tissue"
         ],
@@ -6622,12 +6622,12 @@
     },
     "37.11": {
         "title": "Which laboratories submit data for AST and genotypic confirmation for the following pathogens to your national AMR surveillance system(s)?AST data can be in any format (zones, MIC, SIR, aggregated). Genotypic confirmation refers to the identification of a resistance gene; e.g., NDM-1.CML: Clinical Microbiological Laboratory NRL: National Reference or Expert LaboratoryPlease select NRL if it is the only provider of AST and/or genotypic data. : A. baumannii (carbapenem R and/or P) : AST data",
-        "short_title": "AST data available on national level. Carbapenem resistant A. baumanii.",
+        "short_title": "AST data available on national level. Carbapenem resistant A. baumannii.",
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem"
         ],
         "possible_answers": {
@@ -7111,12 +7111,12 @@
     },
     "37.21": {
         "title": "Which laboratories submit data for AST and genotypic confirmation for the following pathogens to your national AMR surveillance system(s)?AST data can be in any format (zones, MIC, SIR, aggregated). Genotypic confirmation refers to the identification of a resistance gene; e.g., NDM-1.CML: Clinical Microbiological Laboratory NRL: National Reference or Expert LaboratoryPlease select NRL if it is the only provider of AST and/or genotypic data. : A. baumannii (carbapenem R and/or P) : Genotypic confirmation data",
-        "short_title": "Genotypic confirmation data available on national level? Carbapenem resistant A. baumanii.",
+        "short_title": "Genotypic confirmation data available on national level? Carbapenem resistant A. baumannii.",
         "type": "SingleChoice",
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Carbapenem"
         ],
         "possible_answers": {
@@ -7551,12 +7551,12 @@
     },
     "38.4": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumannii : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. A. baumannii - blood.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Blood"
         ],
         "possible_answers": {
@@ -7943,12 +7943,12 @@
     },
     "38.12": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumannii : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. A. baumannii - urine.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Urine"
         ],
         "possible_answers": {
@@ -8237,12 +8237,12 @@
     },
     "38.18": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab A. baumannii : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - soft tissue.",
+        "short_title": "Population coverage for AST data part of national surveillance. A. baumannii - soft tissue.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Soft tissue"
         ],
         "possible_answers": {
@@ -8629,12 +8629,12 @@
     },
     "38.26": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Lower respiratory tract A. baumannii : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. A. baumanii - lower respiratory tract.",
+        "short_title": "Population coverage for AST data part of national surveillance. A. baumannii - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -8922,12 +8922,12 @@
     },
     "38.32": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab A. baumannii : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - soft tissue.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumannii - soft tissue.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "soft tisse"
         ],
         "possible_answers": {
@@ -9066,12 +9066,12 @@
     },
     "38.35": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumannii : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumannii - blood.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Blood"
         ],
         "possible_answers": {
@@ -9450,12 +9450,12 @@
     },
     "38.43": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumannii : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumannii - urine.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Urine"
         ],
         "possible_answers": {
@@ -10074,12 +10074,12 @@
     },
     "38.56": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Lower respiratory tract A. baumannii : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumanii - lower respiratory tract.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumannii - lower respiratory tract.",
         "type": "SingleChoice",
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Respiratory tract"
         ],
         "possible_answers": {
@@ -11794,12 +11794,12 @@
     },
     "41.7": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - blood.",
+        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - blood.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Blood",
             "Carbapenem"
         ],
@@ -13601,12 +13601,12 @@
     },
     "41.17": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - urine.",
+        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - urine.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Urine",
             "Carbapenem"
         ],
@@ -14286,12 +14286,12 @@
     },
     "41.21": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Wound/tissue swab A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - soft tissue.",
+        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - soft tissue.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Soft tissue",
             "Carbapenem"
         ],
@@ -18728,12 +18728,12 @@
     },
     "41.48": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Lower respiratory tract A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - lower respiratory tract.",
+        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - lower respiratory tract.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Respiratory tract",
             "Carbapenem"
         ],
@@ -19051,12 +19051,12 @@
     },
     "41.50": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumanii - screening.",
+        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - screening.",
         "type": "MultipleChoice",
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "A. baumanii",
+            "A. baumannii",
             "Screening",
             "Carbapenem"
         ],

@@ -13,6 +13,7 @@ library(bslib)
 library(thematic)
 library(stringr)
 library(DT)
+library(openxlsx)
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
@@ -270,7 +271,7 @@ ui <- shinyUI(fluidPage(
             accordion(
 
                 accordion_panel(
-                    "Sections",
+                    title = HTML('<i class="fa fa-list accordion-icon accordion-icon-sections"></i> Sections'),
                     #tags$button(
                     #    class = "info-button",
                     #    #title = sectionInfoText,
@@ -293,7 +294,7 @@ ui <- shinyUI(fluidPage(
                     class = "hr-filters-separator"
                 ),
                 accordion_panel(
-                    "Countries",
+                    title = HTML('<i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
                     actionLink("selectAllCountries", "Select All"),
                     checkboxGroupInput(
                         inputId  = "countriesSelection",
@@ -308,7 +309,7 @@ ui <- shinyUI(fluidPage(
                     class = "hr-filters-separator"
                 ),
                 accordion_panel(
-                    "Culture material",
+                    title = HTML('<i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
                     actionLink("selectAllCultureMaterials", "Select All"),
                     tags$button(
                         class = "info-button",
@@ -332,7 +333,7 @@ ui <- shinyUI(fluidPage(
                     class = "hr-filters-separator"
                 ),
                 accordion_panel(
-                    "Pathogens",
+                    title = HTML('<i class="fa fa-bacteria accordion-icon accordion-icon-pathogens"></i> Pathogens'),
                     actionLink("selectAllPathogens", "Select All"),
                     tags$button(
                         class = "info-button",
@@ -356,7 +357,7 @@ ui <- shinyUI(fluidPage(
                     class = "hr-filters-separator"
                 ),
                 accordion_panel(
-                    "Resistances",
+                    title = HTML('<i class="fa fa-triangle-exclamation accordion-icon accordion-icon-resistances"></i> Resistances'),
                     actionLink("selectAllResistances", "Select All"),
                     tags$button(
                         class = "info-button",
@@ -405,19 +406,28 @@ ui <- shinyUI(fluidPage(
                         
                         column(
                             width = 5,
-                            selectInput(
+                            selectizeInput(
                                 inputId   = "questionSelection",
-                                label     = "Select a question - use the filter panel to narrow the selection",
+                                label     = "Use the left filter panel to narrow the question selection, then select a question here:",
                                 choices   = c("Participating countries", allShortTitles),
                                 selected  = c("Participating countries"),
                                 multiple  = FALSE,
-                                selectize = FALSE,
                                 width     = "99%",
-                                size      = 1
+                                options   = list(
+                                    render = I("{
+                                        option: function(item, escape) {
+                                            return '<div>' + item.label + '</div>';
+                                        },
+                                        item: function(item, escape) {
+                                            return '<div>' + item.label + '</div>';
+                                        }
+                                    }")
+                                )
                             ),
+                            uiOutput("multipleChoiceAnswerSelector"),
                             tags$div(
                                 class = "",
-                                plotOutput("dashboardPlot")
+                                uiOutput("dashboardPlotUI")
                             )
                         ),
                         column(
@@ -456,8 +466,10 @@ ui <- shinyUI(fluidPage(
                         )
                     ),
                     DT::dataTableOutput("resultsTable"),
-                    tags$span(
-                        downloadButton("downloadData", "Download",class = "btn btn-outline-primary")
+                    tags$div(
+                        style = "margin-top: 10px;",
+                        downloadButton("downloadDataCSV", "Download CSV", class = "btn btn-outline-primary"),
+                        downloadButton("downloadDataExcel", "Download Excel", class = "btn btn-outline-primary", style = "margin-left: 10px;")
                     )
                 ),
 
@@ -621,20 +633,93 @@ server <- function(input, output, session) {
 
     # update the question selection list
     observeEvent(input$sectionsSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
+        # Create named vector: names = HTML with badges (for display), values = short titles (for selection)
+        choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
+        updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
 
     observeEvent(input$pathogensSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
+        choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
+        updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
 
     observeEvent(input$resistancesSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
+        choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
+        updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
 
     observeEvent(input$cultureMaterialsSelection, {
-        updateSelectInput(session, "questionSelection", choices = c("Participating countries", activeQuestions()[[2]]), selected = c("Participating countries"))
+        choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
+        updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
+
+    # Remove country from selection when cross button is clicked
+    observeEvent(input$remove_country, {
+        countryToRemove <- input$remove_country$country
+        if (!is.null(countryToRemove) && countryToRemove %in% input$countriesSelection) {
+            updatedSelection <- setdiff(input$countriesSelection, countryToRemove)
+            updateCheckboxGroupInput(session, "countriesSelection", selected = updatedSelection)
+        }
+    })
+
+    # Dynamic UI for the plot with adjusted height
+    output$dashboardPlotUI <- renderUI({
+        if (input$questionSelection %in% multipleChoiceShortTitles) {
+            # Smaller height when selection box is present
+            plotOutput("dashboardPlot", height = "520px")
+        } else {
+            # Normal height when no selection box
+            plotOutput("dashboardPlot", height = "700px")
+        }
+    })
+
+    # Dynamic UI for multiple-choice answer selection
+    output$multipleChoiceAnswerSelector <- renderUI({
+        if (input$questionSelection %in% multipleChoiceShortTitles) {
+            # Get possible answers for this multiple-choice question
+            possibleAnswers <- c()
+            for (question in surveyData) {
+                if (question$short_title == input$questionSelection && question$type == "MultipleChoice") {
+                    possibleAnswers <- names(question$possible_answers)
+                    break
+                }
+            }
+
+            if (length(possibleAnswers) > 0) {
+                tags$div(
+                    style = "margin-top: 10px; margin-bottom: 15px; background-color: #f5f5f5; padding: 15px; border-radius: 4px;",
+                    tags$label(
+                        style = "font-weight: 500; margin-bottom: 8px; display: block;",
+                        "Multiple Choice Question: Choose an answer option to view on the map:"
+                    ),
+                    selectInput(
+                        inputId = "selectedAnswer",
+                        label = NULL,
+                        choices = possibleAnswers,
+                        selected = possibleAnswers[1],
+                        width = "100%"
+                    ),
+                    tags$div(
+                        style = "margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 1em;",
+                        tags$span(
+                            style = "display: flex; align-items: center; gap: 8px;",
+                            tags$span(
+                                style = "display: inline-block; width: 24px; height: 24px; background-color: #0fdbd5;"
+                            ),
+                            tags$span("Selected")
+                        ),
+                        tags$span(
+                            style = "display: flex; align-items: center; gap: 8px;",
+                            tags$span(
+                                style = "display: inline-block; width: 24px; height: 24px; background-color: #ff6f61;"
+                            ),
+                            tags$span("Not selected")
+                        )
+                    )
+                )
+            }
+        }
+    })
 
 
     ## FUNCTIONS ##
@@ -714,26 +799,63 @@ server <- function(input, output, session) {
     createResultsTable <- function() {
 
         # returns a datafrme for the Survey Results tab
-        
+
+        # Helper function to create colored badge HTML
+        getBadgeColor <- function(tag) {
+            # Sections - blue
+            if (tag %in% sectionList) return("#008aab")
+            # Culture material - red
+            if (tag %in% cultureMaterialList) return("#d9534f")
+            # Pathogens - green
+            if (tag %in% pathogenList) return("#5cb85c")
+            # Resistances - yellow
+            if (tag %in% resistanceList) return("#f0ad4e")
+            # Default - gray
+            return("#999999")
+        }
+
+        formatQuestionWithBadges <- function(questionTitle, tagsString) {
+            tagsList <- strsplit(tagsString, ", ")[[1]]
+            # Remove "Section 0" if present
+            tagsList <- tagsList[tagsList != "Section 0"]
+
+            if (length(tagsList) == 0) {
+                return(questionTitle)
+            }
+
+            # Create badge HTML for each tag
+            badgesHtml <- paste(
+                sapply(tagsList, function(tag) {
+                    color <- getBadgeColor(tag)
+                    paste0('<span style="display: inline-block; background-color: ', color,
+                           '; color: white; padding: 2px 8px; margin: 2px; border-radius: 3px; font-size: 0.75em; font-weight: 500;">',
+                           tag, '</span>')
+                }),
+                collapse = " "
+            )
+
+            # Combine badges and question on separate lines
+            return(paste0(badgesHtml, '<br/>', questionTitle))
+        }
+
         # initiate vectors
-        questions <- c()
-        tags <- c()
+        questionsWithBadges <- c()
 
         # get active questions (titles)
         activeQuestions <- activeQuestions()[[1]]
 
-        # loop once over questions to retrieve question titles and tags
+        # loop once over questions to retrieve question titles and format with tags
         for (question in surveyData) {
 
             if (question$title %in% activeQuestions) {
-                questions <- c(questions, question$title)
-                tags <- c(tags, toString(question$tags))
+                formattedQuestion <- formatQuestionWithBadges(question$title, toString(question$tags))
+                questionsWithBadges <- c(questionsWithBadges, formattedQuestion)
             }
 
         }
 
         # add columns to DF
-        resultsTable <- data.frame("Question" = questions, "Tags" = tags)
+        resultsTable <- data.frame("Question" = questionsWithBadges, stringsAsFactors = FALSE)
 
         # loop over selected countries
         for (country in input$countriesSelection) {
@@ -869,13 +991,36 @@ server <- function(input, output, session) {
                 }
 
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
-                
+
+                # For the MAP: create binary data for selected answer
+                answersNumeric <- NULL
+                if (!is.null(input$selectedAnswer)) {
+                    answersNumeric <- c()
+                    for (country in intersect(repliedCountries, input$countriesSelection)) {
+                        if (country %in% names(actualAnswers)) {
+                            countryAnswers <- actualAnswers[[country]]
+                            # Check if the selected answer is in this country's list of answers
+                            if (input$selectedAnswer %in% countryAnswers) {
+                                answersNumeric <- c(answersNumeric, 1) # Selected
+                            } else {
+                                answersNumeric <- c(answersNumeric, 2) # Not selected
+                            }
+                        } else {
+                            answersNumeric <- c(answersNumeric, 2) # Not selected
+                        }
+                    }
+                }
+
+                # Use light blue for selected, red for not selected (for MAP only)
+                customColorScaleMap <- c("#0fdbd5", "#ff6f61")
+
                 return(
                     list(
-                        answersNumeric = NULL, # not used for MultipleChoice, only for the map
-                        customColorScale = colorSequence[1:length(possibleAnswerText)],
-                        possibleAnswerText,
-                        possibleAnswerPercentReplied
+                        answersNumeric,  # For map (binary: selected/not selected)
+                        customColorScaleMap,  # For map
+                        possibleAnswerText,  # For bar chart (all answers)
+                        possibleAnswerPercentReplied,  # For bar chart (all percentages)
+                        colorSequence[1:length(possibleAnswerText)]  # For bar chart colors
                     )
                 )
             }
@@ -896,8 +1041,39 @@ server <- function(input, output, session) {
 
         # used to filter the question selection list
 
+        # Helper function to get badge color (same as in createResultsTable)
+        getBadgeColor <- function(tag) {
+            if (tag %in% sectionList) return("#008aab")
+            if (tag %in% cultureMaterialList) return("#d9534f")
+            if (tag %in% pathogenList) return("#5cb85c")
+            if (tag %in% resistanceList) return("#f0ad4e")
+            return("#999999")
+        }
+
+        formatShortTitleWithBadges <- function(shortTitle, tagsString) {
+            tagsList <- strsplit(tagsString, ", ")[[1]]
+            tagsList <- tagsList[tagsList != "Section 0"]
+
+            if (length(tagsList) == 0) {
+                return(shortTitle)
+            }
+
+            badgesHtml <- paste(
+                sapply(tagsList, function(tag) {
+                    color <- getBadgeColor(tag)
+                    paste0('<span style="display: inline-block; background-color: ', color,
+                           '; color: white; padding: 1px 6px; margin-right: 4px; border-radius: 3px; font-size: 0.7em; font-weight: 500;">',
+                           tag, '</span>')
+                }),
+                collapse = ""
+            )
+
+            return(paste0(badgesHtml, '<br/>', shortTitle))
+        }
+
         activeQuestionTitles <- c()
         activeQuestionShortTitles <- c()
+        activeQuestionShortTitlesWithBadges <- c()
 
         for (question in surveyData) {
 
@@ -923,13 +1099,17 @@ server <- function(input, output, session) {
                 (length(input$cultureMaterialsSelection) != 0) & (length(intersect(input$cultureMaterialsSelection, question$tags)) == 0)
             ) next
 
-            # question has to be taken -> append short title to the vector
+            # question has to be taken -> append titles to vectors
             activeQuestionTitles <- c(activeQuestionTitles, question[["title"]])
             activeQuestionShortTitles <- c(activeQuestionShortTitles, question[["short_title"]])
-            
+
+            # Add short title with badges
+            formattedShortTitle <- formatShortTitleWithBadges(question[["short_title"]], toString(question$tags))
+            activeQuestionShortTitlesWithBadges <- c(activeQuestionShortTitlesWithBadges, formattedShortTitle)
+
         }
 
-        return(list(activeQuestionTitles, activeQuestionShortTitles))
+        return(list(activeQuestionTitles, activeQuestionShortTitles, activeQuestionShortTitlesWithBadges))
 
     }
 
@@ -1083,7 +1263,7 @@ server <- function(input, output, session) {
         getParticipatingCountries(),
         rownames = FALSE,
         colnames = c("Score (/100)", "% Answered"),
-        options=list(
+        options = list(
             dom = 't',
             pageLength = 100
         )
@@ -1092,23 +1272,117 @@ server <- function(input, output, session) {
     output$resultsTable <- DT::renderDT(
         createResultsTable(),
         rownames = FALSE,
+        escape = FALSE,  # Allow HTML rendering in cells
         #colnames = c(c("Questions", "Tags"), input$countriesSelection),
+        extensions = c('ColReorder', 'FixedColumns'),
         options = list(
             autowidth = TRUE,
             scrollX = TRUE,
-            pageLength = 10
-            #columnDefs = list(
-            #    list(targets=c(0), width='400')
-            #)
+            pageLength = 10,
+            lengthMenu = list(c(10, 25, 50), c(10, 25, 50)),
+            ordering = FALSE,  # Disable row sorting
+            colReorder = list(
+                realtime = TRUE,  # Show changes as you drag
+                fixedColumnsLeft = 1  # Keep first column (Question) fixed for reordering
+            ),
+            fixedColumns = list(
+                left = 0  # Start with no fixed columns
+            ),
+            headerCallback = JS(
+                "function(thead, data, start, end, display) {",
+                "  var table = this.api();",
+                "  var th0 = $(thead).find('th').eq(0);",
+                "  ",
+                "  // Only add lock button if not already present",
+                "  if (th0.find('.lock-btn').length === 0) {",
+                "    var currentText = th0.text();",
+                "    th0.html('<div style=\"display: flex; justify-content: space-between; align-items: center;\"><span>' + currentText + '</span><span class=\"lock-btn\" style=\"cursor: pointer;\" title=\"Click to lock/unlock this column when scrolling horizontally\"><i class=\"fa fa-lock-open\" style=\"font-size: 0.9em;\"></i></span></div>');",
+                "    th0.css({'background-color': '#008aab', 'color': '#ffffff', 'border-right': '2px solid #008aab'});",
+                "    ",
+                "    // Add click handler for lock button",
+                "    th0.find('.lock-btn').on('click', function(e) {",
+                "      e.stopPropagation();",
+                "      var icon = $(this).find('i');",
+                "      var isLocked = icon.hasClass('fa-lock');",
+                "      ",
+                "      if (isLocked) {",
+                "        // Unlock",
+                "        icon.removeClass('fa-lock').addClass('fa-lock-open');",
+                "        $(this).attr('title', 'Click to lock/unlock this column when scrolling horizontally');",
+                "        table.fixedColumns().left(0);",
+                "      } else {",
+                "        // Lock",
+                "        icon.removeClass('fa-lock-open').addClass('fa-lock');",
+                "        $(this).attr('title', 'Click to lock/unlock this column when scrolling horizontally');",
+                "        table.fixedColumns().left(1);",
+                "      }",
+                "    });",
+                "  }",
+                "  ",
+                "  // Style other columns (country columns)",
+                "  $(thead).find('th:gt(0)').each(function(index) {",
+                "    // Only add remove button if not already present",
+                "    if ($(this).find('.remove-country-btn').length === 0) {",
+                "      var currentText = $(this).text();",
+                "      $(this).html('<div style=\"display: flex; justify-content: space-between; align-items: center;\"><span>' + currentText + '</span><span style=\"display: flex; align-items: center; gap: 6px;\"><i class=\"fa fa-arrows-h\" style=\"font-size: 0.8em; cursor: move;\"></i><span class=\"remove-country-btn\" style=\"cursor: pointer; font-weight: bold; font-size: 1.3em;\" title=\"Remove this country from selection\">&times;</span></span></div>');",
+                "      ",
+                "      // Add click handler for remove button",
+                "      $(this).find('.remove-country-btn').on('click', function(e) {",
+                "        e.stopPropagation();",
+                "        var countryName = currentText;",
+                "        Shiny.setInputValue('remove_country', {country: countryName, timestamp: Date.now()});",
+                "      });",
+                "    }",
+                "    $(this).css({'background-color': '#0fdbd5', 'color': '#ffffff', 'cursor': 'move'});",
+                "  });",
+                "}"
+            ),
+            initComplete = JS(
+                "function(settings, json) {",
+                "  var wrapper = $(this.api().table().container());",
+                "  var scroll = wrapper.find('.dataTables_scrollBody');",
+                "  if (scroll.length > 0) {",
+                "    var topScroll = $('<div class=\"dataTables_scrollHead_top\" style=\"overflow-x: auto; overflow-y: hidden;\"><div style=\"height: 1px; width: ' + scroll[0].scrollWidth + 'px;\"></div></div>');",
+                "    topScroll.insertBefore(wrapper.find('.dataTables_scroll'));",
+                "    topScroll.on('scroll', function() {",
+                "      scroll.scrollLeft($(this).scrollLeft());",
+                "    });",
+                "    scroll.on('scroll', function() {",
+                "      topScroll.scrollLeft($(this).scrollLeft());",
+                "    });",
+                "  }",
+                "}"
+            ),
+            columnDefs = list(
+                list(
+                    targets = 0,
+                    createdCell = JS(
+                        "function(td, cellData, rowData, row, col) {",
+                        "  $(td).css({'border-right': '1px solid #008aab'});",
+                        "}"
+                    )
+                )
+            )
         )
     )
 
-    # 
-    output$downloadData <- downloadHandler(
-        #filename = paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d%H%M%S"), ".csv"),
-        filename = paste0("amr_watch_europe-export.csv"),
+    # CSV download
+    output$downloadDataCSV <- downloadHandler(
+        filename = function() {
+            paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".csv")
+        },
         content = function(file) {
             write.csv(createResultsTable(), file, row.names = FALSE)
+        }
+    )
+
+    # Excel download
+    output$downloadDataExcel <- downloadHandler(
+        filename = function() {
+            paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".xlsx")
+        },
+        content = function(file) {
+            write.xlsx(createResultsTable(), file, rowNames = FALSE)
         }
     )
 
@@ -1125,12 +1399,12 @@ server <- function(input, output, session) {
         themeBgColor = "#ffffff"
         themeFgColor = "#1D1F21"
 
-        dashboardMap <- plot_ly(
-            #height = 800,
-            #width = 800
-        )
-
         if (input$questionSelection == "Participating countries") {
+
+            dashboardMap <- plot_ly(
+                #height = 800,
+                #width = 800
+            )
 
             dashboardMap <- dashboardMap %>% add_trace( # displays results
                 type = 'choropleth',
@@ -1158,12 +1432,72 @@ server <- function(input, output, session) {
         }
 
         else if (input$questionSelection %in% multipleChoiceShortTitles){
-            
-            return(NULL)
-            
+
+            # Check if answer is selected (handles NULL case)
+            if (is.null(countryReplies()[[1]]) || is.null(countryReplies()[[2]])) {
+                return(NULL)
+            }
+
+            # Multiple choice questions - show map for selected answer option
+            dashboardMap <- plot_ly(
+                #height = 800,
+                #width = 800
+            )
+
+            dashboardMap <- dashboardMap %>% add_trace( # displays results
+                type = 'choropleth',
+                #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
+                geojson = geojsonEurope,
+                locations = intersect(repliedCountries, input$countriesSelection),
+                z = countryReplies()[[1]],
+                zmin = 1,
+                zmax = length(countryReplies()[[2]]),
+                text = intersect(repliedCountries, input$countriesSelection),
+                hoverinfo = "text",
+                showlegend = FALSE,
+                #autocolorscale = FALSE,
+                showscale = FALSE,
+                #colorscale = countryReplies()[[2]],#c("#cc8888", "#dddd77", "#0fdbd5"),
+                reversescale = FALSE,
+                colors = countryReplies()[[2]],
+                marker = list(
+                    line = list(
+                        width = 1,
+                        color = themeBgColor
+                    )
+                )
+            )
+
+            dashboardMap <- dashboardMap %>% add_trace( # non-participating countries
+                name = "Not participating",
+                type = 'choropleth',
+                geojson = geojsonEurope,
+                #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson
+                locations = getNonParticipatingCountries(),
+                z = rep(0.7, length(getNonParticipatingCountries())),
+                zmin = 0,
+                zmax = 1,
+                text = getNonParticipatingCountries(),
+                hoverinfo = "text",
+                showscale = FALSE,
+                colorscale = "Greys",
+                #colors = c("#aaaaaa", "#aaaaaa"), ## cannot use "colors" in both traces
+                marker = list(
+                    line = list(
+                        width = 1,
+                        color = themeBgColor
+                    )
+                )
+            )
+
         }
         
         else {
+            
+            dashboardMap <- plot_ly(
+                #height = 800,
+                #width = 800
+            )
 
             dashboardMap <- dashboardMap %>% add_trace( # displays results
                 type = 'choropleth',
@@ -1264,8 +1598,19 @@ server <- function(input, output, session) {
                 width = 0.4
             )
         }
-        
+
         else {
+            # Check if data is available (handles NULL case for multiple-choice questions)
+            if (is.null(countryReplies()[[3]]) || is.null(countryReplies()[[4]])) {
+                return(NULL)
+            }
+
+            # For multiple-choice questions, use light grey; for others, use custom colors
+            barColors <- if (input$questionSelection %in% multipleChoiceShortTitles && length(countryReplies()) >= 5) {
+                rep("#888888", length(countryReplies()[[3]]))
+            } else {
+                countryReplies()[[2]]
+            }
 
             dashboardPlot <- ggplot(
                 data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
@@ -1277,7 +1622,7 @@ server <- function(input, output, session) {
             geom_bar(
                 aes(x = factor(reply, level = rev(unique(countryReplies()[[3]]))), y = occurences),
                 stat = "identity",
-                fill = countryReplies()[[2]],
+                fill = barColors,
                 width = 0.4
             )
         }
@@ -1338,8 +1683,7 @@ server <- function(input, output, session) {
 
         dashboardPlot
 
-    }, height = 700
-    )
+    })
 
 }
 

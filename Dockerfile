@@ -12,7 +12,7 @@ RUN mkdir /home/shiny-app
 ## base
 RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'shinyWidgets', 'rmarkdown'))"
 ## data parsing
-RUN R -e "install.packages(c('readxl', 'rjson', 'jsonlite', 'hash'))"
+RUN R -e "install.packages(c('readxl', 'rjson', 'jsonlite', 'hash', 'openxlsx'))"
 ## map
 ## RUN R -e "install.packages(c())"
 ## plots and tables
