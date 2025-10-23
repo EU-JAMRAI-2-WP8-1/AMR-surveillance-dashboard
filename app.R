@@ -271,7 +271,7 @@ ui <- shinyUI(fluidPage(
             accordion(
 
                 accordion_panel(
-                    title = HTML('<i class="fa fa-list accordion-icon accordion-icon-sections"></i> Sections'),
+                    title = HTML('<i class="fa fa-shapes accordion-icon accordion-icon-sections"></i> Sections'),
                     #tags$button(
                     #    class = "info-button",
                     #    #title = sectionInfoText,
@@ -690,7 +690,7 @@ server <- function(input, output, session) {
                     style = "margin-top: 10px; margin-bottom: 15px; background-color: #f5f5f5; padding: 15px; border-radius: 4px;",
                     tags$label(
                         style = "font-weight: 500; margin-bottom: 8px; display: block;",
-                        "Multiple Choice Question: Choose an answer option to view on the map:"
+                        "Multiple Selection Question: Choose an answer option to view on the map:"
                     ),
                     selectInput(
                         inputId = "selectedAnswer",
@@ -1279,7 +1279,7 @@ server <- function(input, output, session) {
             autowidth = TRUE,
             scrollX = TRUE,
             pageLength = 10,
-            lengthMenu = list(c(10, 25, 50), c(10, 25, 50)),
+            lengthMenu = list(c(5, 10, 20), c(5, 10, 20)),
             ordering = FALSE,  # Disable row sorting
             colReorder = list(
                 realtime = TRUE,  # Show changes as you drag
@@ -1674,11 +1674,12 @@ server <- function(input, output, session) {
             },
             position = "top"
         ) +
+        theme_minimal() +
         theme(
             axis.title.y = element_blank(),       # y axis label (remove)
             axis.title.x = element_text(size=16), # x axis label
-            axis.text.y = element_text(size=18),  # axis ticks
-            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate 
+            axis.text.y = element_text(size=18, hjust=1),  # axis ticks - align to left
+            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=-1) # rotate
         )
 
         dashboardPlot
