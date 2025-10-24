@@ -97,6 +97,12 @@
     background-color: rgba(127, 127, 127, 0.25) !important;
     --bs-nav-tabs-border-width: 0 !important;
     --bs-nav-tabs-border-radius: 0 !important;
+    display: flex !important;
+}
+
+/* Push the last tab (Info) to the right */
+.nav-tabs .nav-item:last-child {
+    margin-left: auto !important;
 }
 
 .nav-item {
@@ -167,6 +173,10 @@
 
 .pagination > li {
     padding: 12px;
+}
+
+.shiny-input-radiogroup {
+    margin-bottom: 0px !important;
 }
 
 .map-tab-container .dataTable > tbody > tr > td {
@@ -246,7 +256,54 @@
     min-width: 200px;
 }
 
-.sidebar-filler {
+.sections-wrapper {
+    background-color: #6c757d;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.github-link-btn {
+    color: white !important;
+    padding: 6px 12px;
+    text-decoration: none !important;
+    margin-right: 10px;
+    font-size: 18px;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.github-link-btn:hover {
+    color: #ffffff !important;
+    opacity: 0.8;
+}
+
+#sectionsSelection .btn {
+    width: 280px;
+    padding: 6px 12px !important;
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: white !important;
+    border-radius: 0 !important;
+}
+
+#sectionsSelection .btn:hover {
+    background-color: #5a6268 !important;
+    border-color: #5a6268 !important;
+}
+
+#sectionsSelection input:checked + .btn {
+    background-color: #008aab !important;
+    border-color: #008aab !important;
+    color: white !important;
+}
+
+#sectionsSelection input:checked + .btn:hover {
+    background-color: #006d87 !important;
+    border-color: #006d87 !important;
 }
 
 
@@ -316,6 +373,20 @@
     padding-right: 12px;
 }
 
+.full-question-title-box {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid #008aab;
+    border-radius: 2px;
+}
+
+.question-title-text {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.5;
+}
+
 .about-container {
     padding: 36px;
 }
@@ -368,7 +439,7 @@
     .jamrai-logo-header-long {
         display: none;
     }
-    
+
     .jamrai-logo-header-rect {
         display: block;
         height: 128px;
@@ -383,5 +454,15 @@
 
     .tab-text {
         display: none;
+    }
+
+    /* Section buttons - hide text on mobile */
+    #sectionsSelection .btn-text {
+        display: none;
+    }
+
+    #sectionsSelection .btn {
+        width: auto !important;
+        min-width: 50px;
     }
 }
