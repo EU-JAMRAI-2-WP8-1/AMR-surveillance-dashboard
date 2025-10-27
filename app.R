@@ -271,29 +271,6 @@ ui <- shinyUI(fluidPage(
             accordion(
 
                 accordion_panel(
-                    title = HTML('<i class="fa fa-shapes accordion-icon accordion-icon-sections"></i> Sections'),
-                    #tags$button(
-                    #    class = "info-button",
-                    #    #title = sectionInfoText,
-                    #    "?"
-                    #),
-                    #tags$span(
-                    #    class = "info-sections",
-                    #    sectionInfoText
-                    #),
-                    checkboxGroupInput(
-                        inputId  = "sectionsSelection",
-                        label    = "",
-                        choices  = sectionList,
-                        selected = sectionList,
-                        inline   = FALSE,
-                        width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
-                ),
-                accordion_panel(
                     title = HTML('<i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
                     actionLink("selectAllCountries", "Select All"),
                     checkboxGroupInput(
@@ -389,6 +366,31 @@ ui <- shinyUI(fluidPage(
         mainPanel(
             width = 10,
 
+            # Sections filter - horizontal at top
+            tags$div(
+                class = "sections-wrapper",
+                radioGroupButtons(
+                    inputId  = "sectionsSelection",
+                    label    = NULL,
+                    choiceNames = list(
+                        HTML('<i class="fa fa-eye"></i><span class="btn-text"> National surveillance</span>'),
+                        HTML('<i class="fa fa-dna"></i><span class="btn-text"> National genomic surveillance</span>'),
+                        HTML('<i class="fa fa-book-open"></i><span class="btn-text"> National guidance</span>')
+                    ),
+                    choiceValues = sectionList,
+                    selected = sectionList[1],
+                    individual = FALSE,
+                    checkIcon = list(),
+                    status = "primary"
+                ),
+                tags$a(
+                    href = "https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard",
+                    target = "_blank",
+                    class = "github-link-btn",
+                    tags$i(class = "fa fa-brands fa-github")
+                )
+            ),
+
             # tabs
             tabsetPanel(
 
@@ -433,6 +435,10 @@ ui <- shinyUI(fluidPage(
                         column(
                             width = 7,
                             tags$div(
+                                class = "full-question-title-box",
+                                uiOutput("fullQuestionTitle")
+                            ),
+                            tags$div(
                                 class = "dashboard-map-box",
                                 plotlyOutput(outputId = "dashboardMap", width = "100%", height = "780px")
                             ),
@@ -473,52 +479,52 @@ ui <- shinyUI(fluidPage(
                     )
                 ),
 
-                # map
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("speedometer2"),
-                        tags$span(
-                            class = "tab-text",
-                            "Joint results"
-                        )
-                    ),
-
-                    fluidRow(
-
-                        class = "map-tab-container",
-
-                        column(
-                            width = 9,
-                            tags$div(
-                                class = "map-and-source-container",
-                                tags$div(
-                                    class = "map-container",
-                                    plotlyOutput(outputId = "scoresMap", width = "100%", height = "780px")
-                                ),
-                                tags$div(
-                                    class = "map-source-text medium-grey-text",
-                                    "Map source: ",
-                                    tags$a(
-                                        href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
-                                        "Eurostat",
-                                        target = "_blank"
-                                    )
-                                )
-                            ),
-                        ),
-
-                        column(
-                            width = 3,
-                            tags$div(
-                                class = "map-info-container",
-                                HTML("<i>See the \"Info\" tab for information about scores</i>"),
-                                DT::dataTableOutput("scoresTable")
-
-                            )
-                        )
-                        
-                    )
-                ),
+                # map - Joint results tab (commented out for beta release)
+                # tabPanel(
+                #     tags$span(
+                #         bsicons::bs_icon("speedometer2"),
+                #         tags$span(
+                #             class = "tab-text",
+                #             "Joint results"
+                #         )
+                #     ),
+                #
+                #     fluidRow(
+                #
+                #         class = "map-tab-container",
+                #
+                #         column(
+                #             width = 9,
+                #             tags$div(
+                #                 class = "map-and-source-container",
+                #                 tags$div(
+                #                     class = "map-container",
+                #                     plotlyOutput(outputId = "scoresMap", width = "100%", height = "780px")
+                #                 ),
+                #                 tags$div(
+                #                     class = "map-source-text medium-grey-text",
+                #                     "Map source: ",
+                #                     tags$a(
+                #                         href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
+                #                         "Eurostat",
+                #                         target = "_blank"
+                #                     )
+                #                 )
+                #             ),
+                #         ),
+                #
+                #         column(
+                #             width = 3,
+                #             tags$div(
+                #                 class = "map-info-container",
+                #                 HTML("<i>See the \"Info\" tab for information about scores</i>"),
+                #                 DT::dataTableOutput("scoresTable")
+                #
+                #             )
+                #         )
+                #
+                #     )
+                # ),
 
                 # info
                 tabPanel(
@@ -574,7 +580,7 @@ server <- function(input, output, session) {
 
     # "Reset filters" button
     observeEvent(input$resetFilters, {
-        updateCheckboxGroupInput(session, "sectionsSelection", choices = sectionList, selected = sectionList)
+        updateRadioButtons(session, "sectionsSelection", selected = sectionList[1])
         updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
         updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
         updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList)
@@ -670,6 +676,34 @@ server <- function(input, output, session) {
         } else {
             # Normal height when no selection box
             plotOutput("dashboardPlot", height = "700px")
+        }
+    })
+
+    # Display full question title above the map
+    output$fullQuestionTitle <- renderUI({
+        if (input$questionSelection == "Participating countries") {
+            tags$div(
+                class = "question-title-text",
+                tags$strong("Question: "),
+                "Which countries participated in the survey?"
+            )
+        } else {
+            # Find the full title for the selected short title
+            fullTitle <- NULL
+            for (question in surveyData) {
+                if (question$short_title == input$questionSelection) {
+                    fullTitle <- question$title
+                    break
+                }
+            }
+
+            if (!is.null(fullTitle)) {
+                tags$div(
+                    class = "question-title-text",
+                    tags$strong("Question: "),
+                    fullTitle
+                )
+            }
         }
     })
 
@@ -1677,9 +1711,9 @@ server <- function(input, output, session) {
         theme_minimal() +
         theme(
             axis.title.y = element_blank(),       # y axis label (remove)
-            axis.title.x = element_text(size=16), # x axis label
-            axis.text.y = element_text(size=18, hjust=1),  # axis ticks - align to left
-            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=-1) # rotate
+            axis.title.x = element_text(size=16, margin = margin(t = 10)), # x axis label with top margin
+            axis.text.y = element_text(size=18, hjust=0),  # axis ticks - left align
+            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate
         )
 
         dashboardPlot
