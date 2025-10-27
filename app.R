@@ -1708,7 +1708,7 @@ server <- function(input, output, session) {
             },
             position = "top"
         ) +
-        theme_minimal() +
+        theme_dark() +
         theme(
             axis.title.y = element_blank(),       # y axis label (remove)
             axis.title.x = element_text(size=16, margin = margin(t = 10)), # x axis label with top margin
