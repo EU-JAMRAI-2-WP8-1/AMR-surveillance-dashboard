@@ -5,7 +5,10 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "Section 0"
+            "Section 0",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {},
         "actual_answers": {}
@@ -16,7 +19,10 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "Section 0"
+            "Section 0",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {},
         "actual_answers": {}
@@ -27,7 +33,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "Section 0"
+            "Section 0",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Austria": 0,
@@ -98,7 +107,10 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "Section 0"
+            "Section 0",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {},
         "actual_answers": {}
@@ -109,7 +121,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "Section 0"
+            "Section 0",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Ministry": 0,
@@ -126,7 +141,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Blood"
+            "Blood",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -171,7 +188,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Urine"
+            "Urine",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -216,7 +235,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Urine"
+            "Urine",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -261,7 +282,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -306,7 +329,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -351,7 +376,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Soft tissue"
+            "Soft tissue",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -395,7 +422,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Results from routine AST available in the national AMR surveillance system.": 1,
@@ -544,7 +574,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -664,7 +697,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Blood"
+            "Blood",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -709,7 +744,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Urine"
+            "Urine",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -754,7 +791,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Urine"
+            "Urine",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -799,7 +838,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -844,7 +885,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -889,7 +932,9 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Soft tissue"
+            "Soft tissue",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -933,7 +978,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -1047,7 +1095,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, national guidance in place for all included pathogens (excluding C. difficile).": 1,
@@ -1092,7 +1143,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -1203,7 +1257,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All clinical microbiological laboratories.": 1,
@@ -1313,7 +1370,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes.": 0,
@@ -1357,7 +1417,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, national guidance in place for all included pathogens.": 1,
@@ -1404,7 +1467,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Regional and/or local guidance (including two or more institutions).": 1,
@@ -1516,7 +1582,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National guidance"
+            "National guidance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All clinical microbiological laboratories.": 1,
@@ -1635,7 +1704,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, both WGS and bioinformatics are performed in-house.": 1,
@@ -1684,7 +1756,8 @@
         "tags": [
             "National genomic surveillance",
             "E. coli",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -1731,7 +1804,8 @@
         "tags": [
             "National genomic surveillance",
             "E. coli",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -1778,7 +1852,8 @@
         "tags": [
             "National genomic surveillance",
             "E. coli",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -1825,7 +1900,8 @@
         "tags": [
             "National genomic surveillance",
             "K. pneumoniae",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -1872,7 +1948,8 @@
         "tags": [
             "National genomic surveillance",
             "K. pneumoniae",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -1919,7 +1996,8 @@
         "tags": [
             "National genomic surveillance",
             "K. pneumoniae",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -1966,7 +2044,8 @@
         "tags": [
             "National genomic surveillance",
             "P. aeruginosa",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -2013,7 +2092,8 @@
         "tags": [
             "National genomic surveillance",
             "A. baumannii",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -2060,7 +2140,8 @@
         "tags": [
             "National genomic surveillance",
             "S. aureus",
-            "Methicillin"
+            "Methicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -2107,7 +2188,8 @@
         "tags": [
             "National genomic surveillance",
             "E. faecium/faecalis",
-            "Vancomycin"
+            "Vancomycin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -2154,7 +2236,8 @@
         "tags": [
             "National genomic surveillance",
             "S. pneumoniae",
-            "Penicillin"
+            "Penicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -2201,7 +2284,8 @@
         "tags": [
             "National genomic surveillance",
             "H. influenzae",
-            "Ampicillin"
+            "Ampicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -2247,7 +2331,9 @@
         "coefficient": 0.077,
         "tags": [
             "National genomic surveillance",
-            "C. difficile"
+            "C. difficile",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all isolates sequenced.": 1,
@@ -2292,7 +2378,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes.": 1,
@@ -2338,7 +2427,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, raw read data.": 1,
@@ -2447,7 +2539,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Lack of infrastructure to submit WGS data.": 1,
@@ -2567,7 +2662,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Identification of the pathogen(s) causing infection/carriage for diagnostic purposes.": 0.5,
@@ -2727,7 +2825,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes.": 1,
@@ -2775,7 +2876,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, we have a data sharing/analysis pipeline set-up for this analysis.": 1,
@@ -2823,7 +2927,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Not applicable": "null",
@@ -2976,7 +3083,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Number of reads.": 0.1,
@@ -3178,7 +3288,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Inhouse pipeline; open access tools only.": 1,
@@ -3282,7 +3395,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Not applicable.": "null",
@@ -3387,7 +3503,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, annually.": 1,
@@ -3433,7 +3552,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes.": 1,
@@ -3478,7 +3600,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Inhouse storage.": 1,
@@ -3523,7 +3648,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, all data.": 1,
@@ -3568,7 +3696,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Technical infrastructure relating to sequencing instruments.": 1,
@@ -3747,7 +3878,10 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "National genomic surveillance"
+            "National genomic surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {},
         "actual_answers": {
@@ -3931,7 +4065,8 @@
             "National surveillance",
             "E. coli",
             "Carbapenem",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4166,7 +4301,8 @@
             "National surveillance",
             "E. coli",
             "3rd-generation Cephalosporin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4213,7 +4349,8 @@
             "National surveillance",
             "E. coli",
             "Colistin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4260,7 +4397,8 @@
             "National surveillance",
             "K. pneumoniae",
             "Carbapenem",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4307,7 +4445,8 @@
             "National surveillance",
             "K. pneumoniae",
             "3rd-generation Cephalosporin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4354,7 +4493,8 @@
             "National surveillance",
             "K. pneumoniae",
             "Colistin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4400,7 +4540,8 @@
         "tags": [
             "National surveillance",
             "C. difficile",
-            "Stool"
+            "Stool",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4447,7 +4588,8 @@
             "National surveillance",
             "H. influenzae",
             "Ampicillin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4494,7 +4636,8 @@
             "National surveillance",
             "S. pneumoniae",
             "Penicillin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4541,7 +4684,8 @@
             "National surveillance",
             "E. faecium/faecalis",
             "Vancomycin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4588,7 +4732,8 @@
             "National surveillance",
             "P. aeruginosa",
             "Carbapenem",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4635,7 +4780,8 @@
             "National surveillance",
             "A. baumannii",
             "Carbapenem",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -4682,7 +4828,8 @@
             "National surveillance",
             "S. aureus",
             "Methicillin",
-            "Screening"
+            "Screening",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes, mandatory": 1,
@@ -6138,7 +6285,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6187,7 +6335,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6236,7 +6385,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6285,7 +6435,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6334,7 +6485,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6383,7 +6535,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6432,7 +6585,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6481,7 +6635,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6530,7 +6685,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6579,7 +6735,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6628,7 +6785,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6677,7 +6835,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Methicillin"
+            "Methicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6726,7 +6885,8 @@
         "tags": [
             "National surveillance",
             "E. faecium/faecalis",
-            "Vancomycin"
+            "Vancomycin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6775,7 +6935,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Penicillin"
+            "Penicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6824,7 +6985,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Ampicillin"
+            "Ampicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6872,7 +7034,9 @@
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "C. difficile"
+            "C. difficile",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6921,7 +7085,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -6970,7 +7135,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7019,7 +7185,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7068,7 +7235,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7117,7 +7285,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7166,7 +7335,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Methicillin"
+            "Methicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7215,7 +7385,8 @@
         "tags": [
             "National surveillance",
             "E. faecium/faecalis",
-            "Vancomycin"
+            "Vancomycin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7264,7 +7435,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Penicillin"
+            "Penicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7313,7 +7485,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Ampicillin"
+            "Ampicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7361,7 +7534,9 @@
         "coefficient": 0.038,
         "tags": [
             "National surveillance",
-            "C. difficile"
+            "C. difficile",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "All CMLs": 1,
@@ -7410,7 +7585,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7459,7 +7635,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7508,7 +7685,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7557,7 +7735,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7606,7 +7785,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7655,7 +7835,8 @@
         "tags": [
             "National surveillance",
             "E. faecium/faecalis",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7704,7 +7885,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7753,7 +7935,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7802,7 +7985,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7851,7 +8035,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7900,7 +8085,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7949,7 +8135,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -7998,7 +8185,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8047,7 +8235,8 @@
         "tags": [
             "National surveillance",
             "E. faecium/faecalis",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8096,7 +8285,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8145,7 +8335,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8194,7 +8385,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Soft tissue"
+            "Soft tissue",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8243,7 +8435,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Soft tissue"
+            "Soft tissue",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8292,7 +8485,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Soft tissue"
+            "Soft tissue",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8341,7 +8535,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8390,7 +8585,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8439,7 +8635,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8488,7 +8685,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8537,7 +8735,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8586,7 +8785,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8635,7 +8835,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8684,7 +8885,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8733,7 +8935,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8782,7 +8985,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8831,7 +9035,8 @@
         "tags": [
             "National surveillance",
             "C. difficile",
-            "Stool"
+            "Stool",
+            "Not resistance related"
         ],
         "possible_answers": {
             "76-100%": 1,
@@ -8880,7 +9085,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -8928,7 +9134,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "soft tisse"
+            "soft tisse",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -8976,7 +9183,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9024,7 +9232,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9072,7 +9281,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9120,7 +9330,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9168,7 +9379,8 @@
         "tags": [
             "National surveillance",
             "E. faecium/faecalis",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9216,7 +9428,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9264,7 +9477,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Blood"
+            "Blood",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9312,7 +9526,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9360,7 +9575,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9408,7 +9624,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9456,7 +9673,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9504,7 +9722,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9552,7 +9771,8 @@
         "tags": [
             "National surveillance",
             "E. faecium/faecalis",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9600,7 +9820,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9648,7 +9869,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Urine"
+            "Urine",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9696,7 +9918,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Soft tissue"
+            "Soft tissue",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9744,7 +9967,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Soft tissue"
+            "Soft tissue",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9792,7 +10016,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9840,7 +10065,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9888,7 +10114,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9936,7 +10163,8 @@
         "tags": [
             "National surveillance",
             "E. coli",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -9984,7 +10212,8 @@
         "tags": [
             "National surveillance",
             "K. pneumoniae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -10032,7 +10261,8 @@
         "tags": [
             "National surveillance",
             "P. aeruginosa",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -10080,7 +10310,8 @@
         "tags": [
             "National surveillance",
             "A. baumannii",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -10128,7 +10359,8 @@
         "tags": [
             "National surveillance",
             "S. aureus",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -10176,7 +10408,8 @@
         "tags": [
             "National surveillance",
             "S. pneumoniae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -10224,7 +10457,8 @@
         "tags": [
             "National surveillance",
             "H. influenzae",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -10272,7 +10506,8 @@
         "tags": [
             "National surveillance",
             "C. difficile",
-            "Stool"
+            "Stool",
+            "Not resistance related"
         ],
         "possible_answers": {
             "HIGH: all main geographical regions of the country are covered.": 1,
@@ -10319,7 +10554,9 @@
         "coefficient": 0.167,
         "tags": [
             "National surveillance",
-            "Urine"
+            "Urine",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "High: Comparable methods are used": 1,
@@ -10366,7 +10603,9 @@
         "coefficient": 0.167,
         "tags": [
             "National surveillance",
-            "Soft tissue"
+            "Soft tissue",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "High: Comparable methods are used": 1,
@@ -10413,7 +10652,9 @@
         "coefficient": 0.167,
         "tags": [
             "National surveillance",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "High: Comparable methods are used": 1,
@@ -10460,7 +10701,9 @@
         "coefficient": 0.167,
         "tags": [
             "National surveillance",
-            "Respiratory tract"
+            "Respiratory tract",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "High: Comparable methods are used": 1,
@@ -10507,7 +10750,9 @@
         "coefficient": 0.167,
         "tags": [
             "National surveillance",
-            "Stool"
+            "Stool",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "High: Comparable methods are used": 1,
@@ -10554,7 +10799,9 @@
         "coefficient": 0.167,
         "tags": [
             "National surveillance",
-            "Blood"
+            "Blood",
+            "Not pathogen related",
+            "Not resistance related"
         ],
         "possible_answers": {
             "High: Comparable methods are used": 1,
@@ -10600,7 +10847,10 @@
         "type": "SingleChoice",
         "coefficient": 1,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -16712,7 +16962,8 @@
         "tags": [
             "National surveillance",
             "C. difficile",
-            "Stool"
+            "Stool",
+            "Not resistance related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -16891,7 +17142,8 @@
             "National surveillance",
             "E. coli",
             "Screening",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -17062,7 +17314,8 @@
             "National surveillance",
             "E. coli",
             "Screening",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -17210,7 +17463,8 @@
             "National surveillance",
             "E. coli",
             "Screening",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -17365,7 +17619,8 @@
             "National surveillance",
             "K. pneumoniae",
             "Screening",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -17536,7 +17791,8 @@
             "National surveillance",
             "P. aeruginosa",
             "Screening",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -17703,7 +17959,8 @@
             "National surveillance",
             "S. aureus",
             "Screening",
-            "Methicillin"
+            "Methicillin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -17864,7 +18121,8 @@
             "National surveillance",
             "E. faecium/faecalis",
             "Screening",
-            "Vancomycin"
+            "Vancomycin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -18231,7 +18489,8 @@
             "National surveillance",
             "K. pneumoniae",
             "Screening",
-            "3rd-generation Cephalosporin"
+            "3rd-generation Cephalosporin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -18903,7 +19162,8 @@
             "National surveillance",
             "K. pneumoniae",
             "Screening",
-            "Colistin"
+            "Colistin",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -19058,7 +19318,8 @@
             "National surveillance",
             "A. baumannii",
             "Screening",
-            "Carbapenem"
+            "Carbapenem",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Age": 0.2,
@@ -19223,7 +19484,10 @@
         "type": "SingleChoice",
         "coefficient": 0.5,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -19266,7 +19530,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19309,7 +19576,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19352,7 +19622,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19395,7 +19668,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19438,7 +19714,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19481,7 +19760,10 @@
         "type": "SingleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": "null",
@@ -19524,7 +19806,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted\u00a0continuously or with close regular intervals (at least once a month)": "null",
@@ -19630,7 +19915,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -19731,7 +20019,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -19833,7 +20124,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -19934,7 +20228,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": "null",
@@ -20034,7 +20331,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20149,7 +20449,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20257,7 +20560,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20363,7 +20669,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20473,7 +20782,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20580,7 +20892,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20684,7 +20999,10 @@
         "type": "SingleChoice",
         "coefficient": 0.5,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Yes": 1,
@@ -20727,7 +21045,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted continuously or with close regular intervals (at least once a month)": 0,
@@ -20832,7 +21153,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is submitted automatically/semi-automatically via direct integrations": "null",
@@ -20939,7 +21263,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "There is no need, one system collects all information at national level": 1,
@@ -21049,7 +21376,10 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {},
         "actual_answers": {
@@ -21089,7 +21419,10 @@
         "type": "MultipleChoice",
         "coefficient": 1,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "Data is published automatically in a real-time dashboard via direct integration between the AMR surveillance system and the dashboard.": 1,
@@ -21212,7 +21545,10 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {},
         "actual_answers": {
@@ -21252,7 +21588,10 @@
         "type": "MultipleChoice",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {
             "The indicators and/or frequency for when a clinical sample is taken for microbiological culture varies between healthcare facilities \u2013 makes it hard to know if measured resistance levels are representative.": "null",
@@ -21411,7 +21750,10 @@
         "type": "FreeText",
         "coefficient": 0,
         "tags": [
-            "National surveillance"
+            "National surveillance",
+            "Not pathogen related",
+            "Not resistance related",
+            "Not culture material related"
         ],
         "possible_answers": {},
         "actual_answers": {

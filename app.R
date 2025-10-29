@@ -110,14 +110,14 @@ nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / resistances / culture materials
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
-pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile")
-resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
-cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool")
+pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile", "Not pathogen related")
+resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
+cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool", "Not culture material related")
 
 # info text
-pathogensInfoText       <- "Unselect all pathogens to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus on one or several pathogens, select the pathogen(s) you need."
-resistancesInfoText     <- "Unselect all resistances to ignore if questions are resistance-specific or not.\nTo keep only resistance-specific questions, select all.\nTo focus on one or several resistances, select the resistance(s) you need."
-cultureMaterialInfoText <- "Unselect all culture materials to ignore if questions are material-specific or not.\nTo keep only material-specific questions, select all.\nTo focus on one or several culture materials, select the one(s) you need."
+pathogensInfoText       <- "Select the pathogen(s) you want to filter by. You can also select 'Not pathogen related' to include questions that are not specific to any pathogen."
+resistancesInfoText     <- "Select the resistance(s) you want to filter by. You can also select 'Not resistance related' to include questions that are not specific to any resistance."
+cultureMaterialInfoText <- "Select the culture material(s) you want to filter by. You can also select 'Not culture material related' to include questions that are not specific to any culture material."
 
 # get all questions (short titles) for question filter + set list of multiple choice questions (short titles)
 allShortTitles <- c()
@@ -243,6 +243,26 @@ ui <- shinyUI(fluidPage(
     #    class = "top-spacer"
     #),
 
+    # JavaScript to update body class based on section selection
+    tags$script(HTML("
+        $(document).on('shiny:inputchanged', function(event) {
+            if (event.name === 'sectionsSelection') {
+                $('body').removeClass('section-1 section-2 section-3');
+                if (event.value === 'National surveillance') {
+                    $('body').addClass('section-1');
+                } else if (event.value === 'National genomic surveillance') {
+                    $('body').addClass('section-2');
+                } else if (event.value === 'National guidance') {
+                    $('body').addClass('section-3');
+                }
+            }
+        });
+        // Set initial class on page load
+        $(document).ready(function() {
+            $('body').addClass('section-1');
+        });
+    ")),
+
     # Layout type
     sidebarLayout(
 
@@ -301,7 +321,7 @@ ui <- shinyUI(fluidPage(
                         inputId  = "cultureMaterialsSelection",
                         label    = "",
                         choices  = cultureMaterialList,
-                        selected = c(),
+                        selected = cultureMaterialList,
                         inline   = FALSE,
                         width    = NULL
                     )
@@ -325,7 +345,7 @@ ui <- shinyUI(fluidPage(
                         inputId  = "pathogensSelection",
                         label    = "",
                         choices  = pathogenList,
-                        selected = c(),
+                        selected = pathogenList,
                         inline   = FALSE,
                         width    = NULL
                     )
@@ -350,7 +370,7 @@ ui <- shinyUI(fluidPage(
                         inputId  = "resistancesSelection",
                         label    = "",
                         choices  = resistanceList,
-                        selected = c(),
+                        selected = resistanceList,
                         inline   = FALSE,
                         width    = NULL
                     )
@@ -471,6 +491,7 @@ ui <- shinyUI(fluidPage(
                             "Survey results"
                         )
                     ),
+                    uiOutput("noQuestionsMessage"),
                     DT::dataTableOutput("resultsTable"),
                     tags$div(
                         style = "margin-top: 10px;",
@@ -582,9 +603,9 @@ server <- function(input, output, session) {
     observeEvent(input$resetFilters, {
         updateRadioButtons(session, "sectionsSelection", selected = sectionList[1])
         updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
-        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
-        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList)
-        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList)
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
+        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
+        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
     })
 
     # "Select all" button for countries
@@ -608,7 +629,7 @@ server <- function(input, output, session) {
     # "Select all" button for resistances
     observeEvent(input$selectAllResistances, {
         if ((length(resistanceList) - length(input$resistancesSelection)) < 2) {
-            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList)
+            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = c())
         } else {
             updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
         }
@@ -617,7 +638,7 @@ server <- function(input, output, session) {
     # "Select all" button for culture materials
     observeEvent(input$selectAllCultureMaterials, {
         if ((length(cultureMaterialList) - length(input$cultureMaterialsSelection)) < 2) {
-            updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList)
+            updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = c())
         } else {
             updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
         }
@@ -834,24 +855,35 @@ server <- function(input, output, session) {
 
         # returns a datafrme for the Survey Results tab
 
-        # Helper function to create colored badge HTML
+        # Helper function to get badge color (only for sections)
         getBadgeColor <- function(tag) {
-            # Sections - blue
-            if (tag %in% sectionList) return("#008aab")
-            # Culture material - red
-            if (tag %in% cultureMaterialList) return("#d9534f")
-            # Pathogens - green
-            if (tag %in% pathogenList) return("#5cb85c")
-            # Resistances - yellow
-            if (tag %in% resistanceList) return("#f0ad4e")
-            # Default - gray
-            return("#999999")
+            # Sections - use specific colors
+            if (tag == "National surveillance") return("#2a9d8f")
+            if (tag == "National genomic surveillance") return("#d4a843")
+            if (tag == "National guidance") return("#cc8888")
+            # All other filters - gray
+            return("#888888")
+        }
+
+        # Helper function to get badge icon
+        getBadgeIcon <- function(tag) {
+            # Sections
+            if (tag %in% sectionList) return("")
+            # Culture material
+            if (tag %in% cultureMaterialList) return('<i class="fa fa-flask"></i> ')
+            # Pathogens
+            if (tag %in% pathogenList) return('<i class="fa fa-bacteria"></i> ')
+            # Resistances
+            if (tag %in% resistanceList) return('<i class="fa fa-triangle-exclamation"></i> ')
+            # Default
+            return("")
         }
 
         formatQuestionWithBadges <- function(questionTitle, tagsString) {
             tagsList <- strsplit(tagsString, ", ")[[1]]
-            # Remove "Section 0" if present
+            # Remove "Section 0" and "Not ... related" tags (don't display these)
             tagsList <- tagsList[tagsList != "Section 0"]
+            tagsList <- tagsList[!grepl("^Not .* related$", tagsList)]
 
             if (length(tagsList) == 0) {
                 return(questionTitle)
@@ -861,9 +893,10 @@ server <- function(input, output, session) {
             badgesHtml <- paste(
                 sapply(tagsList, function(tag) {
                     color <- getBadgeColor(tag)
+                    icon <- getBadgeIcon(tag)
                     paste0('<span style="display: inline-block; background-color: ', color,
                            '; color: white; padding: 2px 8px; margin: 2px; border-radius: 3px; font-size: 0.75em; font-weight: 500;">',
-                           tag, '</span>')
+                           icon, tag, '</span>')
                 }),
                 collapse = " "
             )
@@ -1075,18 +1108,35 @@ server <- function(input, output, session) {
 
         # used to filter the question selection list
 
-        # Helper function to get badge color (same as in createResultsTable)
+        # Helper function to get badge color (only for sections)
         getBadgeColor <- function(tag) {
-            if (tag %in% sectionList) return("#008aab")
-            if (tag %in% cultureMaterialList) return("#d9534f")
-            if (tag %in% pathogenList) return("#5cb85c")
-            if (tag %in% resistanceList) return("#f0ad4e")
-            return("#999999")
+            # Sections - use specific colors
+            if (tag == "National surveillance") return("#2a9d8f")
+            if (tag == "National genomic surveillance") return("#d4a843")
+            if (tag == "National guidance") return("#cc8888")
+            # All other filters - gray
+            return("#888888")
+        }
+
+        # Helper function to get badge icon
+        getBadgeIcon <- function(tag) {
+            # Sections
+            if (tag %in% sectionList) return("")
+            # Culture material
+            if (tag %in% cultureMaterialList) return('<i class="fa fa-flask"></i> ')
+            # Pathogens
+            if (tag %in% pathogenList) return('<i class="fa fa-bacteria"></i> ')
+            # Resistances
+            if (tag %in% resistanceList) return('<i class="fa fa-triangle-exclamation"></i> ')
+            # Default
+            return("")
         }
 
         formatShortTitleWithBadges <- function(shortTitle, tagsString) {
             tagsList <- strsplit(tagsString, ", ")[[1]]
+            # Remove "Section 0" and "Not ... related" tags (don't display these)
             tagsList <- tagsList[tagsList != "Section 0"]
+            tagsList <- tagsList[!grepl("^Not .* related$", tagsList)]
 
             if (length(tagsList) == 0) {
                 return(shortTitle)
@@ -1095,9 +1145,10 @@ server <- function(input, output, session) {
             badgesHtml <- paste(
                 sapply(tagsList, function(tag) {
                     color <- getBadgeColor(tag)
+                    icon <- getBadgeIcon(tag)
                     paste0('<span style="display: inline-block; background-color: ', color,
                            '; color: white; padding: 1px 6px; margin-right: 4px; border-radius: 3px; font-size: 0.7em; font-weight: 500;">',
-                           tag, '</span>')
+                           icon, tag, '</span>')
                 }),
                 collapse = ""
             )
@@ -1121,17 +1172,11 @@ server <- function(input, output, session) {
             if (question$type == "FreeText") next
 
             # check if question tags and active filters do match
-            if (
-                (length(input$pathogensSelection) != 0) & (length(intersect(input$pathogensSelection, question$tags)) == 0)
-            ) next
+            if (length(intersect(input$pathogensSelection, question$tags)) == 0) next
 
-            if (
-                (length(input$resistancesSelection) != 0) & (length(intersect(input$resistancesSelection, question$tags)) == 0)
-            ) next
+            if (length(intersect(input$resistancesSelection, question$tags)) == 0) next
 
-            if (
-                (length(input$cultureMaterialsSelection) != 0) & (length(intersect(input$cultureMaterialsSelection, question$tags)) == 0)
-            ) next
+            if (length(intersect(input$cultureMaterialsSelection, question$tags)) == 0) next
 
             # question has to be taken -> append titles to vectors
             activeQuestionTitles <- c(activeQuestionTitles, question[["title"]])
@@ -1303,6 +1348,19 @@ server <- function(input, output, session) {
         )
     )
 
+    output$noQuestionsMessage <- renderUI({
+        if (length(activeQuestions()[[1]]) == 0) {
+            tags$div(
+                style = "padding: 40px; text-align: center; color: #666; font-size: 1.1em;",
+                tags$i(class = "fa fa-info-circle", style = "font-size: 2em; margin-bottom: 10px;"),
+                tags$br(),
+                "No questions match the active filters.",
+                tags$br(),
+                tags$span(style = "font-size: 0.9em;", "Try adjusting your filter selections.")
+            )
+        }
+    })
+
     output$resultsTable <- DT::renderDT(
         createResultsTable(),
         rownames = FALSE,
@@ -1331,7 +1389,7 @@ server <- function(input, output, session) {
                 "  if (th0.find('.lock-btn').length === 0) {",
                 "    var currentText = th0.text();",
                 "    th0.html('<div style=\"display: flex; justify-content: space-between; align-items: center;\"><span>' + currentText + '</span><span class=\"lock-btn\" style=\"cursor: pointer;\" title=\"Click to lock/unlock this column when scrolling horizontally\"><i class=\"fa fa-lock-open\" style=\"font-size: 0.9em;\"></i></span></div>');",
-                "    th0.css({'background-color': '#008aab', 'color': '#ffffff', 'border-right': '2px solid #008aab'});",
+                "    // Colors are now handled by CSS based on selected section",
                 "    ",
                 "    // Add click handler for lock button",
                 "    th0.find('.lock-btn').on('click', function(e) {",
@@ -1367,7 +1425,8 @@ server <- function(input, output, session) {
                 "        Shiny.setInputValue('remove_country', {country: countryName, timestamp: Date.now()});",
                 "      });",
                 "    }",
-                "    $(this).css({'background-color': '#0fdbd5', 'color': '#ffffff', 'cursor': 'move'});",
+                "    // Colors are now handled by CSS based on selected section",
+                "    $(this).css({'cursor': 'move'});",
                 "  });",
                 "}"
             ),
@@ -1390,11 +1449,7 @@ server <- function(input, output, session) {
             columnDefs = list(
                 list(
                     targets = 0,
-                    createdCell = JS(
-                        "function(td, cellData, rowData, row, col) {",
-                        "  $(td).css({'border-right': '1px solid #008aab'});",
-                        "}"
-                    )
+                    className = 'first-column-cell'
                 )
             )
         )
@@ -1708,7 +1763,7 @@ server <- function(input, output, session) {
             },
             position = "top"
         ) +
-        theme_dark() +
+        theme_minimal() +
         theme(
             axis.title.y = element_blank(),       # y axis label (remove)
             axis.title.x = element_text(size=16, margin = margin(t = 10)), # x axis label with top margin

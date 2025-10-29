@@ -72,6 +72,20 @@
     display: block;
 }
 
+/* Style for "Not ... related" filter labels */
+.checkbox label:has(input[value*="Not"]):has(input[value*="related"]) {
+    color: #a05050 !important;
+    font-style: italic;
+}
+
+/* Alternative selector for better compatibility */
+input[value="Not pathogen related"] + span,
+input[value="Not resistance related"] + span,
+input[value="Not culture material related"] + span {
+    color: #a05050 !important;
+    font-style: italic;
+}
+
 
 /* OVERWRITE BOOTSTRAP */
 
@@ -116,26 +130,7 @@
 
 .accordion-icon {
     font-size: 0.85em;
-}
-
-.accordion-icon-sections {
-    color: #008aab;
-}
-
-.accordion-icon-culture {
-    color: #d9534f;
-}
-
-.accordion-icon-pathogens {
-    color: #5cb85c;
-}
-
-.accordion-icon-resistances {
-    color: #f0ad4e;
-}
-
-.accordion-icon-countries {
-    color: #0fdbd5;
+    color: #666;
 }
 
 .row > .col-sm-2 {
@@ -196,13 +191,30 @@
     font-size: 0.9rem !important;
 }
 
-
 #resultsTable tr > th {
     min-width: 160px;
+    transition: background-color 0.3s ease;
 }
 
 #resultsTable tr > th:first-child {
     min-width: 540px;
+}
+
+/* Fixed table header colors - JAMRAI colors */
+#resultsTable tr > th:first-child {
+    background-color: #008aab !important;
+    color: #ffffff !important;
+    border-right: 2px solid #008aab !important;
+}
+
+#resultsTable tr > th:not(:first-child) {
+    background-color: #0fdbd5 !important;
+    color: #ffffff !important;
+}
+
+/* Fixed border for first column cells - JAMRAI dark blue */
+#resultsTable td.first-column-cell {
+    border-right: 1px solid #008aab !important;
 }
 
 /* Question selection dropdown menu */
@@ -254,15 +266,45 @@
     padding: 0 !important;
     border: 0;
     min-width: 200px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .sections-wrapper {
     background-color: #6c757d;
     padding: 0;
     margin: 0;
+    margin-bottom: 4px;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+    position: relative;
+}
+
+/* Horizontal stripe below section buttons */
+.sections-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    transition: background-color 0.3s ease;
+}
+
+body.section-1 .sections-wrapper::after {
+    background-color: #2a9d8f;
+}
+
+body.section-2 .sections-wrapper::after {
+    background-color: #d4a843;
+}
+
+body.section-3 .sections-wrapper::after {
+    background-color: #cc8888;
 }
 
 .github-link-btn {
@@ -295,15 +337,40 @@
     border-color: #5a6268 !important;
 }
 
-#sectionsSelection input:checked + .btn {
-    background-color: #008aab !important;
-    border-color: #008aab !important;
+/* Section 1 - National surveillance (teal) */
+#sectionsSelection input:nth-of-type(1):checked + .btn {
+    background-color: #2a9d8f !important;
+    border-color: #2a9d8f !important;
     color: white !important;
 }
 
-#sectionsSelection input:checked + .btn:hover {
-    background-color: #006d87 !important;
-    border-color: #006d87 !important;
+#sectionsSelection input:nth-of-type(1):checked + .btn:hover {
+    background-color: #1f7a6f !important;
+    border-color: #1f7a6f !important;
+}
+
+/* Section 2 - National genomic surveillance (gold) */
+#sectionsSelection input:nth-of-type(2):checked + .btn {
+    background-color: #d4a843 !important;
+    border-color: #d4a843 !important;
+    color: white !important;
+}
+
+#sectionsSelection input:nth-of-type(2):checked + .btn:hover {
+    background-color: #b8920f !important;
+    border-color: #b8920f !important;
+}
+
+/* Section 3 - National guidance (soft red) */
+#sectionsSelection input:nth-of-type(3):checked + .btn {
+    background-color: #cc8888 !important;
+    border-color: #cc8888 !important;
+    color: white !important;
+}
+
+#sectionsSelection input:nth-of-type(3):checked + .btn:hover {
+    background-color: #b87373 !important;
+    border-color: #b87373 !important;
 }
 
 
@@ -377,8 +444,22 @@
     background-color: #f8f9fa;
     padding: 12px 15px;
     margin-bottom: 10px;
-    border-left: 4px solid #008aab;
+    border-left: 4px solid #2a9d8f;
     border-radius: 2px;
+    transition: border-color 0.3s ease;
+}
+
+/* Dynamic border color based on selected section */
+body.section-1 .full-question-title-box {
+    border-left-color: #2a9d8f;
+}
+
+body.section-2 .full-question-title-box {
+    border-left-color: #d4a843;
+}
+
+body.section-3 .full-question-title-box {
+    border-left-color: #cc8888;
 }
 
 .question-title-text {
