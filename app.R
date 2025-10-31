@@ -1788,7 +1788,8 @@ server <- function(input, output, session) {
         }
 
         dashboardPlot <- dashboardPlot +
-        scale_y_reverse(limits = c(100, 0)) +
+        geom_hline(yintercept = 100, color = "gray50", linewidth = 0.5) +
+        scale_y_reverse(limits = c(100, 0), expand = c(0, 0)) +
         coord_flip() +
         labs(
             x = "Replies", y = yAxisLabel
@@ -1839,7 +1840,10 @@ server <- function(input, output, session) {
             axis.title.y = element_blank(),       # y axis label (remove)
             axis.title.x = element_text(size=16, margin = margin(t = 20), family = "Arial"), # x axis label with increased top margin
             axis.text.y = element_text(size=14, hjust=0, family = "Arial"),  # axis ticks - left align, reduced font size
-            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1, family = "Arial") # rotate
+            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1, family = "Arial"), # rotate
+            panel.grid = element_blank(),  # remove background grid
+            axis.line.y = element_line(color = "gray50", linewidth = 0.5),  # add thin line on y-axis only
+            axis.line.x = element_line(color = "gray50", linewidth = 0.5)  # add thin line on x-axis (top after flip)
         )
 
         ggplotly(dashboardPlot, height = plotHeight, tooltip = "text") %>%
