@@ -1735,7 +1735,7 @@ server <- function(input, output, session) {
 
             # For multiple-choice questions, use light grey; for others, use custom colors
             barColors <- if (input$questionSelection %in% multipleChoiceShortTitles && length(countryReplies()) >= 5) {
-                rep("#888888", length(countryReplies()[[3]]))
+                rep("#008aab", length(countryReplies()[[3]]))
             } else {
                 countryReplies()[[2]]
             }
