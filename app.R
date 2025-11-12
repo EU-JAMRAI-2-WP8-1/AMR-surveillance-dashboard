@@ -295,7 +295,7 @@ ui <- shinyUI(fluidPage(
 
                 accordion_panel(
                     title = HTML('<i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
-                    actionLink("selectAllCountries", "Select All"),
+                    actionLink("selectAllCountries", "(De)Select All"),
                     checkboxGroupInput(
                         inputId  = "countriesSelection",
                         label    = "",
@@ -310,7 +310,7 @@ ui <- shinyUI(fluidPage(
                 ),
                 accordion_panel(
                     title = HTML('<i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
-                    actionLink("selectAllCultureMaterials", "Select All"),
+                    actionLink("selectAllCultureMaterials", "(De)Select All"),
                     tags$button(
                         class = "info-button",
                         #title = cultureMaterialInfoText,
@@ -334,7 +334,7 @@ ui <- shinyUI(fluidPage(
                 ),
                 accordion_panel(
                     title = HTML('<i class="fa fa-bacteria accordion-icon accordion-icon-pathogens"></i> Pathogens'),
-                    actionLink("selectAllPathogens", "Select All"),
+                    actionLink("selectAllPathogens", "(De)Select All"),
                     tags$button(
                         class = "info-button",
                         #title = pathogensInfoText,
@@ -358,7 +358,7 @@ ui <- shinyUI(fluidPage(
                 ),
                 accordion_panel(
                     title = HTML('<i class="fa fa-triangle-exclamation accordion-icon accordion-icon-resistances"></i> Resistances'),
-                    actionLink("selectAllResistances", "Select All"),
+                    actionLink("selectAllResistances", "(De)Select All"),
                     tags$button(
                         class = "info-button",
                         #title = resistancesInfoText,
