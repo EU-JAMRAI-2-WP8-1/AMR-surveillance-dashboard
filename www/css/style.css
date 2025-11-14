@@ -81,10 +81,10 @@
     color: white;
     border: none;
     border-radius: 6px;
-    padding: 8px 16px;
-    margin-top: 0px;
+    padding: 6px 12px;  /* Reduced from 8px 16px to make thinner */
+    margin-top: 12px;  /* Add space above button when at bottom */
     margin-bottom: 0px;
-    font-size: 1rem;
+    font-size: 0.9rem;  /* Slightly smaller font */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -286,11 +286,9 @@ input[value="Not culture material related"] + span {
     --bs-accordion-border-width: 0;
 }
 
-/* Left border bar for filter sections */
+/* Spacing between filter sections */
 .accordion-item {
-    border-left: 6px solid #495057;  /* Thickened from 5px to 6px */
-    padding-left: 0px;  /* Remove space between border and title box */
-    margin-bottom: 28px;  /* Increased spacing between sections from 20px to 28px */
+    margin-bottom: 28px;  /* Increased spacing between sections */
     border-radius: 0 !important;  /* Remove border-radius to keep borders straight */
 }
 
@@ -298,11 +296,34 @@ input[value="Not culture material related"] + span {
 .accordion-button {
     padding-top: 8px !important;
     padding-bottom: 8px !important;
+    position: relative;
+}
+
+/* Remove blue outline/focus on accordion button */
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none !important;
+}
+
+/* Filter progress bar */
+.filter-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: #008aab;
+    width: 0%;
+    transition: width 0.3s ease;
+    z-index: 1;
 }
 
 /* Reduce spacing in accordion body to bring title and content closer */
 .accordion-body {
-    padding-top: 8px !important;
+    padding-top: 4px !important;  /* Reduced from 8px to bring closer to progress bar */
     padding-bottom: 8px !important;
 }
 
@@ -449,6 +470,12 @@ input[value="Not culture material related"] + span {
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+    direction: rtl;  /* Move scrollbar to left side */
+}
+
+/* Reset text direction for content inside sidebar */
+.sidebar-panel > * {
+    direction: ltr;
 }
 
 .sections-wrapper {
@@ -560,6 +587,19 @@ body.section-3 .sections-wrapper::after {
 
 .reset-filters-wrapper > button {
     width: 100%;
+}
+
+/* Instructions button with JAMRAI turquoise color on hover */
+#showInstructions {
+    background-color: white !important;
+    border-color: #0fdbd5 !important;
+    color: #0fdbd5 !important;
+}
+
+#showInstructions:hover {
+    background-color: #0fdbd5 !important;
+    border-color: #0fdbd5 !important;
+    color: white !important;
 }
 
 /*#resetFilters {

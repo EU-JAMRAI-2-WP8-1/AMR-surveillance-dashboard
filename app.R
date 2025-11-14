@@ -288,18 +288,18 @@ ui <- shinyUI(fluidPage(
 
             tags$span(
                 class = "reset-filters-wrapper",
-                actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
+                actionButton("showInstructions", "Instructions", class = "btn btn-outline-info", icon = icon("circle-info"))
             ),
 
-            hr(
-                class = "hr-filters-separator"
+            tags$span(
+                class = "reset-filters-wrapper",
+                actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
             ),
 
             accordion(
 
                 accordion_panel(
-                    title = HTML('<i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
-                    uiOutput("selectAllCountriesButton"),
+                    title = HTML('<div class="filter-progress-bar" id="progress-countries"></div><i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
                     checkboxGroupInput(
                         inputId  = "countriesSelection",
                         label    = "",
@@ -307,14 +307,11 @@ ui <- shinyUI(fluidPage(
                         selected = participatingCountries,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
+                    ),
+                    uiOutput("selectAllCountriesButton")
                 ),
                 accordion_panel(
-                    title = HTML('<i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
-                    uiOutput("selectAllCultureMaterialsButton"),
+                    title = HTML('<div class="filter-progress-bar" id="progress-cultureMaterials"></div><i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
                     checkboxGroupInput(
                         inputId  = "cultureMaterialsSelection",
                         label    = "",
@@ -322,14 +319,11 @@ ui <- shinyUI(fluidPage(
                         selected = cultureMaterialList,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
+                    ),
+                    uiOutput("selectAllCultureMaterialsButton")
                 ),
                 accordion_panel(
-                    title = HTML('<i class="fa fa-bacteria accordion-icon accordion-icon-pathogens"></i> Pathogens'),
-                    uiOutput("selectAllPathogensButton"),
+                    title = HTML('<div class="filter-progress-bar" id="progress-pathogens"></div><i class="fa fa-bacteria accordion-icon accordion-icon-pathogens"></i> Pathogens'),
                     checkboxGroupInput(
                         inputId  = "pathogensSelection",
                         label    = "",
@@ -337,14 +331,11 @@ ui <- shinyUI(fluidPage(
                         selected = pathogenList,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
+                    ),
+                    uiOutput("selectAllPathogensButton")
                 ),
                 accordion_panel(
-                    title = HTML('<i class="fa fa-triangle-exclamation accordion-icon accordion-icon-resistances"></i> Resistances'),
-                    uiOutput("selectAllResistancesButton"),
+                    title = HTML('<div class="filter-progress-bar" id="progress-resistances"></div><i class="fa fa-triangle-exclamation accordion-icon accordion-icon-resistances"></i> Resistances'),
                     class = "country-filter-container",
                     checkboxGroupInput(
                         inputId  = "resistancesSelection",
@@ -353,8 +344,8 @@ ui <- shinyUI(fluidPage(
                         selected = resistanceList,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                    
+                    ),
+                    uiOutput("selectAllResistancesButton")
                 )
             ),
             tags$div(
@@ -709,6 +700,21 @@ server <- function(input, output, session) {
             size = "l"
         ))
     }, once = TRUE, ignoreInit = FALSE)
+
+    # Instructions button - reopens the usage modal
+    observeEvent(input$showInstructions, {
+        showModal(modalDialog(
+            title = "How to Use This Dashboard",
+            tryCatch({
+                includeHTML("www/html/usage.html")
+            }, error = function(e) {
+                HTML("<p>Usage information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = modalButton("Close"),
+            size = "l"
+        ))
+    })
 
     # update the question selection list
     observeEvent(input$sectionsSelection, {
