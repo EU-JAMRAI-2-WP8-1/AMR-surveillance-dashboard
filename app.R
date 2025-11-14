@@ -291,11 +291,15 @@ ui <- shinyUI(fluidPage(
                 actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
             ),
 
+            hr(
+                class = "hr-filters-separator"
+            ),
+
             accordion(
 
                 accordion_panel(
                     title = HTML('<i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
-                    actionLink("selectAllCountries", "(De)Select All"),
+                    uiOutput("selectAllCountriesButton"),
                     checkboxGroupInput(
                         inputId  = "countriesSelection",
                         label    = "",
@@ -310,16 +314,7 @@ ui <- shinyUI(fluidPage(
                 ),
                 accordion_panel(
                     title = HTML('<i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
-                    actionLink("selectAllCultureMaterials", "(De)Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = cultureMaterialInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        cultureMaterialInfoText
-                    ),
+                    uiOutput("selectAllCultureMaterialsButton"),
                     checkboxGroupInput(
                         inputId  = "cultureMaterialsSelection",
                         label    = "",
@@ -334,16 +329,7 @@ ui <- shinyUI(fluidPage(
                 ),
                 accordion_panel(
                     title = HTML('<i class="fa fa-bacteria accordion-icon accordion-icon-pathogens"></i> Pathogens'),
-                    actionLink("selectAllPathogens", "(De)Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = pathogensInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        pathogensInfoText
-                    ),
+                    uiOutput("selectAllPathogensButton"),
                     checkboxGroupInput(
                         inputId  = "pathogensSelection",
                         label    = "",
@@ -358,16 +344,7 @@ ui <- shinyUI(fluidPage(
                 ),
                 accordion_panel(
                     title = HTML('<i class="fa fa-triangle-exclamation accordion-icon accordion-icon-resistances"></i> Resistances'),
-                    actionLink("selectAllResistances", "(De)Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = resistancesInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        resistancesInfoText
-                    ),
+                    uiOutput("selectAllResistancesButton"),
                     class = "country-filter-container",
                     checkboxGroupInput(
                         inputId  = "resistancesSelection",
@@ -451,7 +428,7 @@ ui <- shinyUI(fluidPage(
                             ),
                             uiOutput("multipleChoiceAnswerSelector"),
                             tags$div(
-                                class = "",
+                                class = "dashboard-plot-container",
                                 uiOutput("dashboardPlotUI")
                             )
                         ),
@@ -611,6 +588,63 @@ server <- function(input, output, session) {
         updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
     })
 
+    # Dynamic button labels that change based on selection state
+    output$selectAllCountriesButton <- renderUI({
+        if ((length(participatingCountries) - length(input$countriesSelection)) < 2) {
+            actionButton("selectAllCountries", HTML('<i class="fa fa-times"></i> Deselect All'), class = "select-all-button deselect-button")
+        } else {
+            actionButton("selectAllCountries", HTML('<i class="fa fa-check"></i> Select All'), class = "select-all-button select-button")
+        }
+    })
+
+    output$selectAllCultureMaterialsButton <- renderUI({
+        if ((length(cultureMaterialList) - length(input$cultureMaterialsSelection)) < 2) {
+            tags$div(
+                style = "position: relative;",
+                actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-times"></i> Deselect All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button deselect-button"),
+                tags$span(class = "info-sections", cultureMaterialInfoText)
+            )
+        } else {
+            tags$div(
+                style = "position: relative;",
+                actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-check"></i> Select All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button select-button"),
+                tags$span(class = "info-sections", cultureMaterialInfoText)
+            )
+        }
+    })
+
+    output$selectAllPathogensButton <- renderUI({
+        if ((length(pathogenList) - length(input$pathogensSelection)) < 2) {
+            tags$div(
+                style = "position: relative;",
+                actionButton("selectAllPathogens", HTML('<i class="fa fa-times"></i> Deselect All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button deselect-button"),
+                tags$span(class = "info-sections", pathogensInfoText)
+            )
+        } else {
+            tags$div(
+                style = "position: relative;",
+                actionButton("selectAllPathogens", HTML('<i class="fa fa-check"></i> Select All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button select-button"),
+                tags$span(class = "info-sections", pathogensInfoText)
+            )
+        }
+    })
+
+    output$selectAllResistancesButton <- renderUI({
+        if ((length(resistanceList) - length(input$resistancesSelection)) < 2) {
+            tags$div(
+                style = "position: relative;",
+                actionButton("selectAllResistances", HTML('<i class="fa fa-times"></i> Deselect All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button deselect-button"),
+                tags$span(class = "info-sections", resistancesInfoText)
+            )
+        } else {
+            tags$div(
+                style = "position: relative;",
+                actionButton("selectAllResistances", HTML('<i class="fa fa-check"></i> Select All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button select-button"),
+                tags$span(class = "info-sections", resistancesInfoText)
+            )
+        }
+    })
+
     # "Select all" button for countries
     observeEvent(input$selectAllCountries, {
         if ((length(participatingCountries) - length(input$countriesSelection)) < 2) {
@@ -660,6 +694,21 @@ server <- function(input, output, session) {
             footer = modalButton("Close")
         ))
     })
+
+    # Welcome/Usage modal - shows on page load
+    observeEvent(TRUE, {
+        showModal(modalDialog(
+            title = "Welcome to the AMR Surveillance Dashboard",
+            tryCatch({
+                includeHTML("www/html/usage.html")
+            }, error = function(e) {
+                HTML("<p>Usage information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = modalButton("Start Exploring"),
+            size = "l"
+        ))
+    }, once = TRUE, ignoreInit = FALSE)
 
     # update the question selection list
     observeEvent(input$sectionsSelection, {
@@ -1677,186 +1726,239 @@ server <- function(input, output, session) {
 
     output$dashboardPlot <- renderPlotly({
 
+        # Helper function to wrap long labels into multiple lines
+        wrapLabel <- function(label, maxCharsPerLine = 24) {
+            if (nchar(label) <= maxCharsPerLine) {
+                return(label)
+            }
+
+            split <- strsplit(label, " ")[[1]]
+            lines <- c()
+            currentLine <- ""
+
+            for (word in split) {
+                # Test if adding this word would exceed the limit
+                testLine <- if (nchar(currentLine) == 0) word else paste(currentLine, word)
+
+                if (nchar(testLine) > maxCharsPerLine && nchar(currentLine) > 0) {
+                    # Current line is full, save it and start a new line
+                    lines <- c(lines, currentLine)
+                    currentLine <- word
+
+                    # Check if we've reached 3 lines
+                    if (length(lines) >= 3) {
+                        lines[3] <- paste0(lines[3], "...")
+                        return(paste(lines, collapse = "<br>"))
+                    }
+                } else {
+                    # Add word to current line
+                    currentLine <- testLine
+                }
+            }
+
+            # Add the last line
+            if (nchar(currentLine) > 0) {
+                lines <- c(lines, currentLine)
+            }
+
+            return(paste(lines, collapse = "<br>"))
+        }
+
         if (input$questionSelection == "Participating countries"){
 
             # Calculate dynamic height based on number of bars
             numBars <- nrow(participationDataOccurrences)
-            plotHeight <- max(400, numBars * 90 + 150)  # min 400px, 90px per bar + 150px for margins
+            plotHeight <- max(400, numBars * 90 + 150)
 
-            dashboardPlot <- ggplot(
-                data = participationDataOccurrences,
-                aes(
-                    x = reply,
-                    y = occurences,
-                    text = paste0(reply, ": ", sprintf("%.2f", occurences), "%")
+            # Prepare data
+            replies <- participationDataOccurrences$reply
+            occurrences <- participationDataOccurrences$occurences
+            barColors <- c(colorSequence[1], colorSequence[2], "#b3b3b3")
+
+            # Wrap labels if needed
+            wrappedLabels <- sapply(replies, wrapLabel)
+
+            # Add spacing prefix to Y-axis labels for better separation from plot
+            wrappedLabels <- paste0("  ", wrappedLabels)
+
+            # Create text labels with positioning
+            # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
+            # but display reversed on screen. Text positions use data coordinates:
+            # - For bars >= 20%: position inside bar, closer to left edge visually
+            # - For bars < 20%: position outside bar, to the left visually
+            textLabels <- paste0(sprintf("%.0f", occurrences), "%")  # Round to integer and add % symbol
+            textPositions <- ifelse(occurrences >= 20,
+                                    occurrences - 3,  # Inside the bar
+                                    occurrences + 12)  # Outside the bar (increased to move labels more to the left)
+            textColors <- ifelse(occurrences >= 20, "white", "black")
+
+            # Create the plot
+            p <- plot_ly(height = plotHeight) %>%
+                add_bars(
+                    y = wrappedLabels,
+                    x = occurrences,
+                    orientation = 'h',
+                    marker = list(color = barColors),
+                    width = 0.5,
+                    hovertemplate = paste0("%{y}: %{x:.2f}%<extra></extra>"),
+                    showlegend = FALSE
                 )
-            ) +
-            geom_bar(
-                aes(x = factor(reply, level = rev(unique(reply))), y = occurences),
-                stat = "identity",
-                fill = c(colorSequence[1], colorSequence[2], "#b3b3b3"),
-                width = 0.5
-            ) +
-            # WHITE LABELS INSIDE BARS: For values >= 20%
-            # Formula: y = occurences - 8.6
-            # Fixed offset of 8.6 units from the left edge of the bar
-            # With fixed 0-100 scale, this works consistently for all bar sizes >= 20%
-            # hjust = 0: Left-align the text (text starts at the y position)
-            geom_text(
-                data = participationDataOccurrences %>% filter(occurences >= 20),
-                aes(x = factor(reply, level = rev(unique(reply))), y = occurences - 8.6, label = sprintf("%.2f", occurences)),
-                hjust = 0,
-                size = 5.5,
-                color = "white"
-            ) +
-            # BLACK LABELS OUTSIDE BARS: For values < 20%
-            # Formula: y = occurences + 7.5
-            # Fixed offset of 7.5 units to the right (outside bar)
-            # For small bars where white label won't fit inside
-            # hjust = 0: Left-align the text
-            geom_text(
-                data = participationDataOccurrences %>% filter(occurences < 20),
-                aes(x = factor(reply, level = rev(unique(reply))), y = occurences + 7.5, label = sprintf("%.2f", occurences)),
-                hjust = 0,
-                size = 5.5,
-                color = "black"
-            )
-        }
 
-        else {
-            # Check if data is available (handles NULL case for multiple-choice questions)
+            # Add annotations individually to properly set colors
+            for (i in seq_along(wrappedLabels)) {
+                p <- p %>% add_annotations(
+                    y = wrappedLabels[i],
+                    x = textPositions[i],
+                    text = textLabels[i],
+                    xanchor = "left",
+                    showarrow = FALSE,
+                    font = list(size = 20, color = textColors[i], family = "Arial")
+                )
+            }
+
+            p %>%
+                layout(
+                    xaxis = list(
+                        title = "% of European countries",
+                        side = "top",
+                        range = c(100, 0),  # Reversed range: bars go right to left
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        zeroline = FALSE,
+                        tickfont = list(size = 17, family = "Arial"),
+                        titlefont = list(size = 17, family = "Arial"),
+                        fixedrange = TRUE,
+                        ticksuffix = "%"  # Add % symbol to x-axis tick labels
+                    ),
+                    yaxis = list(
+                        title = "",
+                        side = "right",  # Y-axis labels on the right
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        tickfont = list(size = 20, family = "Arial", weight = 700),  # Bold (700) for better prominence
+                        fixedrange = TRUE,
+                        automargin = TRUE
+                    ),
+                    margin = list(l = 10, r = 200, t = 50, b = 50),  # Reduced margins to enlarge and center chart
+                    font = list(family = "Arial, sans-serif"),
+                    plot_bgcolor = "white",
+                    paper_bgcolor = "white",
+                    autosize = TRUE
+                ) %>%
+                config(
+                    displaylogo = FALSE,
+                    responsive = TRUE
+                )
+
+        } else {
+            # Check if data is available
             if (is.null(countryReplies()[[3]]) || is.null(countryReplies()[[4]])) {
                 return(NULL)
             }
 
             # Calculate dynamic height based on number of bars
             numBars <- length(countryReplies()[[3]])
-            plotHeight <- max(400, numBars * 90 + 150)  # min 400px, 90px per bar + 150px for margins
+            plotHeight <- max(400, numBars * 90 + 150)
 
-            # For multiple-choice questions, use light grey; for others, use custom colors
+            # Prepare data
+            replies <- countryReplies()[[3]]
+            occurrences <- countryReplies()[[4]]
+
+            # For multiple-choice questions, use JAMRAI blue; for others, use custom colors
             barColors <- if (input$questionSelection %in% multipleChoiceShortTitles && length(countryReplies()) >= 5) {
-                rep("#008aab", length(countryReplies()[[3]]))
+                rep("#008aab", length(replies))
             } else {
                 countryReplies()[[2]]
             }
 
-            dashboardPlot <- ggplot(
-                data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
-                aes(
-                    x = reply,
-                    y = occurences,
-                    text = paste0(reply, ": ", sprintf("%.2f", occurences), "%")
+            # Wrap labels if needed (calculate threshold based on max label length)
+            maxLabelLength <- max(nchar(replies))
+            threshold <- if (maxLabelLength <= 24) 24 else min(ceiling(maxLabelLength / 3), 24)
+            wrappedLabels <- sapply(replies, function(x) wrapLabel(x, threshold))
+
+            # Add spacing prefix to Y-axis labels for better separation from plot
+            wrappedLabels <- paste0("  ", wrappedLabels)
+
+            # Create text labels with positioning
+            # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
+            # but display reversed on screen. Text positions use data coordinates:
+            # - For bars >= 20%: position inside bar, closer to left edge visually
+            # - For bars < 20%: position outside bar, to the left visually
+            textLabels <- paste0(sprintf("%.0f", occurrences), "%")  # Round to integer and add % symbol
+            textPositions <- ifelse(occurrences >= 20,
+                                    occurrences - 3,  # Inside the bar
+                                    occurrences + 12)  # Outside the bar (increased to move labels more to the left)
+            textColors <- ifelse(occurrences >= 20, "white", "black")
+
+            # Set axis label based on question type
+            yAxisLabel <- "% of selected countries"
+
+            # Create the plot
+            p <- plot_ly(height = plotHeight) %>%
+                add_bars(
+                    y = wrappedLabels,
+                    x = occurrences,
+                    orientation = 'h',
+                    marker = list(color = barColors),
+                    width = 0.5,
+                    hovertemplate = paste0("%{y}: %{x:.2f}%<extra></extra>"),
+                    showlegend = FALSE
                 )
-            ) +
-            geom_bar(
-                aes(x = factor(reply, level = rev(unique(countryReplies()[[3]]))), y = occurences),
-                stat = "identity",
-                fill = barColors,
-                width = 0.5
-            ) +
-            # WHITE LABELS INSIDE BARS: For values >= 20%
-            # Formula: y = occurences - 8.6
-            # Fixed offset of 8.6 units from the left edge of the bar
-            # With fixed 0-100 scale, this works consistently for all bar sizes >= 20%
-            # hjust = 0: Left-align the text (text starts at the y position)
-            geom_text(
-                data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]) %>% filter(occurences >= 20),
-                aes(x = factor(reply, level = rev(unique(countryReplies()[[3]]))), y = occurences - 8.6, label = sprintf("%.2f", occurences)),
-                hjust = 0,
-                size = 5.5,
-                color = "white"
-            ) +
-            # BLACK LABELS OUTSIDE BARS: For values < 20%
-            # Formula: y = occurences + 7.5
-            # Fixed offset of 7.5 units to the right (outside bar)
-            # For small bars where white label won't fit inside
-            # hjust = 0: Left-align the text
-            geom_text(
-                data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]) %>% filter(occurences < 20),
-                aes(x = factor(reply, level = rev(unique(countryReplies()[[3]]))), y = occurences + 7.5, label = sprintf("%.2f", occurences)),
-                hjust = 0,
-                size = 5.5,
-                color = "black"
-            )
+
+            # Add annotations individually to properly set colors
+            for (i in seq_along(wrappedLabels)) {
+                p <- p %>% add_annotations(
+                    y = wrappedLabels[i],
+                    x = textPositions[i],
+                    text = textLabels[i],
+                    xanchor = "left",
+                    showarrow = FALSE,
+                    font = list(size = 20, color = textColors[i], family = "Arial")
+                )
+            }
+
+            p %>%
+                layout(
+                    xaxis = list(
+                        title = yAxisLabel,
+                        side = "top",
+                        range = c(100, 0),  # Reversed range: bars go right to left
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        zeroline = FALSE,
+                        tickfont = list(size = 17, family = "Arial"),
+                        titlefont = list(size = 17, family = "Arial"),
+                        fixedrange = TRUE,
+                        ticksuffix = "%"  # Add % symbol to x-axis tick labels
+                    ),
+                    yaxis = list(
+                        title = "",
+                        side = "right",  # Y-axis labels on the right
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        tickfont = list(size = 20, family = "Arial", weight = 700),  # Bold (700) for better prominence
+                        fixedrange = TRUE,
+                        automargin = TRUE
+                    ),
+                    margin = list(l = 10, r = 200, t = 50, b = 50),  # Reduced margins to enlarge and center chart
+                    font = list(family = "Arial, sans-serif"),
+                    plot_bgcolor = "white",
+                    paper_bgcolor = "white",
+                    autosize = TRUE
+                ) %>%
+                config(
+                    displaylogo = FALSE,
+                    responsive = TRUE
+                )
         }
-
-        # Set axis label based on question type
-        yAxisLabel <- if (input$questionSelection == "Participating countries") {
-            "% of European countries"
-        } else {
-            "% of selected countries"
-        }
-
-        dashboardPlot <- dashboardPlot +
-        geom_hline(yintercept = 100, color = "gray50", linewidth = 0.5) +
-        scale_y_reverse(limits = c(100, 0), expand = c(0, 0)) +
-        coord_flip() +
-        labs(
-            x = "Replies", y = yAxisLabel
-        ) +
-        scale_x_discrete(
-            labels = function(x) {
-
-                if (max(nchar(x)) <= 24) { # no need to split
-                    return(x)
-                }
-
-                threshold <- min(c(ceiling(max(nchar(x))/3), 24)) # max 24 characters per line
-
-                # split long labels into 2 or 3 lines (4 is too much for quesstions with many replies)
-                for (i in 1:length(x)) {
-
-                    split <- strsplit(x[i], " ")[[1]] # split by space
-
-                    newLabel <- ""
-                    thisRow <- ""
-                    rowCount <- 1
-
-                    for (j in 1:length(split)) {
-                        newLabel <- paste0(newLabel, " ", split[j])
-                        thisRow <- paste0(thisRow, " ", split[j])
-                        if (nchar(thisRow) > threshold) {
-                            rowCount <- rowCount + 1
-                            if (rowCount > 3) { # max 3 lines
-                                newLabel <- paste0(newLabel, "...")
-                                break
-                            }
-                            newLabel <- paste0(newLabel, "\n") # new line
-                            thisRow <- ""
-                        }
-                    }
-
-                    x[i] <- newLabel
-
-                }
-
-                return(x)
-
-            },
-            position = "top"
-        ) +
-        theme_minimal() +
-        theme(
-            axis.title.y = element_blank(),       # y axis label (remove)
-            axis.title.x = element_text(size=16, margin = margin(t = 20), family = "Arial"), # x axis label with increased top margin
-            axis.text.y = element_text(size=14, hjust=0, family = "Arial"),  # axis ticks - left align, reduced font size
-            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1, family = "Arial"), # rotate
-            panel.grid = element_blank(),  # remove background grid
-            axis.line.y = element_line(color = "gray50", linewidth = 0.5),  # add thin line on y-axis only
-            axis.line.x = element_line(color = "gray50", linewidth = 0.5)  # add thin line on x-axis (top after flip)
-        )
-
-        ggplotly(dashboardPlot, height = plotHeight, tooltip = "text") %>%
-            layout(
-                yaxis = list(side = "right"),
-                font = list(family = "Arial, sans-serif"),
-                autosize = FALSE,
-                margin = list(l = 50, r = 250, t = 50, b = 100)
-            ) %>%
-            config(
-                displaylogo = FALSE,
-                responsive = TRUE
-            )
 
     })
 

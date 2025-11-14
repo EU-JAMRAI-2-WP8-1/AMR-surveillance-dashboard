@@ -62,27 +62,185 @@
     position: absolute;
     background-color: #fff;
     width: 256px;
-    left: 64px;
-    padding: 4px;
+    right: 0px;
+    top: 100%;
+    margin-top: 4px;
+    padding: 8px;
     z-index: 999;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .info-button:hover + .info-sections {
     display: block;
 }
 
-/* Style for "Not ... related" filter labels */
+/* Select/Deselect All Buttons */
+.select-all-button {
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.select-all-button i.fa-check,
+.select-all-button i.fa-times {
+    margin-right: 8px;
+}
+
+/* Green background for "Select All" - very soft, almost transparent */
+.select-button {
+    background-color: rgba(92, 184, 92, 0.15);
+    color: #4a8a4a;
+}
+
+.select-button:hover {
+    background-color: rgba(92, 184, 92, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Red background for "Deselect All" - very soft, almost transparent */
+.deselect-button {
+    background-color: rgba(217, 83, 79, 0.15);
+    color: #a94442;
+}
+
+.deselect-button:hover {
+    background-color: rgba(217, 83, 79, 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.select-all-button:active {
+    transform: translateY(0);
+}
+
+/* Info button inside select/deselect button */
+.select-all-button .info-button-inline {
+    position: absolute;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #666;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: help;
+    font-weight: bold;
+}
+
+.select-all-button .info-button-inline:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Show info section on hover of inline info button */
+.select-all-button:hover + .info-sections {
+    display: block;
+}
+
+/* Show info section when info-active class is toggled (for mobile) */
+.select-all-button.info-active + .info-sections {
+    display: block;
+}
+
+/* Modern Badge-Style Checkboxes with Check Indicator */
+.checkbox {
+    margin-bottom: 5px;
+}
+
+.checkbox label {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 12px;
+    margin: 2px;  /* Reduced from 3px to 2px */
+    border-radius: 20px;  /* Fully rounded pill shape */
+    background-color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    user-select: none;
+    color: #666;
+    position: relative;
+    min-height: 26px;  /* Fixed height to prevent vertical expansion - reduced from 28px */
+    box-sizing: border-box;
+}
+
+.checkbox label:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-1px);
+}
+
+.checkbox input[type="checkbox"] {
+    display: none;
+}
+
+/* Parent label styling when checkbox is checked */
+.checkbox:has(input[type="checkbox"]:checked) label {
+    background-color: #008aab;
+    color: white;
+    font-weight: 500;
+    padding-right: 38px;  /* Extra space for check icon on the right */
+}
+
+/* Add single checkmark icon after checked labels */
+.checkbox:has(input[type="checkbox"]:checked) label::after {
+    content: "✓";
+    position: absolute;
+    right: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Style for "Not ... related" filter labels - grey when unchecked */
 .checkbox label:has(input[value*="Not"]):has(input[value*="related"]) {
-    color: #a05050 !important;
+    color: #a05050;
     font-style: italic;
+    background-color: #f0e0e0;
+}
+
+.checkbox label:has(input[value*="Not"]):has(input[value*="related"]):hover {
+    background-color: #e8d0d0;
+}
+
+/* "Not related" items - red/pink when checked */
+.checkbox:has(input[value*="Not"][value*="related"]:checked) label {
+    background-color: #cc8888;
+    color: white;
+    font-style: normal;  /* Remove italic when checked */
+}
+
+.checkbox:has(input[value*="Not"][value*="related"]:checked) label::after {
+    content: "✓";
+    position: absolute;
+    right: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    font-style: normal;  /* Ensure checkmark is not italic */
 }
 
 /* Alternative selector for better compatibility */
 input[value="Not pathogen related"] + span,
 input[value="Not resistance related"] + span,
 input[value="Not culture material related"] + span {
-    color: #a05050 !important;
+    color: #a05050;
     font-style: italic;
 }
 
@@ -128,6 +286,26 @@ input[value="Not culture material related"] + span {
     --bs-accordion-border-width: 0;
 }
 
+/* Left border bar for filter sections */
+.accordion-item {
+    border-left: 6px solid #495057;  /* Thickened from 5px to 6px */
+    padding-left: 0px;  /* Remove space between border and title box */
+    margin-bottom: 28px;  /* Increased spacing between sections from 20px to 28px */
+    border-radius: 0 !important;  /* Remove border-radius to keep borders straight */
+}
+
+/* Reduce height of accordion title boxes */
+.accordion-button {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
+/* Reduce spacing in accordion body to bring title and content closer */
+.accordion-body {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+}
+
 .accordion-icon {
     font-size: 0.85em;
     color: #666;
@@ -156,8 +334,8 @@ input[value="Not culture material related"] + span {
 }
 
 .hr-filters-separator {
-    margin-left: 24px !important;
-    margin-right: 24px !important;
+    margin-left: 0px !important;  /* Remove left margin so hr goes to left border */
+    margin-right: 0px !important;  /* Remove right margin so hr goes to right edge */
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
@@ -415,6 +593,14 @@ body.section-3 .sections-wrapper::after {
     padding-left: 0 !important;
     padding-right: 0 !important;
     --bs-gutter-x: 0 !important; /**/
+}
+
+.dashboard-plot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-left: 20px;
 }
 
 .map-and-source-container {
