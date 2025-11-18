@@ -392,7 +392,7 @@ ui <- shinyUI(fluidPage(
                         bsicons::bs_icon("globe-europe-africa"),
                         tags$span(
                             class = "tab-text",
-                            "Map" #"Dashboard"
+                            "Visuals"
                         )
                     ),
                     fluidRow(
@@ -456,10 +456,10 @@ ui <- shinyUI(fluidPage(
                 # survey results
                 tabPanel(
                     tags$span(
-                        bsicons::bs_icon("journal-check"),
+                        bsicons::bs_icon("table"),
                         tags$span(
                             class = "tab-text",
-                            "Survey results"
+                            "Table"
                         )
                     ),
                     uiOutput("noQuestionsMessage"),

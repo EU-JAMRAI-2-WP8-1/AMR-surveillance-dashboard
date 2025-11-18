@@ -149,8 +149,8 @@
     background-color: rgba(0, 0, 0, 0.15);
 }
 
-/* Show info section on hover of inline info button */
-.select-all-button:hover + .info-sections {
+/* Show info section when manually triggered */
+.info-sections.show-info {
     display: block;
 }
 
@@ -299,6 +299,20 @@ input[value="Not culture material related"] + span {
     position: relative;
 }
 
+/* Light grey background bar for progress indicator */
+.accordion-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    width: calc(100% - 24px);
+    height: 3px;
+    background-color: #e0e0e0;
+    z-index: 0;
+    transform: none !important;
+    transition: none !important;
+}
+
 /* Remove blue outline/focus on accordion button */
 .accordion-button:focus {
     box-shadow: none !important;
@@ -313,7 +327,7 @@ input[value="Not culture material related"] + span {
 .filter-progress-bar {
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 12px;
     height: 3px;
     background-color: #008aab;
     width: 0%;
@@ -591,7 +605,7 @@ body.section-3 .sections-wrapper::after {
 
 /* Instructions button with JAMRAI turquoise color on hover */
 #showInstructions {
-    background-color: white !important;
+    background-color: transparent !important;
     border-color: #0fdbd5 !important;
     color: #0fdbd5 !important;
 }
@@ -599,7 +613,7 @@ body.section-3 .sections-wrapper::after {
 #showInstructions:hover {
     background-color: #0fdbd5 !important;
     border-color: #0fdbd5 !important;
-    color: white !important;
+    color: #212529 !important;  /* Dark text to match other buttons */
 }
 
 /*#resetFilters {

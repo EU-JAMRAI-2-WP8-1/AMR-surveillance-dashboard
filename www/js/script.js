@@ -10,6 +10,17 @@ new ResizeObserver(
         document.body.querySelector("div")
     );
 
+// Handle info button hover to show tooltip only on question mark
+$(document).on('mouseenter', '.info-button-inline', function(e) {
+    e.stopPropagation();
+    $(this).closest('div').find('.info-sections').addClass('show-info');
+});
+
+$(document).on('mouseleave', '.info-button-inline', function(e) {
+    e.stopPropagation();
+    $(this).closest('div').find('.info-sections').removeClass('show-info');
+});
+
 // Update filter progress bars based on selection count
 $(document).on('shiny:connected', function() {
 
@@ -17,7 +28,8 @@ $(document).on('shiny:connected', function() {
     function updateProgressBar(inputId, progressBarId, totalCount) {
         const selectedCount = $('#' + inputId + ' input:checked').length;
         const percentage = totalCount > 0 ? (selectedCount / totalCount) * 100 : 0;
-        $('#' + progressBarId).css('width', percentage + '%');
+        // Account for 12px margins on each side (24px total)
+        $('#' + progressBarId).css('width', 'calc(' + percentage + '% - 24px)');
     }
 
     // Function to get total count for a checkbox group
