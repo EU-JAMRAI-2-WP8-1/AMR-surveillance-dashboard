@@ -76,62 +76,80 @@
     display: block;
 }
 
-/* Select/Deselect All Buttons */
-.select-all-button {
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 6px 12px;  /* Reduced from 8px 16px to make thinner */
-    margin-top: 12px;  /* Add space above button when at bottom */
+/* Dual Button Container */
+.dual-button-container {
+    display: flex;
+    gap: 4px;
+    margin-top: 12px;
     margin-bottom: 0px;
-    font-size: 0.9rem;  /* Slightly smaller font */
+}
+
+/* Add padding when info button is present (in wrapper with position:relative) */
+div[style*="position: relative"] .dual-button-container {
+    padding-right: 30px;
+}
+
+/* Individual dual buttons */
+.dual-button {
+    flex: 1;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    position: relative;
+    justify-content: center;
+    gap: 4px;
 }
 
-.select-all-button i.fa-check,
-.select-all-button i.fa-times {
-    margin-right: 8px;
+.dual-button i {
+    font-size: 0.8rem;
 }
 
-/* Green background for "Select All" - very soft, almost transparent */
-.select-button {
-    background-color: rgba(92, 184, 92, 0.15);
-    color: #4a8a4a;
-}
-
-.select-button:hover {
-    background-color: rgba(92, 184, 92, 0.25);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Red background for "Deselect All" - very soft, almost transparent */
-.deselect-button {
-    background-color: rgba(217, 83, 79, 0.15);
+/* Deselect button (Clear) */
+.deselect-btn {
+    background-color: rgba(217, 83, 79, 0.12);
     color: #a94442;
 }
 
-.deselect-button:hover {
-    background-color: rgba(217, 83, 79, 0.25);
+.deselect-btn:hover:not(.disabled-btn) {
+    background-color: rgba(217, 83, 79, 0.22);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.select-all-button:active {
+/* Select button (All) */
+.select-btn {
+    background-color: rgba(0, 138, 171, 0.12);
+    color: #006d8a;
+}
+
+.select-btn:hover:not(.disabled-btn) {
+    background-color: rgba(0, 138, 171, 0.22);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled state */
+.disabled-btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.dual-button:active:not(.disabled-btn) {
     transform: translateY(0);
 }
 
-/* Info button inside select/deselect button */
-.select-all-button .info-button-inline {
+/* Standalone info button (separate from buttons) */
+.info-button-standalone {
     position: absolute;
-    right: 8px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 3px; /* Fine-tune vertical alignment */
     background-color: rgba(0, 0, 0, 0.08);
     color: #666;
     width: 22px;
@@ -141,12 +159,19 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    cursor: help;
+    border: none;
+    cursor: help !important;
     font-weight: bold;
+    pointer-events: auto;
 }
 
-.select-all-button .info-button-inline:hover {
+.info-button-standalone:hover {
     background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Show info section on hover */
+.info-button-standalone:hover + .info-sections {
+    display: block;
 }
 
 /* Show info section when manually triggered */
@@ -154,8 +179,8 @@
     display: block;
 }
 
-/* Show info section when info-active class is toggled (for mobile) */
-.select-all-button.info-active + .info-sections {
+/* Show info section when info-active class is toggled */
+.info-button-standalone.info-active + .info-sections {
     display: block;
 }
 
@@ -210,13 +235,14 @@
 
 /* Style for "Not ... related" filter labels - grey when unchecked */
 .checkbox label:has(input[value*="Not"]):has(input[value*="related"]) {
-    color: #a05050;
+    color: #666;
     font-style: italic;
-    background-color: #f0e0e0;
+    background-color: #e0e0e0;
 }
 
 .checkbox label:has(input[value*="Not"]):has(input[value*="related"]):hover {
-    background-color: #e8d0d0;
+    background-color: #d0d0d0;
+    transform: translateY(-1px);
 }
 
 /* "Not related" items - red/pink when checked */
@@ -240,8 +266,16 @@
 input[value="Not pathogen related"] + span,
 input[value="Not resistance related"] + span,
 input[value="Not culture material related"] + span {
-    color: #a05050;
+    color: #666;
     font-style: italic;
+}
+
+/* Alternative selector for checked state */
+input[value="Not pathogen related"]:checked + span,
+input[value="Not resistance related"]:checked + span,
+input[value="Not culture material related"]:checked + span {
+    color: white;
+    font-style: normal;
 }
 
 
@@ -300,7 +334,7 @@ input[value="Not culture material related"] + span {
 }
 
 /* Light grey background bar for progress indicator */
-.accordion-button::after {
+.accordion-button::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -309,8 +343,6 @@ input[value="Not culture material related"] + span {
     height: 3px;
     background-color: #e0e0e0;
     z-index: 0;
-    transform: none !important;
-    transition: none !important;
 }
 
 /* Remove blue outline/focus on accordion button */

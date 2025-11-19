@@ -579,97 +579,109 @@ server <- function(input, output, session) {
         updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
     })
 
-    # Dynamic button labels that change based on selection state
+    # Two separate buttons for select and deselect
     output$selectAllCountriesButton <- renderUI({
-        if ((length(participatingCountries) - length(input$countriesSelection)) < 2) {
-            actionButton("selectAllCountries", HTML('<i class="fa fa-times"></i> Deselect All'), class = "select-all-button deselect-button")
-        } else {
-            actionButton("selectAllCountries", HTML('<i class="fa fa-check"></i> Select All'), class = "select-all-button select-button")
-        }
+        tags$div(
+            class = "dual-button-container",
+            actionButton("deselectAllCountries", HTML('<i class="fa fa-times"></i> Clear'),
+                class = paste("dual-button deselect-btn", if(length(input$countriesSelection) == 0) "disabled-btn" else "")),
+            actionButton("selectAllCountries", HTML('<i class="fa fa-check"></i> All'),
+                class = paste("dual-button select-btn", if(length(input$countriesSelection) == length(participatingCountries)) "disabled-btn" else ""))
+        )
     })
 
     output$selectAllCultureMaterialsButton <- renderUI({
-        if ((length(cultureMaterialList) - length(input$cultureMaterialsSelection)) < 2) {
+        tags$div(
+            style = "position: relative;",
             tags$div(
-                style = "position: relative;",
-                actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-times"></i> Deselect All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button deselect-button"),
-                tags$span(class = "info-sections", cultureMaterialInfoText)
-            )
-        } else {
-            tags$div(
-                style = "position: relative;",
-                actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-check"></i> Select All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button select-button"),
-                tags$span(class = "info-sections", cultureMaterialInfoText)
-            )
-        }
+                class = "dual-button-container",
+                actionButton("deselectAllCultureMaterials", HTML('<i class="fa fa-times"></i> Clear'),
+                    class = paste("dual-button deselect-btn", if(length(input$cultureMaterialsSelection) == 0) "disabled-btn" else "")),
+                actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-check"></i> All'),
+                    class = paste("dual-button select-btn", if(length(input$cultureMaterialsSelection) == length(cultureMaterialList)) "disabled-btn" else ""))
+            ),
+            tags$button(
+                class = "info-button-standalone",
+                "?"
+            ),
+            tags$span(class = "info-sections", cultureMaterialInfoText)
+        )
     })
 
     output$selectAllPathogensButton <- renderUI({
-        if ((length(pathogenList) - length(input$pathogensSelection)) < 2) {
+        tags$div(
+            style = "position: relative;",
             tags$div(
-                style = "position: relative;",
-                actionButton("selectAllPathogens", HTML('<i class="fa fa-times"></i> Deselect All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button deselect-button"),
-                tags$span(class = "info-sections", pathogensInfoText)
-            )
-        } else {
-            tags$div(
-                style = "position: relative;",
-                actionButton("selectAllPathogens", HTML('<i class="fa fa-check"></i> Select All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button select-button"),
-                tags$span(class = "info-sections", pathogensInfoText)
-            )
-        }
+                class = "dual-button-container",
+                actionButton("deselectAllPathogens", HTML('<i class="fa fa-times"></i> Clear'),
+                    class = paste("dual-button deselect-btn", if(length(input$pathogensSelection) == 0) "disabled-btn" else "")),
+                actionButton("selectAllPathogens", HTML('<i class="fa fa-check"></i> All'),
+                    class = paste("dual-button select-btn", if(length(input$pathogensSelection) == length(pathogenList)) "disabled-btn" else ""))
+            ),
+            tags$button(
+                class = "info-button-standalone",
+                "?"
+            ),
+            tags$span(class = "info-sections", pathogensInfoText)
+        )
     })
 
     output$selectAllResistancesButton <- renderUI({
-        if ((length(resistanceList) - length(input$resistancesSelection)) < 2) {
+        tags$div(
+            style = "position: relative;",
             tags$div(
-                style = "position: relative;",
-                actionButton("selectAllResistances", HTML('<i class="fa fa-times"></i> Deselect All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button deselect-button"),
-                tags$span(class = "info-sections", resistancesInfoText)
-            )
-        } else {
-            tags$div(
-                style = "position: relative;",
-                actionButton("selectAllResistances", HTML('<i class="fa fa-check"></i> Select All<span class="info-button-inline" onclick="event.stopPropagation(); this.parentElement.classList.toggle(\'info-active\');">?</span>'), class = "select-all-button select-button"),
-                tags$span(class = "info-sections", resistancesInfoText)
-            )
-        }
+                class = "dual-button-container",
+                actionButton("deselectAllResistances", HTML('<i class="fa fa-times"></i> Clear'),
+                    class = paste("dual-button deselect-btn", if(length(input$resistancesSelection) == 0) "disabled-btn" else "")),
+                actionButton("selectAllResistances", HTML('<i class="fa fa-check"></i> All'),
+                    class = paste("dual-button select-btn", if(length(input$resistancesSelection) == length(resistanceList)) "disabled-btn" else ""))
+            ),
+            tags$button(
+                class = "info-button-standalone",
+                "?"
+            ),
+            tags$span(class = "info-sections", resistancesInfoText)
+        )
     })
 
-    # "Select all" button for countries
+    # Select all button for countries
     observeEvent(input$selectAllCountries, {
-        if ((length(participatingCountries) - length(input$countriesSelection)) < 2) {
-            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = c())
-        } else {
-            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
-        }
+        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
     })
 
-    # "Select all" button for pathogens
+    # Deselect all button for countries
+    observeEvent(input$deselectAllCountries, {
+        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = c())
+    })
+
+    # Select all button for pathogens
     observeEvent(input$selectAllPathogens, {
-        if ((length(pathogenList) - length(input$pathogensSelection)) < 2) {
-            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = c())
-        } else {
-            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
-        }
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
     })
 
-    # "Select all" button for resistances
+    # Deselect all button for pathogens
+    observeEvent(input$deselectAllPathogens, {
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = c())
+    })
+
+    # Select all button for resistances
     observeEvent(input$selectAllResistances, {
-        if ((length(resistanceList) - length(input$resistancesSelection)) < 2) {
-            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = c())
-        } else {
-            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
-        }
+        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
     })
 
-    # "Select all" button for culture materials
+    # Deselect all button for resistances
+    observeEvent(input$deselectAllResistances, {
+        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = c())
+    })
+
+    # Select all button for culture materials
     observeEvent(input$selectAllCultureMaterials, {
-        if ((length(cultureMaterialList) - length(input$cultureMaterialsSelection)) < 2) {
-            updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = c())
-        } else {
-            updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
-        }
+        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
+    })
+
+    # Deselect all button for culture materials
+    observeEvent(input$deselectAllCultureMaterials, {
+        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = c())
     })
 
     # Legal information modal
