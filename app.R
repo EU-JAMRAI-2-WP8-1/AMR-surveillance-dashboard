@@ -114,6 +114,11 @@ pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. bauman
 resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
 cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool", "Not culture material related")
 
+# No special display modification needed - just use the lists as-is
+pathogenChoiceNames <- pathogenList
+resistanceChoiceNames <- resistanceList
+cultureMaterialChoiceNames <- cultureMaterialList
+
 # info text
 pathogensInfoText       <- "Select the pathogen(s) you want to filter by. You can also select 'Not pathogen related' to include questions that are not specific to any pathogen."
 resistancesInfoText     <- "Select the resistance(s) you want to filter by. You can also select 'Not resistance related' to include questions that are not specific to any resistance."
@@ -315,7 +320,8 @@ ui <- shinyUI(fluidPage(
                     checkboxGroupInput(
                         inputId  = "cultureMaterialsSelection",
                         label    = "",
-                        choices  = cultureMaterialList,
+                        choiceNames  = cultureMaterialChoiceNames,
+                        choiceValues = cultureMaterialList,
                         selected = cultureMaterialList,
                         inline   = FALSE,
                         width    = NULL
@@ -327,7 +333,8 @@ ui <- shinyUI(fluidPage(
                     checkboxGroupInput(
                         inputId  = "pathogensSelection",
                         label    = "",
-                        choices  = pathogenList,
+                        choiceNames  = pathogenChoiceNames,
+                        choiceValues = pathogenList,
                         selected = pathogenList,
                         inline   = FALSE,
                         width    = NULL
@@ -340,7 +347,8 @@ ui <- shinyUI(fluidPage(
                     checkboxGroupInput(
                         inputId  = "resistancesSelection",
                         label    = "",
-                        choices  = resistanceList,
+                        choiceNames  = resistanceChoiceNames,
+                        choiceValues = resistanceList,
                         selected = resistanceList,
                         inline   = FALSE,
                         width    = NULL
@@ -1788,10 +1796,11 @@ server <- function(input, output, session) {
             numBars <- nrow(participationDataOccurrences)
             plotHeight <- max(400, numBars * 90 + 150)
 
-            # Prepare data
-            replies <- participationDataOccurrences$reply
-            occurrences <- participationDataOccurrences$occurences
-            barColors <- c(colorSequence[1], colorSequence[2], "#b3b3b3")
+            # Prepare data and sort by occurrences (ascending, so highest appears at top)
+            sortOrder <- order(participationDataOccurrences$occurences, decreasing = FALSE)
+            replies <- participationDataOccurrences$reply[sortOrder]
+            occurrences <- participationDataOccurrences$occurences[sortOrder]
+            barColors <- c(colorSequence[1], colorSequence[2], "#b3b3b3")[sortOrder]
 
             # Wrap labels if needed
             wrappedLabels <- sapply(replies, wrapLabel)
@@ -1859,7 +1868,9 @@ server <- function(input, output, session) {
                         showgrid = FALSE,
                         tickfont = list(size = 20, family = "Arial", weight = 700),  # Bold (700) for better prominence
                         fixedrange = TRUE,
-                        automargin = TRUE
+                        automargin = TRUE,
+                        categoryorder = "array",  # Preserve custom order
+                        categoryarray = wrappedLabels  # Use our sorted order
                     ),
                     margin = list(l = 10, r = 200, t = 50, b = 50),  # Reduced margins to enlarge and center chart
                     font = list(family = "Arial, sans-serif"),
@@ -1882,15 +1893,16 @@ server <- function(input, output, session) {
             numBars <- length(countryReplies()[[3]])
             plotHeight <- max(400, numBars * 90 + 150)
 
-            # Prepare data
-            replies <- countryReplies()[[3]]
-            occurrences <- countryReplies()[[4]]
+            # Prepare data and sort by occurrences (ascending, so highest appears at top)
+            sortOrder <- order(countryReplies()[[4]], decreasing = FALSE)
+            replies <- countryReplies()[[3]][sortOrder]
+            occurrences <- countryReplies()[[4]][sortOrder]
 
             # For multiple-choice questions, use JAMRAI blue; for others, use custom colors
             barColors <- if (input$questionSelection %in% multipleChoiceShortTitles && length(countryReplies()) >= 5) {
                 rep("#008aab", length(replies))
             } else {
-                countryReplies()[[2]]
+                countryReplies()[[2]][sortOrder]
             }
 
             # Wrap labels if needed (calculate threshold based on max label length)
@@ -1964,7 +1976,9 @@ server <- function(input, output, session) {
                         showgrid = FALSE,
                         tickfont = list(size = 20, family = "Arial", weight = 700),  # Bold (700) for better prominence
                         fixedrange = TRUE,
-                        automargin = TRUE
+                        automargin = TRUE,
+                        categoryorder = "array",  # Preserve custom order
+                        categoryarray = wrappedLabels  # Use our sorted order
                     ),
                     margin = list(l = 10, r = 200, t = 50, b = 50),  # Reduced margins to enlarge and center chart
                     font = list(family = "Arial, sans-serif"),

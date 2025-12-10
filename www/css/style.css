@@ -220,62 +220,34 @@ div[style*="position: relative"] .dual-button-container {
     background-color: #008aab;
     color: white;
     font-weight: 500;
-    padding-right: 38px;  /* Extra space for check icon on the right */
+    padding-left: 38px;  /* Extra space for check icon on the left */
 }
 
-/* Add single checkmark icon after checked labels */
-.checkbox:has(input[type="checkbox"]:checked) label::after {
+/* Add single checkmark icon before checked labels */
+.checkbox:has(input[type="checkbox"]:checked) label::before {
     content: "✓";
     position: absolute;
-    right: 12px;
+    left: 12px;
     font-size: 16px;
     font-weight: bold;
     color: white;
 }
 
-/* Style for "Not ... related" filter labels - grey when unchecked */
-.checkbox label:has(input[value*="Not"]):has(input[value*="related"]) {
-    color: #666;
-    font-style: italic;
-    background-color: #e0e0e0;
-}
-
-.checkbox label:has(input[value*="Not"]):has(input[value*="related"]):hover {
-    background-color: #d0d0d0;
-    transform: translateY(-1px);
-}
-
-/* "Not related" items - red/pink when checked */
+/* "Not ... related" buttons use lighter blue when checked */
 .checkbox:has(input[value*="Not"][value*="related"]:checked) label {
-    background-color: #cc8888;
+    background-color: #0fdbd5;
     color: white;
-    font-style: normal;  /* Remove italic when checked */
+    font-weight: 500;
+    padding-left: 38px;  /* Extra space for check icon on the left */
 }
 
-.checkbox:has(input[value*="Not"][value*="related"]:checked) label::after {
+.checkbox:has(input[value*="Not"][value*="related"]:checked) label::before {
     content: "✓";
     position: absolute;
-    right: 12px;
+    left: 12px;
     font-size: 16px;
     font-weight: bold;
     color: white;
-    font-style: normal;  /* Ensure checkmark is not italic */
-}
-
-/* Alternative selector for better compatibility */
-input[value="Not pathogen related"] + span,
-input[value="Not resistance related"] + span,
-input[value="Not culture material related"] + span {
-    color: #666;
-    font-style: italic;
-}
-
-/* Alternative selector for checked state */
-input[value="Not pathogen related"]:checked + span,
-input[value="Not resistance related"]:checked + span,
-input[value="Not culture material related"]:checked + span {
-    color: white;
-    font-style: normal;
 }
 
 
