@@ -1,5 +1,5 @@
 # Base R Shiny image
-FROM rocker/shiny
+FROM rocker/shiny:4.4.3
 
 # install Linux R packages dependencies
 RUN apt update

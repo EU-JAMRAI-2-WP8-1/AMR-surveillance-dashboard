@@ -62,28 +62,192 @@
     position: absolute;
     background-color: #fff;
     width: 256px;
-    left: 64px;
-    padding: 4px;
+    right: 0px;
+    top: 100%;
+    margin-top: 4px;
+    padding: 8px;
     z-index: 999;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .info-button:hover + .info-sections {
     display: block;
 }
 
-/* Style for "Not ... related" filter labels */
-.checkbox label:has(input[value*="Not"]):has(input[value*="related"]) {
-    color: #a05050 !important;
-    font-style: italic;
+/* Dual Button Container */
+.dual-button-container {
+    display: flex;
+    gap: 4px;
+    margin-top: 12px;
+    margin-bottom: 0px;
 }
 
-/* Alternative selector for better compatibility */
-input[value="Not pathogen related"] + span,
-input[value="Not resistance related"] + span,
-input[value="Not culture material related"] + span {
-    color: #a05050 !important;
-    font-style: italic;
+/* Add padding when info button is present (in wrapper with position:relative) */
+div[style*="position: relative"] .dual-button-container {
+    padding-right: 30px;
+}
+
+/* Individual dual buttons */
+.dual-button {
+    flex: 1;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.dual-button i {
+    font-size: 0.8rem;
+}
+
+/* Deselect button (Clear) */
+.deselect-btn {
+    background-color: rgba(217, 83, 79, 0.12);
+    color: #a94442;
+}
+
+.deselect-btn:hover:not(.disabled-btn) {
+    background-color: rgba(217, 83, 79, 0.22);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Select button (All) */
+.select-btn {
+    background-color: rgba(0, 138, 171, 0.12);
+    color: #006d8a;
+}
+
+.select-btn:hover:not(.disabled-btn) {
+    background-color: rgba(0, 138, 171, 0.22);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled state */
+.disabled-btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.dual-button:active:not(.disabled-btn) {
+    transform: translateY(0);
+}
+
+/* Standalone info button (separate from buttons) */
+.info-button-standalone {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 3px; /* Fine-tune vertical alignment */
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #666;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: help !important;
+    font-weight: bold;
+    pointer-events: auto;
+}
+
+.info-button-standalone:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Show info section on hover */
+.info-button-standalone:hover + .info-sections {
+    display: block;
+}
+
+/* Show info section when manually triggered */
+.info-sections.show-info {
+    display: block;
+}
+
+/* Show info section when info-active class is toggled */
+.info-button-standalone.info-active + .info-sections {
+    display: block;
+}
+
+/* Modern Badge-Style Checkboxes with Check Indicator */
+.checkbox {
+    margin-bottom: 5px;
+}
+
+.checkbox label {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 12px;
+    margin: 2px;  /* Reduced from 3px to 2px */
+    border-radius: 20px;  /* Fully rounded pill shape */
+    background-color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    user-select: none;
+    color: #666;
+    position: relative;
+    min-height: 26px;  /* Fixed height to prevent vertical expansion - reduced from 28px */
+    box-sizing: border-box;
+}
+
+.checkbox label:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-1px);
+}
+
+.checkbox input[type="checkbox"] {
+    display: none;
+}
+
+/* Parent label styling when checkbox is checked */
+.checkbox:has(input[type="checkbox"]:checked) label {
+    background-color: #008aab;
+    color: white;
+    font-weight: 500;
+    padding-left: 38px;  /* Extra space for check icon on the left */
+}
+
+/* Add single checkmark icon before checked labels */
+.checkbox:has(input[type="checkbox"]:checked) label::before {
+    content: "✓";
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* "Not ... related" buttons use lighter blue when checked */
+.checkbox:has(input[value*="Not"][value*="related"]:checked) label {
+    background-color: #0fdbd5;
+    color: white;
+    font-weight: 500;
+    padding-left: 38px;  /* Extra space for check icon on the left */
+}
+
+.checkbox:has(input[value*="Not"][value*="related"]:checked) label::before {
+    content: "✓";
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
 }
 
 
@@ -128,6 +292,59 @@ input[value="Not culture material related"] + span {
     --bs-accordion-border-width: 0;
 }
 
+/* Spacing between filter sections */
+.accordion-item {
+    margin-bottom: 28px;  /* Increased spacing between sections */
+    border-radius: 0 !important;  /* Remove border-radius to keep borders straight */
+}
+
+/* Reduce height of accordion title boxes */
+.accordion-button {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    position: relative;
+}
+
+/* Light grey background bar for progress indicator */
+.accordion-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    width: calc(100% - 24px);
+    height: 3px;
+    background-color: #e0e0e0;
+    z-index: 0;
+}
+
+/* Remove blue outline/focus on accordion button */
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none !important;
+}
+
+/* Filter progress bar */
+.filter-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    height: 3px;
+    background-color: #008aab;
+    width: 0%;
+    transition: width 0.3s ease;
+    z-index: 1;
+}
+
+/* Reduce spacing in accordion body to bring title and content closer */
+.accordion-body {
+    padding-top: 4px !important;  /* Reduced from 8px to bring closer to progress bar */
+    padding-bottom: 8px !important;
+}
+
 .accordion-icon {
     font-size: 0.85em;
     color: #666;
@@ -156,8 +373,8 @@ input[value="Not culture material related"] + span {
 }
 
 .hr-filters-separator {
-    margin-left: 24px !important;
-    margin-right: 24px !important;
+    margin-left: 0px !important;  /* Remove left margin so hr goes to left border */
+    margin-right: 0px !important;  /* Remove right margin so hr goes to right edge */
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
@@ -271,6 +488,12 @@ input[value="Not culture material related"] + span {
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+    direction: rtl;  /* Move scrollbar to left side */
+}
+
+/* Reset text direction for content inside sidebar */
+.sidebar-panel > * {
+    direction: ltr;
 }
 
 .sections-wrapper {
@@ -384,6 +607,19 @@ body.section-3 .sections-wrapper::after {
     width: 100%;
 }
 
+/* Instructions button with JAMRAI turquoise color on hover */
+#showInstructions {
+    background-color: transparent !important;
+    border-color: #0fdbd5 !important;
+    color: #0fdbd5 !important;
+}
+
+#showInstructions:hover {
+    background-color: #0fdbd5 !important;
+    border-color: #0fdbd5 !important;
+    color: #212529 !important;  /* Dark text to match other buttons */
+}
+
 /*#resetFilters {
 
 }*/
@@ -415,6 +651,14 @@ body.section-3 .sections-wrapper::after {
     padding-left: 0 !important;
     padding-right: 0 !important;
     --bs-gutter-x: 0 !important; /**/
+}
+
+.dashboard-plot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-left: 20px;
 }
 
 .map-and-source-container {
