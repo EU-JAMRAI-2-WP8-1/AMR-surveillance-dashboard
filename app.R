@@ -110,9 +110,9 @@ nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / resistances / culture materials
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
-pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile", "Not pathogen related")
-resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
-cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool", "Not culture material related")
+pathogenList        <- c("A. baumannii", "C. difficile", "E. coli", "E. faecium/faecalis", "H. influenzae", "K. pneumoniae", "P. aeruginosa", "S. aureus", "S. pneumoniae", "Not pathogen related")
+resistanceList      <- c("3rd-generation Cephalosporin", "Ampicillin", "Carbapenem", "Colistin", "Methicillin", "Penicillin", "Vancomycin", "Not resistance related")
+cultureMaterialList <- c("Blood", "Respiratory tract", "Screening", "Soft tissue", "Stool", "Urine", "Not culture material related")
 
 # No special display modification needed - just use the lists as-is
 pathogenChoiceNames <- pathogenList
@@ -809,16 +809,47 @@ server <- function(input, output, session) {
     # Dynamic UI for multiple-choice answer selection
     output$multipleChoiceAnswerSelector <- renderUI({
         if (input$questionSelection %in% multipleChoiceShortTitles) {
-            # Get possible answers for this multiple-choice question
+            # Get possible answers and check if it's a follow-up question
             possibleAnswers <- c()
+            isFollowUpQuestion <- FALSE
             for (question in surveyData) {
                 if (question$short_title == input$questionSelection && question$type == "MultipleChoice") {
                     possibleAnswers <- names(question$possible_answers)
+                    isFollowUpQuestion <- grepl("^You answered", question$title, ignore.case = FALSE)
                     break
                 }
             }
 
             if (length(possibleAnswers) > 0) {
+                # Build legend items
+                legendItems <- list(
+                    tags$span(
+                        style = "display: flex; align-items: center; gap: 8px;",
+                        tags$span(
+                            style = "display: inline-block; width: 24px; height: 24px; background-color: #0fdbd5;"
+                        ),
+                        tags$span("Selected")
+                    ),
+                    tags$span(
+                        style = "display: flex; align-items: center; gap: 8px;",
+                        tags$span(
+                            style = "display: inline-block; width: 24px; height: 24px; background-color: #ff6f61;"
+                        ),
+                        tags$span("Not selected")
+                    )
+                )
+
+                # Add third legend item for follow-up questions
+                if (isFollowUpQuestion) {
+                    legendItems[[3]] <- tags$span(
+                        style = "display: flex; align-items: center; gap: 8px;",
+                        tags$span(
+                            style = "display: inline-block; width: 24px; height: 24px; background-color: #888888;"
+                        ),
+                        tags$span("Not asked")
+                    )
+                }
+
                 tags$div(
                     style = "margin-top: 10px; margin-bottom: 15px; background-color: #f5f5f5; padding: 15px; border-radius: 4px;",
                     tags$label(
@@ -834,20 +865,7 @@ server <- function(input, output, session) {
                     ),
                     tags$div(
                         style = "margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 1em;",
-                        tags$span(
-                            style = "display: flex; align-items: center; gap: 8px;",
-                            tags$span(
-                                style = "display: inline-block; width: 24px; height: 24px; background-color: #0fdbd5;"
-                            ),
-                            tags$span("Selected")
-                        ),
-                        tags$span(
-                            style = "display: flex; align-items: center; gap: 8px;",
-                            tags$span(
-                                style = "display: inline-block; width: 24px; height: 24px; background-color: #ff6f61;"
-                            ),
-                            tags$span("Not selected")
-                        )
+                        legendItems
                     )
                 )
             }
@@ -983,20 +1001,32 @@ server <- function(input, output, session) {
             return(paste0(badgesHtml, '<br/>', questionTitle))
         }
 
-        # initiate vectors
-        questionsWithBadges <- c()
-
         # get active questions (titles)
         activeQuestions <- activeQuestions()[[1]]
 
-        # loop once over questions to retrieve question titles and format with tags
+        # Build list of active questions with their positions
+        activeQuestionsData <- list()
         for (question in surveyData) {
-
             if (question$title %in% activeQuestions) {
-                formattedQuestion <- formatQuestionWithBadges(question$title, toString(question$tags))
-                questionsWithBadges <- c(questionsWithBadges, formattedQuestion)
+                activeQuestionsData[[length(activeQuestionsData) + 1]] <- list(
+                    question = question,
+                    position = ifelse(is.null(question[["position"]]), 9999, question[["position"]])
+                )
             }
+        }
 
+        # Sort by position
+        if (length(activeQuestionsData) > 0) {
+            positions <- sapply(activeQuestionsData, function(x) x$position)
+            sortOrder <- order(positions)
+            activeQuestionsData <- activeQuestionsData[sortOrder]
+        }
+
+        # Build formatted questions in sorted order
+        questionsWithBadges <- c()
+        for (item in activeQuestionsData) {
+            formattedQuestion <- formatQuestionWithBadges(item$question$title, toString(item$question$tags))
+            questionsWithBadges <- c(questionsWithBadges, formattedQuestion)
         }
 
         # add columns to DF
@@ -1008,17 +1038,15 @@ server <- function(input, output, session) {
             # (re)set country replies vector
             countryReplies <- c()
 
-            # loop over questions
-            for (question in surveyData) {
+            # loop over questions in sorted order
+            for (item in activeQuestionsData) {
+                question <- item$question
 
-                if (question$title %in% activeQuestions) {
+                if (length(question$actual_answers[[country]]) == 0) {
+                    countryReplies <- c(countryReplies, NA)
 
-                    if (length(question$actual_answers[[country]]) == 0) {
-                        countryReplies <- c(countryReplies, NA)
-
-                    } else {
-                        countryReplies <- c(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
-                    }
+                } else {
+                    countryReplies <- c(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
                 }
             }
 
@@ -1127,6 +1155,9 @@ server <- function(input, output, session) {
                 actualAnswers <- question[["actual_answers"]]
                 allActualAnswers <- unlist(actualAnswers, use.names = FALSE)
 
+                # Check if this is a follow-up question (starts with "You answered")
+                isFollowUpQuestion <- grepl("^You answered", question[["title"]], ignore.case = FALSE)
+
                 # loop over possible answers and get occurence of each
                 possibleAnswerOccurences <- c()
                 possibleAnswerText <- c()
@@ -1137,31 +1168,57 @@ server <- function(input, output, session) {
 
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
 
-                # For the MAP: create binary data for selected answer
+                # For the MAP: create data for selected answer
                 answersNumeric <- NULL
+                customColorScaleMap <- NULL
+
                 if (!is.null(input$selectedAnswer)) {
                     answersNumeric <- c()
                     for (country in intersect(repliedCountries, input$countriesSelection)) {
+                        # Check if country has any answers at all
+                        hasAnswers <- FALSE
                         if (country %in% names(actualAnswers)) {
                             countryAnswers <- actualAnswers[[country]]
-                            # Check if the selected answer is in this country's list of answers
+                            # Check if it's not NULL, not NA, has length > 0, and not just empty strings
+                            if (!is.null(countryAnswers) && length(countryAnswers) > 0 && !all(is.na(countryAnswers))) {
+                                # Also check that answers are not empty strings
+                                nonEmptyAnswers <- countryAnswers[countryAnswers != ""]
+                                if (length(nonEmptyAnswers) > 0) {
+                                    hasAnswers <- TRUE
+                                }
+                            }
+                        }
+
+                        if (hasAnswers) {
+                            # Country has answers - check if selected answer is in the list
                             if (input$selectedAnswer %in% countryAnswers) {
                                 answersNumeric <- c(answersNumeric, 1) # Selected
                             } else {
                                 answersNumeric <- c(answersNumeric, 2) # Not selected
                             }
                         } else {
-                            answersNumeric <- c(answersNumeric, 2) # Not selected
+                            # Country has no answers at all (or only empty strings)
+                            if (isFollowUpQuestion) {
+                                answersNumeric <- c(answersNumeric, 3) # Not asked (only for follow-up questions)
+                            } else {
+                                answersNumeric <- c(answersNumeric, 2) # Not selected (for regular questions)
+                            }
                         }
+                    }
+
+                    # Set color scale based on question type
+                    if (isFollowUpQuestion) {
+                        # Use three colors: selected, not selected, not asked
+                        customColorScaleMap <- c("#0fdbd5", "#ff6f61", "#888888")
+                    } else {
+                        # Use two colors: selected, not selected
+                        customColorScaleMap <- c("#0fdbd5", "#ff6f61")
                     }
                 }
 
-                # Use light blue for selected, red for not selected (for MAP only)
-                customColorScaleMap <- c("#0fdbd5", "#ff6f61")
-
                 return(
                     list(
-                        answersNumeric,  # For map (binary: selected/not selected)
+                        answersNumeric,  # For map (binary or ternary: selected/not selected/not asked)
                         customColorScaleMap,  # For map
                         possibleAnswerText,  # For bar chart (all answers)
                         possibleAnswerPercentReplied,  # For bar chart (all percentages)
@@ -1237,6 +1294,7 @@ server <- function(input, output, session) {
         activeQuestionTitles <- c()
         activeQuestionShortTitles <- c()
         activeQuestionShortTitlesWithBadges <- c()
+        activeQuestionPositions <- c()
 
         for (question in surveyData) {
 
@@ -1264,6 +1322,17 @@ server <- function(input, output, session) {
             formattedShortTitle <- formatShortTitleWithBadges(question[["short_title"]], toString(question$tags))
             activeQuestionShortTitlesWithBadges <- c(activeQuestionShortTitlesWithBadges, formattedShortTitle)
 
+            # Add position
+            activeQuestionPositions <- c(activeQuestionPositions, ifelse(is.null(question[["position"]]), 9999, question[["position"]]))
+
+        }
+
+        # Sort by position
+        if (length(activeQuestionPositions) > 0) {
+            sortOrder <- order(activeQuestionPositions)
+            activeQuestionTitles <- activeQuestionTitles[sortOrder]
+            activeQuestionShortTitles <- activeQuestionShortTitles[sortOrder]
+            activeQuestionShortTitlesWithBadges <- activeQuestionShortTitlesWithBadges[sortOrder]
         }
 
         return(list(activeQuestionTitles, activeQuestionShortTitles, activeQuestionShortTitlesWithBadges))
