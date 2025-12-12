@@ -110,9 +110,9 @@ nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / resistances / culture materials
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
-pathogenList        <- c("A. baumannii", "C. difficile", "E. coli", "E. faecium/faecalis", "H. influenzae", "K. pneumoniae", "P. aeruginosa", "S. aureus", "S. pneumoniae", "Not pathogen related")
-resistanceList      <- c("3rd-generation Cephalosporin", "Ampicillin", "Carbapenem", "Colistin", "Methicillin", "Penicillin", "Vancomycin", "Not resistance related")
-cultureMaterialList <- c("Blood", "Respiratory tract", "Screening", "Soft tissue", "Stool", "Urine", "Not culture material related")
+pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile", "Not pathogen related")
+resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
+cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Stool", "Screening", "Not culture material related")
 
 # No special display modification needed - just use the lists as-is
 pathogenChoiceNames <- pathogenList
@@ -846,7 +846,7 @@ server <- function(input, output, session) {
                         tags$span(
                             style = "display: inline-block; width: 24px; height: 24px; background-color: #888888;"
                         ),
-                        tags$span("Not asked")
+                        tags$span("NA")
                     )
                 }
 
