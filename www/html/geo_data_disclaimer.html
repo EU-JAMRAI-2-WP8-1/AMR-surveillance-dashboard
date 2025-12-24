@@ -1,0 +1,53 @@
+<div class="disclaimer-content">
+    <!-- Introduction -->
+    <section style="margin-bottom: 30px;">
+        <p style="margin-bottom: 15px;">
+            This dashboard uses geospatial data from <strong>Eurostat</strong> to display country boundaries on interactive maps.
+            The information below describes the data source, modifications made, and important legal notices.
+        </p>
+    </section>
+
+    <!-- Geospatial Data Section -->
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">Geospatial Data Source</h2>
+        <p style="margin-bottom: 10px;">
+            The GeoJSON dataset used for country boundaries is sourced from <strong>Eurostat (GISCO)</strong>.
+            This content is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" style="color: #008aab; text-decoration: underline;">Creative Commons Attribution 4.0 International (CC BY 4.0)</a> licence.
+            <ul>
+                <li><strong>Source:</strong> <a href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries" target="_blank" style="color: #008aab; text-decoration: underline;">Eurostat GISCO Portal</a></li>
+                <li><strong>Dataset Version:</strong> CNTR_RG_60M_2024_4326</li>
+                <li><strong>Access Date:</strong> May 7, 2025</li>
+            </ul>
+        </p>
+
+        <h3 style="color: #0fdbd5; font-weight: normal; font-size: 1.15em; margin-bottom: 8px; margin-top: 15px;">Modifications Applied</h3>
+        <ul style="margin-left: 20px; margin-bottom: 15px;">
+            <li style="margin-bottom: 5px;"><strong>Filtering</strong>: Only European countries have been retained.</li>
+            <li style="margin-bottom: 5px;"><strong>Aggregation</strong>: Norway and Svalbard have been merged into a single geographical entity.</li>
+            <li style="margin-bottom: 5px;"><strong>Standardization</strong>: Unique IDs have been added to ensure compatibility with the survey dataset.</li>
+        </ul>
+    </section>
+
+    <!-- Statistical Content Section -->
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">Statistical Content</h2>
+        <p style="margin-bottom: 10px;">
+            The data displayed on this map originates from a <strong>JAMRAI Survey</strong>.
+            Eurostat is not the author of these results and is not responsible for the data processing or findings shown in this dashboard.
+        </p>
+    </section>
+
+    <br>
+
+    <!-- Legal Notice Section -->
+    <section style="margin-bottom: 10px;">
+        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">Legal Notice</h2>
+        <p style="margin-bottom: 10px; font-style: italic; color: #666;">
+            <strong>Disclaimer:</strong> The European Commission and Eurostat are not responsible for any use that may be made of this information.
+            The reuse of Eurostat geospatial data does not imply endorsement by the European Union of this application or its findings.
+        </p>
+        <p style="margin-bottom: 10px; font-style: italic; color: #666;">
+            This visualization was developed using the <strong>Plotly R library</strong>.
+        </p>
+    </section>
+</div>

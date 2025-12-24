@@ -65,3 +65,9 @@ $(document).on('shiny:connected', function() {
         updateProgressBar('resistancesSelection', 'progress-resistances', getTotalCount('resistancesSelection'));
     }, 500);
 });
+
+// Handle clicks on geo data disclaimer link in map annotations
+$(document).on('click', '.geo-disclaimer-link', function(e) {
+    e.preventDefault();
+    Shiny.setInputValue('showGeoDataDisclaimer', Math.random(), {priority: 'event'});
+});
