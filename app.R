@@ -100,10 +100,10 @@ for (country in geojsonEurope$features) {
 countryQuestionIndex <- 3
 
 # Participating country list
-participatingCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["possible_answers"]])), "\\.", " ")
+participatingCountries <- names(surveyData[[countryQuestionIndex]][["possible_answers"]])
 
 # Countries that have replied
-repliedCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["actual_answers"]])), "\\.", " ")
+repliedCountries <- names(surveyData[[countryQuestionIndex]][["actual_answers"]])
 
 # Not-participating countries (grey on the map)
 nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
@@ -282,14 +282,14 @@ ui <- shinyUI(fluidPage(
             width = 2,
 
             # logo
-            #img(
-            #    src = jamraiLogoHeaderRect,
-            #    class = "jamrai-logo-header"
-            #),
-
-            #hr(
-            #    class = "hr-filters-separator"
-            #),
+            tags$div(
+                class = "sidebar-logo-wrapper",
+                tags$img(
+                    src = "www/logos/Jamreye_primary-Colour-RGB@3x.png",
+                    class = "sidebar-logo",
+                    alt = "JAMREYE Logo"
+                )
+            ),
 
             tags$span(
                 class = "reset-filters-wrapper",
@@ -409,7 +409,7 @@ ui <- shinyUI(fluidPage(
                             width = 5,
                             selectizeInput(
                                 inputId   = "questionSelection",
-                                label     = "Use the left filter panel to narrow the question selection, then select a question here:",
+                                label     = HTML("<strong>Select a question</strong> (<strong>first</strong> use the left filter panel to narrow the selection)"),
                                 choices   = c("Participating countries", allShortTitles),
                                 selected  = c("Participating countries"),
                                 multiple  = FALSE,
@@ -442,12 +442,14 @@ ui <- shinyUI(fluidPage(
                                 plotlyOutput(outputId = "dashboardMap", width = "100%", height = "780px")
                             ),
                             tags$div(
-                                class = "map-source-text medium-grey-text",
-                                "Map source: ",
+                                class = "map-disclaimer-text",
+                                style = "text-align: center; font-size: 0.9em; color: #888888; margin-top: 5px;",
+                                "Geospatial data © Eurostat | ",
                                 tags$a(
-                                    href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
-                                    "Eurostat",
-                                    target = "_blank"
+                                    href = "#",
+                                    class = "geo-disclaimer-link",
+                                    style = "color: #008aab; text-decoration: underline; cursor: pointer;",
+                                    "Legal notice"
                                 )
                             )
                         )#,
@@ -706,17 +708,41 @@ server <- function(input, output, session) {
         ))
     })
 
+    # Geo data disclaimer modal
+    observeEvent(input$showGeoDataDisclaimer, {
+        showModal(modalDialog(
+            title = "Geospatial Data - Legal Notice",
+            tryCatch({
+                includeHTML("www/html/geo_data_disclaimer.html")
+            }, error = function(e) {
+                HTML("<p>Disclaimer information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = modalButton("Close"),
+            size = "l"
+        ))
+    })
+
     # Welcome/Usage modal - shows on page load
     observeEvent(TRUE, {
         showModal(modalDialog(
-            title = "Welcome to the AMR Surveillance Dashboard",
+            title = tags$div(
+                class = "flex-space-between",
+                tags$img(
+                    src = "www/logos/Jamreye_secondary-Colour-RGB@3x.png",
+                    class = "modal-logo",
+                    alt = "JAMREYE Logo"
+                ),
+                HTML("Welcome to JAMREYE:<br>Your AMR Surveillance Dashboard"),
+                modalButton("Start Exploring")
+            ),
             tryCatch({
                 includeHTML("www/html/usage.html")
             }, error = function(e) {
                 HTML("<p>Usage information unavailable</p>")
             }),
             easyClose = TRUE,
-            footer = modalButton("Start Exploring"),
+            footer = NULL, #modalButton("Start Exploring"),
             size = "l"
         ))
     }, once = TRUE, ignoreInit = FALSE)
@@ -724,14 +750,23 @@ server <- function(input, output, session) {
     # Instructions button - reopens the usage modal
     observeEvent(input$showInstructions, {
         showModal(modalDialog(
-            title = "How to Use This Dashboard",
+            title = tags$div(
+                class = "flex-space-between",
+                tags$img(
+                    src = "www/logos/Jamreye_secondary-Colour-RGB@3x.png",
+                    class = "modal-logo",
+                    alt = "JAMREYE Logo"
+                ),
+                HTML("How to Use This Dashboard"),
+                modalButton("Close")
+            ),
             tryCatch({
                 includeHTML("www/html/usage.html")
             }, error = function(e) {
                 HTML("<p>Usage information unavailable</p>")
             }),
             easyClose = TRUE,
-            footer = modalButton("Close"),
+            footer = NULL, #modalButton("Close"),
             size = "l"
         ))
     })
@@ -791,7 +826,7 @@ server <- function(input, output, session) {
             fullTitle <- NULL
             for (question in surveyData) {
                 if (question$short_title == input$questionSelection) {
-                    fullTitle <- question$title
+                    fullTitle <- question$display_title
                     break
                 }
             }
@@ -1102,11 +1137,24 @@ server <- function(input, output, session) {
                     
                 }
 
-                # get possible answer keys only
+                # get possible answer keys, colors, and occurrences
                 possibleAnswerText <- c()
+                possibleAnswerColors <- c()
                 possibleAnswerOccurences <- c()
+                colorIndex <- 1
                 for (possibleAnswer in names(possibleAnswers)) {
                     possibleAnswerText <- c(possibleAnswerText, possibleAnswer)
+
+                    # extract color from JSON structure
+                    answerColor <- possibleAnswers[[possibleAnswer]][["color"]]
+                    if (is.null(answerColor)) {
+                        # fallback to hardcoded color sequence if color is null
+                        # wrap around if we exceed the color sequence length
+                        fallbackIndex <- ((colorIndex - 1) %% length(colorSequence)) + 1
+                        answerColor <- colorSequence[fallbackIndex]
+                    }
+                    possibleAnswerColors <- c(possibleAnswerColors, answerColor)
+                    colorIndex <- colorIndex + 1
 
                     # get occurences of each possible reply
                     occurencesCounter <- 0
@@ -1119,18 +1167,8 @@ server <- function(input, output, session) {
                     possibleAnswerOccurences <- c(possibleAnswerOccurences, occurencesCounter)
                 }
 
-                # for map: create a custom discrete color scale
-                if (length(possibleAnswerText) > 2) {
-                    if (substr(possibleAnswerText[3], 1, 2) == "No") {
-                        ## !! quick fix (to be replaced by better method) - put No reply in red by using color sscale where colors 2 and 3 are reverted
-                        customColorScale <- alternativeColorSequence[1:length(possibleAnswerText)]
-                    }
-                    else {
-                        customColorScale <- colorSequence[1:length(possibleAnswerText)]
-                    }
-                } else {
-                    customColorScale <- colorSequence[1:length(possibleAnswerText)]
-                }
+                # use colors from JSON
+                customColorScale <- possibleAnswerColors
 
                 # convert to percentage
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
@@ -1158,12 +1196,25 @@ server <- function(input, output, session) {
                 # Check if this is a follow-up question (starts with "You answered")
                 isFollowUpQuestion <- grepl("^You answered", question[["title"]], ignore.case = FALSE)
 
-                # loop over possible answers and get occurence of each
+                # loop over possible answers and get occurence of each, plus extract colors
                 possibleAnswerOccurences <- c()
                 possibleAnswerText <- c()
+                possibleAnswerColors <- c()
+                colorIndex <- 1
                 for (possibleAnswer in names(possibleAnswers)) {
                     possibleAnswerText <- c(possibleAnswerText, possibleAnswer)
                     possibleAnswerOccurences <- c(possibleAnswerOccurences, sum(allActualAnswers == possibleAnswer))
+
+                    # extract color from JSON structure
+                    answerColor <- possibleAnswers[[possibleAnswer]][["color"]]
+                    if (is.null(answerColor)) {
+                        # fallback to hardcoded color sequence if color is null
+                        # wrap around if we exceed the color sequence length
+                        fallbackIndex <- ((colorIndex - 1) %% length(colorSequence)) + 1
+                        answerColor <- colorSequence[fallbackIndex]
+                    }
+                    possibleAnswerColors <- c(possibleAnswerColors, answerColor)
+                    colorIndex <- colorIndex + 1
                 }
 
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
@@ -1222,7 +1273,7 @@ server <- function(input, output, session) {
                         customColorScaleMap,  # For map
                         possibleAnswerText,  # For bar chart (all answers)
                         possibleAnswerPercentReplied,  # For bar chart (all percentages)
-                        colorSequence[1:length(possibleAnswerText)]  # For bar chart colors
+                        possibleAnswerColors  # For bar chart colors (from JSON)
                     )
                 )
             }
@@ -1605,7 +1656,7 @@ server <- function(input, output, session) {
     # CSV download
     output$downloadDataCSV <- downloadHandler(
         filename = function() {
-            paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".csv")
+            paste0("jamreye_data_export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".csv")
         },
         content = function(file) {
             write.csv(createResultsTable(), file, row.names = FALSE)
@@ -1615,7 +1666,7 @@ server <- function(input, output, session) {
     # Excel download
     output$downloadDataExcel <- downloadHandler(
         filename = function() {
-            paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".xlsx")
+            paste0("jamreye_data_export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".xlsx")
         },
         content = function(file) {
             write.xlsx(createResultsTable(), file, rowNames = FALSE)

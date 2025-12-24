@@ -41,6 +41,12 @@
     color:#888888;
 }
 
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .info-button {
     width: 24px;
     height: 24px;
@@ -444,6 +450,21 @@ div[style*="position: relative"] .dual-button-container {
     border-bottom: 1px solid #e8e8e8;
 }
 
+.modal-title {
+    width: 100%;
+    color: #008aab;
+    /*font-weight: bold;*/
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.modal-logo {
+    max-width: 120px;
+    height: auto;
+    margin-right: 12px;
+}
+
+
 /* OVERWRITE PLOTLY DEFAULT */
 
 
@@ -494,6 +515,21 @@ div[style*="position: relative"] .dual-button-container {
 /* Reset text direction for content inside sidebar */
 .sidebar-panel > * {
     direction: ltr;
+}
+
+/* Sidebar logo */
+.sidebar-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 32px;
+    margin-bottom: 0px;
+}
+
+.sidebar-logo {
+    max-width: 100%;
+    height: auto;
+    width: 100%;
 }
 
 .sections-wrapper {
@@ -741,9 +777,17 @@ body.section-3 .full-question-title-box {
 }
 
 
+/* MODAL WINDOW */
+
+.modal-title .flex-space-between button {
+    margin-left: 24px;
+}
+
+
 /* RESPONSIVE */
 
-@media screen and (orientation:portrait) {
+/* Mobile devices and tablets (up to 768px) */
+@media (max-width: 768px) {
 
     /* GENERAL */
 
@@ -789,5 +833,17 @@ body.section-3 .full-question-title-box {
     #sectionsSelection .btn {
         width: auto !important;
         min-width: 50px;
+    }
+
+    /* Stack modal title elements vertically on mobile */
+    .flex-space-between {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .modal-logo {
+        margin-right: 0;
+        margin-bottom: 8px;
     }
 }
