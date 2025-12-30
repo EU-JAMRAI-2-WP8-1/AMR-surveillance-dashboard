@@ -409,7 +409,7 @@ ui <- shinyUI(fluidPage(
                             width = 5,
                             selectizeInput(
                                 inputId   = "questionSelection",
-                                label     = HTML("<strong>Select a question</strong> (<strong>first</strong> use the left filter panel to narrow the selection)"),
+                                label     = HTML("<strong>Select a question</strong> (first use the left filter panel to narrow the selection)"),
                                 choices   = c("Participating countries", allShortTitles),
                                 selected  = c("Participating countries"),
                                 multiple  = FALSE,
@@ -728,13 +728,22 @@ server <- function(input, output, session) {
         showModal(modalDialog(
             title = tags$div(
                 class = "flex-space-between",
-                tags$img(
-                    src = "www/logos/Jamreye_secondary-Colour-RGB@3x.png",
-                    class = "modal-logo",
-                    alt = "JAMREYE Logo"
+                tags$div(
+                    class = "modal-header-left",
+                    tags$img(
+                        src = "www/logos/Jamreye_primary-Colour-RGB@3x.png",
+                        class = "modal-logo",
+                        alt = "JAMREYE Logo"
+                    ),
+                    tags$div(
+                        class = "modal-title-text",
+                        HTML("Welcome to JAMREYE:<br>Your AMR Surveillance Dashboard")
+                    )
                 ),
-                HTML("Welcome to JAMREYE:<br>Your AMR Surveillance Dashboard"),
-                modalButton("Start Exploring")
+                tags$div(
+                    class = "modal-header-right",
+                    modalButton("Start Exploring")
+                )
             ),
             tryCatch({
                 includeHTML("www/html/usage.html")
@@ -752,13 +761,22 @@ server <- function(input, output, session) {
         showModal(modalDialog(
             title = tags$div(
                 class = "flex-space-between",
-                tags$img(
-                    src = "www/logos/Jamreye_secondary-Colour-RGB@3x.png",
-                    class = "modal-logo",
-                    alt = "JAMREYE Logo"
+                tags$div(
+                    class = "modal-header-left",
+                    tags$img(
+                        src = "www/logos/Jamreye_primary-Colour-RGB@3x.png",
+                        class = "modal-logo",
+                        alt = "JAMREYE Logo"
+                    ),
+                    tags$div(
+                        class = "modal-title-text",
+                        HTML("How to Use This Dashboard")
+                    )
                 ),
-                HTML("How to Use This Dashboard"),
-                modalButton("Close")
+                tags$div(
+                    class = "modal-header-right",
+                    modalButton("Close")
+                )
             ),
             tryCatch({
                 includeHTML("www/html/usage.html")
@@ -1925,9 +1943,6 @@ server <- function(input, output, session) {
             # Wrap labels if needed
             wrappedLabels <- sapply(replies, wrapLabel)
 
-            # Add spacing prefix to Y-axis labels for better separation from plot
-            wrappedLabels <- paste0("  ", wrappedLabels)
-
             # Create text labels with positioning
             # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
             # but display reversed on screen. Text positions use data coordinates:
@@ -2029,9 +2044,6 @@ server <- function(input, output, session) {
             maxLabelLength <- max(nchar(replies))
             threshold <- if (maxLabelLength <= 24) 24 else min(ceiling(maxLabelLength / 3), 24)
             wrappedLabels <- sapply(replies, function(x) wrapLabel(x, threshold))
-
-            # Add spacing prefix to Y-axis labels for better separation from plot
-            wrappedLabels <- paste0("  ", wrappedLabels)
 
             # Create text labels with positioning
             # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space

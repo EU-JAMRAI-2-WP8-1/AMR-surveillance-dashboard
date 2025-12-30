@@ -269,7 +269,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -327,7 +327,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -385,7 +385,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -443,7 +443,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -501,7 +501,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -559,7 +559,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -937,7 +937,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -995,7 +995,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -1053,7 +1053,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -1111,7 +1111,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -1169,7 +1169,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -1227,7 +1227,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -1748,7 +1748,7 @@
                 "score": 1
             },
             "Do not know.": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -1818,7 +1818,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -2161,7 +2161,7 @@
                 "score": 1
             },
             "No, WGS is not used.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             },
             "Other.": {
@@ -2219,15 +2219,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2281,15 +2281,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2343,15 +2343,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2405,15 +2405,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2467,15 +2467,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2529,15 +2529,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2591,15 +2591,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2653,15 +2653,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2715,15 +2715,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2777,15 +2777,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2839,15 +2839,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2901,15 +2901,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -2963,15 +2963,15 @@
                 "score": 1
             },
             "Yes, for specific time periods and/or number of isolates.": {
-                "color": "#086D6A",
-                "score": 0.8
-            },
-            "Yes, when required/requested.": {
                 "color": "#92F6D5",
                 "score": 0.8
             },
+            "Yes, when required/requested.": {
+                "color": "#F7C948",
+                "score": 0.8
+            },
             "No, not sequenced.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -3037,7 +3037,7 @@
                 "score": 1
             },
             "WGS not used.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -3565,7 +3565,7 @@
                 "score": 0.2
             },
             "No but under implementation.": {
-                "color": "#CF6BB5",
+                "color": "#3DC47E",
                 "score": 0.5
             },
             "No, WGS not used for outbreak investigations.": {
@@ -3573,7 +3573,7 @@
                 "score": 0
             },
             "Do not know.": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Other.": {
@@ -3581,7 +3581,7 @@
                 "score": 0
             },
             "WGS not used.": {
-                "color": "#DF2E1A",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -3635,7 +3635,7 @@
                 "score": 1
             },
             "Yes, it can be done but there is no official data sharing/analysis pipeline.": {
-                "color": "#CF6BB5",
+                "color": "#3DC47E",
                 "score": 0.5
             },
             "No, legal issues prevent this type of sharing and analysis.": {
@@ -3647,7 +3647,7 @@
                 "score": 0
             },
             "Do not know.": {
-                "color": "#F7C948",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Other.": {
@@ -3655,7 +3655,7 @@
                 "score": 0
             },
             "WGS not used.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -4388,11 +4388,11 @@
                 "score": 0
             },
             "Do not know.": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "WGS not used.": {
-                "color": "#CF6BB5",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -4446,15 +4446,15 @@
                 "score": 1
             },
             "No.": {
-                "color": "#DF2E1A",
+                "color": "#f7c948",
                 "score": 1
             },
             "Do not know.": {
-                "color": "#F7C948",
+                "color": "#6D6D6D",
                 "score": null
             },
             "WGS not used.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -4516,7 +4516,7 @@
                 "score": 1
             },
             "WGS not used.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -4578,7 +4578,7 @@
                 "score": 0
             },
             "WGS not used.": {
-                "color": "#999999",
+                "color": "#E3C19B",
                 "score": 0
             }
         },
@@ -4880,7 +4880,7 @@
     },
     "36.1": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (carbapenem R and/or P) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant E. coli - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - E. coli - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 58,
@@ -4938,7 +4938,7 @@
     },
     "36.2": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (carbapenem R and/or P) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant E. coli - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - E. coli - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 70,
@@ -5112,7 +5112,7 @@
     },
     "36.5": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (colistin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Colistin resistant E. coli - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - E. coli - Colistin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 60,
@@ -5170,7 +5170,7 @@
     },
     "36.6": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (3GC- R and/or P) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? 3rd-generation cephalosporins resistant E. coli - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - E. coli - 3rd-generation Cephalosporin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 59,
@@ -5228,7 +5228,7 @@
     },
     "36.7": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (3GC- R and/or P) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? 3rd-generation cephalosporins resistant E. coli - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - E. coli - 3rd-generation Cephalosporin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 71,
@@ -6040,7 +6040,7 @@
     },
     "36.21": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (colistin R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Colistin resistant E. coli - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - E. coli - Colistin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 72,
@@ -6214,7 +6214,7 @@
     },
     "36.24": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (carbapenem R and/or P) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant K. pneumoniae - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - K. pneumoniae - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 73,
@@ -6272,7 +6272,7 @@
     },
     "36.25": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (carbapenem R and/or P) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant K. pneumoniae - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - K. pneumoniae - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 61,
@@ -6330,7 +6330,7 @@
     },
     "36.26": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (3GC- R and/or P) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? 3rd-generation cephalosporins resistant K. pneumoniae - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - K. pneumoniae - 3rd-generation Cephalosporin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 62,
@@ -6388,7 +6388,7 @@
     },
     "36.27": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (3GC- R and/or P) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? 3rd-generation cephalosporins resistant K. pneumoniae - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - K. pneumoniae - 3rd-generation Cephalosporin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 74,
@@ -6562,7 +6562,7 @@
     },
     "36.30": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (colistin R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Colistin resistant K. pneumoniae - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - K. pneumoniae - Colistin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 75,
@@ -6620,7 +6620,7 @@
     },
     "36.31": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (colistin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Colistin resistant K. pneumoniae - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - K. pneumoniae - Colistin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 63,
@@ -6678,7 +6678,7 @@
     },
     "36.32": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : P. aeruginosa (carbapenem R and/or P) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant P. aeruginosa - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - P. aeruginosa - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 64,
@@ -6736,7 +6736,7 @@
     },
     "36.33": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : P. aeruginosa (carbapenem R and/or P) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant P. aeruginosa - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - P. aeruginosa - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 76,
@@ -6968,7 +6968,7 @@
     },
     "36.37": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - A. baumannii - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 65,
@@ -7026,7 +7026,7 @@
     },
     "36.38": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Wound/Tissue swab",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - A. baumannii - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 77,
@@ -7548,7 +7548,7 @@
     },
     "36.47": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. faecium and/or E. faecalis (vancomycin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - Urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 78,
@@ -7606,7 +7606,7 @@
     },
     "36.48": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. faecium and/or E. faecalis (vancomycin R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 66,
@@ -7664,7 +7664,7 @@
     },
     "36.49": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Vancomycin resistant Enterococci - blood.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Blood - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 67,
@@ -7722,7 +7722,7 @@
     },
     "36.50": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Vancomycin resistant Enterococci - urine.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Urine - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 79,
@@ -7809,7 +7809,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -7879,7 +7879,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -7949,7 +7949,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8019,7 +8019,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8089,7 +8089,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8159,7 +8159,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8229,7 +8229,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8299,7 +8299,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8369,7 +8369,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8439,7 +8439,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8509,7 +8509,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8579,7 +8579,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8649,7 +8649,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8719,7 +8719,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8789,7 +8789,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8859,7 +8859,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8929,7 +8929,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -8999,7 +8999,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9069,7 +9069,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9139,7 +9139,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9209,7 +9209,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9279,7 +9279,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9349,7 +9349,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9419,7 +9419,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9489,7 +9489,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9559,7 +9559,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not submitted": {
@@ -9600,7 +9600,7 @@
     },
     "38.1": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSF E. coli : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. E. coli - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - E. coli.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 138,
@@ -9629,7 +9629,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -9670,7 +9670,7 @@
     },
     "38.2": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSF K. pneumoniae : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. K. pneumoniae - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - K. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 140,
@@ -9699,7 +9699,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -9740,7 +9740,7 @@
     },
     "38.3": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFP. aeruginosa : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. P. aeruginosa - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - P. aeruginosa.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 142,
@@ -9769,7 +9769,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -9810,7 +9810,7 @@
     },
     "38.4": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumannii : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. A. baumannii - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - A. baumannii.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 144,
@@ -9839,7 +9839,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -9880,7 +9880,7 @@
     },
     "38.5": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFS. aureus : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. S. aureus - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - S. aureus.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 146,
@@ -9909,7 +9909,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -9950,7 +9950,7 @@
     },
     "38.6": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFE. faecium and/or E. faecalis : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. VRE - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - E. faecium/faecalis.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 148,
@@ -9979,7 +9979,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10020,7 +10020,7 @@
     },
     "38.7": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFS. pneumoniae : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. S. pneumoniae - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - S. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 150,
@@ -10049,7 +10049,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10090,7 +10090,7 @@
     },
     "38.8": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFH. influenzae : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. H. influenzae - blood.",
+        "short_title": "Population coverage for AST data part of national surveillance. Blood - H. influenzae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 152,
@@ -10119,7 +10119,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10160,7 +10160,7 @@
     },
     "38.9": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine E. coli : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. E. coli - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - E. coli.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 154,
@@ -10189,7 +10189,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10230,7 +10230,7 @@
     },
     "38.10": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine K. pneumoniae : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. K. pneumoniae - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - K. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 156,
@@ -10259,7 +10259,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10300,7 +10300,7 @@
     },
     "38.11": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineP. aeruginosa : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. P. aeruginosa - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - P. aeruginosa.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 158,
@@ -10329,7 +10329,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10370,7 +10370,7 @@
     },
     "38.12": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumannii : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. A. baumannii - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - A. baumannii.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 160,
@@ -10399,7 +10399,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10440,7 +10440,7 @@
     },
     "38.13": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineS. aureus : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. S. aureus - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - S. aureus.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 162,
@@ -10469,7 +10469,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10510,7 +10510,7 @@
     },
     "38.14": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineE. faecium and/or E. faecalis : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. VRE - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - E. faecium/faecalis.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 164,
@@ -10539,7 +10539,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10580,7 +10580,7 @@
     },
     "38.15": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineS. pneumoniae : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. S. pneumoniae - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - S. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 166,
@@ -10609,7 +10609,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10650,7 +10650,7 @@
     },
     "38.16": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineH. influenzae : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. H. influenzae - urine.",
+        "short_title": "Population coverage for AST data part of national surveillance. Urine - H. influenzae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 168,
@@ -10679,7 +10679,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10749,7 +10749,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10819,7 +10819,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10889,7 +10889,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -10959,7 +10959,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11029,7 +11029,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11099,7 +11099,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11169,7 +11169,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11239,7 +11239,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11309,7 +11309,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11379,7 +11379,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11449,7 +11449,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11519,7 +11519,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11589,7 +11589,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11659,7 +11659,7 @@
                 "score": 0.25
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11700,7 +11700,7 @@
     },
     "38.31": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSF E. coli : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. E. coli - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - E. coli.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 139,
@@ -11725,7 +11725,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11791,7 +11791,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11832,7 +11832,7 @@
     },
     "38.33": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSF K. pneumoniae : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. K. pneumoniae - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - K. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 141,
@@ -11857,7 +11857,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11898,7 +11898,7 @@
     },
     "38.34": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFP. aeruginosa : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. P. aeruginosa - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - P. aeruginosa.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 143,
@@ -11923,7 +11923,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -11964,7 +11964,7 @@
     },
     "38.35": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFA. baumannii : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumannii - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - A. baumannii.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 145,
@@ -11989,7 +11989,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12030,7 +12030,7 @@
     },
     "38.36": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFS. aureus : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. S. aureus - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - S. aureus.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 147,
@@ -12055,7 +12055,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12096,7 +12096,7 @@
     },
     "38.37": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFE. faecium and/or E. faecalis : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. VRE - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - E. faecium/faecalis.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 149,
@@ -12121,7 +12121,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12162,7 +12162,7 @@
     },
     "38.38": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFS. pneumoniae : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. S. pneumoniae - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - S. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 151,
@@ -12187,7 +12187,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12228,7 +12228,7 @@
     },
     "38.39": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Blood/CSFH. influenzae : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. H. influenzae - blood.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Blood - H. influenzae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 153,
@@ -12253,7 +12253,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12294,7 +12294,7 @@
     },
     "38.40": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine E. coli : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. E. coli - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - E. coli.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 155,
@@ -12319,7 +12319,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12360,7 +12360,7 @@
     },
     "38.41": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine K. pneumoniae : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. K. pneumoniae - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - K. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 157,
@@ -12385,7 +12385,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12426,7 +12426,7 @@
     },
     "38.42": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineP. aeruginosa : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. P. aeruginosa - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - P. aeruginosa.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 159,
@@ -12451,7 +12451,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12492,7 +12492,7 @@
     },
     "38.43": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Urine A. baumannii : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. A. baumannii - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - A. baumannii.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 161,
@@ -12517,7 +12517,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12558,7 +12558,7 @@
     },
     "38.44": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineS. aureus : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. S. aureus - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - S. aureus.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 163,
@@ -12583,7 +12583,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12624,7 +12624,7 @@
     },
     "38.45": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineE. faecium and/or E. faecalis : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. VRE - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - E. faecium/faecalis.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 165,
@@ -12649,7 +12649,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12690,7 +12690,7 @@
     },
     "38.46": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineS. pneumoniae : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. S. pneumoniae - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - S. pneumoniae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 167,
@@ -12715,7 +12715,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12756,7 +12756,7 @@
     },
     "38.47": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : UrineH. influenzae : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. H. influenzae - urine.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Urine - H. influenzae.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 169,
@@ -12781,7 +12781,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12847,7 +12847,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12913,7 +12913,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -12979,7 +12979,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13045,7 +13045,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13111,7 +13111,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13177,7 +13177,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13243,7 +13243,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13309,7 +13309,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13375,7 +13375,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13441,7 +13441,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13507,7 +13507,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13573,7 +13573,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13639,7 +13639,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "Not part of national surveillance": {
@@ -13705,7 +13705,7 @@
                 "score": 0.3
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "No data submitted": {
@@ -13771,7 +13771,7 @@
                 "score": 0.3
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "No data submitted": {
@@ -13837,7 +13837,7 @@
                 "score": 0.3
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "No data submitted": {
@@ -13903,7 +13903,7 @@
                 "score": 0.3
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "No data submitted": {
@@ -13969,7 +13969,7 @@
                 "score": 0.3
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "No data submitted": {
@@ -14035,7 +14035,7 @@
                 "score": 0.3
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             },
             "No data submitted": {
@@ -14097,7 +14097,7 @@
                 "score": 0
             },
             "Do not know": {
-                "color": "#999999",
+                "color": "#6D6D6D",
                 "score": null
             }
         },
@@ -14134,7 +14134,7 @@
     },
     "41.1": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF E. coli (3GC- R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. 3rd-generation cephalosporins resistant E. coli - blood.",
+        "short_title": "Patient data available at national level. Blood - E. coli - 3rd-generation Cephalosporin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 206,
@@ -14354,7 +14354,7 @@
     },
     "41.2": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF E. coli (colistin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Colistin resistant E. coli - blood.",
+        "short_title": "Patient data available at national level. Blood - E. coli - Colistin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 207,
@@ -14573,7 +14573,7 @@
     },
     "41.3": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF K. pneumoniae (colistin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Colistin resistant K. pneumoniae - blood.",
+        "short_title": "Patient data available at national level. Blood - K. pneumoniae - Colistin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 210,
@@ -14795,7 +14795,7 @@
     },
     "41.4": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF K. pneumoniae (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant K. pneumoniae - blood.",
+        "short_title": "Patient data available at national level. Blood - K. pneumoniae - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 208,
@@ -15042,7 +15042,7 @@
     },
     "41.5": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF K. pneumoniae (3GC- R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. 3rd-generation cephalosporins resistant K. pneumoniae - blood.",
+        "short_title": "Patient data available at national level. Blood - K. pneumoniae - 3rd-generation Cephalosporin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 209,
@@ -15264,7 +15264,7 @@
     },
     "41.6": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF P. aeruginosa (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant P. aeruginosa - blood.",
+        "short_title": "Patient data available at national level. Blood - P. aeruginosa - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 211,
@@ -15498,7 +15498,7 @@
     },
     "41.7": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - blood.",
+        "short_title": "Patient data available at national level. Blood - A. baumannii - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 212,
@@ -15733,7 +15733,7 @@
     },
     "41.8": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF S. aureus (methicillin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Methicillin resistant S. aureus - blood.",
+        "short_title": "Patient data available at national level. Blood - S. aureus - Methicillin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 213,
@@ -15972,7 +15972,7 @@
     },
     "41.9": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF S. pneumoniae (penicillin and macrolide R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Penicillin resistant S. pneumoniae - blood.",
+        "short_title": "Patient data available at national level. Blood - S. pneumoniae - Penicillin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 215,
@@ -16193,7 +16193,7 @@
     },
     "41.10": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF H. influenzae (ampicillin- R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Ampicillin resistant H. influenzae - blood.",
+        "short_title": "Patient data available at national level. Blood - H. influenzae - Ampicillin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 216,
@@ -16396,7 +16396,7 @@
     },
     "41.11": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine E. coli (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant E. coli - urine.",
+        "short_title": "Patient data available at national level. Urine - E. coli - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 217,
@@ -16620,7 +16620,7 @@
     },
     "41.12": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine E. coli (colistin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Colistin resistant E. coli - urine.",
+        "short_title": "Patient data available at national level. Urine - E. coli - Colistin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 219,
@@ -16823,7 +16823,7 @@
     },
     "41.13": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine K. pneumoniae (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant K. pneumoniae - urine.",
+        "short_title": "Patient data available at national level. Urine - K. pneumoniae - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 220,
@@ -17053,7 +17053,7 @@
     },
     "41.14": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine K. pneumoniae (3GC- R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. 3rd-generation cephalosporins resistant K. pneumoniae - urine.",
+        "short_title": "Patient data available at national level. Urine - K. pneumoniae - 3rd-generation Cephalosporin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 221,
@@ -17247,7 +17247,7 @@
     },
     "41.15": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine K. pneumoniae (colistin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Colistin resistant K. pneumoniae - urine.",
+        "short_title": "Patient data available at national level. Urine - K. pneumoniae - Colistin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 222,
@@ -17446,7 +17446,7 @@
     },
     "41.16": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine P. aeruginosa (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant P. aeruginosa - urine.",
+        "short_title": "Patient data available at national level. Urine - P. aeruginosa - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 223,
@@ -17655,7 +17655,7 @@
     },
     "41.17": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - urine.",
+        "short_title": "Patient data available at national level. Urine - A. baumannii - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 224,
@@ -17862,7 +17862,7 @@
     },
     "41.18": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine S. aureus (methicillin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Methicillin resistant S. aureus - urine.",
+        "short_title": "Patient data available at national level. Urine - S. aureus - Methicillin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 225,
@@ -18072,7 +18072,7 @@
     },
     "41.19": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine E. faecium and/or E. faecalis (vancomycin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Vancomycin resistant Enterococci - urine.",
+        "short_title": "Patient data available at national level. Urine - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 226,
@@ -23013,7 +23013,7 @@
     },
     "41.44": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF E. coli (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant E. coli - blood.",
+        "short_title": "Patient data available at national level. Blood - E. coli - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 205,
@@ -23442,7 +23442,7 @@
     },
     "41.46": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Urine E. coli (3GC-R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. 3rd-generation cephalosporins resistant E. coli - urine.",
+        "short_title": "Patient data available at national level. Urine - E. coli - 3rd-generation Cephalosporin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 218,
@@ -23643,7 +23643,7 @@
     },
     "41.47": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Blood/CSF E. faecium and/or faecalis (vancomycin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Vancomycin resistant Enterococci - blood.",
+        "short_title": "Patient data available at national level. Blood - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 214,
