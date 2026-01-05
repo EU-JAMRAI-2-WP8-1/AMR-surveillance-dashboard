@@ -1209,7 +1209,11 @@ server <- function(input, output, session) {
 
                 # get country answers and stack them in a single vector
                 actualAnswers <- question[["actual_answers"]]
-                allActualAnswers <- unlist(actualAnswers, use.names = FALSE)
+
+                # Filter to only include selected countries
+                selectedCountries <- intersect(input$countriesSelection, repliedCountries)
+                filteredActualAnswers <- actualAnswers[names(actualAnswers) %in% selectedCountries]
+                allActualAnswers <- unlist(filteredActualAnswers, use.names = FALSE)
 
                 # Check if this is a follow-up question (starts with "You answered")
                 isFollowUpQuestion <- grepl("^You answered", question[["title"]], ignore.case = FALSE)
