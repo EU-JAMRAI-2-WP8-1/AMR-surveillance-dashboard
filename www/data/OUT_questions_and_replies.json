@@ -255,7 +255,7 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Blood",
+            "Blood/CSF",
             "Not pathogen related",
             "Not resistance related"
         ],
@@ -923,7 +923,7 @@
         "coefficient": 0.167,
         "tags": [
             "National guidance",
-            "Blood",
+            "Blood/CSF",
             "Not pathogen related",
             "Not resistance related"
         ],
@@ -4887,7 +4887,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "Carbapenem"
         ],
@@ -5054,7 +5054,7 @@
     },
     "36.4": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (carbapenem R and/or P) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant E. coli - screening",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - E. coli - Carbapenem resistant",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 100,
@@ -5119,7 +5119,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "Colistin"
         ],
@@ -5177,7 +5177,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "3rd-generation Cephalosporin"
         ],
@@ -5344,7 +5344,7 @@
     },
     "36.9": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (3GC- R and/or P) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? 3rd-generation cephalosporins resistant E. coli - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - E. coli - 3rd-generation Cephalosporin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 101,
@@ -5402,7 +5402,7 @@
     },
     "36.10": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. coli (colistin R) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Colistin resistant E. coli - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - E. coli - Colistin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 102,
@@ -5460,7 +5460,7 @@
     },
     "36.11": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (carbapenem R and/or P) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant K. pneumoniae - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - K. pneumoniae - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 103,
@@ -5518,7 +5518,7 @@
     },
     "36.12": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (3GC- R and/or P) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? 3rd-generation cephalosporins resistant K. pneumoniae - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - K. pneumoniae - 3rd-generation Cephalosporin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 104,
@@ -5576,7 +5576,7 @@
     },
     "36.13": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (colistin R) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Colistin resistant K. pneumoniae - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - K. pneumoniae - Colistin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 105,
@@ -5634,7 +5634,7 @@
     },
     "36.14": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : C. difficile : Diarrhea/stool sample",
-        "short_title": "Which pathogens are under mandatory national surveillance? C. difficile - stool.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Stool - C. difficile.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 99,
@@ -5692,7 +5692,7 @@
     },
     "36.15": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Ampicillin resistant H. influenzae - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - H. influenzae - Ampicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 111,
@@ -5750,7 +5750,7 @@
     },
     "36.16": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Penicillin resistant S. pneumoniae - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - S. pneumoniae - Penicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 110,
@@ -5808,7 +5808,7 @@
     },
     "36.17": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. faecium and/or E. faecalis (vancomycin R) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Vancomycin resistant Enterococci - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 109,
@@ -5866,7 +5866,7 @@
     },
     "36.18": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : P. aeruginosa (carbapenem R and/or P) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant P. aeruginosa - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - P. aeruginosa - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 106,
@@ -5924,7 +5924,7 @@
     },
     "36.19": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - A. baumannii - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 107,
@@ -5982,7 +5982,7 @@
     },
     "36.20": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Screening",
-        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - screening.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Screening - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 108,
@@ -6279,7 +6279,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "Carbapenem"
         ],
@@ -6337,7 +6337,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "3rd-generation Cephalosporin"
         ],
@@ -6504,7 +6504,7 @@
     },
     "36.29": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : K. pneumoniae (colistin R) : Lower respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? Colistin resistant K. pneumoniae - colistin.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Lower respiratory tract - Colistin resistant K. pneumoniae.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 87,
@@ -6627,7 +6627,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "Colistin"
         ],
@@ -6685,7 +6685,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "P. aeruginosa",
             "Carbapenem"
         ],
@@ -6794,7 +6794,7 @@
     },
     "36.34": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : P. aeruginosa (carbapenem R and/or P) : Wound/Tissue swab",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant P. aeruginosa - soft tissue.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Soft tissue - P. aeruginosa - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 96,
@@ -6975,7 +6975,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "A. baumannii",
             "Carbapenem"
         ],
@@ -7084,7 +7084,7 @@
     },
     "36.39": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Lower respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? Carbapenem resistant A. baumannii - soft tissue.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Soft tissue - A. baumannii - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 97,
@@ -7490,7 +7490,7 @@
     },
     "36.46": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? Methicillin resistant S. aureus - soft tissue.",
+        "short_title": "Which pathogens are under mandatory national surveillance? Soft tissue - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
         "position": 98,
@@ -7613,7 +7613,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "S. aureus",
             "Methicillin"
         ],
@@ -7671,7 +7671,7 @@
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. faecium/faecalis",
             "Vancomycin"
         ],
@@ -9607,7 +9607,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "Not resistance related"
         ],
@@ -9677,7 +9677,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "Not resistance related"
         ],
@@ -9747,7 +9747,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "P. aeruginosa",
             "Not resistance related"
         ],
@@ -9817,7 +9817,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "A. baumannii",
             "Not resistance related"
         ],
@@ -9887,7 +9887,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "S. aureus",
             "Not resistance related"
         ],
@@ -9957,7 +9957,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. faecium/faecalis",
             "Not resistance related"
         ],
@@ -10027,7 +10027,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "S. pneumoniae",
             "Not resistance related"
         ],
@@ -10097,7 +10097,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "H. influenzae",
             "Not resistance related"
         ],
@@ -10720,7 +10720,7 @@
     },
     "38.17": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swabP. aeruginosa : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. P. aeruginosa - soft tissue.",
+        "short_title": "Population coverage for AST data part of national surveillance. Soft tissue - P. aeruginosa.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 190,
@@ -10790,7 +10790,7 @@
     },
     "38.18": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab A. baumannii : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. A. baumannii - soft tissue.",
+        "short_title": "Population coverage for AST data part of national surveillance. Soft tissue - A. baumannii.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 192,
@@ -10860,7 +10860,7 @@
     },
     "38.19": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab S. aureus : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. S. aureus - soft tissue.",
+        "short_title": "Population coverage for AST data part of national surveillance. Soft tissue - S. aureus.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 193,
@@ -11630,7 +11630,7 @@
     },
     "38.30": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Diarrhea C. difficile : If data is submitted: Estimated range of population coverage",
-        "short_title": "Population coverage for AST data part of national surveillance. C. difficile - stool.",
+        "short_title": "Population coverage for AST data part of national surveillance. Stool - C. difficile.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 195,
@@ -11707,7 +11707,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "Not resistance related"
         ],
@@ -11839,7 +11839,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "Not resistance related"
         ],
@@ -11905,7 +11905,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "P. aeruginosa",
             "Not resistance related"
         ],
@@ -11971,7 +11971,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "A. baumannii",
             "Not resistance related"
         ],
@@ -12037,7 +12037,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "S. aureus",
             "Not resistance related"
         ],
@@ -12103,7 +12103,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. faecium/faecalis",
             "Not resistance related"
         ],
@@ -12169,7 +12169,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "S. pneumoniae",
             "Not resistance related"
         ],
@@ -12235,7 +12235,7 @@
         "coefficient": 0.033,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "H. influenzae",
             "Not resistance related"
         ],
@@ -12822,7 +12822,7 @@
     },
     "38.48": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swabP. aeruginosa : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. P. aeruginosa - soft tissue.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Soft tissue - P. aeruginosa.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 191,
@@ -12888,7 +12888,7 @@
     },
     "38.49": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Wound/tissue swab S. aureus : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. S. aureus - soft tissue.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Soft tissue - S. aureus.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 194,
@@ -13614,7 +13614,7 @@
     },
     "38.60": {
         "title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata?  Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated).Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country. : Diarrhea C. difficile : If data is submitted:Estimated geographical representativeness",
-        "short_title": "Geographical representativeness for AST data part of national surveillance. C. difficile - stool.",
+        "short_title": "Geographical representativeness for AST data part of national surveillance. Stool - C. difficile.",
         "display_title": "Is AST data for the following pathogen part of your national surveillance, and how would you estimate the population coverage and the geographical representativeness of the submitteddata? Applies to AST data for all tested isolates (susceptible, intermediate and resistant). Can be in any format (zones, MIC, SIR, aggregated). Estimation range of population coverage:The percentage of the population that is roughly covered by the clinical microbiology laboratories that submit data. Estimation of geographical representativeness: A rough estimation of the quantity of geographical regions that are covered by the clinical microbiology laboratories that submit data. Similar estimations are included in the annual report to EARS-Net. If you are unsure about the estimations, please consult the EARS-Net focal point in your country.",
         "type": "SingleChoice",
         "position": 196,
@@ -14017,7 +14017,7 @@
         "coefficient": 0.167,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "Not pathogen related",
             "Not resistance related"
         ],
@@ -14141,7 +14141,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "3rd-generation Cephalosporin"
         ],
@@ -14361,7 +14361,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "Colistin"
         ],
@@ -14580,7 +14580,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "Colistin"
         ],
@@ -14802,7 +14802,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "Carbapenem"
         ],
@@ -15049,7 +15049,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "K. pneumoniae",
             "3rd-generation Cephalosporin"
         ],
@@ -15271,7 +15271,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "P. aeruginosa",
             "Carbapenem"
         ],
@@ -15505,7 +15505,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "A. baumannii",
             "Carbapenem"
         ],
@@ -15740,7 +15740,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "S. aureus",
             "Methicillin"
         ],
@@ -15979,7 +15979,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "S. pneumoniae",
             "Penicillin"
         ],
@@ -16200,7 +16200,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "H. influenzae",
             "Ampicillin"
         ],
@@ -18480,7 +18480,7 @@
     },
     "41.21": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Wound/tissue swab A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - soft tissue.",
+        "short_title": "Patient data available at national level. Soft tissue - A. baumannii - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 241,
@@ -18686,7 +18686,7 @@
     },
     "41.22": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Wound/tissue swab S. aureus (methicillin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Methicillin resistant S. aureus - soft tissue.",
+        "short_title": "Patient data available at national level. Soft tissue - S. aureus - Methicillin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 242,
@@ -21425,7 +21425,7 @@
     },
     "41.36": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Diarrhea/stool sample C. difficile : Patient/case data available",
-        "short_title": "Patient data available at national level. C. difficile - stool.",
+        "short_title": "Patient data available at national level. Stool - C. difficile.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 243,
@@ -21639,7 +21639,7 @@
     },
     "41.37": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening E. coli (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant E. coli - screening.",
+        "short_title": "Patient data available at national level. Screening - E. coli - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 244,
@@ -21845,7 +21845,7 @@
     },
     "41.38": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening E. coli (3GC- R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. 3rd-generation cephalosporins resistant E. coli - screening.",
+        "short_title": "Patient data available at national level. Screening - E. coli - 3rd-generation Cephalosporin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 245,
@@ -22028,7 +22028,7 @@
     },
     "41.39": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening E. coli (colistin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Colistin resistant E. coli - screening.",
+        "short_title": "Patient data available at national level. Screening - E. coli - Colistin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 246,
@@ -22218,7 +22218,7 @@
     },
     "41.40": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening K. pneumoniae (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant K. pneumoniae - screening.",
+        "short_title": "Patient data available at national level. Screening - K. pneumoniae - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 247,
@@ -22424,7 +22424,7 @@
     },
     "41.41": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening P. aeruginosa (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant P. aeruginosa - screening.",
+        "short_title": "Patient data available at national level. Screening - P. aeruginosa - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 250,
@@ -22626,7 +22626,7 @@
     },
     "41.42": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening S. aureus (methicillin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Methicillin resistant S. aureus - screening.",
+        "short_title": "Patient data available at national level. Screening - S. aureus - Methicillin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 252,
@@ -22822,7 +22822,7 @@
     },
     "41.43": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening E. faecium and/or E. faecalis (vancomycin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Vancomycin resistant Enterococci - screening.",
+        "short_title": "Patient data available at national level. Screening - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 253,
@@ -23020,7 +23020,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. coli",
             "Carbapenem"
         ],
@@ -23259,7 +23259,7 @@
     },
     "41.45": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening K. pneumoniae (3GC- R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. 3rd-generation cephalosporins resistant K. pneumoniae - screening.",
+        "short_title": "Patient data available at national level. Screening - K. pneumoniae - 3rd-generation Cephalosporin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 248,
@@ -23650,7 +23650,7 @@
         "coefficient": 0.02,
         "tags": [
             "National surveillance",
-            "Blood",
+            "Blood/CSF",
             "E. faecium/faecalis",
             "Vancomycin"
         ],
@@ -24071,7 +24071,7 @@
     },
     "41.49": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening K. pneumoniae (colistin R) : Patient/case data available",
-        "short_title": "Patient data available at national level. Colistin resistant K. pneumoniae - screening.",
+        "short_title": "Patient data available at national level. Screening - K. pneumoniae - Colistin resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 249,
@@ -24261,7 +24261,7 @@
     },
     "41.50": {
         "title": "You answered \u201cyes to some patient/case information is available\u201d in the question above.  Which of the following patient/case information is available in your national AMR surveillance system(s)?  Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF. : Screening A. baumannii (carbapenem R and/or P) : Patient/case data available",
-        "short_title": "Patient data available at national level. Carbapenem resistant A. baumannii - screening.",
+        "short_title": "Patient data available at national level. Screening - A. baumannii - Carbapenem resistant.",
         "display_title": "You answered \"yes to some patient/case information is available\" in the question above. Which of the following patient/case information is available in your national AMR surveillance system(s)? Please also select available if the data are in separate systems but regularly linked with the AMR data. Community-associated: Infections that are contracted in the community, i.e. outside of a healthcare facility. Healthcare-associated: An infection occurring in a patient during the process of care in a hospital or other healthcare facility, which was not present or incubating at the time of admission. Healthcare-associated infections can also appear after discharge. Long-Term Care Facility (LTCF)-associated: An infection in a patient who is a resident at a LTCF.",
         "type": "MultipleChoice",
         "position": 251,
