@@ -284,8 +284,8 @@ div[style*="position: relative"] .dual-button-container {
     display: flex !important;
 }
 
-/* Push the last tab (Info) to the right */
-.nav-tabs .nav-item:last-child {
+/* Push Info and Contact tabs to the right */
+.nav-tabs .nav-item:nth-last-child(2) {
     margin-left: auto !important;
 }
 
@@ -455,13 +455,47 @@ div[style*="position: relative"] .dual-button-container {
     color: #008aab;
     /*font-weight: bold;*/
     font-size: 1.4em;
-    text-align: center;
+}
+
+/* Override align-items for modal headers specifically */
+
+.modal-header {
+    padding-bottom: 0px !important;
+}
+
+.modal-title .flex-space-between {
+    align-items: flex-start;
+}
+
+.modal-header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.modal-title-text {
+    margin-top: 24px;
+    color: #008aab;
+    font-size: 1.4em;
+    text-align: left;
 }
 
 .modal-logo {
-    max-width: 120px;
+    max-width: 200px;
     height: auto;
-    margin-right: 12px;
+    margin-bottom: 0;
+}
+
+.modal-header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.modal-body {
+    padding-top: 8px !important;
 }
 
 
@@ -522,7 +556,7 @@ div[style*="position: relative"] .dual-button-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 24px 32px;
+    padding: 32px 48px;
     margin-bottom: 0px;
 }
 
@@ -752,6 +786,90 @@ body.section-3 .full-question-title-box {
     padding: 36px;
 }
 
+/* CONTACT FORM */
+
+.contact-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 36px;
+}
+
+.contact-container h3 {
+    margin-bottom: 20px;
+    color: #008aab;
+}
+
+.contact-container p {
+    margin-bottom: 24px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.contact-container .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-container label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+}
+
+.contact-container input[type="text"],
+.contact-container input[type="email"],
+.contact-container textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contact-container input[type="text"]:focus,
+.contact-container input[type="email"]:focus,
+.contact-container textarea:focus {
+    outline: none;
+    border-color: #008aab;
+    box-shadow: 0 0 0 3px rgba(0, 138, 171, 0.1);
+}
+
+.contact-container textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.contact-container .form-text {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.contact-container #submitContact {
+    margin-top: 10px;
+}
+
+/* Contact form alert messages */
+.contact-container .alert {
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.contact-container .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.contact-container .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
 
 /* FOOTER */
 
@@ -842,8 +960,21 @@ body.section-3 .full-question-title-box {
         align-items: center;
     }
 
-    .modal-logo {
-        margin-right: 0;
-        margin-bottom: 8px;
+    .modal-header-left {
+        align-items: center;
+        text-align: center;
+    }
+
+    .modal-title-text {
+        text-align: center;
+    }
+
+    /* Contact form responsive styling */
+    .contact-container {
+        padding: 20px;
+    }
+
+    .contact-container h3 {
+        font-size: 1.5rem;
     }
 }

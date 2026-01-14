@@ -19,6 +19,17 @@ library(openxlsx)
 options(shiny.host = "0.0.0.0")
 options(shiny.port = 8180)
 
+# Load SMTP credentials from environment variables
+SMTP_SERVER <- Sys.getenv("SMTP_SERVER")
+SMTP_PORT <- Sys.getenv("SMTP_PORT")
+SMTP_USERNAME <- Sys.getenv("SMTP_USERNAME")
+SMTP_PASSWORD <- Sys.getenv("SMTP_PASSWORD")
+SENDER_EMAIL <- Sys.getenv("SENDER_EMAIL")
+RECIPIENT_EMAIL <- Sys.getenv("RECIPIENT_EMAIL")
+
+# Check if email sending is configured
+EMAIL_ENABLED <- (SMTP_SERVER != "" && SMTP_USERNAME != "" && SMTP_PASSWORD != "" && SENDER_EMAIL != "" && RECIPIENT_EMAIL != "")
+
 # Add resource directory to server
 #shiny::addResourcePath(prefix = 'www', directoryPath = '/srv/shiny-server/www') ## DOCKER
 shiny::addResourcePath(prefix = 'www', directoryPath = './www') ## R
@@ -112,7 +123,7 @@ nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
 pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile", "Not pathogen related")
 resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
-cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Stool", "Screening", "Not culture material related")
+cultureMaterialList <- c("Blood/CSF", "Urine", "Respiratory tract", "Soft tissue", "Stool", "Screening", "Not culture material related")
 
 # No special display modification needed - just use the lists as-is
 pathogenChoiceNames <- pathogenList
@@ -140,8 +151,7 @@ for (question in surveyData) {
 }
 
 # initiate dicrete colors sequence for maps and plots
-colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000")
-alternativeColorSequence <- c("#0fdbd5", "#f7c948", "#ff6f61", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # colors 2 and 3 reverted (quick fix for "No" reply at 3rd position)
+colorSequence <- c("#0fdbd5", "#df2e1a", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # old red: #ff6f61
 
 # create a dataset for participation map
 participationData <- data.frame(
@@ -285,7 +295,7 @@ ui <- shinyUI(fluidPage(
             tags$div(
                 class = "sidebar-logo-wrapper",
                 tags$img(
-                    src = "www/logos/Jamreye_primary-Colour-RGB@3x.png",
+                    src = "www/logos/Jamreye_primary-Colour-RGB.svg",
                     class = "sidebar-logo",
                     alt = "JAMREYE Logo"
                 )
@@ -409,7 +419,7 @@ ui <- shinyUI(fluidPage(
                             width = 5,
                             selectizeInput(
                                 inputId   = "questionSelection",
-                                label     = HTML("<strong>Select a question</strong> (<strong>first</strong> use the left filter panel to narrow the selection)"),
+                                label     = HTML("<strong>Select a question</strong> (tip: use the left filter panel first to narrow the selection)"),
                                 choices   = c("Participating countries", allShortTitles),
                                 selected  = c("Participating countries"),
                                 multiple  = FALSE,
@@ -547,6 +557,81 @@ ui <- shinyUI(fluidPage(
                             }),
                             HTML("<br><br>"),
                             actionButton("showLegalModal", "Legal Information", class = "btn btn-outline-primary", icon = icon("scale-balanced"))
+                        )
+                    )
+                ),
+
+                # contact
+                tabPanel(
+                    tags$span(
+                        bsicons::bs_icon("envelope"),
+                        tags$span(
+                            class = "tab-text",
+                            "Contact"
+                        )
+                    ),
+                    fluidRow(
+                        tags$div(
+                            class = "contact-container",
+                            style = "max-width: 800px; margin: 40px auto; padding: 20px;",
+                            tags$h3("Contact Us", style = "margin-bottom: 20px; color: #008aab;"),
+                            tags$p("Have questions or feedback? We'd love to hear from you. Please fill out the form below and we'll get back to you as soon as possible."),
+                            tags$br(),
+
+                            # Name input
+                            textInput(
+                                inputId = "contactName",
+                                label = "Name *",
+                                placeholder = "Your name",
+                                width = "100%"
+                            ),
+
+                            # Email input
+                            textInput(
+                                inputId = "contactEmail",
+                                label = "Email *",
+                                placeholder = "your.email@example.com",
+                                width = "100%"
+                            ),
+
+                            # Subject input
+                            textInput(
+                                inputId = "contactSubject",
+                                label = "Subject *",
+                                placeholder = "Brief subject of your message",
+                                width = "100%"
+                            ),
+
+                            # Message textarea
+                            textAreaInput(
+                                inputId = "contactMessage",
+                                label = "Message *",
+                                placeholder = "Your message here...",
+                                width = "100%",
+                                height = "200px"
+                            ),
+
+                            # Required field note
+                            tags$p(
+                                style = "font-size: 0.9em; color: #666; margin-top: -10px;",
+                                "* Required fields"
+                            ),
+
+                            # Submit button
+                            actionButton(
+                                "submitContact",
+                                "Send Message",
+                                class = "btn btn-outline-primary",
+                                icon = icon("paper-plane"),
+                                style = "margin-top: 10px;"
+                            ),
+
+                            # Status message placeholder
+                            tags$div(
+                                id = "contactStatusMessage",
+                                style = "margin-top: 20px;",
+                                uiOutput("contactStatus")
+                            )
                         )
                     )
                 )
@@ -728,13 +813,22 @@ server <- function(input, output, session) {
         showModal(modalDialog(
             title = tags$div(
                 class = "flex-space-between",
-                tags$img(
-                    src = "www/logos/Jamreye_secondary-Colour-RGB@3x.png",
-                    class = "modal-logo",
-                    alt = "JAMREYE Logo"
+                tags$div(
+                    class = "modal-header-left",
+                    tags$img(
+                        src = "www/logos/Jamreye_primary-Colour-RGB.svg",
+                        class = "modal-logo",
+                        alt = "JAMREYE Logo"
+                    ),
+                    tags$div(
+                        class = "modal-title-text",
+                        HTML("Welcome to JAMREYE:<br>Your AMR Surveillance Dashboard")
+                    )
                 ),
-                HTML("Welcome to JAMREYE:<br>Your AMR Surveillance Dashboard"),
-                modalButton("Start Exploring")
+                tags$div(
+                    class = "modal-header-right",
+                    modalButton("Start Exploring")
+                )
             ),
             tryCatch({
                 includeHTML("www/html/usage.html")
@@ -752,13 +846,22 @@ server <- function(input, output, session) {
         showModal(modalDialog(
             title = tags$div(
                 class = "flex-space-between",
-                tags$img(
-                    src = "www/logos/Jamreye_secondary-Colour-RGB@3x.png",
-                    class = "modal-logo",
-                    alt = "JAMREYE Logo"
+                tags$div(
+                    class = "modal-header-left",
+                    tags$img(
+                        src = "www/logos/Jamreye_primary-Colour-RGB.svg",
+                        class = "modal-logo",
+                        alt = "JAMREYE Logo"
+                    ),
+                    tags$div(
+                        class = "modal-title-text",
+                        HTML("How to Use This Dashboard")
+                    )
                 ),
-                HTML("How to Use This Dashboard"),
-                modalButton("Close")
+                tags$div(
+                    class = "modal-header-right",
+                    modalButton("Close")
+                )
             ),
             tryCatch({
                 includeHTML("www/html/usage.html")
@@ -769,6 +872,134 @@ server <- function(input, output, session) {
             footer = NULL, #modalButton("Close"),
             size = "l"
         ))
+    })
+
+    # Contact form submission
+    observeEvent(input$submitContact, {
+        # Check if email is configured
+        if (!EMAIL_ENABLED) {
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "The contact form is not configured on this instance. Please use the official deployment."
+                )
+            })
+            return()
+        }
+
+        # Validate inputs
+        name <- trimws(input$contactName)
+        email <- trimws(input$contactEmail)
+        subject <- trimws(input$contactSubject)
+        message <- trimws(input$contactMessage)
+
+        # Check if all required fields are filled
+        if (name == "" || email == "" || subject == "" || message == "") {
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "Please fill in all required fields."
+                )
+            })
+            return()
+        }
+
+        # Basic email validation
+        emailPattern <- "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+        if (!grepl(emailPattern, email)) {
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "Please enter a valid email address."
+                )
+            })
+            return()
+        }
+
+        # Send email using system curl with TLS 1.2+
+        tryCatch({
+            # Parse recipient emails (supports comma-separated list)
+            recipient_list <- trimws(unlist(strsplit(RECIPIENT_EMAIL, ",")))
+
+            # Create email body (plain text format for curl)
+            email_body_text <- paste0(
+                "New contact form submission\n\n",
+                "From: ", name, "\n",
+                "Email: ", email, "\n",
+                "Subject: ", subject, "\n\n",
+                "Message:\n", message, "\n\n",
+                "---\n",
+                "Sent from JAMREYE AMR Surveillance Dashboard at ", format(Sys.time(), '%Y-%m-%d %H:%M:%S')
+            )
+
+            # Send email to each recipient
+            for (recipient in recipient_list) {
+                # Create email message with headers
+                email_content <- paste0(
+                    "From: ", SENDER_EMAIL, "\r\n",
+                    "To: ", recipient, "\r\n",
+                    "Subject: [Dashboard Contact] ", subject, "\r\n",
+                    "\r\n",
+                    email_body_text, "\r\n"
+                )
+
+                # Write to temporary file
+                tmp_file <- tempfile(fileext = ".txt")
+                writeLines(email_content, tmp_file)
+
+                # Build curl command with TLS 1.2+ support
+                curl_cmd <- sprintf(
+                    'curl --url "smtp://%s:%s" --ssl-reqd --mail-from "%s" --mail-rcpt "%s" --upload-file "%s" --user "%s:%s" --tlsv1.2 --silent --show-error 2>&1',
+                    SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, recipient, tmp_file, SMTP_USERNAME, SMTP_PASSWORD
+                )
+
+                # Execute curl command
+                exit_code <- system(curl_cmd, ignore.stdout = TRUE, ignore.stderr = FALSE)
+
+                # Clean up temp file
+                unlink(tmp_file)
+
+                # Check if sending failed
+                if (exit_code != 0) {
+                    stop(paste("Failed to send email to", recipient, "- curl exit code:", exit_code))
+                }
+            }
+
+            # Show success message
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-success",
+                    style = "padding: 15px; border-radius: 4px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;",
+                    tags$strong("Success! "),
+                    "Your message has been sent. We'll get back to you soon."
+                )
+            })
+
+            # Clear form fields
+            updateTextInput(session, "contactName", value = "")
+            updateTextInput(session, "contactEmail", value = "")
+            updateTextInput(session, "contactSubject", value = "")
+            updateTextAreaInput(session, "contactMessage", value = "")
+
+        }, error = function(e) {
+            # Show error message with details for debugging
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "There was an error sending your message. Please try again later or contact us directly."
+                )
+            })
+            # Log error for server admin
+            print(paste("Contact form error:", e$message))
+        })
     })
 
     # update the question selection list
@@ -868,7 +1099,7 @@ server <- function(input, output, session) {
                     tags$span(
                         style = "display: flex; align-items: center; gap: 8px;",
                         tags$span(
-                            style = "display: inline-block; width: 24px; height: 24px; background-color: #ff6f61;"
+                            style = "display: inline-block; width: 24px; height: 24px; background-color: #df2e1a;"
                         ),
                         tags$span("Not selected")
                     )
@@ -1191,7 +1422,11 @@ server <- function(input, output, session) {
 
                 # get country answers and stack them in a single vector
                 actualAnswers <- question[["actual_answers"]]
-                allActualAnswers <- unlist(actualAnswers, use.names = FALSE)
+
+                # Filter to only include selected countries
+                selectedCountries <- intersect(input$countriesSelection, repliedCountries)
+                filteredActualAnswers <- actualAnswers[names(actualAnswers) %in% selectedCountries]
+                allActualAnswers <- unlist(filteredActualAnswers, use.names = FALSE)
 
                 # Check if this is a follow-up question (starts with "You answered")
                 isFollowUpQuestion <- grepl("^You answered", question[["title"]], ignore.case = FALSE)
@@ -1260,10 +1495,10 @@ server <- function(input, output, session) {
                     # Set color scale based on question type
                     if (isFollowUpQuestion) {
                         # Use three colors: selected, not selected, not asked
-                        customColorScaleMap <- c("#0fdbd5", "#ff6f61", "#888888")
+                        customColorScaleMap <- c("#0fdbd5", "#df2e1a", "#888888")
                     } else {
                         # Use two colors: selected, not selected
-                        customColorScaleMap <- c("#0fdbd5", "#ff6f61")
+                        customColorScaleMap <- c("#0fdbd5", "#df2e1a")
                     }
                 }
 
@@ -1925,9 +2160,6 @@ server <- function(input, output, session) {
             # Wrap labels if needed
             wrappedLabels <- sapply(replies, wrapLabel)
 
-            # Add spacing prefix to Y-axis labels for better separation from plot
-            wrappedLabels <- paste0("  ", wrappedLabels)
-
             # Create text labels with positioning
             # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
             # but display reversed on screen. Text positions use data coordinates:
@@ -2029,9 +2261,6 @@ server <- function(input, output, session) {
             maxLabelLength <- max(nchar(replies))
             threshold <- if (maxLabelLength <= 24) 24 else min(ceiling(maxLabelLength / 3), 24)
             wrappedLabels <- sapply(replies, function(x) wrapLabel(x, threshold))
-
-            # Add spacing prefix to Y-axis labels for better separation from plot
-            wrappedLabels <- paste0("  ", wrappedLabels)
 
             # Create text labels with positioning
             # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space

@@ -26,7 +26,7 @@
         <p style="margin-bottom: 15px;">Use the tools below to focus on what matters to you:</p>
 
         <!-- Filters -->
-        <h3 style="color: #0fdbd5; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Filters (Left Panel)</h3>
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Filters (Left Panel)</h3>
         <p style="margin-bottom: 8px;">Narrow your selection by:</p>
         <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
             <li style="margin-bottom: 8px;">
@@ -48,7 +48,7 @@
         </ul>
 
         <!-- Sections -->
-        <h3 style="color: #0fdbd5; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Sections (Top Buttons)</h3>
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Sections (Top Buttons)</h3>
         <p style="margin-bottom: 8px;">Questions are grouped into three categories:</p>
         <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
             <li style="margin-bottom: 8px;">
@@ -69,7 +69,7 @@
         </ul>
 
         <!-- Tabs -->
-        <h3 style="color: #0fdbd5; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Tabs</h3>
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Tabs</h3>
         <ul style="list-style-type: none; padding-left: 0;">
             <li style="margin-bottom: 8px;">
                 <i class="fa fa-globe" style="color: #666; margin-right: 8px;"></i>
@@ -98,5 +98,23 @@
     </section>
 
     <!-- Closing -->
-    <p style="font-size: 1.1em; margin-top: 20px;"><strong>Happy exploring!</strong> Let us know if you need help.</p>
+    <p style="font-size: 1.1em; margin-top: 20px;">
+        <strong>Happy exploring!</strong>
+        <a href="#" id="linkToContact" style="color: #008aab; text-decoration: underline; cursor: pointer;">
+            Let us know if you need help.
+        </a>
+    </p>
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#linkToContact').on('click', function(e) {
+        e.preventDefault();
+        $('.modal').modal('hide');
+        setTimeout(function() {
+            // Find and click the Contact tab
+            $('.nav-tabs li:has(a:contains("Contact")) a').click();
+        }, 300);
+    });
+});
+</script>
