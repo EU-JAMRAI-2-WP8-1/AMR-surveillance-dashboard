@@ -98,5 +98,23 @@
     </section>
 
     <!-- Closing -->
-    <p style="font-size: 1.1em; margin-top: 20px;"><strong>Happy exploring!</strong> Let us know if you need help.</p>
+    <p style="font-size: 1.1em; margin-top: 20px;">
+        <strong>Happy exploring!</strong>
+        <a href="#" id="linkToContact" style="color: #008aab; text-decoration: underline; cursor: pointer;">
+            Let us know if you need help.
+        </a>
+    </p>
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#linkToContact').on('click', function(e) {
+        e.preventDefault();
+        $('.modal').modal('hide');
+        setTimeout(function() {
+            // Find and click the Contact tab
+            $('.nav-tabs li:has(a:contains("Contact")) a').click();
+        }, 300);
+    });
+});
+</script>
