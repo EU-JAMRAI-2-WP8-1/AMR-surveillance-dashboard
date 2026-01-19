@@ -10,7 +10,7 @@ RUN mkdir /home/shiny-app
 
 # Install R dependencies
 ## base
-RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'shinyWidgets', 'rmarkdown'))"
+RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'shinyWidgets', 'shinyjs', 'rmarkdown'))"
 ## data parsing
 RUN R -e "install.packages(c('readxl', 'rjson', 'jsonlite', 'hash', 'openxlsx'))"
 ## map
