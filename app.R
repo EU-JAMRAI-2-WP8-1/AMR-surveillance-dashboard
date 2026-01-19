@@ -123,7 +123,7 @@ nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
 pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile", "Not pathogen related")
 resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
-cultureMaterialList <- c("Blood/CSF", "Urine", "Respiratory tract", "Soft tissue", "Stool", "Screening", "Not culture material related")
+cultureMaterialList <- c("Blood/CSF", "Urine", "Respiratory tract", "Wound/tissue", "Stool", "Screening", "Not culture material related")
 
 # No special display modification needed - just use the lists as-is
 pathogenChoiceNames <- pathogenList
@@ -1066,7 +1066,7 @@ server <- function(input, output, session) {
                 tags$div(
                     class = "question-title-text",
                     tags$strong("Question: "),
-                    fullTitle
+                    HTML(fullTitle)
                 )
             }
         }
