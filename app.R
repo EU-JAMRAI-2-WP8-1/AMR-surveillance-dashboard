@@ -4,6 +4,7 @@
 # import libraries
 library(shiny)
 library(shinyWidgets)
+library(shinyjs)
 #library(jsonlite)
 library(rjson)
 library(dplyr)
@@ -187,6 +188,9 @@ ui <- shinyUI(fluidPage(
 
     # set theme
     theme = custom_theme,
+
+    # enable shinyjs
+    useShinyjs(),
 
     # import CSS
     includeCSS(file.path("www/css/style.css")),
@@ -922,6 +926,17 @@ server <- function(input, output, session) {
             return()
         }
 
+        # Disable submit button and show "Sending..." indicator immediately
+        shinyjs::disable("submitContact")
+        output$contactStatus <- renderUI({
+            tags$div(
+                class = "alert alert-info",
+                style = "padding: 15px; border-radius: 4px; background-color: #cce5ff; color: #004085; border: 1px solid #b8daff;",
+                tags$i(class = "fa fa-spinner fa-spin", style = "margin-right: 8px;"),
+                "Sending your message..."
+            )
+        })
+
         # Send email using system curl with TLS 1.2+
         tryCatch({
             # Parse recipient emails (supports comma-separated list)
@@ -953,9 +968,9 @@ server <- function(input, output, session) {
                 tmp_file <- tempfile(fileext = ".txt")
                 writeLines(email_content, tmp_file)
 
-                # Build curl command with TLS 1.2+ support
+                # Build curl command with TLS 1.2+ support and timeouts
                 curl_cmd <- sprintf(
-                    'curl --url "smtp://%s:%s" --ssl-reqd --mail-from "%s" --mail-rcpt "%s" --upload-file "%s" --user "%s:%s" --tlsv1.2 --silent --show-error 2>&1',
+                    'curl --url "smtp://%s:%s" --ssl-reqd --mail-from "%s" --mail-rcpt "%s" --upload-file "%s" --user "%s:%s" --tlsv1.2 --connect-timeout 10 --max-time 30 --silent --show-error 2>&1',
                     SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, recipient, tmp_file, SMTP_USERNAME, SMTP_PASSWORD
                 )
 
@@ -981,11 +996,12 @@ server <- function(input, output, session) {
                 )
             })
 
-            # Clear form fields
+            # Clear form fields and re-enable button
             updateTextInput(session, "contactName", value = "")
             updateTextInput(session, "contactEmail", value = "")
             updateTextInput(session, "contactSubject", value = "")
             updateTextAreaInput(session, "contactMessage", value = "")
+            shinyjs::enable("submitContact")
 
         }, error = function(e) {
             # Show error message with details for debugging
@@ -997,7 +1013,8 @@ server <- function(input, output, session) {
                     "There was an error sending your message. Please try again later or contact us directly."
                 )
             })
-            # Log error for server admin
+            # Re-enable button and log error for server admin
+            shinyjs::enable("submitContact")
             print(paste("Contact form error:", e$message))
         })
     })
