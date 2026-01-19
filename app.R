@@ -19,6 +19,17 @@ library(openxlsx)
 options(shiny.host = "0.0.0.0")
 options(shiny.port = 8180)
 
+# Load SMTP credentials from environment variables
+SMTP_SERVER <- Sys.getenv("SMTP_SERVER")
+SMTP_PORT <- Sys.getenv("SMTP_PORT")
+SMTP_USERNAME <- Sys.getenv("SMTP_USERNAME")
+SMTP_PASSWORD <- Sys.getenv("SMTP_PASSWORD")
+SENDER_EMAIL <- Sys.getenv("SENDER_EMAIL")
+RECIPIENT_EMAIL <- Sys.getenv("RECIPIENT_EMAIL")
+
+# Check if email sending is configured
+EMAIL_ENABLED <- (SMTP_SERVER != "" && SMTP_USERNAME != "" && SMTP_PASSWORD != "" && SENDER_EMAIL != "" && RECIPIENT_EMAIL != "")
+
 # Add resource directory to server
 #shiny::addResourcePath(prefix = 'www', directoryPath = '/srv/shiny-server/www') ## DOCKER
 shiny::addResourcePath(prefix = 'www', directoryPath = './www') ## R
@@ -100,24 +111,29 @@ for (country in geojsonEurope$features) {
 countryQuestionIndex <- 3
 
 # Participating country list
-participatingCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["possible_answers"]])), "\\.", " ")
+participatingCountries <- names(surveyData[[countryQuestionIndex]][["possible_answers"]])
 
 # Countries that have replied
-repliedCountries <- str_replace_all(colnames(as.data.frame(surveyData[[countryQuestionIndex]][["actual_answers"]])), "\\.", " ")
+repliedCountries <- names(surveyData[[countryQuestionIndex]][["actual_answers"]])
 
 # Not-participating countries (grey on the map)
 nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
 
 # Filters : pathogens under surveillance / resistances / culture materials
 sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
-pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile")
-resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin")
-cultureMaterialList <- c("Blood", "Urine", "Respiratory tract", "Soft tissue", "Screening", "Stool")
+pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile", "Not pathogen related")
+resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
+cultureMaterialList <- c("Blood/CSF", "Urine", "Respiratory tract", "Wound/tissue", "Stool", "Screening", "Not culture material related")
+
+# No special display modification needed - just use the lists as-is
+pathogenChoiceNames <- pathogenList
+resistanceChoiceNames <- resistanceList
+cultureMaterialChoiceNames <- cultureMaterialList
 
 # info text
-pathogensInfoText       <- "Unselect all pathogens to ignore if questions are pathogen-specific or not.\nTo keep only pathogen-specific questions, select all.\nTo focus on one or several pathogens, select the pathogen(s) you need."
-resistancesInfoText     <- "Unselect all resistances to ignore if questions are resistance-specific or not.\nTo keep only resistance-specific questions, select all.\nTo focus on one or several resistances, select the resistance(s) you need."
-cultureMaterialInfoText <- "Unselect all culture materials to ignore if questions are material-specific or not.\nTo keep only material-specific questions, select all.\nTo focus on one or several culture materials, select the one(s) you need."
+pathogensInfoText       <- "Select the pathogen(s) you want to filter by. You can also select 'Not pathogen related' to include questions that are not specific to any pathogen."
+resistancesInfoText     <- "Select the resistance(s) you want to filter by. You can also select 'Not resistance related' to include questions that are not specific to any resistance."
+cultureMaterialInfoText <- "Select the culture material(s) you want to filter by. You can also select 'Not culture material related' to include questions that are not specific to any culture material."
 
 # get all questions (short titles) for question filter + set list of multiple choice questions (short titles)
 allShortTitles <- c()
@@ -135,8 +151,7 @@ for (question in surveyData) {
 }
 
 # initiate dicrete colors sequence for maps and plots
-colorSequence <- c("#0fdbd5", "#ff6f61", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000")
-alternativeColorSequence <- c("#0fdbd5", "#f7c948", "#ff6f61", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # colors 2 and 3 reverted (quick fix for "No" reply at 3rd position)
+colorSequence <- c("#0fdbd5", "#df2e1a", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # old red: #ff6f61
 
 # create a dataset for participation map
 participationData <- data.frame(
@@ -160,6 +175,9 @@ participationDataOccurrences <- data.frame(
         sum(participationData$survey_participation == 3)
     )
 )
+
+# Convert raw counts to percentages
+participationDataOccurrences$occurences <- (participationDataOccurrences$occurences / sum(participationDataOccurrences$occurences)) * 100
 
 
 ## USER INTERFACE ##
@@ -243,6 +261,26 @@ ui <- shinyUI(fluidPage(
     #    class = "top-spacer"
     #),
 
+    # JavaScript to update body class based on section selection
+    tags$script(HTML("
+        $(document).on('shiny:inputchanged', function(event) {
+            if (event.name === 'sectionsSelection') {
+                $('body').removeClass('section-1 section-2 section-3');
+                if (event.value === 'National surveillance') {
+                    $('body').addClass('section-1');
+                } else if (event.value === 'National genomic surveillance') {
+                    $('body').addClass('section-2');
+                } else if (event.value === 'National guidance') {
+                    $('body').addClass('section-3');
+                }
+            }
+        });
+        // Set initial class on page load
+        $(document).ready(function() {
+            $('body').addClass('section-1');
+        });
+    ")),
+
     # Layout type
     sidebarLayout(
 
@@ -254,14 +292,19 @@ ui <- shinyUI(fluidPage(
             width = 2,
 
             # logo
-            #img(
-            #    src = jamraiLogoHeaderRect,
-            #    class = "jamrai-logo-header"
-            #),
+            tags$div(
+                class = "sidebar-logo-wrapper",
+                tags$img(
+                    src = "www/logos/Jamreye_primary-Colour-RGB.svg",
+                    class = "sidebar-logo",
+                    alt = "JAMREYE Logo"
+                )
+            ),
 
-            #hr(
-            #    class = "hr-filters-separator"
-            #),
+            tags$span(
+                class = "reset-filters-wrapper",
+                actionButton("showInstructions", "Instructions", class = "btn btn-outline-info", icon = icon("circle-info"))
+            ),
 
             tags$span(
                 class = "reset-filters-wrapper",
@@ -271,8 +314,7 @@ ui <- shinyUI(fluidPage(
             accordion(
 
                 accordion_panel(
-                    title = HTML('<i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
-                    actionLink("selectAllCountries", "Select All"),
+                    title = HTML('<div class="filter-progress-bar" id="progress-countries"></div><i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
                     checkboxGroupInput(
                         inputId  = "countriesSelection",
                         label    = "",
@@ -280,81 +322,48 @@ ui <- shinyUI(fluidPage(
                         selected = participatingCountries,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
+                    ),
+                    uiOutput("selectAllCountriesButton")
                 ),
                 accordion_panel(
-                    title = HTML('<i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
-                    actionLink("selectAllCultureMaterials", "Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = cultureMaterialInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        cultureMaterialInfoText
-                    ),
+                    title = HTML('<div class="filter-progress-bar" id="progress-cultureMaterials"></div><i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
                     checkboxGroupInput(
                         inputId  = "cultureMaterialsSelection",
                         label    = "",
-                        choices  = cultureMaterialList,
-                        selected = c(),
+                        choiceNames  = cultureMaterialChoiceNames,
+                        choiceValues = cultureMaterialList,
+                        selected = cultureMaterialList,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
+                    ),
+                    uiOutput("selectAllCultureMaterialsButton")
                 ),
                 accordion_panel(
-                    title = HTML('<i class="fa fa-bacteria accordion-icon accordion-icon-pathogens"></i> Pathogens'),
-                    actionLink("selectAllPathogens", "Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = pathogensInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        pathogensInfoText
-                    ),
+                    title = HTML('<div class="filter-progress-bar" id="progress-pathogens"></div><i class="fa fa-bacteria accordion-icon accordion-icon-pathogens"></i> Pathogens'),
                     checkboxGroupInput(
                         inputId  = "pathogensSelection",
                         label    = "",
-                        choices  = pathogenList,
-                        selected = c(),
+                        choiceNames  = pathogenChoiceNames,
+                        choiceValues = pathogenList,
+                        selected = pathogenList,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                ),
-                hr(
-                    class = "hr-filters-separator"
+                    ),
+                    uiOutput("selectAllPathogensButton")
                 ),
                 accordion_panel(
-                    title = HTML('<i class="fa fa-triangle-exclamation accordion-icon accordion-icon-resistances"></i> Resistances'),
-                    actionLink("selectAllResistances", "Select All"),
-                    tags$button(
-                        class = "info-button",
-                        #title = resistancesInfoText,
-                        "?"
-                    ),
-                    tags$span(
-                        class = "info-sections",
-                        resistancesInfoText
-                    ),
+                    title = HTML('<div class="filter-progress-bar" id="progress-resistances"></div><i class="fa fa-triangle-exclamation accordion-icon accordion-icon-resistances"></i> Resistances'),
                     class = "country-filter-container",
                     checkboxGroupInput(
                         inputId  = "resistancesSelection",
                         label    = "",
-                        choices  = resistanceList,
-                        selected = c(),
+                        choiceNames  = resistanceChoiceNames,
+                        choiceValues = resistanceList,
+                        selected = resistanceList,
                         inline   = FALSE,
                         width    = NULL
-                    )
-                    
+                    ),
+                    uiOutput("selectAllResistancesButton")
                 )
             ),
             tags$div(
@@ -401,7 +410,7 @@ ui <- shinyUI(fluidPage(
                         bsicons::bs_icon("globe-europe-africa"),
                         tags$span(
                             class = "tab-text",
-                            "Map" #"Dashboard"
+                            "Visuals"
                         )
                     ),
                     fluidRow(
@@ -410,7 +419,7 @@ ui <- shinyUI(fluidPage(
                             width = 5,
                             selectizeInput(
                                 inputId   = "questionSelection",
-                                label     = "Use the left filter panel to narrow the question selection, then select a question here:",
+                                label     = HTML("<strong>Select a question</strong> (tip: use the left filter panel first to narrow the selection)"),
                                 choices   = c("Participating countries", allShortTitles),
                                 selected  = c("Participating countries"),
                                 multiple  = FALSE,
@@ -428,7 +437,7 @@ ui <- shinyUI(fluidPage(
                             ),
                             uiOutput("multipleChoiceAnswerSelector"),
                             tags$div(
-                                class = "",
+                                class = "dashboard-plot-container",
                                 uiOutput("dashboardPlotUI")
                             )
                         ),
@@ -443,12 +452,14 @@ ui <- shinyUI(fluidPage(
                                 plotlyOutput(outputId = "dashboardMap", width = "100%", height = "780px")
                             ),
                             tags$div(
-                                class = "map-source-text medium-grey-text",
-                                "Map source: ",
+                                class = "map-disclaimer-text",
+                                style = "text-align: center; font-size: 0.9em; color: #888888; margin-top: 5px;",
+                                "Geospatial data © Eurostat | ",
                                 tags$a(
-                                    href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
-                                    "Eurostat",
-                                    target = "_blank"
+                                    href = "#",
+                                    class = "geo-disclaimer-link",
+                                    style = "color: #008aab; text-decoration: underline; cursor: pointer;",
+                                    "Legal notice"
                                 )
                             )
                         )#,
@@ -465,12 +476,13 @@ ui <- shinyUI(fluidPage(
                 # survey results
                 tabPanel(
                     tags$span(
-                        bsicons::bs_icon("journal-check"),
+                        bsicons::bs_icon("table"),
                         tags$span(
                             class = "tab-text",
-                            "Survey results"
+                            "Table"
                         )
                     ),
+                    uiOutput("noQuestionsMessage"),
                     DT::dataTableOutput("resultsTable"),
                     tags$div(
                         style = "margin-top: 10px;",
@@ -547,6 +559,81 @@ ui <- shinyUI(fluidPage(
                             actionButton("showLegalModal", "Legal Information", class = "btn btn-outline-primary", icon = icon("scale-balanced"))
                         )
                     )
+                ),
+
+                # contact
+                tabPanel(
+                    tags$span(
+                        bsicons::bs_icon("envelope"),
+                        tags$span(
+                            class = "tab-text",
+                            "Contact"
+                        )
+                    ),
+                    fluidRow(
+                        tags$div(
+                            class = "contact-container",
+                            style = "max-width: 800px; margin: 40px auto; padding: 20px;",
+                            tags$h3("Contact Us", style = "margin-bottom: 20px; color: #008aab;"),
+                            tags$p("Have questions or feedback? We'd love to hear from you. Please fill out the form below and we'll get back to you as soon as possible."),
+                            tags$br(),
+
+                            # Name input
+                            textInput(
+                                inputId = "contactName",
+                                label = "Name *",
+                                placeholder = "Your name",
+                                width = "100%"
+                            ),
+
+                            # Email input
+                            textInput(
+                                inputId = "contactEmail",
+                                label = "Email *",
+                                placeholder = "your.email@example.com",
+                                width = "100%"
+                            ),
+
+                            # Subject input
+                            textInput(
+                                inputId = "contactSubject",
+                                label = "Subject *",
+                                placeholder = "Brief subject of your message",
+                                width = "100%"
+                            ),
+
+                            # Message textarea
+                            textAreaInput(
+                                inputId = "contactMessage",
+                                label = "Message *",
+                                placeholder = "Your message here...",
+                                width = "100%",
+                                height = "200px"
+                            ),
+
+                            # Required field note
+                            tags$p(
+                                style = "font-size: 0.9em; color: #666; margin-top: -10px;",
+                                "* Required fields"
+                            ),
+
+                            # Submit button
+                            actionButton(
+                                "submitContact",
+                                "Send Message",
+                                class = "btn btn-outline-primary",
+                                icon = icon("paper-plane"),
+                                style = "margin-top: 10px;"
+                            ),
+
+                            # Status message placeholder
+                            tags$div(
+                                id = "contactStatusMessage",
+                                style = "margin-top: 20px;",
+                                uiOutput("contactStatus")
+                            )
+                        )
+                    )
                 )
 
                 # dataset
@@ -582,45 +669,114 @@ server <- function(input, output, session) {
     observeEvent(input$resetFilters, {
         updateRadioButtons(session, "sectionsSelection", selected = sectionList[1])
         updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
-        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList)
-        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList)
-        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList)
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
+        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
+        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
     })
 
-    # "Select all" button for countries
+    # Two separate buttons for select and deselect
+    output$selectAllCountriesButton <- renderUI({
+        tags$div(
+            class = "dual-button-container",
+            actionButton("deselectAllCountries", HTML('<i class="fa fa-times"></i> Clear'),
+                class = paste("dual-button deselect-btn", if(length(input$countriesSelection) == 0) "disabled-btn" else "")),
+            actionButton("selectAllCountries", HTML('<i class="fa fa-check"></i> All'),
+                class = paste("dual-button select-btn", if(length(input$countriesSelection) == length(participatingCountries)) "disabled-btn" else ""))
+        )
+    })
+
+    output$selectAllCultureMaterialsButton <- renderUI({
+        tags$div(
+            style = "position: relative;",
+            tags$div(
+                class = "dual-button-container",
+                actionButton("deselectAllCultureMaterials", HTML('<i class="fa fa-times"></i> Clear'),
+                    class = paste("dual-button deselect-btn", if(length(input$cultureMaterialsSelection) == 0) "disabled-btn" else "")),
+                actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-check"></i> All'),
+                    class = paste("dual-button select-btn", if(length(input$cultureMaterialsSelection) == length(cultureMaterialList)) "disabled-btn" else ""))
+            ),
+            tags$button(
+                class = "info-button-standalone",
+                "?"
+            ),
+            tags$span(class = "info-sections", cultureMaterialInfoText)
+        )
+    })
+
+    output$selectAllPathogensButton <- renderUI({
+        tags$div(
+            style = "position: relative;",
+            tags$div(
+                class = "dual-button-container",
+                actionButton("deselectAllPathogens", HTML('<i class="fa fa-times"></i> Clear'),
+                    class = paste("dual-button deselect-btn", if(length(input$pathogensSelection) == 0) "disabled-btn" else "")),
+                actionButton("selectAllPathogens", HTML('<i class="fa fa-check"></i> All'),
+                    class = paste("dual-button select-btn", if(length(input$pathogensSelection) == length(pathogenList)) "disabled-btn" else ""))
+            ),
+            tags$button(
+                class = "info-button-standalone",
+                "?"
+            ),
+            tags$span(class = "info-sections", pathogensInfoText)
+        )
+    })
+
+    output$selectAllResistancesButton <- renderUI({
+        tags$div(
+            style = "position: relative;",
+            tags$div(
+                class = "dual-button-container",
+                actionButton("deselectAllResistances", HTML('<i class="fa fa-times"></i> Clear'),
+                    class = paste("dual-button deselect-btn", if(length(input$resistancesSelection) == 0) "disabled-btn" else "")),
+                actionButton("selectAllResistances", HTML('<i class="fa fa-check"></i> All'),
+                    class = paste("dual-button select-btn", if(length(input$resistancesSelection) == length(resistanceList)) "disabled-btn" else ""))
+            ),
+            tags$button(
+                class = "info-button-standalone",
+                "?"
+            ),
+            tags$span(class = "info-sections", resistancesInfoText)
+        )
+    })
+
+    # Select all button for countries
     observeEvent(input$selectAllCountries, {
-        if ((length(participatingCountries) - length(input$countriesSelection)) < 2) {
-            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = c())
-        } else {
-            updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
-        }
+        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
     })
 
-    # "Select all" button for pathogens
+    # Deselect all button for countries
+    observeEvent(input$deselectAllCountries, {
+        updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = c())
+    })
+
+    # Select all button for pathogens
     observeEvent(input$selectAllPathogens, {
-        if ((length(pathogenList) - length(input$pathogensSelection)) < 2) {
-            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = c())
-        } else {
-            updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
-        }
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
     })
 
-    # "Select all" button for resistances
+    # Deselect all button for pathogens
+    observeEvent(input$deselectAllPathogens, {
+        updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = c())
+    })
+
+    # Select all button for resistances
     observeEvent(input$selectAllResistances, {
-        if ((length(resistanceList) - length(input$resistancesSelection)) < 2) {
-            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList)
-        } else {
-            updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
-        }
+        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
     })
 
-    # "Select all" button for culture materials
+    # Deselect all button for resistances
+    observeEvent(input$deselectAllResistances, {
+        updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = c())
+    })
+
+    # Select all button for culture materials
     observeEvent(input$selectAllCultureMaterials, {
-        if ((length(cultureMaterialList) - length(input$cultureMaterialsSelection)) < 2) {
-            updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList)
-        } else {
-            updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
-        }
+        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
+    })
+
+    # Deselect all button for culture materials
+    observeEvent(input$deselectAllCultureMaterials, {
+        updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = c())
     })
 
     # Legal information modal
@@ -635,6 +791,215 @@ server <- function(input, output, session) {
             easyClose = TRUE,
             footer = modalButton("Close")
         ))
+    })
+
+    # Geo data disclaimer modal
+    observeEvent(input$showGeoDataDisclaimer, {
+        showModal(modalDialog(
+            title = "Geospatial Data - Legal Notice",
+            tryCatch({
+                includeHTML("www/html/geo_data_disclaimer.html")
+            }, error = function(e) {
+                HTML("<p>Disclaimer information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = modalButton("Close"),
+            size = "l"
+        ))
+    })
+
+    # Welcome/Usage modal - shows on page load
+    observeEvent(TRUE, {
+        showModal(modalDialog(
+            title = tags$div(
+                class = "flex-space-between",
+                tags$div(
+                    class = "modal-header-left",
+                    tags$img(
+                        src = "www/logos/Jamreye_primary-Colour-RGB.svg",
+                        class = "modal-logo",
+                        alt = "JAMREYE Logo"
+                    ),
+                    tags$div(
+                        class = "modal-title-text",
+                        HTML("Welcome to JAMREYE:<br>Your AMR Surveillance Dashboard")
+                    )
+                ),
+                tags$div(
+                    class = "modal-header-right",
+                    modalButton("Start Exploring")
+                )
+            ),
+            tryCatch({
+                includeHTML("www/html/usage.html")
+            }, error = function(e) {
+                HTML("<p>Usage information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = NULL, #modalButton("Start Exploring"),
+            size = "l"
+        ))
+    }, once = TRUE, ignoreInit = FALSE)
+
+    # Instructions button - reopens the usage modal
+    observeEvent(input$showInstructions, {
+        showModal(modalDialog(
+            title = tags$div(
+                class = "flex-space-between",
+                tags$div(
+                    class = "modal-header-left",
+                    tags$img(
+                        src = "www/logos/Jamreye_primary-Colour-RGB.svg",
+                        class = "modal-logo",
+                        alt = "JAMREYE Logo"
+                    ),
+                    tags$div(
+                        class = "modal-title-text",
+                        HTML("How to Use This Dashboard")
+                    )
+                ),
+                tags$div(
+                    class = "modal-header-right",
+                    modalButton("Close")
+                )
+            ),
+            tryCatch({
+                includeHTML("www/html/usage.html")
+            }, error = function(e) {
+                HTML("<p>Usage information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = NULL, #modalButton("Close"),
+            size = "l"
+        ))
+    })
+
+    # Contact form submission
+    observeEvent(input$submitContact, {
+        # Check if email is configured
+        if (!EMAIL_ENABLED) {
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "The contact form is not configured on this instance. Please use the official deployment."
+                )
+            })
+            return()
+        }
+
+        # Validate inputs
+        name <- trimws(input$contactName)
+        email <- trimws(input$contactEmail)
+        subject <- trimws(input$contactSubject)
+        message <- trimws(input$contactMessage)
+
+        # Check if all required fields are filled
+        if (name == "" || email == "" || subject == "" || message == "") {
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "Please fill in all required fields."
+                )
+            })
+            return()
+        }
+
+        # Basic email validation
+        emailPattern <- "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+        if (!grepl(emailPattern, email)) {
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "Please enter a valid email address."
+                )
+            })
+            return()
+        }
+
+        # Send email using system curl with TLS 1.2+
+        tryCatch({
+            # Parse recipient emails (supports comma-separated list)
+            recipient_list <- trimws(unlist(strsplit(RECIPIENT_EMAIL, ",")))
+
+            # Create email body (plain text format for curl)
+            email_body_text <- paste0(
+                "New contact form submission\n\n",
+                "From: ", name, "\n",
+                "Email: ", email, "\n",
+                "Subject: ", subject, "\n\n",
+                "Message:\n", message, "\n\n",
+                "---\n",
+                "Sent from JAMREYE AMR Surveillance Dashboard at ", format(Sys.time(), '%Y-%m-%d %H:%M:%S')
+            )
+
+            # Send email to each recipient
+            for (recipient in recipient_list) {
+                # Create email message with headers
+                email_content <- paste0(
+                    "From: ", SENDER_EMAIL, "\r\n",
+                    "To: ", recipient, "\r\n",
+                    "Subject: [Dashboard Contact] ", subject, "\r\n",
+                    "\r\n",
+                    email_body_text, "\r\n"
+                )
+
+                # Write to temporary file
+                tmp_file <- tempfile(fileext = ".txt")
+                writeLines(email_content, tmp_file)
+
+                # Build curl command with TLS 1.2+ support
+                curl_cmd <- sprintf(
+                    'curl --url "smtp://%s:%s" --ssl-reqd --mail-from "%s" --mail-rcpt "%s" --upload-file "%s" --user "%s:%s" --tlsv1.2 --silent --show-error 2>&1',
+                    SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, recipient, tmp_file, SMTP_USERNAME, SMTP_PASSWORD
+                )
+
+                # Execute curl command
+                exit_code <- system(curl_cmd, ignore.stdout = TRUE, ignore.stderr = FALSE)
+
+                # Clean up temp file
+                unlink(tmp_file)
+
+                # Check if sending failed
+                if (exit_code != 0) {
+                    stop(paste("Failed to send email to", recipient, "- curl exit code:", exit_code))
+                }
+            }
+
+            # Show success message
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-success",
+                    style = "padding: 15px; border-radius: 4px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;",
+                    tags$strong("Success! "),
+                    "Your message has been sent. We'll get back to you soon."
+                )
+            })
+
+            # Clear form fields
+            updateTextInput(session, "contactName", value = "")
+            updateTextInput(session, "contactEmail", value = "")
+            updateTextInput(session, "contactSubject", value = "")
+            updateTextAreaInput(session, "contactMessage", value = "")
+
+        }, error = function(e) {
+            # Show error message with details for debugging
+            output$contactStatus <- renderUI({
+                tags$div(
+                    class = "alert alert-danger",
+                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
+                    tags$strong("Error: "),
+                    "There was an error sending your message. Please try again later or contact us directly."
+                )
+            })
+            # Log error for server admin
+            print(paste("Contact form error:", e$message))
+        })
     })
 
     # update the question selection list
@@ -672,10 +1037,10 @@ server <- function(input, output, session) {
     output$dashboardPlotUI <- renderUI({
         if (input$questionSelection %in% multipleChoiceShortTitles) {
             # Smaller height when selection box is present
-            plotOutput("dashboardPlot", height = "520px")
+            plotlyOutput("dashboardPlot", height = "520px")
         } else {
             # Normal height when no selection box
-            plotOutput("dashboardPlot", height = "700px")
+            plotlyOutput("dashboardPlot", height = "700px")
         }
     })
 
@@ -692,7 +1057,7 @@ server <- function(input, output, session) {
             fullTitle <- NULL
             for (question in surveyData) {
                 if (question$short_title == input$questionSelection) {
-                    fullTitle <- question$title
+                    fullTitle <- question$display_title
                     break
                 }
             }
@@ -701,7 +1066,7 @@ server <- function(input, output, session) {
                 tags$div(
                     class = "question-title-text",
                     tags$strong("Question: "),
-                    fullTitle
+                    HTML(fullTitle)
                 )
             }
         }
@@ -710,16 +1075,47 @@ server <- function(input, output, session) {
     # Dynamic UI for multiple-choice answer selection
     output$multipleChoiceAnswerSelector <- renderUI({
         if (input$questionSelection %in% multipleChoiceShortTitles) {
-            # Get possible answers for this multiple-choice question
+            # Get possible answers and check if it's a follow-up question
             possibleAnswers <- c()
+            isFollowUpQuestion <- FALSE
             for (question in surveyData) {
                 if (question$short_title == input$questionSelection && question$type == "MultipleChoice") {
                     possibleAnswers <- names(question$possible_answers)
+                    isFollowUpQuestion <- grepl("^You answered", question$title, ignore.case = FALSE)
                     break
                 }
             }
 
             if (length(possibleAnswers) > 0) {
+                # Build legend items
+                legendItems <- list(
+                    tags$span(
+                        style = "display: flex; align-items: center; gap: 8px;",
+                        tags$span(
+                            style = "display: inline-block; width: 24px; height: 24px; background-color: #0fdbd5;"
+                        ),
+                        tags$span("Selected")
+                    ),
+                    tags$span(
+                        style = "display: flex; align-items: center; gap: 8px;",
+                        tags$span(
+                            style = "display: inline-block; width: 24px; height: 24px; background-color: #df2e1a;"
+                        ),
+                        tags$span("Not selected")
+                    )
+                )
+
+                # Add third legend item for follow-up questions
+                if (isFollowUpQuestion) {
+                    legendItems[[3]] <- tags$span(
+                        style = "display: flex; align-items: center; gap: 8px;",
+                        tags$span(
+                            style = "display: inline-block; width: 24px; height: 24px; background-color: #888888;"
+                        ),
+                        tags$span("NA")
+                    )
+                }
+
                 tags$div(
                     style = "margin-top: 10px; margin-bottom: 15px; background-color: #f5f5f5; padding: 15px; border-radius: 4px;",
                     tags$label(
@@ -735,20 +1131,7 @@ server <- function(input, output, session) {
                     ),
                     tags$div(
                         style = "margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 1em;",
-                        tags$span(
-                            style = "display: flex; align-items: center; gap: 8px;",
-                            tags$span(
-                                style = "display: inline-block; width: 24px; height: 24px; background-color: #0fdbd5;"
-                            ),
-                            tags$span("Selected")
-                        ),
-                        tags$span(
-                            style = "display: flex; align-items: center; gap: 8px;",
-                            tags$span(
-                                style = "display: inline-block; width: 24px; height: 24px; background-color: #ff6f61;"
-                            ),
-                            tags$span("Not selected")
-                        )
+                        legendItems
                     )
                 )
             }
@@ -834,24 +1217,35 @@ server <- function(input, output, session) {
 
         # returns a datafrme for the Survey Results tab
 
-        # Helper function to create colored badge HTML
+        # Helper function to get badge color (only for sections)
         getBadgeColor <- function(tag) {
-            # Sections - blue
-            if (tag %in% sectionList) return("#008aab")
-            # Culture material - red
-            if (tag %in% cultureMaterialList) return("#d9534f")
-            # Pathogens - green
-            if (tag %in% pathogenList) return("#5cb85c")
-            # Resistances - yellow
-            if (tag %in% resistanceList) return("#f0ad4e")
-            # Default - gray
-            return("#999999")
+            # Sections - use specific colors
+            if (tag == "National surveillance") return("#2a9d8f")
+            if (tag == "National genomic surveillance") return("#d4a843")
+            if (tag == "National guidance") return("#cc8888")
+            # All other filters - gray
+            return("#888888")
+        }
+
+        # Helper function to get badge icon
+        getBadgeIcon <- function(tag) {
+            # Sections
+            if (tag %in% sectionList) return("")
+            # Culture material
+            if (tag %in% cultureMaterialList) return('<i class="fa fa-flask"></i> ')
+            # Pathogens
+            if (tag %in% pathogenList) return('<i class="fa fa-bacteria"></i> ')
+            # Resistances
+            if (tag %in% resistanceList) return('<i class="fa fa-triangle-exclamation"></i> ')
+            # Default
+            return("")
         }
 
         formatQuestionWithBadges <- function(questionTitle, tagsString) {
             tagsList <- strsplit(tagsString, ", ")[[1]]
-            # Remove "Section 0" if present
+            # Remove "Section 0" and "Not ... related" tags (don't display these)
             tagsList <- tagsList[tagsList != "Section 0"]
+            tagsList <- tagsList[!grepl("^Not .* related$", tagsList)]
 
             if (length(tagsList) == 0) {
                 return(questionTitle)
@@ -861,9 +1255,10 @@ server <- function(input, output, session) {
             badgesHtml <- paste(
                 sapply(tagsList, function(tag) {
                     color <- getBadgeColor(tag)
+                    icon <- getBadgeIcon(tag)
                     paste0('<span style="display: inline-block; background-color: ', color,
                            '; color: white; padding: 2px 8px; margin: 2px; border-radius: 3px; font-size: 0.75em; font-weight: 500;">',
-                           tag, '</span>')
+                           icon, tag, '</span>')
                 }),
                 collapse = " "
             )
@@ -872,20 +1267,32 @@ server <- function(input, output, session) {
             return(paste0(badgesHtml, '<br/>', questionTitle))
         }
 
-        # initiate vectors
-        questionsWithBadges <- c()
-
         # get active questions (titles)
         activeQuestions <- activeQuestions()[[1]]
 
-        # loop once over questions to retrieve question titles and format with tags
+        # Build list of active questions with their positions
+        activeQuestionsData <- list()
         for (question in surveyData) {
-
             if (question$title %in% activeQuestions) {
-                formattedQuestion <- formatQuestionWithBadges(question$title, toString(question$tags))
-                questionsWithBadges <- c(questionsWithBadges, formattedQuestion)
+                activeQuestionsData[[length(activeQuestionsData) + 1]] <- list(
+                    question = question,
+                    position = ifelse(is.null(question[["position"]]), 9999, question[["position"]])
+                )
             }
+        }
 
+        # Sort by position
+        if (length(activeQuestionsData) > 0) {
+            positions <- sapply(activeQuestionsData, function(x) x$position)
+            sortOrder <- order(positions)
+            activeQuestionsData <- activeQuestionsData[sortOrder]
+        }
+
+        # Build formatted questions in sorted order
+        questionsWithBadges <- c()
+        for (item in activeQuestionsData) {
+            formattedQuestion <- formatQuestionWithBadges(item$question$title, toString(item$question$tags))
+            questionsWithBadges <- c(questionsWithBadges, formattedQuestion)
         }
 
         # add columns to DF
@@ -897,17 +1304,15 @@ server <- function(input, output, session) {
             # (re)set country replies vector
             countryReplies <- c()
 
-            # loop over questions
-            for (question in surveyData) {
+            # loop over questions in sorted order
+            for (item in activeQuestionsData) {
+                question <- item$question
 
-                if (question$title %in% activeQuestions) {
+                if (length(question$actual_answers[[country]]) == 0) {
+                    countryReplies <- c(countryReplies, NA)
 
-                    if (length(question$actual_answers[[country]]) == 0) {
-                        countryReplies <- c(countryReplies, NA)
-
-                    } else {
-                        countryReplies <- c(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
-                    }
+                } else {
+                    countryReplies <- c(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
                 }
             }
 
@@ -963,11 +1368,24 @@ server <- function(input, output, session) {
                     
                 }
 
-                # get possible answer keys only
+                # get possible answer keys, colors, and occurrences
                 possibleAnswerText <- c()
+                possibleAnswerColors <- c()
                 possibleAnswerOccurences <- c()
+                colorIndex <- 1
                 for (possibleAnswer in names(possibleAnswers)) {
                     possibleAnswerText <- c(possibleAnswerText, possibleAnswer)
+
+                    # extract color from JSON structure
+                    answerColor <- possibleAnswers[[possibleAnswer]][["color"]]
+                    if (is.null(answerColor)) {
+                        # fallback to hardcoded color sequence if color is null
+                        # wrap around if we exceed the color sequence length
+                        fallbackIndex <- ((colorIndex - 1) %% length(colorSequence)) + 1
+                        answerColor <- colorSequence[fallbackIndex]
+                    }
+                    possibleAnswerColors <- c(possibleAnswerColors, answerColor)
+                    colorIndex <- colorIndex + 1
 
                     # get occurences of each possible reply
                     occurencesCounter <- 0
@@ -980,18 +1398,8 @@ server <- function(input, output, session) {
                     possibleAnswerOccurences <- c(possibleAnswerOccurences, occurencesCounter)
                 }
 
-                # for map: create a custom discrete color scale
-                if (length(possibleAnswerText) > 2) {
-                    if (substr(possibleAnswerText[3], 1, 2) == "No") {
-                        ## !! quick fix (to be replaced by better method) - put No reply in red by using color sscale where colors 2 and 3 are reverted
-                        customColorScale <- alternativeColorSequence[1:length(possibleAnswerText)]
-                    }
-                    else {
-                        customColorScale <- colorSequence[1:length(possibleAnswerText)]
-                    }
-                } else {
-                    customColorScale <- colorSequence[1:length(possibleAnswerText)]
-                }
+                # use colors from JSON
+                customColorScale <- possibleAnswerColors
 
                 # convert to percentage
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
@@ -1014,47 +1422,93 @@ server <- function(input, output, session) {
 
                 # get country answers and stack them in a single vector
                 actualAnswers <- question[["actual_answers"]]
-                allActualAnswers <- unlist(actualAnswers, use.names = FALSE)
 
-                # loop over possible answers and get occurence of each
+                # Filter to only include selected countries
+                selectedCountries <- intersect(input$countriesSelection, repliedCountries)
+                filteredActualAnswers <- actualAnswers[names(actualAnswers) %in% selectedCountries]
+                allActualAnswers <- unlist(filteredActualAnswers, use.names = FALSE)
+
+                # Check if this is a follow-up question (starts with "You answered")
+                isFollowUpQuestion <- grepl("^You answered", question[["title"]], ignore.case = FALSE)
+
+                # loop over possible answers and get occurence of each, plus extract colors
                 possibleAnswerOccurences <- c()
                 possibleAnswerText <- c()
+                possibleAnswerColors <- c()
+                colorIndex <- 1
                 for (possibleAnswer in names(possibleAnswers)) {
                     possibleAnswerText <- c(possibleAnswerText, possibleAnswer)
                     possibleAnswerOccurences <- c(possibleAnswerOccurences, sum(allActualAnswers == possibleAnswer))
+
+                    # extract color from JSON structure
+                    answerColor <- possibleAnswers[[possibleAnswer]][["color"]]
+                    if (is.null(answerColor)) {
+                        # fallback to hardcoded color sequence if color is null
+                        # wrap around if we exceed the color sequence length
+                        fallbackIndex <- ((colorIndex - 1) %% length(colorSequence)) + 1
+                        answerColor <- colorSequence[fallbackIndex]
+                    }
+                    possibleAnswerColors <- c(possibleAnswerColors, answerColor)
+                    colorIndex <- colorIndex + 1
                 }
 
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
 
-                # For the MAP: create binary data for selected answer
+                # For the MAP: create data for selected answer
                 answersNumeric <- NULL
+                customColorScaleMap <- NULL
+
                 if (!is.null(input$selectedAnswer)) {
                     answersNumeric <- c()
                     for (country in intersect(repliedCountries, input$countriesSelection)) {
+                        # Check if country has any answers at all
+                        hasAnswers <- FALSE
                         if (country %in% names(actualAnswers)) {
                             countryAnswers <- actualAnswers[[country]]
-                            # Check if the selected answer is in this country's list of answers
+                            # Check if it's not NULL, not NA, has length > 0, and not just empty strings
+                            if (!is.null(countryAnswers) && length(countryAnswers) > 0 && !all(is.na(countryAnswers))) {
+                                # Also check that answers are not empty strings
+                                nonEmptyAnswers <- countryAnswers[countryAnswers != ""]
+                                if (length(nonEmptyAnswers) > 0) {
+                                    hasAnswers <- TRUE
+                                }
+                            }
+                        }
+
+                        if (hasAnswers) {
+                            # Country has answers - check if selected answer is in the list
                             if (input$selectedAnswer %in% countryAnswers) {
                                 answersNumeric <- c(answersNumeric, 1) # Selected
                             } else {
                                 answersNumeric <- c(answersNumeric, 2) # Not selected
                             }
                         } else {
-                            answersNumeric <- c(answersNumeric, 2) # Not selected
+                            # Country has no answers at all (or only empty strings)
+                            if (isFollowUpQuestion) {
+                                answersNumeric <- c(answersNumeric, 3) # Not asked (only for follow-up questions)
+                            } else {
+                                answersNumeric <- c(answersNumeric, 2) # Not selected (for regular questions)
+                            }
                         }
+                    }
+
+                    # Set color scale based on question type
+                    if (isFollowUpQuestion) {
+                        # Use three colors: selected, not selected, not asked
+                        customColorScaleMap <- c("#0fdbd5", "#df2e1a", "#888888")
+                    } else {
+                        # Use two colors: selected, not selected
+                        customColorScaleMap <- c("#0fdbd5", "#df2e1a")
                     }
                 }
 
-                # Use light blue for selected, red for not selected (for MAP only)
-                customColorScaleMap <- c("#0fdbd5", "#ff6f61")
-
                 return(
                     list(
-                        answersNumeric,  # For map (binary: selected/not selected)
+                        answersNumeric,  # For map (binary or ternary: selected/not selected/not asked)
                         customColorScaleMap,  # For map
                         possibleAnswerText,  # For bar chart (all answers)
                         possibleAnswerPercentReplied,  # For bar chart (all percentages)
-                        colorSequence[1:length(possibleAnswerText)]  # For bar chart colors
+                        possibleAnswerColors  # For bar chart colors (from JSON)
                     )
                 )
             }
@@ -1075,18 +1529,35 @@ server <- function(input, output, session) {
 
         # used to filter the question selection list
 
-        # Helper function to get badge color (same as in createResultsTable)
+        # Helper function to get badge color (only for sections)
         getBadgeColor <- function(tag) {
-            if (tag %in% sectionList) return("#008aab")
-            if (tag %in% cultureMaterialList) return("#d9534f")
-            if (tag %in% pathogenList) return("#5cb85c")
-            if (tag %in% resistanceList) return("#f0ad4e")
-            return("#999999")
+            # Sections - use specific colors
+            if (tag == "National surveillance") return("#2a9d8f")
+            if (tag == "National genomic surveillance") return("#d4a843")
+            if (tag == "National guidance") return("#cc8888")
+            # All other filters - gray
+            return("#888888")
+        }
+
+        # Helper function to get badge icon
+        getBadgeIcon <- function(tag) {
+            # Sections
+            if (tag %in% sectionList) return("")
+            # Culture material
+            if (tag %in% cultureMaterialList) return('<i class="fa fa-flask"></i> ')
+            # Pathogens
+            if (tag %in% pathogenList) return('<i class="fa fa-bacteria"></i> ')
+            # Resistances
+            if (tag %in% resistanceList) return('<i class="fa fa-triangle-exclamation"></i> ')
+            # Default
+            return("")
         }
 
         formatShortTitleWithBadges <- function(shortTitle, tagsString) {
             tagsList <- strsplit(tagsString, ", ")[[1]]
+            # Remove "Section 0" and "Not ... related" tags (don't display these)
             tagsList <- tagsList[tagsList != "Section 0"]
+            tagsList <- tagsList[!grepl("^Not .* related$", tagsList)]
 
             if (length(tagsList) == 0) {
                 return(shortTitle)
@@ -1095,9 +1566,10 @@ server <- function(input, output, session) {
             badgesHtml <- paste(
                 sapply(tagsList, function(tag) {
                     color <- getBadgeColor(tag)
+                    icon <- getBadgeIcon(tag)
                     paste0('<span style="display: inline-block; background-color: ', color,
                            '; color: white; padding: 1px 6px; margin-right: 4px; border-radius: 3px; font-size: 0.7em; font-weight: 500;">',
-                           tag, '</span>')
+                           icon, tag, '</span>')
                 }),
                 collapse = ""
             )
@@ -1108,6 +1580,7 @@ server <- function(input, output, session) {
         activeQuestionTitles <- c()
         activeQuestionShortTitles <- c()
         activeQuestionShortTitlesWithBadges <- c()
+        activeQuestionPositions <- c()
 
         for (question in surveyData) {
 
@@ -1121,17 +1594,11 @@ server <- function(input, output, session) {
             if (question$type == "FreeText") next
 
             # check if question tags and active filters do match
-            if (
-                (length(input$pathogensSelection) != 0) & (length(intersect(input$pathogensSelection, question$tags)) == 0)
-            ) next
+            if (length(intersect(input$pathogensSelection, question$tags)) == 0) next
 
-            if (
-                (length(input$resistancesSelection) != 0) & (length(intersect(input$resistancesSelection, question$tags)) == 0)
-            ) next
+            if (length(intersect(input$resistancesSelection, question$tags)) == 0) next
 
-            if (
-                (length(input$cultureMaterialsSelection) != 0) & (length(intersect(input$cultureMaterialsSelection, question$tags)) == 0)
-            ) next
+            if (length(intersect(input$cultureMaterialsSelection, question$tags)) == 0) next
 
             # question has to be taken -> append titles to vectors
             activeQuestionTitles <- c(activeQuestionTitles, question[["title"]])
@@ -1141,6 +1608,17 @@ server <- function(input, output, session) {
             formattedShortTitle <- formatShortTitleWithBadges(question[["short_title"]], toString(question$tags))
             activeQuestionShortTitlesWithBadges <- c(activeQuestionShortTitlesWithBadges, formattedShortTitle)
 
+            # Add position
+            activeQuestionPositions <- c(activeQuestionPositions, ifelse(is.null(question[["position"]]), 9999, question[["position"]]))
+
+        }
+
+        # Sort by position
+        if (length(activeQuestionPositions) > 0) {
+            sortOrder <- order(activeQuestionPositions)
+            activeQuestionTitles <- activeQuestionTitles[sortOrder]
+            activeQuestionShortTitles <- activeQuestionShortTitles[sortOrder]
+            activeQuestionShortTitlesWithBadges <- activeQuestionShortTitlesWithBadges[sortOrder]
         }
 
         return(list(activeQuestionTitles, activeQuestionShortTitles, activeQuestionShortTitlesWithBadges))
@@ -1303,6 +1781,19 @@ server <- function(input, output, session) {
         )
     )
 
+    output$noQuestionsMessage <- renderUI({
+        if (length(activeQuestions()[[1]]) == 0) {
+            tags$div(
+                style = "padding: 40px; text-align: center; color: #666; font-size: 1.1em;",
+                tags$i(class = "fa fa-info-circle", style = "font-size: 2em; margin-bottom: 10px;"),
+                tags$br(),
+                "No questions match the active filters.",
+                tags$br(),
+                tags$span(style = "font-size: 0.9em;", "Try adjusting your filter selections.")
+            )
+        }
+    })
+
     output$resultsTable <- DT::renderDT(
         createResultsTable(),
         rownames = FALSE,
@@ -1331,7 +1822,7 @@ server <- function(input, output, session) {
                 "  if (th0.find('.lock-btn').length === 0) {",
                 "    var currentText = th0.text();",
                 "    th0.html('<div style=\"display: flex; justify-content: space-between; align-items: center;\"><span>' + currentText + '</span><span class=\"lock-btn\" style=\"cursor: pointer;\" title=\"Click to lock/unlock this column when scrolling horizontally\"><i class=\"fa fa-lock-open\" style=\"font-size: 0.9em;\"></i></span></div>');",
-                "    th0.css({'background-color': '#008aab', 'color': '#ffffff', 'border-right': '2px solid #008aab'});",
+                "    // Colors are now handled by CSS based on selected section",
                 "    ",
                 "    // Add click handler for lock button",
                 "    th0.find('.lock-btn').on('click', function(e) {",
@@ -1367,7 +1858,8 @@ server <- function(input, output, session) {
                 "        Shiny.setInputValue('remove_country', {country: countryName, timestamp: Date.now()});",
                 "      });",
                 "    }",
-                "    $(this).css({'background-color': '#0fdbd5', 'color': '#ffffff', 'cursor': 'move'});",
+                "    // Colors are now handled by CSS based on selected section",
+                "    $(this).css({'cursor': 'move'});",
                 "  });",
                 "}"
             ),
@@ -1390,11 +1882,7 @@ server <- function(input, output, session) {
             columnDefs = list(
                 list(
                     targets = 0,
-                    createdCell = JS(
-                        "function(td, cellData, rowData, row, col) {",
-                        "  $(td).css({'border-right': '1px solid #008aab'});",
-                        "}"
-                    )
+                    className = 'first-column-cell'
                 )
             )
         )
@@ -1403,7 +1891,7 @@ server <- function(input, output, session) {
     # CSV download
     output$downloadDataCSV <- downloadHandler(
         filename = function() {
-            paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".csv")
+            paste0("jamreye_data_export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".csv")
         },
         content = function(file) {
             write.csv(createResultsTable(), file, row.names = FALSE)
@@ -1413,7 +1901,7 @@ server <- function(input, output, session) {
     # Excel download
     output$downloadDataExcel <- downloadHandler(
         filename = function() {
-            paste0("amr_watch_europe-export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".xlsx")
+            paste0("jamreye_data_export-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".xlsx")
         },
         content = function(file) {
             write.xlsx(createResultsTable(), file, rowNames = FALSE)
@@ -1609,114 +2097,249 @@ server <- function(input, output, session) {
             ),
             dragmode = FALSE,
             autosize = TRUE
+        ) %>%
+        config(
+            displaylogo = FALSE
         )
 
-        
+
     })
 
-    output$dashboardPlot <- renderPlot({
+    output$dashboardPlot <- renderPlotly({
+
+        # Helper function to wrap long labels into multiple lines
+        wrapLabel <- function(label, maxCharsPerLine = 24) {
+            if (nchar(label) <= maxCharsPerLine) {
+                return(label)
+            }
+
+            split <- strsplit(label, " ")[[1]]
+            lines <- c()
+            currentLine <- ""
+
+            for (word in split) {
+                # Test if adding this word would exceed the limit
+                testLine <- if (nchar(currentLine) == 0) word else paste(currentLine, word)
+
+                if (nchar(testLine) > maxCharsPerLine && nchar(currentLine) > 0) {
+                    # Current line is full, save it and start a new line
+                    lines <- c(lines, currentLine)
+                    currentLine <- word
+
+                    # Check if we've reached 3 lines
+                    if (length(lines) >= 3) {
+                        lines[3] <- paste0(lines[3], "...")
+                        return(paste(lines, collapse = "<br>"))
+                    }
+                } else {
+                    # Add word to current line
+                    currentLine <- testLine
+                }
+            }
+
+            # Add the last line
+            if (nchar(currentLine) > 0) {
+                lines <- c(lines, currentLine)
+            }
+
+            return(paste(lines, collapse = "<br>"))
+        }
 
         if (input$questionSelection == "Participating countries"){
 
-            dashboardPlot <- ggplot(
-                data = participationDataOccurrences,
-                aes(
-                    x = reply,
-                    y = occurences
-                )
-            ) +
-            geom_bar(
-                aes(x = factor(reply, level = rev(unique(reply))), y = occurences),
-                stat = "identity",
-                fill = c(colorSequence[1], colorSequence[2], "#b3b3b3"),
-                width = 0.4
-            )
-        }
+            # Calculate dynamic height based on number of bars
+            numBars <- nrow(participationDataOccurrences)
+            plotHeight <- max(400, numBars * 90 + 150)
 
-        else {
-            # Check if data is available (handles NULL case for multiple-choice questions)
+            # Prepare data and sort by occurrences (ascending, so highest appears at top)
+            sortOrder <- order(participationDataOccurrences$occurences, decreasing = FALSE)
+            replies <- participationDataOccurrences$reply[sortOrder]
+            occurrences <- participationDataOccurrences$occurences[sortOrder]
+            barColors <- c(colorSequence[1], colorSequence[2], "#b3b3b3")[sortOrder]
+
+            # Wrap labels if needed
+            wrappedLabels <- sapply(replies, wrapLabel)
+
+            # Create text labels with positioning
+            # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
+            # but display reversed on screen. Text positions use data coordinates:
+            # - For bars >= 20%: position inside bar, closer to left edge visually
+            # - For bars < 20%: position outside bar, to the left visually
+            textLabels <- paste0(sprintf("%.0f", occurrences), "%")  # Round to integer and add % symbol
+            textPositions <- ifelse(occurrences >= 20,
+                                    occurrences - 3,  # Inside the bar
+                                    occurrences + 12)  # Outside the bar (increased to move labels more to the left)
+            textColors <- ifelse(occurrences >= 20, "white", "black")
+
+            # Create the plot
+            p <- plot_ly(height = plotHeight) %>%
+                add_bars(
+                    y = wrappedLabels,
+                    x = occurrences,
+                    orientation = 'h',
+                    marker = list(color = barColors),
+                    width = 0.5,
+                    hovertemplate = paste0("%{y}: %{x:.2f}%<extra></extra>"),
+                    showlegend = FALSE
+                )
+
+            # Add annotations individually to properly set colors
+            for (i in seq_along(wrappedLabels)) {
+                p <- p %>% add_annotations(
+                    y = wrappedLabels[i],
+                    x = textPositions[i],
+                    text = textLabels[i],
+                    xanchor = "left",
+                    showarrow = FALSE,
+                    font = list(size = 20, color = textColors[i], family = "Arial")
+                )
+            }
+
+            p %>%
+                layout(
+                    xaxis = list(
+                        title = "% of European countries",
+                        side = "top",
+                        range = c(100, 0),  # Reversed range: bars go right to left
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        zeroline = FALSE,
+                        tickfont = list(size = 17, family = "Arial"),
+                        titlefont = list(size = 17, family = "Arial"),
+                        fixedrange = TRUE,
+                        ticksuffix = "%"  # Add % symbol to x-axis tick labels
+                    ),
+                    yaxis = list(
+                        title = "",
+                        side = "right",  # Y-axis labels on the right
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        tickfont = list(size = 20, family = "Arial", weight = 700),  # Bold (700) for better prominence
+                        fixedrange = TRUE,
+                        automargin = TRUE,
+                        categoryorder = "array",  # Preserve custom order
+                        categoryarray = wrappedLabels  # Use our sorted order
+                    ),
+                    margin = list(l = 10, r = 200, t = 50, b = 50),  # Reduced margins to enlarge and center chart
+                    font = list(family = "Arial, sans-serif"),
+                    plot_bgcolor = "white",
+                    paper_bgcolor = "white",
+                    autosize = TRUE
+                ) %>%
+                config(
+                    displaylogo = FALSE,
+                    responsive = TRUE
+                )
+
+        } else {
+            # Check if data is available
             if (is.null(countryReplies()[[3]]) || is.null(countryReplies()[[4]])) {
                 return(NULL)
             }
 
-            # For multiple-choice questions, use light grey; for others, use custom colors
+            # Calculate dynamic height based on number of bars
+            numBars <- length(countryReplies()[[3]])
+            plotHeight <- max(400, numBars * 90 + 150)
+
+            # Prepare data and sort by occurrences (ascending, so highest appears at top)
+            sortOrder <- order(countryReplies()[[4]], decreasing = FALSE)
+            replies <- countryReplies()[[3]][sortOrder]
+            occurrences <- countryReplies()[[4]][sortOrder]
+
+            # For multiple-choice questions, use JAMRAI blue; for others, use custom colors
             barColors <- if (input$questionSelection %in% multipleChoiceShortTitles && length(countryReplies()) >= 5) {
-                rep("#888888", length(countryReplies()[[3]]))
+                rep("#008aab", length(replies))
             } else {
-                countryReplies()[[2]]
+                countryReplies()[[2]][sortOrder]
             }
 
-            dashboardPlot <- ggplot(
-                data = data.frame(reply=countryReplies()[[3]], occurences=countryReplies()[[4]]),
-                aes(
-                    x = reply,
-                    y = occurences
+            # Wrap labels if needed (calculate threshold based on max label length)
+            maxLabelLength <- max(nchar(replies))
+            threshold <- if (maxLabelLength <= 24) 24 else min(ceiling(maxLabelLength / 3), 24)
+            wrappedLabels <- sapply(replies, function(x) wrapLabel(x, threshold))
+
+            # Create text labels with positioning
+            # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
+            # but display reversed on screen. Text positions use data coordinates:
+            # - For bars >= 20%: position inside bar, closer to left edge visually
+            # - For bars < 20%: position outside bar, to the left visually
+            textLabels <- paste0(sprintf("%.0f", occurrences), "%")  # Round to integer and add % symbol
+            textPositions <- ifelse(occurrences >= 20,
+                                    occurrences - 3,  # Inside the bar
+                                    occurrences + 12)  # Outside the bar (increased to move labels more to the left)
+            textColors <- ifelse(occurrences >= 20, "white", "black")
+
+            # Set axis label based on question type
+            yAxisLabel <- "% of selected countries"
+
+            # Create the plot
+            p <- plot_ly(height = plotHeight) %>%
+                add_bars(
+                    y = wrappedLabels,
+                    x = occurrences,
+                    orientation = 'h',
+                    marker = list(color = barColors),
+                    width = 0.5,
+                    hovertemplate = paste0("%{y}: %{x:.2f}%<extra></extra>"),
+                    showlegend = FALSE
                 )
-            ) +
-            geom_bar(
-                aes(x = factor(reply, level = rev(unique(countryReplies()[[3]]))), y = occurences),
-                stat = "identity",
-                fill = barColors,
-                width = 0.4
-            )
+
+            # Add annotations individually to properly set colors
+            for (i in seq_along(wrappedLabels)) {
+                p <- p %>% add_annotations(
+                    y = wrappedLabels[i],
+                    x = textPositions[i],
+                    text = textLabels[i],
+                    xanchor = "left",
+                    showarrow = FALSE,
+                    font = list(size = 20, color = textColors[i], family = "Arial")
+                )
+            }
+
+            p %>%
+                layout(
+                    xaxis = list(
+                        title = yAxisLabel,
+                        side = "top",
+                        range = c(100, 0),  # Reversed range: bars go right to left
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        zeroline = FALSE,
+                        tickfont = list(size = 17, family = "Arial"),
+                        titlefont = list(size = 17, family = "Arial"),
+                        fixedrange = TRUE,
+                        ticksuffix = "%"  # Add % symbol to x-axis tick labels
+                    ),
+                    yaxis = list(
+                        title = "",
+                        side = "right",  # Y-axis labels on the right
+                        showline = TRUE,
+                        linecolor = "gray50",
+                        linewidth = 0.5,
+                        showgrid = FALSE,
+                        tickfont = list(size = 20, family = "Arial", weight = 700),  # Bold (700) for better prominence
+                        fixedrange = TRUE,
+                        automargin = TRUE,
+                        categoryorder = "array",  # Preserve custom order
+                        categoryarray = wrappedLabels  # Use our sorted order
+                    ),
+                    margin = list(l = 10, r = 200, t = 50, b = 50),  # Reduced margins to enlarge and center chart
+                    font = list(family = "Arial, sans-serif"),
+                    plot_bgcolor = "white",
+                    paper_bgcolor = "white",
+                    autosize = TRUE
+                ) %>%
+                config(
+                    displaylogo = FALSE,
+                    responsive = TRUE
+                )
         }
-
-        dashboardPlot <- dashboardPlot +
-        scale_y_reverse() +
-        coord_flip() +
-        labs(
-            x = "Replies", y = "% of selected countries"
-        ) +
-        scale_x_discrete(
-            labels = function(x) {
-
-                if (max(nchar(x)) <= 24) { # no need to split
-                    return(x)
-                }
-
-                threshold <- min(c(ceiling(max(nchar(x))/3), 24)) # max 24 characters per line
-
-                # split long labels into 2 or 3 lines (4 is too much for quesstions with many replies)
-                for (i in 1:length(x)) {
-
-                    split <- strsplit(x[i], " ")[[1]] # split by space
-
-                    newLabel <- ""
-                    thisRow <- ""
-                    rowCount <- 1
-
-                    for (j in 1:length(split)) {
-                        newLabel <- paste0(newLabel, " ", split[j])
-                        thisRow <- paste0(thisRow, " ", split[j])
-                        if (nchar(thisRow) > threshold) {
-                            rowCount <- rowCount + 1
-                            if (rowCount > 3) { # max 3 lines
-                                newLabel <- paste0(newLabel, "...")
-                                break
-                            }
-                            newLabel <- paste0(newLabel, "\n") # new line
-                            thisRow <- ""
-                        }
-                    }
-
-                    x[i] <- newLabel
-
-                }
-
-                return(x)
-
-            },
-            position = "top"
-        ) +
-        theme_dark() +
-        theme(
-            axis.title.y = element_blank(),       # y axis label (remove)
-            axis.title.x = element_text(size=16, margin = margin(t = 10)), # x axis label with top margin
-            axis.text.y = element_text(size=18, hjust=0),  # axis ticks - left align
-            axis.text.x = element_text(size=16, angle = 90, vjust = 0.5, hjust=1) # rotate
-        )
-
-        dashboardPlot
 
     })
 

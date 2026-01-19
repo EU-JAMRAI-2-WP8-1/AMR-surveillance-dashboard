@@ -41,6 +41,12 @@
     color:#888888;
 }
 
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .info-button {
     width: 24px;
     height: 24px;
@@ -62,14 +68,192 @@
     position: absolute;
     background-color: #fff;
     width: 256px;
-    left: 64px;
-    padding: 4px;
+    right: 0px;
+    top: 100%;
+    margin-top: 4px;
+    padding: 8px;
     z-index: 999;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .info-button:hover + .info-sections {
     display: block;
+}
+
+/* Dual Button Container */
+.dual-button-container {
+    display: flex;
+    gap: 4px;
+    margin-top: 12px;
+    margin-bottom: 0px;
+}
+
+/* Add padding when info button is present (in wrapper with position:relative) */
+div[style*="position: relative"] .dual-button-container {
+    padding-right: 30px;
+}
+
+/* Individual dual buttons */
+.dual-button {
+    flex: 1;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.dual-button i {
+    font-size: 0.8rem;
+}
+
+/* Deselect button (Clear) */
+.deselect-btn {
+    background-color: rgba(217, 83, 79, 0.12);
+    color: #a94442;
+}
+
+.deselect-btn:hover:not(.disabled-btn) {
+    background-color: rgba(217, 83, 79, 0.22);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Select button (All) */
+.select-btn {
+    background-color: rgba(0, 138, 171, 0.12);
+    color: #006d8a;
+}
+
+.select-btn:hover:not(.disabled-btn) {
+    background-color: rgba(0, 138, 171, 0.22);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Disabled state */
+.disabled-btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.dual-button:active:not(.disabled-btn) {
+    transform: translateY(0);
+}
+
+/* Standalone info button (separate from buttons) */
+.info-button-standalone {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 3px; /* Fine-tune vertical alignment */
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #666;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: help !important;
+    font-weight: bold;
+    pointer-events: auto;
+}
+
+.info-button-standalone:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Show info section on hover */
+.info-button-standalone:hover + .info-sections {
+    display: block;
+}
+
+/* Show info section when manually triggered */
+.info-sections.show-info {
+    display: block;
+}
+
+/* Show info section when info-active class is toggled */
+.info-button-standalone.info-active + .info-sections {
+    display: block;
+}
+
+/* Modern Badge-Style Checkboxes with Check Indicator */
+.checkbox {
+    margin-bottom: 5px;
+}
+
+.checkbox label {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 12px;
+    margin: 2px;  /* Reduced from 3px to 2px */
+    border-radius: 20px;  /* Fully rounded pill shape */
+    background-color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    user-select: none;
+    color: #666;
+    position: relative;
+    min-height: 26px;  /* Fixed height to prevent vertical expansion - reduced from 28px */
+    box-sizing: border-box;
+}
+
+.checkbox label:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-1px);
+}
+
+.checkbox input[type="checkbox"] {
+    display: none;
+}
+
+/* Parent label styling when checkbox is checked */
+.checkbox:has(input[type="checkbox"]:checked) label {
+    background-color: #008aab;
+    color: white;
+    font-weight: 500;
+    padding-left: 38px;  /* Extra space for check icon on the left */
+}
+
+/* Add single checkmark icon before checked labels */
+.checkbox:has(input[type="checkbox"]:checked) label::before {
+    content: "✓";
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* "Not ... related" buttons use lighter blue when checked */
+.checkbox:has(input[value*="Not"][value*="related"]:checked) label {
+    background-color: #0fdbd5;
+    color: white;
+    font-weight: 500;
+    padding-left: 38px;  /* Extra space for check icon on the left */
+}
+
+.checkbox:has(input[value*="Not"][value*="related"]:checked) label::before {
+    content: "✓";
+    position: absolute;
+    left: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
 }
 
 
@@ -100,8 +284,8 @@
     display: flex !important;
 }
 
-/* Push the last tab (Info) to the right */
-.nav-tabs .nav-item:last-child {
+/* Push Info and Contact tabs to the right */
+.nav-tabs .nav-item:nth-last-child(2) {
     margin-left: auto !important;
 }
 
@@ -114,28 +298,62 @@
     --bs-accordion-border-width: 0;
 }
 
+/* Spacing between filter sections */
+.accordion-item {
+    margin-bottom: 28px;  /* Increased spacing between sections */
+    border-radius: 0 !important;  /* Remove border-radius to keep borders straight */
+}
+
+/* Reduce height of accordion title boxes */
+.accordion-button {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    position: relative;
+}
+
+/* Light grey background bar for progress indicator */
+.accordion-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    width: calc(100% - 24px);
+    height: 3px;
+    background-color: #e0e0e0;
+    z-index: 0;
+}
+
+/* Remove blue outline/focus on accordion button */
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: transparent !important;
+}
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none !important;
+}
+
+/* Filter progress bar */
+.filter-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    height: 3px;
+    background-color: #008aab;
+    width: 0%;
+    transition: width 0.3s ease;
+    z-index: 1;
+}
+
+/* Reduce spacing in accordion body to bring title and content closer */
+.accordion-body {
+    padding-top: 4px !important;  /* Reduced from 8px to bring closer to progress bar */
+    padding-bottom: 8px !important;
+}
+
 .accordion-icon {
     font-size: 0.85em;
-}
-
-.accordion-icon-sections {
-    color: #008aab;
-}
-
-.accordion-icon-culture {
-    color: #d9534f;
-}
-
-.accordion-icon-pathogens {
-    color: #5cb85c;
-}
-
-.accordion-icon-resistances {
-    color: #f0ad4e;
-}
-
-.accordion-icon-countries {
-    color: #0fdbd5;
+    color: #666;
 }
 
 .row > .col-sm-2 {
@@ -161,8 +379,8 @@
 }
 
 .hr-filters-separator {
-    margin-left: 24px !important;
-    margin-right: 24px !important;
+    margin-left: 0px !important;  /* Remove left margin so hr goes to left border */
+    margin-right: 0px !important;  /* Remove right margin so hr goes to right edge */
     margin-top: 0px !important;
     margin-bottom: 0px !important;
 }
@@ -196,13 +414,30 @@
     font-size: 0.9rem !important;
 }
 
-
 #resultsTable tr > th {
     min-width: 160px;
+    transition: background-color 0.3s ease;
 }
 
 #resultsTable tr > th:first-child {
     min-width: 540px;
+}
+
+/* Fixed table header colors - JAMRAI colors */
+#resultsTable tr > th:first-child {
+    background-color: #008aab !important;
+    color: #ffffff !important;
+    border-right: 2px solid #008aab !important;
+}
+
+#resultsTable tr > th:not(:first-child) {
+    background-color: #0fdbd5 !important;
+    color: #ffffff !important;
+}
+
+/* Fixed border for first column cells - JAMRAI dark blue */
+#resultsTable td.first-column-cell {
+    border-right: 1px solid #008aab !important;
 }
 
 /* Question selection dropdown menu */
@@ -214,6 +449,55 @@
     padding: 12px 8px 12px 8px !important;
     border-bottom: 1px solid #e8e8e8;
 }
+
+.modal-title {
+    width: 100%;
+    color: #008aab;
+    /*font-weight: bold;*/
+    font-size: 1.4em;
+}
+
+/* Override align-items for modal headers specifically */
+
+.modal-header {
+    padding-bottom: 0px !important;
+}
+
+.modal-title .flex-space-between {
+    align-items: flex-start;
+}
+
+.modal-header-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.modal-title-text {
+    margin-top: 24px;
+    color: #008aab;
+    font-size: 1.4em;
+    text-align: left;
+}
+
+.modal-logo {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 0;
+}
+
+.modal-header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.modal-body {
+    padding-top: 8px !important;
+}
+
 
 /* OVERWRITE PLOTLY DEFAULT */
 
@@ -254,15 +538,66 @@
     padding: 0 !important;
     border: 0;
     min-width: 200px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    direction: rtl;  /* Move scrollbar to left side */
+}
+
+/* Reset text direction for content inside sidebar */
+.sidebar-panel > * {
+    direction: ltr;
+}
+
+/* Sidebar logo */
+.sidebar-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 48px;
+    margin-bottom: 0px;
+}
+
+.sidebar-logo {
+    max-width: 100%;
+    height: auto;
+    width: 100%;
 }
 
 .sections-wrapper {
     background-color: #6c757d;
     padding: 0;
     margin: 0;
+    margin-bottom: 4px;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+    position: relative;
+}
+
+/* Horizontal stripe below section buttons */
+.sections-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    transition: background-color 0.3s ease;
+}
+
+body.section-1 .sections-wrapper::after {
+    background-color: #2a9d8f;
+}
+
+body.section-2 .sections-wrapper::after {
+    background-color: #d4a843;
+}
+
+body.section-3 .sections-wrapper::after {
+    background-color: #cc8888;
 }
 
 .github-link-btn {
@@ -295,15 +630,40 @@
     border-color: #5a6268 !important;
 }
 
-#sectionsSelection input:checked + .btn {
-    background-color: #008aab !important;
-    border-color: #008aab !important;
+/* Section 1 - National surveillance (teal) */
+#sectionsSelection input:nth-of-type(1):checked + .btn {
+    background-color: #2a9d8f !important;
+    border-color: #2a9d8f !important;
     color: white !important;
 }
 
-#sectionsSelection input:checked + .btn:hover {
-    background-color: #006d87 !important;
-    border-color: #006d87 !important;
+#sectionsSelection input:nth-of-type(1):checked + .btn:hover {
+    background-color: #1f7a6f !important;
+    border-color: #1f7a6f !important;
+}
+
+/* Section 2 - National genomic surveillance (gold) */
+#sectionsSelection input:nth-of-type(2):checked + .btn {
+    background-color: #d4a843 !important;
+    border-color: #d4a843 !important;
+    color: white !important;
+}
+
+#sectionsSelection input:nth-of-type(2):checked + .btn:hover {
+    background-color: #b8920f !important;
+    border-color: #b8920f !important;
+}
+
+/* Section 3 - National guidance (soft red) */
+#sectionsSelection input:nth-of-type(3):checked + .btn {
+    background-color: #cc8888 !important;
+    border-color: #cc8888 !important;
+    color: white !important;
+}
+
+#sectionsSelection input:nth-of-type(3):checked + .btn:hover {
+    background-color: #b87373 !important;
+    border-color: #b87373 !important;
 }
 
 
@@ -315,6 +675,19 @@
 
 .reset-filters-wrapper > button {
     width: 100%;
+}
+
+/* Instructions button with JAMRAI turquoise color on hover */
+#showInstructions {
+    background-color: transparent !important;
+    border-color: #0fdbd5 !important;
+    color: #0fdbd5 !important;
+}
+
+#showInstructions:hover {
+    background-color: #0fdbd5 !important;
+    border-color: #0fdbd5 !important;
+    color: #212529 !important;  /* Dark text to match other buttons */
 }
 
 /*#resetFilters {
@@ -350,6 +723,14 @@
     --bs-gutter-x: 0 !important; /**/
 }
 
+.dashboard-plot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    margin-left: 20px;
+}
+
 .map-and-source-container {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -377,8 +758,22 @@
     background-color: #f8f9fa;
     padding: 12px 15px;
     margin-bottom: 10px;
-    border-left: 4px solid #008aab;
+    border-left: 4px solid #2a9d8f;
     border-radius: 2px;
+    transition: border-color 0.3s ease;
+}
+
+/* Dynamic border color based on selected section */
+body.section-1 .full-question-title-box {
+    border-left-color: #2a9d8f;
+}
+
+body.section-2 .full-question-title-box {
+    border-left-color: #d4a843;
+}
+
+body.section-3 .full-question-title-box {
+    border-left-color: #cc8888;
 }
 
 .question-title-text {
@@ -389,6 +784,90 @@
 
 .about-container {
     padding: 36px;
+}
+
+/* CONTACT FORM */
+
+.contact-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 36px;
+}
+
+.contact-container h3 {
+    margin-bottom: 20px;
+    color: #008aab;
+}
+
+.contact-container p {
+    margin-bottom: 24px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.contact-container .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-container label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #333;
+}
+
+.contact-container input[type="text"],
+.contact-container input[type="email"],
+.contact-container textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.contact-container input[type="text"]:focus,
+.contact-container input[type="email"]:focus,
+.contact-container textarea:focus {
+    outline: none;
+    border-color: #008aab;
+    box-shadow: 0 0 0 3px rgba(0, 138, 171, 0.1);
+}
+
+.contact-container textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.contact-container .form-text {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.contact-container #submitContact {
+    margin-top: 10px;
+}
+
+/* Contact form alert messages */
+.contact-container .alert {
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.contact-container .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.contact-container .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
 
@@ -416,9 +895,17 @@
 }
 
 
+/* MODAL WINDOW */
+
+.modal-title .flex-space-between button {
+    margin-left: 24px;
+}
+
+
 /* RESPONSIVE */
 
-@media screen and (orientation:portrait) {
+/* Mobile devices and tablets (up to 768px) */
+@media (max-width: 768px) {
 
     /* GENERAL */
 
@@ -464,5 +951,30 @@
     #sectionsSelection .btn {
         width: auto !important;
         min-width: 50px;
+    }
+
+    /* Stack modal title elements vertically on mobile */
+    .flex-space-between {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .modal-header-left {
+        align-items: center;
+        text-align: center;
+    }
+
+    .modal-title-text {
+        text-align: center;
+    }
+
+    /* Contact form responsive styling */
+    .contact-container {
+        padding: 20px;
+    }
+
+    .contact-container h3 {
+        font-size: 1.5rem;
     }
 }

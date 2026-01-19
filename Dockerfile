@@ -1,5 +1,5 @@
 # Base R Shiny image
-FROM rocker/shiny
+FROM rocker/shiny:4.4.3
 
 # install Linux R packages dependencies
 RUN apt update
@@ -19,7 +19,8 @@ RUN R -e "install.packages(c('readxl', 'rjson', 'jsonlite', 'hash', 'openxlsx'))
 RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly', 'DT'))"
 ## style
 RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
-## 
+## email - uses system curl (no R packages needed)
+##
 RUN R -e "install.packages(c('remotes', 'sf'))"
 ## removed
 ## RUN R -e "install.packages(c('remotes', 'sf', 'geos', 'gdal', 'geojsonR', 'geojsonio', 'leaflet'))"

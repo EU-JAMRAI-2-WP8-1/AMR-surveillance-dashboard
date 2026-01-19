@@ -1,0 +1,120 @@
+<div class="usage-content">
+    <!-- Welcome Section -->
+    <section style="margin-bottom: 30px;">
+        <p style="margin-bottom: 10px;">
+            This dashboard presents <strong>current national AMR surveillance information in humans</strong>
+            from 28 of the 30 EU-JAMRAI 2 partner countries. It is designed as a
+            <strong>tool for national and international AMR experts</strong> and policymakers to
+            <strong>explore, compare, and analyse surveillance information</strong> across Europe.
+        </p>
+        <p>For project details and contacts, please visit the <strong>Info tab</strong>.</p>
+    </section>
+
+    <!-- How to Use Section -->
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">How to Use the Dashboard</h2>
+        <ol style="margin-left: 20px;">
+            <li style="margin-bottom: 5px;"><strong>Select a question</strong> from the dropdown menu.</li>
+            <li style="margin-bottom: 5px;">The <strong>map</strong> shows answers by country.</li>
+            <li style="margin-bottom: 5px;">The <strong>bar chart</strong> shows combined answers for all countries.</li>
+        </ol>
+    </section>
+
+    <!-- Customize Your View Section -->
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">Customize Your View</h2>
+        <p style="margin-bottom: 15px;">Use the tools below to focus on what matters to you:</p>
+
+        <!-- Filters -->
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Filters (Left Panel)</h3>
+        <p style="margin-bottom: 8px;">Narrow your selection by:</p>
+        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-globe" style="color: #666; margin-right: 8px;"></i>
+                <strong>Countries</strong>: Show all or only specific countries.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-flask" style="color: #666; margin-right: 8px;"></i>
+                <strong>Culture material</strong>: Filter by specimen type (e.g., blood, urine).
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-bacteria" style="color: #666; margin-right: 8px;"></i>
+                <strong>Pathogens</strong>: Focus on specific bacterial pathogens.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-triangle-exclamation" style="color: #666; margin-right: 8px;"></i>
+                <strong>Resistances</strong>: Select specific antibiotic resistances.
+            </li>
+        </ul>
+
+        <!-- Sections -->
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Sections (Top Buttons)</h3>
+        <p style="margin-bottom: 8px;">Questions are grouped into three categories:</p>
+        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-eye" style="color: #2a9d8f; margin-right: 8px;"></i>
+                <strong>National Surveillance</strong>: How AMR is monitored at the national level
+                (e.g., which pathogens are under mandatory surveillance?).
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-dna" style="color: #d4a843; margin-right: 8px;"></i>
+                <strong>National Genomic Surveillance</strong>: How genomic sequencing is used for AMR
+                (e.g., which pathogens are analysed using WGS?).
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-book-open" style="color: #cc8888; margin-right: 8px;"></i>
+                <strong>National Guidance</strong>: Guidelines that use AMR data or influence surveillance
+                (e.g., national treatment guidance for common infections).
+            </li>
+        </ul>
+
+        <!-- Tabs -->
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Tabs</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-globe" style="color: #666; margin-right: 8px;"></i>
+                <strong>Visuals</strong>: View answers on a map and bar chart.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-table" style="color: #666; margin-right: 8px;"></i>
+                <strong>Table</strong>: See answers in an interactive table (filters apply here too).
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-info-circle" style="color: #666; margin-right: 8px;"></i>
+                <strong>Info</strong>: Learn about the project, legal details, and contacts.
+            </li>
+        </ul>
+    </section>
+
+    <!-- Tips Section -->
+    <section style="margin-bottom: 30px;">
+        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">Tips for Better Navigation</h2>
+        <ul style="margin-left: 20px;">
+            <li style="margin-bottom: 5px;">Use <strong>filters</strong> to quickly find relevant questions.</li>
+            <li style="margin-bottom: 5px;">Click <strong>"Reset filters"</strong> to return to the default view.</li>
+            <li style="margin-bottom: 5px;">Download data in the <strong>Table tab</strong>.</li>
+            <li style="margin-bottom: 5px;">Click the <strong>instructions button</strong> (top left) to revisit this guide.</li>
+        </ul>
+    </section>
+
+    <!-- Closing -->
+    <p style="font-size: 1.1em; margin-top: 20px;">
+        <strong>Happy exploring!</strong>
+        <a href="#" id="linkToContact" style="color: #008aab; text-decoration: underline; cursor: pointer;">
+            Let us know if you need help.
+        </a>
+    </p>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#linkToContact').on('click', function(e) {
+        e.preventDefault();
+        $('.modal').modal('hide');
+        setTimeout(function() {
+            // Find and click the Contact tab
+            $('.nav-tabs li:has(a:contains("Contact")) a').click();
+        }, 300);
+    });
+});
+</script>
