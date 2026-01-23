@@ -75,7 +75,7 @@ thematic_shiny(
 
 # Import Europe polygons
 geojsonEurope <- tryCatch({
-    rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson")) # rjson
+    rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326-modified.geojson")) # rjson
     ##jsonlite::read_json("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson") # jsonlite (unused -> slows down process)
 }, error = function(e) {
     showNotification("Error loading map data", type = "error")
