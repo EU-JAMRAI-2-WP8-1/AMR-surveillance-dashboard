@@ -1,14 +1,30 @@
 // send size of main div to parent window (iframe)
-new ResizeObserver(
-    () => window.parent.postMessage(
+function getDocumentHeight() {
+    return Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+    );
+}
+
+function sendHeightToParent() {
+    window.parent.postMessage(
         {
             type: 'setHeight',
-            height: document.body.querySelector("div").clientHeight
+            height: getDocumentHeight()
         },
         '*'
-    )).observe(
-        document.body.querySelector("div")
     );
+}
+
+// Use ResizeObserver on the body to detect any layout changes
+new ResizeObserver(sendHeightToParent).observe(document.body);
+
+// Also send height on load and after potential dynamic content changes
+window.addEventListener('load', sendHeightToParent);
+document.addEventListener('DOMContentLoaded', sendHeightToParent);
 
 // Handle info button hover to show tooltip only on question mark
 $(document).on('mouseenter', '.info-button-inline', function(e) {
