@@ -977,4 +977,25 @@ body.section-3 .full-question-title-box {
     .contact-container h3 {
         font-size: 1.5rem;
     }
+
+    /* Sidebar layout fix for mobile in iframe */
+    .sidebar-panel {
+        position: relative;
+        height: auto;
+        min-height: auto;
+        overflow-y: visible;
+    }
+
+    /* Ensure the main row stacks vertically */
+    .row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Make sidebar and main panel full width on mobile */
+    .col-sm-2,
+    .col-sm-10 {
+        width: 100%;
+        float: none;
+    }
 }
