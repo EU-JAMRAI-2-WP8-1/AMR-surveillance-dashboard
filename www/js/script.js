@@ -45,7 +45,7 @@ $(document).on('shiny:connected', function() {
         const selectedCount = $('#' + inputId + ' input:checked').length;
         const percentage = totalCount > 0 ? (selectedCount / totalCount) * 100 : 0;
         // Account for 12px margins on each side (24px total)
-        $('#' + progressBarId).css('width', 'calc(' + percentage + '% - 24px)');
+        $('#' + progressBarId).css('width', 'calc(' + percentage + '%)');
     }
 
     // Function to get total count for a checkbox group

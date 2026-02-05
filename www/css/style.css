@@ -85,15 +85,15 @@
 /* Dual Button Container */
 .dual-button-container {
     display: flex;
-    gap: 4px;
-    margin-top: 12px;
+    /*gap: 4px;*/ /*NUI*/
+    /*margin-top: 12px;*/ /*NUI*/
     margin-bottom: 0px;
 }
 
 /* Add padding when info button is present (in wrapper with position:relative) */
-div[style*="position: relative"] .dual-button-container {
+/*div[style*="position: relative"] .dual-button-container {
     padding-right: 30px;
-}
+}*/ /*NUI*/
 
 /* Individual dual buttons */
 .dual-button {
@@ -277,31 +277,123 @@ div[style*="position: relative"] .dual-button-container {
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
+/* Navbar background color based on selected section */
+body.section-1 .navbar,
+body.section-1 .navbar.navbar-default {
+    background-color: rgba(42, 157, 143, 0.3) !important; /* Lighter teal */
+}
+
+body.section-2 .navbar,
+body.section-2 .navbar.navbar-default {
+    background-color: rgba(212, 168, 67, 0.3) !important; /* Lighter gold */
+}
+
+body.section-3 .navbar,
+body.section-3 .navbar.navbar-default {
+    background-color: rgba(204, 136, 136, 0.3) !important; /* Lighter pink */
+}
+
+/* Nav-tabs background color based on selected section */
+body.section-1 .nav-tabs {
+    background-color: rgba(42, 157, 143, 0.3) !important; /* Lighter teal */
+}
+
+body.section-2 .nav-tabs {
+    background-color: rgba(212, 168, 67, 0.3) !important; /* Lighter gold */
+}
+
+body.section-3 .nav-tabs {
+    background-color: rgba(204, 136, 136, 0.3) !important; /* Lighter pink */
+}
+
+/* Hide the nav-tabs bar - navigation moved to sidebar */
 .nav-tabs {
-    background-color: rgba(127, 127, 127, 0.25) !important;
     --bs-nav-tabs-border-width: 0 !important;
     --bs-nav-tabs-border-radius: 0 !important;
-    display: flex !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
 }
 
-/* Push Info and Contact tabs to the right */
-.nav-tabs .nav-item:nth-last-child(2) {
-    margin-left: auto !important;
+/* View toggle wrapper in sidebar */
+.view-toggle-wrapper {
+    padding: 8px 12px;
+    margin: 0;
 }
 
-.nav-item {
-    border: 0;
+.view-toggle-wrapper .btn-group-container-sw {
+    width: 100%;
+}
+
+.view-toggle-wrapper .btn-group {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.view-toggle-wrapper #viewToggle .btn {
+    flex: 1;
+    padding: 8px 12px !important;
+    background-color: #e0e0e0 !important;
+    border-color: #e0e0e0 !important;
+    color: #666 !important;
+    border-radius: 0 !important;
+}
+
+/* Pill-shaped button group for view toggle */
+.view-toggle-wrapper #viewToggle .btn:first-of-type {
+    border-radius: 20px 0 0 20px !important;
+}
+
+.view-toggle-wrapper #viewToggle .btn:last-of-type {
+    border-radius: 0 20px 20px 0 !important;
+}
+
+.view-toggle-wrapper #viewToggle .btn:only-of-type {
+    border-radius: 20px !important;
+}
+
+.view-toggle-wrapper #viewToggle .btn:hover {
+    background-color: #d0d0d0 !important;
+    border-color: #d0d0d0 !important;
+}
+
+.view-toggle-wrapper #viewToggle input:checked + .btn {
+    background-color: #008aab !important;
+    border-color: #008aab !important;
+    color: white !important;
+}
+
+/* Sidebar bottom buttons */
+.sidebar-bottom-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding: 12px;
+    margin-top: 32px;
+}
+
+.sidebar-bottom-buttons .btn {
+    flex: 1;
+    font-size: 0.95em;
+    padding: 10px 8px;
 }
 
 .accordion {
     --bs-accordion-bg: rgba(0, 0, 0, 0);
     --bs-accordion-border-width: 0;
+    padding: 12px; /*NUI*/
 }
 
 /* Spacing between filter sections */
 .accordion-item {
-    margin-bottom: 28px;  /* Increased spacing between sections */
+    margin-bottom: 16px;  /* Spacing between sections */
     border-radius: 0 !important;  /* Remove border-radius to keep borders straight */
+    border: 1px solid #008AAB !important; /*NUI*/ /*override Shiny*/
 }
 
 /* Reduce height of accordion title boxes */
@@ -312,7 +404,7 @@ div[style*="position: relative"] .dual-button-container {
 }
 
 /* Light grey background bar for progress indicator */
-.accordion-button::before {
+/*.accordion-button::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -321,7 +413,7 @@ div[style*="position: relative"] .dual-button-container {
     height: 3px;
     background-color: #e0e0e0;
     z-index: 0;
-}
+}*/ /*NUI -> removed*/
 
 /* Remove blue outline/focus on accordion button */
 .accordion-button:focus {
@@ -337,9 +429,9 @@ div[style*="position: relative"] .dual-button-container {
 .filter-progress-bar {
     position: absolute;
     bottom: 0;
-    left: 12px;
-    height: 3px;
-    background-color: #008aab;
+    left: 0px; /*NUI*/
+    height: 100%; /*NUI*/
+    background-color: rgba(0, 138, 171, 0.2); /*NUI*/
     width: 0%;
     transition: width 0.3s ease;
     z-index: 1;
@@ -347,13 +439,30 @@ div[style*="position: relative"] .dual-button-container {
 
 /* Reduce spacing in accordion body to bring title and content closer */
 .accordion-body {
-    padding-top: 4px !important;  /* Reduced from 8px to bring closer to progress bar */
-    padding-bottom: 8px !important;
+    padding: 0 !important; /*NUI*/
+    /*padding-top: 4px !important;  /* Reduced from 8px to bring closer to progress bar */ /*NUI*/
+    /*padding-bottom: 8px !important;*/ /*NUI*/
+}
+
+.accordion-body > .form-group {
+    padding: 18px;
+    margin-bottom: 0px;
+
 }
 
 .accordion-icon {
     font-size: 0.85em;
     color: #666;
+}
+
+.shiny-options-group { /*NUI*/
+    margin-top: -24px !important;
+}
+
+#countriesSelection .shiny-options-group { /* Optimize space use for country selection filter */ /*NUI*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .row > .col-sm-2 {
@@ -386,7 +495,7 @@ div[style*="position: relative"] .dual-button-container {
 }
 
 .accordion-title {
-    font-size: 1.5rem !important;
+    font-size: 1.1rem !important;
 }
 
 .pagination > li {
@@ -536,6 +645,7 @@ div[style*="position: relative"] .dual-button-container {
 
 .sidebar-panel {
     padding: 0 !important;
+    background-color: rgba(0, 0, 0, 0) !important; /*NUI*/
     border: 0;
     min-width: 200px;
     position: sticky;
@@ -600,6 +710,47 @@ body.section-3 .sections-wrapper::after {
     background-color: #cc8888;
 }
 
+/* Sections wrapper in sidebar - horizontal layout with square buttons */
+.sections-wrapper-sidebar {
+    padding: 8px 12px;
+    margin: 0;
+}
+
+.sections-wrapper-sidebar .btn-group-container-sw {
+    width: 100%;
+}
+
+.sections-wrapper-sidebar .btn-group { /*NUI*/
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.sections-wrapper-sidebar #sectionsSelection .btn {
+    width: calc(33.33% - 3px) !important;
+    /*border-radius: 4px !important;*/
+    padding: 8px 4px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.sections-wrapper-sidebar #sectionsSelection .btn .btn-text {
+    display: block;
+    font-size: 1em;
+    margin-top: 4px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.sections-wrapper-sidebar #sectionsSelection .btn i {
+    font-size: 1.2em;
+}
+
 .github-link-btn {
     color: white !important;
     padding: 6px 12px;
@@ -619,15 +770,28 @@ body.section-3 .sections-wrapper::after {
 #sectionsSelection .btn {
     width: 280px;
     padding: 6px 12px !important;
-    background-color: #6c757d !important;
-    border-color: #6c757d !important;
-    color: white !important;
+    background-color: #e0e0e0 !important;
+    border-color: #e0e0e0 !important;
+    color: #666 !important;
     border-radius: 0 !important;
 }
 
+/* Pill-shaped button group for sections */
+#sectionsSelection .btn:first-of-type {
+    border-radius: 60px 0 0 60px !important;
+}
+
+#sectionsSelection .btn:last-of-type {
+    border-radius: 0 60px 60px 0 !important;
+}
+
+#sectionsSelection .btn:only-of-type {
+    border-radius: 60px !important;
+}
+
 #sectionsSelection .btn:hover {
-    background-color: #5a6268 !important;
-    border-color: #5a6268 !important;
+    background-color: #d0d0d0 !important;
+    border-color: #d0d0d0 !important;
 }
 
 /* Section 1 - National surveillance (teal) */
@@ -694,10 +858,10 @@ body.section-3 .sections-wrapper::after {
 
 }*/
 
-#countriesSelection {
+/*#countriesSelection {
     height: 280px;
     overflow-y: scroll;
-}
+}*/ /*NUI*/
 
 #section-filter-container {
     height: 100px;
@@ -936,7 +1100,17 @@ body.section-3 .full-question-title-box {
     }
 
     .dashboard-map-box {
-        margin-top: 320px;
+        margin-top: 15px;
+    }
+
+    .dashboard-plot-container {
+        margin-top: 15px;
+        margin-left: 0;
+    }
+
+    .full-question-title-box {
+        margin-top: 15px;
+        margin-bottom: 10px;
     }
 
     .tab-text {
@@ -953,6 +1127,11 @@ body.section-3 .full-question-title-box {
         min-width: 50px;
     }
 
+    /* Hide lock column button on mobile to prevent scroll lock issue */
+    .lock-btn {
+        display: none !important;
+    }
+
     /* Stack modal title elements vertically on mobile */
     .flex-space-between {
         flex-direction: column;
@@ -967,6 +1146,17 @@ body.section-3 .full-question-title-box {
 
     .modal-title-text {
         text-align: center;
+    }
+
+    /* Center modal footer buttons on mobile */
+    .modal-footer {
+        justify-content: center !important;
+    }
+
+    /* Center modal header-right buttons on mobile */
+    .modal-header-right {
+        align-items: center !important;
+        width: 100%;
     }
 
     /* Contact form responsive styling */

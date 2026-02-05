@@ -132,9 +132,9 @@ resistanceChoiceNames <- resistanceList
 cultureMaterialChoiceNames <- cultureMaterialList
 
 # info text
-pathogensInfoText       <- "Select the pathogen(s) you want to filter by. You can also select 'Not pathogen related' to include questions that are not specific to any pathogen."
-resistancesInfoText     <- "Select the resistance(s) you want to filter by. You can also select 'Not resistance related' to include questions that are not specific to any resistance."
-cultureMaterialInfoText <- "Select the culture material(s) you want to filter by. You can also select 'Not culture material related' to include questions that are not specific to any culture material."
+#pathogensInfoText       <- "Select the pathogen(s) you want to filter by. You can also select 'Not pathogen related' to include questions that are not specific to any pathogen." #NUI
+#resistancesInfoText     <- "Select the resistance(s) you want to filter by. You can also select 'Not resistance related' to include questions that are not specific to any resistance." #NUI
+#cultureMaterialInfoText <- "Select the culture material(s) you want to filter by. You can also select 'Not culture material related' to include questions that are not specific to any culture material." #NUI
 
 # get all questions (short titles) for question filter + set list of multiple choice questions (short titles)
 allShortTitles <- c()
@@ -310,25 +310,44 @@ ui <- shinyUI(fluidPage(
                 actionButton("showInstructions", "Instructions", class = "btn btn-outline-info", icon = icon("circle-info"))
             ),
 
-            tags$span(
-                class = "reset-filters-wrapper",
-                actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
+            # Toggle between Visuals and Table views
+            tags$div(
+                class = "view-toggle-wrapper",
+                radioGroupButtons(
+                    inputId = "viewToggle",
+                    label = NULL,
+                    choiceNames = list(
+                        HTML('<i class="fa fa-globe"></i><span class="btn-text"> Visuals</span>'),
+                        HTML('<i class="fa fa-table"></i><span class="btn-text"> Table</span>')
+                    ),
+                    choiceValues = c("visuals", "table"),
+                    selected = "visuals",
+                    individual = FALSE,
+                    checkIcon = list(),
+                    status = "primary"
+                )
             ),
 
-            accordion(
-
-                accordion_panel(
-                    title = HTML('<div class="filter-progress-bar" id="progress-countries"></div><i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
-                    checkboxGroupInput(
-                        inputId  = "countriesSelection",
-                        label    = "",
-                        choices  = sort(participatingCountries),
-                        selected = participatingCountries,
-                        inline   = FALSE,
-                        width    = NULL
+            # Sections filter - moved to sidebar
+            tags$div(
+                class = "sections-wrapper-sidebar",
+                radioGroupButtons(
+                    inputId  = "sectionsSelection",
+                    label    = NULL,
+                    choiceNames = list(
+                        HTML('<i class="fa fa-eye"></i><span class="btn-text"> National surveillance</span>'),
+                        HTML('<i class="fa fa-dna"></i><span class="btn-text"> National genomic surveillance</span>'),
+                        HTML('<i class="fa fa-book-open"></i><span class="btn-text"> National guidance</span>')
                     ),
-                    uiOutput("selectAllCountriesButton")
-                ),
+                    choiceValues = sectionList,
+                    selected = sectionList[1],
+                    individual = FALSE,
+                    checkIcon = list(),
+                    status = "primary"
+                )
+            ),
+
+            accordion(                
                 accordion_panel(
                     title = HTML('<div class="filter-progress-bar" id="progress-cultureMaterials"></div><i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
                     checkboxGroupInput(
@@ -368,8 +387,35 @@ ui <- shinyUI(fluidPage(
                         width    = NULL
                     ),
                     uiOutput("selectAllResistancesButton")
+                ),
+                accordion_panel(
+                    title = HTML('<div class="filter-progress-bar" id="progress-countries"></div><i class="fa fa-globe accordion-icon accordion-icon-countries"></i> Countries'),
+                    checkboxGroupInput(
+                        inputId  = "countriesSelection",
+                        label    = "",
+                        choices  = sort(participatingCountries),
+                        selected = participatingCountries,
+                        inline   = FALSE,
+                        width    = NULL
+                    ),
+                    uiOutput("selectAllCountriesButton")
                 )
             ),
+
+            # Reset filters button
+            tags$span(
+                class = "reset-filters-wrapper",
+                actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
+            ),
+
+            # Bottom buttons: Info, Legal, Contact
+            tags$div(
+                class = "sidebar-bottom-buttons",
+                actionButton("showInfoModal", "Info", class = "btn btn-outline-secondary btn-sm", icon = icon("info-circle")),
+                actionButton("showLegalModalSidebar", "Legal", class = "btn btn-outline-secondary btn-sm", icon = icon("scale-balanced")),
+                actionButton("showContactModal", "Contact", class = "btn btn-outline-secondary btn-sm", icon = icon("envelope"))
+            ),
+
             tags$div(
                 class = "sidebar-filler"
             )
@@ -379,33 +425,9 @@ ui <- shinyUI(fluidPage(
         mainPanel(
             width = 10,
 
-            # Sections filter - horizontal at top
-            tags$div(
-                class = "sections-wrapper",
-                radioGroupButtons(
-                    inputId  = "sectionsSelection",
-                    label    = NULL,
-                    choiceNames = list(
-                        HTML('<i class="fa fa-eye"></i><span class="btn-text"> National surveillance</span>'),
-                        HTML('<i class="fa fa-dna"></i><span class="btn-text"> National genomic surveillance</span>'),
-                        HTML('<i class="fa fa-book-open"></i><span class="btn-text"> National guidance</span>')
-                    ),
-                    choiceValues = sectionList,
-                    selected = sectionList[1],
-                    individual = FALSE,
-                    checkIcon = list(),
-                    status = "primary"
-                ),
-                tags$a(
-                    href = "https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard",
-                    target = "_blank",
-                    class = "github-link-btn",
-                    tags$i(class = "fa fa-brands fa-github")
-                )
-            ),
-
             # tabs
             tabsetPanel(
+                id = "mainTabs",
 
                 # plots
                 tabPanel(
@@ -417,6 +439,7 @@ ui <- shinyUI(fluidPage(
                             "Visuals"
                         )
                     ),
+                    value = "visuals",
                     fluidRow(
                         
                         column(
@@ -486,6 +509,7 @@ ui <- shinyUI(fluidPage(
                             "Table"
                         )
                     ),
+                    value = "table",
                     uiOutput("noQuestionsMessage"),
                     DT::dataTableOutput("resultsTable"),
                     tags$div(
@@ -699,11 +723,11 @@ server <- function(input, output, session) {
                 actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-check"></i> All'),
                     class = paste("dual-button select-btn", if(length(input$cultureMaterialsSelection) == length(cultureMaterialList)) "disabled-btn" else ""))
             ),
-            tags$button(
-                class = "info-button-standalone",
-                "?"
-            ),
-            tags$span(class = "info-sections", cultureMaterialInfoText)
+            #tags$button(
+            #    class = "info-button-standalone",
+            #    "?"
+            #),
+            #tags$span(class = "info-sections", cultureMaterialInfoText) #NUI
         )
     })
 
@@ -717,11 +741,11 @@ server <- function(input, output, session) {
                 actionButton("selectAllPathogens", HTML('<i class="fa fa-check"></i> All'),
                     class = paste("dual-button select-btn", if(length(input$pathogensSelection) == length(pathogenList)) "disabled-btn" else ""))
             ),
-            tags$button(
-                class = "info-button-standalone",
-                "?"
-            ),
-            tags$span(class = "info-sections", pathogensInfoText)
+            #tags$button(
+            #    class = "info-button-standalone",
+            #    "?"
+            #),
+            #tags$span(class = "info-sections", pathogensInfoText) #NUI
         )
     })
 
@@ -735,11 +759,11 @@ server <- function(input, output, session) {
                 actionButton("selectAllResistances", HTML('<i class="fa fa-check"></i> All'),
                     class = paste("dual-button select-btn", if(length(input$resistancesSelection) == length(resistanceList)) "disabled-btn" else ""))
             ),
-            tags$button(
-                class = "info-button-standalone",
-                "?"
-            ),
-            tags$span(class = "info-sections", resistancesInfoText)
+            #tags$button(
+            #    class = "info-button-standalone",
+            #    "?"
+            #), #NUI
+            #tags$span(class = "info-sections", resistancesInfoText) #NUI
         )
     })
 
@@ -783,7 +807,7 @@ server <- function(input, output, session) {
         updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = c())
     })
 
-    # Legal information modal
+    # Legal information modal (from Info tab button)
     observeEvent(input$showLegalModal, {
         showModal(modalDialog(
             title = "Legal Information",
@@ -793,8 +817,71 @@ server <- function(input, output, session) {
                 HTML("<p>Legal information unavailable</p>")
             }),
             easyClose = TRUE,
-            footer = modalButton("Close")
+            footer = modalButton("Close"),
+            size = "l"
         ))
+    })
+
+    # Legal information modal (from sidebar button)
+    observeEvent(input$showLegalModalSidebar, {
+        showModal(modalDialog(
+            title = "Legal Information",
+            tryCatch({
+                includeHTML("www/html/legal.html")
+            }, error = function(e) {
+                HTML("<p>Legal information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = modalButton("Close"),
+            size = "l"
+        ))
+    })
+
+    # Info modal (from sidebar button)
+    observeEvent(input$showInfoModal, {
+        showModal(modalDialog(
+            title = "About",
+            tryCatch({
+                includeHTML("www/html/about.html")
+            }, error = function(e) {
+                HTML("<p>About information unavailable</p>")
+            }),
+            easyClose = TRUE,
+            footer = modalButton("Close"),
+            size = "l"
+        ))
+    })
+
+    # Contact modal (from sidebar button)
+    observeEvent(input$showContactModal, {
+        showModal(modalDialog(
+            title = tags$span(icon("envelope"), " Contact Us"),
+            tags$div(
+                style = "max-width: 600px;",
+                tags$p("Have questions or feedback? We'd love to hear from you. Please fill out the form below and we'll get back to you as soon as possible."),
+                tags$br(),
+                textInput("contactNameModal", "Name *", placeholder = "Your name", width = "100%"),
+                textInput("contactEmailModal", "Email *", placeholder = "your.email@example.com", width = "100%"),
+                textInput("contactSubjectModal", "Subject *", placeholder = "Brief subject of your message", width = "100%"),
+                textAreaInput("contactMessageModal", "Message *", placeholder = "Your message here...", width = "100%", height = "150px"),
+                tags$p(style = "font-size: 0.9em; color: #666;", "* Required fields")
+            ),
+            easyClose = TRUE,
+            footer = tagList(
+                modalButton("Cancel"),
+                actionButton("submitContactModal", "Send Message", class = "btn btn-primary", icon = icon("paper-plane"))
+            ),
+            size = "m"
+        ))
+    })
+
+    # View toggle - switch between Visuals and Table tabs
+    observeEvent(input$viewToggle, {
+        if (input$viewToggle == "visuals") {
+            updateTabsetPanel(session, "mainTabs", selected = "visuals")
+        } else if (input$viewToggle == "table") {
+            updateTabsetPanel(session, "mainTabs", selected = "table")
+        }
     })
 
     # Geo data disclaimer modal
