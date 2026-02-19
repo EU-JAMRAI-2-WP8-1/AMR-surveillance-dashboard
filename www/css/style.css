@@ -549,6 +549,66 @@ body.section-3 .nav-tabs {
     border-right: 1px solid #008aab !important;
 }
 
+/* Question selector card */
+.question-selector-card {
+    background-color: #e8f6f9;
+    border: 1px solid #b3dde6;
+    border-left: 4px solid #008aab;
+    border-radius: 6px;
+    padding: 14px 16px 6px 16px;
+    margin-bottom: 14px;
+}
+
+/* Dynamic border color based on selected section */
+body.section-1 .question-selector-card {
+    background-color: #e8f6f4;
+    border-color: #b3ddd8;
+    border-left-color: #2a9d8f;
+}
+
+body.section-2 .question-selector-card {
+    background-color: #faf5e8;
+    border-color: #e8dbb8;
+    border-left-color: #d4a843;
+}
+
+body.section-3 .question-selector-card {
+    background-color: #f9eded;
+    border-color: #e6c8c8;
+    border-left-color: #cc8888;
+}
+
+/* Question selector input styling */
+.question-selector-card .selectize-input {
+    border: 2px solid #008aab;
+    border-radius: 9999px;
+    padding: 12px 32px;
+}
+
+body.section-1 .question-selector-card .selectize-input {
+    border-color: #2a9d8f;
+}
+
+body.section-2 .question-selector-card .selectize-input {
+    border-color: #d4a843;
+}
+
+body.section-3 .question-selector-card .selectize-input {
+    border-color: #cc8888;
+}
+
+.question-selector-card .selectize-input::after {
+    content: '' !important;
+    display: block !important;
+    border: none !important;
+    width: 14px !important;
+    height: 14px !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    margin-top: -7px !important;
+}
+
 /* Question selection dropdown menu */
 #questionSelection + .selectize-control .selectize-dropdown-content {
     max-height: 600px !important;
@@ -741,7 +801,7 @@ body.section-3 .sections-wrapper::after {
 
 .sections-wrapper-sidebar #sectionsSelection .btn .btn-text {
     display: block;
-    font-size: 1em;
+    font-size: 0.95em;
     margin-top: 4px;
     word-wrap: break-word;
     white-space: normal;

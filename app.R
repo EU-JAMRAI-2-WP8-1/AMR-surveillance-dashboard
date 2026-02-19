@@ -444,22 +444,25 @@ ui <- shinyUI(fluidPage(
                         
                         column(
                             width = 5,
-                            selectizeInput(
-                                inputId   = "questionSelection",
-                                label     = HTML("<strong>Select a question</strong> (tip: use the left filter panel first to narrow the selection)"),
-                                choices   = c("Participating countries", allShortTitles),
-                                selected  = c("Participating countries"),
-                                multiple  = FALSE,
-                                width     = "99%",
-                                options   = list(
-                                    render = I("{
-                                        option: function(item, escape) {
-                                            return '<div>' + item.label + '</div>';
-                                        },
-                                        item: function(item, escape) {
-                                            return '<div>' + item.label + '</div>';
-                                        }
-                                    }")
+                            tags$div(
+                                class = "question-selector-card",
+                                selectizeInput(
+                                    inputId   = "questionSelection",
+                                    label     = HTML("<strong>Select a question</strong> (tip: use the left filter panel first to narrow the selection)"),
+                                    choices   = c("Participating countries", allShortTitles),
+                                    selected  = c("Participating countries"),
+                                    multiple  = FALSE,
+                                    width     = "99%",
+                                    options   = list(
+                                        render = I("{
+                                            option: function(item, escape) {
+                                                return '<div>' + item.label + '</div>';
+                                            },
+                                            item: function(item, escape) {
+                                                return '<div>' + item.label + '</div>';
+                                            }
+                                        }")
+                                    )
                                 )
                             ),
                             uiOutput("multipleChoiceAnswerSelector"),
