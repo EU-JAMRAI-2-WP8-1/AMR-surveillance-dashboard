@@ -53,15 +53,8 @@
 /* Dual Button Container */
 .dual-button-container {
     display: flex;
-    /*gap: 4px;*/ /*NUI*/
-    /*margin-top: 12px;*/ /*NUI*/
     margin-bottom: 0px;
 }
-
-/* Add padding when info button is present (in wrapper with position:relative) */
-/*div[style*="position: relative"] .dual-button-container {
-    padding-right: 30px;
-}*/ /*NUI*/
 
 /* Individual dual buttons */
 .dual-button {
@@ -242,8 +235,7 @@
 
 /* View toggle wrapper in sidebar */
 .view-toggle-wrapper {
-    padding: 8px 12px;
-    margin: 16px 0 8px 0;
+    padding: 12px 12px;
 }
 
 .view-toggle-wrapper .btn-group-container-sw {
@@ -291,8 +283,7 @@
 
 /* Outer toggle wrapper in sidebar (dashboard / insight) */
 .outer-toggle-wrapper {
-    padding: 8px 12px;
-    margin: 16px 0 8px 0;
+    padding: 32px 12px;
 }
 
 .outer-toggle-wrapper .btn-group-container-sw {
@@ -365,14 +356,14 @@
 .accordion {
     --bs-accordion-bg: rgba(0, 0, 0, 0);
     --bs-accordion-border-width: 0;
-    padding: 12px; /*NUI*/
+    padding: 12px 12px 0px 12px;
 }
 
 /* Spacing between filter sections */
 .accordion-item {
     margin-bottom: 16px;  /* Spacing between sections */
     border-radius: 0 !important;  /* Remove border-radius to keep borders straight */
-    border: 1px solid #008AAB !important; /*NUI*/ /*override Shiny*/
+    border: 1px solid #008AAB !important; /*override Shiny*/
 }
 
 /* Reduce height of accordion title boxes */
@@ -381,18 +372,6 @@
     padding-bottom: 8px !important;
     position: relative;
 }
-
-/* Light grey background bar for progress indicator */
-/*.accordion-button::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 12px;
-    width: calc(100% - 24px);
-    height: 3px;
-    background-color: #e0e0e0;
-    z-index: 0;
-}*/ /*NUI -> removed*/
 
 /* Remove blue outline/focus on accordion button */
 .accordion-button:focus {
@@ -408,9 +387,9 @@
 .filter-progress-bar {
     position: absolute;
     bottom: 0;
-    left: 0px; /*NUI*/
-    height: 100%; /*NUI*/
-    background-color: rgba(0, 138, 171, 0.2); /*NUI*/
+    left: 0px;
+    height: 100%;
+    background-color: rgba(0, 138, 171, 0.2);
     width: 0%;
     transition: width 0.3s ease;
     z-index: 1;
@@ -418,9 +397,7 @@
 
 /* Reduce spacing in accordion body to bring title and content closer */
 .accordion-body {
-    padding: 0 !important; /*NUI*/
-    /*padding-top: 4px !important;  /* Reduced from 8px to bring closer to progress bar */ /*NUI*/
-    /*padding-bottom: 8px !important;*/ /*NUI*/
+    padding: 0 !important;
 }
 
 .accordion-body > .form-group {
@@ -434,11 +411,11 @@
     color: #666;
 }
 
-.shiny-options-group { /*NUI*/
+.shiny-options-group {
     margin-top: -24px !important;
 }
 
-#countriesSelection .shiny-options-group { /* Optimize space use for country selection filter */ /*NUI*/
+#countriesSelection .shiny-options-group { /* Optimize space use for country selection filter */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -634,7 +611,7 @@ body.section-3 .question-selector-card .selectize-input {
 
 .sidebar-panel {
     padding: 0 !important;
-    background-color: rgba(0, 0, 0, 0) !important; /*NUI*/
+    background-color: rgba(0, 0, 0, 0) !important;
     border: 0;
     min-width: 200px;
     position: sticky;
@@ -668,15 +645,14 @@ body.section-3 .question-selector-card .selectize-input {
 
 /* Sections wrapper in sidebar - horizontal layout with square buttons */
 .sections-wrapper-sidebar {
-    padding: 8px 12px;
-    margin-top: 16px;
+    padding: 12px 12px;
 }
 
 .sections-wrapper-sidebar .btn-group-container-sw {
     width: 100%;
 }
 
-.sections-wrapper-sidebar .btn-group { /*NUI*/
+.sections-wrapper-sidebar .btn-group {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -798,11 +774,6 @@ body.section-3 .question-selector-card .selectize-input {
 /*#resetFilters {
 
 }*/
-
-/*#countriesSelection {
-    height: 280px;
-    overflow-y: scroll;
-}*/ /*NUI*/
 
 
 /* MAIN SECTION */
