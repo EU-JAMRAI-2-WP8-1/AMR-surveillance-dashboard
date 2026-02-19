@@ -242,8 +242,7 @@
 
 /* View toggle wrapper in sidebar */
 .view-toggle-wrapper {
-    padding: 8px 12px;
-    margin: 16px 0 8px 0;
+    padding: 12px 12px;
 }
 
 .view-toggle-wrapper .btn-group-container-sw {
@@ -291,8 +290,7 @@
 
 /* Outer toggle wrapper in sidebar (dashboard / insight) */
 .outer-toggle-wrapper {
-    padding: 8px 12px;
-    margin: 16px 0 8px 0;
+    padding: 32px 12px;
 }
 
 .outer-toggle-wrapper .btn-group-container-sw {
@@ -365,7 +363,7 @@
 .accordion {
     --bs-accordion-bg: rgba(0, 0, 0, 0);
     --bs-accordion-border-width: 0;
-    padding: 12px; /*NUI*/
+    padding: 12px 12px 0px 12px;
 }
 
 /* Spacing between filter sections */
@@ -668,8 +666,7 @@ body.section-3 .question-selector-card .selectize-input {
 
 /* Sections wrapper in sidebar - horizontal layout with square buttons */
 .sections-wrapper-sidebar {
-    padding: 8px 12px;
-    margin-top: 16px;
+    padding: 12px 12px;
 }
 
 .sections-wrapper-sidebar .btn-group-container-sw {
