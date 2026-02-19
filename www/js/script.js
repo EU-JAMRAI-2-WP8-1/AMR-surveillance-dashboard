@@ -1,3 +1,22 @@
+// Update body class based on section selection (for color theming)
+$(document).on('shiny:inputchanged', function(event) {
+    if (event.name === 'sectionsSelection') {
+        $('body').removeClass('section-1 section-2 section-3');
+        if (event.value === 'National surveillance') {
+            $('body').addClass('section-1');
+        } else if (event.value === 'National genomic surveillance') {
+            $('body').addClass('section-2');
+        } else if (event.value === 'National guidance') {
+            $('body').addClass('section-3');
+        }
+    }
+});
+
+// Set initial body class on page load
+$(document).ready(function() {
+    $('body').addClass('section-1');
+});
+
 // send size of main div to parent window (iframe)
 function getDocumentHeight() {
     return Math.max(

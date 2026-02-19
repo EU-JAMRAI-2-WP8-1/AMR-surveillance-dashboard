@@ -201,90 +201,6 @@ ui <- shinyUI(fluidPage(
     # add favicon
     tags$head(tags$link(rel="shortcut icon", href=file.path("www/favicons/jamrai_favicon_32x32.png"))),
 
-    # dark mode hidden input (required)
-    #input_dark_mode(
-    #    id = "mode",
-    #    class = "hidden"
-    #),
-
-    # navigation bar
-    #page_navbar(
-
-        #nav_item(
-        #    class = "navbar-header",
-        #    #"ENAMReS - European National AMR Surveillance"
-        #    HTML("<span style=\"color:#ff4444\">[TEST VERSION]</span><span> National surveillance of antimicrobial resistance (AMR) in humans in Europe 2025</span>")
-        #),
-
-        #nav_spacer(),
-
-        # button - link to JAMRAI website
-        #nav_item(
-        #    tags$a(
-        #    tags$span(
-        #        bsicons::bs_icon("cursor"),
-        #        "JAMRAI"
-        #    ),
-        #    href = "https://eu-jamrai.eu/",
-        #    target = "_blank"
-        #    )
-        #),
-
-        # button - link to GitHub repo
-        #nav_item(
-        #    tags$a(
-        #    tags$span(
-        #        bsicons::bs_icon("file-earmark-code"), "Source code"
-        #    ),
-        #    href = "https://github.com/EU-JAMRAI-2-WP8-1/AMR-surveillance-dashboard",
-        #    target = "_blank"
-        #    )
-        #),
-
-        # button - triggers download of source data
-        #nav_item(
-        #    tags$a(
-        #    tags$span(
-        #        bsicons::bs_icon("file-earmark-arrow-down"), "Download data"
-        #    ),
-        #    href = "https://github.com/",
-        #    target = "_blank"
-        #    )
-        #),
-
-        # light/dark mode toggle
-        #nav_item(
-        #    input_dark_mode(id = "dark_mode", mode = NULL)
-        #),
-
-        #position = c("fixed-top")
-    #),
-
-    # spacer - prevents overlapping of header and navbar
-    #div(
-    #    class = "top-spacer"
-    #),
-
-    # JavaScript to update body class based on section selection
-    tags$script(HTML("
-        $(document).on('shiny:inputchanged', function(event) {
-            if (event.name === 'sectionsSelection') {
-                $('body').removeClass('section-1 section-2 section-3');
-                if (event.value === 'National surveillance') {
-                    $('body').addClass('section-1');
-                } else if (event.value === 'National genomic surveillance') {
-                    $('body').addClass('section-2');
-                } else if (event.value === 'National guidance') {
-                    $('body').addClass('section-3');
-                }
-            }
-        });
-        // Set initial class on page load
-        $(document).ready(function() {
-            $('body').addClass('section-1');
-        });
-    ")),
-
     # Layout type
     sidebarLayout(
 
@@ -310,18 +226,18 @@ ui <- shinyUI(fluidPage(
                 actionButton("showInstructions", "Instructions", class = "btn btn-outline-info", icon = icon("circle-info"))
             ),
 
-            # Toggle between Visuals and Table views
+            # Toggle between Graphics and Table views
             tags$div(
                 class = "view-toggle-wrapper",
                 radioGroupButtons(
                     inputId = "viewToggle",
                     label = NULL,
                     choiceNames = list(
-                        HTML('<i class="fa fa-globe"></i><span class="btn-text"> Visuals</span>'),
+                        HTML('<i class="fa fa-globe"></i><span class="btn-text"> Graphics</span>'),
                         HTML('<i class="fa fa-table"></i><span class="btn-text"> Table</span>')
                     ),
-                    choiceValues = c("visuals", "table"),
-                    selected = "visuals",
+                    choiceValues = c("graphics", "table"),
+                    selected = "graphics",
                     individual = FALSE,
                     checkIcon = list(),
                     status = "primary"
@@ -408,6 +324,24 @@ ui <- shinyUI(fluidPage(
                 actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
             ),
 
+            # Toggle between Dashboard and Insight views
+            tags$div(
+                class = "outer-toggle-wrapper",
+                radioGroupButtons(
+                    inputId = "outerToggle",
+                    label = NULL,
+                    choiceNames = list(
+                        HTML('<i class="fa fa-chart-bar"></i><span class="btn-text"> Dashboard</span>'),
+                        HTML('<i class="fa fa-lightbulb"></i><span class="btn-text"> Insight</span>')
+                    ),
+                    choiceValues = c("dashboard", "insight"),
+                    selected = "dashboard",
+                    individual = FALSE,
+                    checkIcon = list(),
+                    status = "primary"
+                )
+            ),
+
             # Bottom buttons: Info, Legal, Contact
             tags$div(
                 class = "sidebar-bottom-buttons",
@@ -427,266 +361,148 @@ ui <- shinyUI(fluidPage(
 
             # tabs
             tabsetPanel(
-                id = "mainTabs",
+                id = "outerTabs",
 
-                # plots
+                # dashboard tab (contains graphics + table)
                 tabPanel(
-                    tags$span(
-                        #bsicons::bs_icon("bar-chart"),
-                        bsicons::bs_icon("globe-europe-africa"),
-                        tags$span(
-                            class = "tab-text",
-                            "Visuals"
-                        )
-                    ),
-                    value = "visuals",
-                    fluidRow(
-                        
-                        column(
-                            width = 5,
-                            tags$div(
-                                class = "question-selector-card",
-                                selectizeInput(
-                                    inputId   = "questionSelection",
-                                    label     = HTML("<strong>Select a question</strong> (tip: use the left filter panel first to narrow the selection)"),
-                                    choices   = c("Participating countries", allShortTitles),
-                                    selected  = c("Participating countries"),
-                                    multiple  = FALSE,
-                                    width     = "99%",
-                                    options   = list(
-                                        render = I("{
-                                            option: function(item, escape) {
-                                                return '<div>' + item.label + '</div>';
-                                            },
-                                            item: function(item, escape) {
-                                                return '<div>' + item.label + '</div>';
-                                            }
-                                        }")
+                    "",
+                    value = "dashboard",
+                    tabsetPanel(
+                        id = "mainTabs",
+
+                        # map and bar chart
+                        tabPanel(
+                            "",
+                            value = "graphics",
+                            fluidRow(
+                                
+                                column(
+                                    width = 5,
+                                    tags$div(
+                                        class = "question-selector-card",
+                                        selectizeInput(
+                                            inputId   = "questionSelection",
+                                            label     = HTML("<strong>Select a question</strong> (tip: use the left filter panel first to narrow the selection)"),
+                                            choices   = c("Participating countries", allShortTitles),
+                                            selected  = c("Participating countries"),
+                                            multiple  = FALSE,
+                                            width     = "99%",
+                                            options   = list(
+                                                render = I("{
+                                                    option: function(item, escape) {
+                                                        return '<div>' + item.label + '</div>';
+                                                    },
+                                                    item: function(item, escape) {
+                                                        return '<div>' + item.label + '</div>';
+                                                    }
+                                                }")
+                                            )
+                                        )
+                                    ),
+                                    uiOutput("multipleChoiceAnswerSelector"),
+                                    tags$div(
+                                        class = "dashboard-plot-container",
+                                        uiOutput("dashboardPlotUI")
+                                    )
+                                ),
+                                column(
+                                    width = 7,
+                                    tags$div(
+                                        class = "full-question-title-box",
+                                        uiOutput("fullQuestionTitle")
+                                    ),
+                                    tags$div(
+                                        class = "dashboard-map-box",
+                                        plotlyOutput(outputId = "dashboardMap", width = "100%", height = "780px")
+                                    ),
+                                    tags$div(
+                                        class = "map-disclaimer-text",
+                                        "Geospatial data © Eurostat | ",
+                                        tags$a(
+                                            href = "#",
+                                            class = "geo-disclaimer-link",
+                                            "Legal notice"
+                                        )
                                     )
                                 )
-                            ),
-                            uiOutput("multipleChoiceAnswerSelector"),
-                            tags$div(
-                                class = "dashboard-plot-container",
-                                uiOutput("dashboardPlotUI")
                             )
                         ),
-                        column(
-                            width = 7,
-                            tags$div(
-                                class = "full-question-title-box",
-                                uiOutput("fullQuestionTitle")
-                            ),
-                            tags$div(
-                                class = "dashboard-map-box",
-                                plotlyOutput(outputId = "dashboardMap", width = "100%", height = "780px")
-                            ),
-                            tags$div(
-                                class = "map-disclaimer-text",
-                                style = "text-align: center; font-size: 0.9em; color: #888888; margin-top: 5px;",
-                                "Geospatial data © Eurostat | ",
-                                tags$a(
-                                    href = "#",
-                                    class = "geo-disclaimer-link",
-                                    style = "color: #008aab; text-decoration: underline; cursor: pointer;",
-                                    "Legal notice"
-                                )
-                            )
-                        )#,
-                        
-                        #column(
-                        #    width = 1,
-                        #    tags$div(
-                        #        class = ""
-                        #    )
-                        #)
-                    )
-                ),
 
-                # survey results
+                        # survey results (table)
+                        tabPanel(
+                            "",
+                            value = "table",
+                            uiOutput("noQuestionsMessage"),
+                            DT::dataTableOutput("resultsTable"),
+                            tags$div(
+                                class = "download-buttons-wrapper",
+                                downloadButton("downloadDataCSV", "Download CSV", class = "btn btn-outline-primary"),
+                                downloadButton("downloadDataExcel", "Download Excel", class = "btn btn-outline-primary")
+                            )
+                        ),
+
+                        # map - Joint results tab (commented out for beta release)
+                        # tabPanel(
+                        #     tags$span(
+                        #         bsicons::bs_icon("speedometer2"),
+                        #         tags$span(
+                        #             class = "tab-text",
+                        #             "Joint results"
+                        #         )
+                        #     ),
+                        #
+                        #     fluidRow(
+                        #
+                        #         class = "map-tab-container",
+                        #
+                        #         column(
+                        #             width = 9,
+                        #             tags$div(
+                        #                 class = "map-and-source-container",
+                        #                 tags$div(
+                        #                     class = "map-container",
+                        #                     plotlyOutput(outputId = "scoresMap", width = "100%", height = "780px")
+                        #                 ),
+                        #                 tags$div(
+                        #                     class = "map-source-text medium-grey-text",
+                        #                     "Map source: ",
+                        #                     tags$a(
+                        #                         href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
+                        #                         "Eurostat",
+                        #                         target = "_blank"
+                        #                     )
+                        #                 )
+                        #             ),
+                        #         ),
+                        #
+                        #         column(
+                        #             width = 3,
+                        #             tags$div(
+                        #                 class = "map-info-container",
+                        #                 HTML("<i>See the \"Info\" tab for information about scores</i>"),
+                        #                 DT::dataTableOutput("scoresTable")
+                        #
+                        #             )
+                        #         )
+                        #
+                        #     )
+                        # ),
+                    ) # /mainTabs
+                ), # /dashboard tabPanel
+
+                # insight tab
                 tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("table"),
-                        tags$span(
-                            class = "tab-text",
-                            "Table"
-                        )
-                    ),
-                    value = "table",
-                    uiOutput("noQuestionsMessage"),
-                    DT::dataTableOutput("resultsTable"),
+                    "",
+                    value = "insight",
                     tags$div(
-                        style = "margin-top: 10px;",
-                        downloadButton("downloadDataCSV", "Download CSV", class = "btn btn-outline-primary"),
-                        downloadButton("downloadDataExcel", "Download Excel", class = "btn btn-outline-primary", style = "margin-left: 10px;")
-                    )
-                ),
-
-                # map - Joint results tab (commented out for beta release)
-                # tabPanel(
-                #     tags$span(
-                #         bsicons::bs_icon("speedometer2"),
-                #         tags$span(
-                #             class = "tab-text",
-                #             "Joint results"
-                #         )
-                #     ),
-                #
-                #     fluidRow(
-                #
-                #         class = "map-tab-container",
-                #
-                #         column(
-                #             width = 9,
-                #             tags$div(
-                #                 class = "map-and-source-container",
-                #                 tags$div(
-                #                     class = "map-container",
-                #                     plotlyOutput(outputId = "scoresMap", width = "100%", height = "780px")
-                #                 ),
-                #                 tags$div(
-                #                     class = "map-source-text medium-grey-text",
-                #                     "Map source: ",
-                #                     tags$a(
-                #                         href="https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries",
-                #                         "Eurostat",
-                #                         target = "_blank"
-                #                     )
-                #                 )
-                #             ),
-                #         ),
-                #
-                #         column(
-                #             width = 3,
-                #             tags$div(
-                #                 class = "map-info-container",
-                #                 HTML("<i>See the \"Info\" tab for information about scores</i>"),
-                #                 DT::dataTableOutput("scoresTable")
-                #
-                #             )
-                #         )
-                #
-                #     )
-                # ),
-
-                # info
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("info-circle"),
-                        tags$span(
-                            class = "tab-text",
-                            "Info"
-                        )
-                    ),
-                    fluidRow(
-                        tags$div(
-                            class = "about-container",
-                            tryCatch({
-                                includeHTML("www/html/about.html")
-                            }, error = function(e) {
-                                HTML("<p>About information unavailable</p>")
-                            }),
-                            HTML("<br><br>"),
-                            actionButton("showLegalModal", "Legal Information", class = "btn btn-outline-primary", icon = icon("scale-balanced"))
-                        )
-                    )
-                ),
-
-                # contact
-                tabPanel(
-                    tags$span(
-                        bsicons::bs_icon("envelope"),
-                        tags$span(
-                            class = "tab-text",
-                            "Contact"
-                        )
-                    ),
-                    fluidRow(
-                        tags$div(
-                            class = "contact-container",
-                            style = "max-width: 800px; margin: 40px auto; padding: 20px;",
-                            tags$h3("Contact Us", style = "margin-bottom: 20px; color: #008aab;"),
-                            tags$p("Have questions or feedback? We'd love to hear from you. Please fill out the form below and we'll get back to you as soon as possible."),
-                            tags$br(),
-
-                            # Name input
-                            textInput(
-                                inputId = "contactName",
-                                label = "Name *",
-                                placeholder = "Your name",
-                                width = "100%"
-                            ),
-
-                            # Email input
-                            textInput(
-                                inputId = "contactEmail",
-                                label = "Email *",
-                                placeholder = "your.email@example.com",
-                                width = "100%"
-                            ),
-
-                            # Subject input
-                            textInput(
-                                inputId = "contactSubject",
-                                label = "Subject *",
-                                placeholder = "Brief subject of your message",
-                                width = "100%"
-                            ),
-
-                            # Message textarea
-                            textAreaInput(
-                                inputId = "contactMessage",
-                                label = "Message *",
-                                placeholder = "Your message here...",
-                                width = "100%",
-                                height = "200px"
-                            ),
-
-                            # Required field note
-                            tags$p(
-                                style = "font-size: 0.9em; color: #666; margin-top: -10px;",
-                                "* Required fields"
-                            ),
-
-                            # Submit button
-                            actionButton(
-                                "submitContact",
-                                "Send Message",
-                                class = "btn btn-outline-primary",
-                                icon = icon("paper-plane"),
-                                style = "margin-top: 10px;"
-                            ),
-
-                            # Status message placeholder
-                            tags$div(
-                                id = "contactStatusMessage",
-                                style = "margin-top: 20px;",
-                                uiOutput("contactStatus")
-                            )
-                        )
+                        class = "insight-coming-soon",
+                        "Coming soon !"
                     )
                 )
 
-                # dataset
-                #tabPanel(
-                #    tags$span(
-                #        bsicons::bs_icon("table"),
-                #        tags$span(
-                #            class = "tab-text",
-                #            "Dataset"
-                #        )
-                #    ),
-                #    tableOutput("myTable")
-                #)
-            ),
+            ), # /outerTabs
         )
     ),
-
-    # footer
-    #fluidRow(
-    #    img(src=jamraiLogoHeaderRectWhite) %>% tagAppendAttributes(class="width-auto footer-image"),
-    #    img(src=euLogoFundWhite) %>% tagAppendAttributes(class="width-auto footer-image")
-    #) %>% tagAppendAttributes(class="footer-box")
 ))
 
 
@@ -718,7 +534,7 @@ server <- function(input, output, session) {
 
     output$selectAllCultureMaterialsButton <- renderUI({
         tags$div(
-            style = "position: relative;",
+            class = "select-all-wrapper",
             tags$div(
                 class = "dual-button-container",
                 actionButton("deselectAllCultureMaterials", HTML('<i class="fa fa-times"></i> Clear'),
@@ -736,7 +552,7 @@ server <- function(input, output, session) {
 
     output$selectAllPathogensButton <- renderUI({
         tags$div(
-            style = "position: relative;",
+            class = "select-all-wrapper",
             tags$div(
                 class = "dual-button-container",
                 actionButton("deselectAllPathogens", HTML('<i class="fa fa-times"></i> Clear'),
@@ -754,7 +570,7 @@ server <- function(input, output, session) {
 
     output$selectAllResistancesButton <- renderUI({
         tags$div(
-            style = "position: relative;",
+            class = "select-all-wrapper",
             tags$div(
                 class = "dual-button-container",
                 actionButton("deselectAllResistances", HTML('<i class="fa fa-times"></i> Clear'),
@@ -860,28 +676,53 @@ server <- function(input, output, session) {
         showModal(modalDialog(
             title = tags$span(icon("envelope"), " Contact Us"),
             tags$div(
-                style = "max-width: 600px;",
+                class = "contact-modal-content",
                 tags$p("Have questions or feedback? We'd love to hear from you. Please fill out the form below and we'll get back to you as soon as possible."),
                 tags$br(),
                 textInput("contactNameModal", "Name *", placeholder = "Your name", width = "100%"),
                 textInput("contactEmailModal", "Email *", placeholder = "your.email@example.com", width = "100%"),
                 textInput("contactSubjectModal", "Subject *", placeholder = "Brief subject of your message", width = "100%"),
                 textAreaInput("contactMessageModal", "Message *", placeholder = "Your message here...", width = "100%", height = "150px"),
-                tags$p(style = "font-size: 0.9em; color: #666;", "* Required fields")
+                tags$p(class = "contact-required-note", "* Required fields")
             ),
             easyClose = TRUE,
             footer = tagList(
                 modalButton("Cancel"),
-                actionButton("submitContactModal", "Send Message", class = "btn btn-primary", icon = icon("paper-plane"))
+                actionButton("submitContactModal", "Send Message", class = "btn btn-outline-primary", icon = icon("paper-plane"))
             ),
             size = "m"
         ))
     })
 
-    # View toggle - switch between Visuals and Table tabs
+    # Outer toggle - switch between Dashboard and Insight tabs
+    observeEvent(input$outerToggle, {
+        if (input$outerToggle == "dashboard") {
+            updateTabsetPanel(session, "outerTabs", selected = "dashboard")
+            shinyjs::enable("viewToggle")
+            shinyjs::enable("sectionsSelection")
+            shinyjs::enable("cultureMaterialsSelection")
+            shinyjs::enable("pathogensSelection")
+            shinyjs::enable("resistancesSelection")
+            shinyjs::enable("countriesSelection")
+            shinyjs::enable("resetFilters")
+            shinyjs::removeClass(selector = ".sidebar-panel", class = "filters-inactive")
+        } else if (input$outerToggle == "insight") {
+            updateTabsetPanel(session, "outerTabs", selected = "insight")
+            shinyjs::disable("viewToggle")
+            shinyjs::disable("sectionsSelection")
+            shinyjs::disable("cultureMaterialsSelection")
+            shinyjs::disable("pathogensSelection")
+            shinyjs::disable("resistancesSelection")
+            shinyjs::disable("countriesSelection")
+            shinyjs::disable("resetFilters")
+            shinyjs::addClass(selector = ".sidebar-panel", class = "filters-inactive")
+        }
+    })
+
+    # View toggle - switch between Graphics and Table tabs
     observeEvent(input$viewToggle, {
-        if (input$viewToggle == "visuals") {
-            updateTabsetPanel(session, "mainTabs", selected = "visuals")
+        if (input$viewToggle == "graphics") {
+            updateTabsetPanel(session, "mainTabs", selected = "graphics")
         } else if (input$viewToggle == "table") {
             updateTabsetPanel(session, "mainTabs", selected = "table")
         }
@@ -975,7 +816,6 @@ server <- function(input, output, session) {
             output$contactStatus <- renderUI({
                 tags$div(
                     class = "alert alert-danger",
-                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
                     tags$strong("Error: "),
                     "The contact form is not configured on this instance. Please use the official deployment."
                 )
@@ -994,7 +834,6 @@ server <- function(input, output, session) {
             output$contactStatus <- renderUI({
                 tags$div(
                     class = "alert alert-danger",
-                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
                     tags$strong("Error: "),
                     "Please fill in all required fields."
                 )
@@ -1008,7 +847,6 @@ server <- function(input, output, session) {
             output$contactStatus <- renderUI({
                 tags$div(
                     class = "alert alert-danger",
-                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
                     tags$strong("Error: "),
                     "Please enter a valid email address."
                 )
@@ -1021,8 +859,7 @@ server <- function(input, output, session) {
         output$contactStatus <- renderUI({
             tags$div(
                 class = "alert alert-info",
-                style = "padding: 15px; border-radius: 4px; background-color: #cce5ff; color: #004085; border: 1px solid #b8daff;",
-                tags$i(class = "fa fa-spinner fa-spin", style = "margin-right: 8px;"),
+                tags$i(class = "fa fa-spinner fa-spin contact-spinner"),
                 "Sending your message..."
             )
         })
@@ -1080,7 +917,6 @@ server <- function(input, output, session) {
             output$contactStatus <- renderUI({
                 tags$div(
                     class = "alert alert-success",
-                    style = "padding: 15px; border-radius: 4px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;",
                     tags$strong("Success! "),
                     "Your message has been sent. We'll get back to you soon."
                 )
@@ -1098,7 +934,6 @@ server <- function(input, output, session) {
             output$contactStatus <- renderUI({
                 tags$div(
                     class = "alert alert-danger",
-                    style = "padding: 15px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;",
                     tags$strong("Error: "),
                     "There was an error sending your message. Please try again later or contact us directly."
                 )
@@ -1197,17 +1032,13 @@ server <- function(input, output, session) {
                 # Build legend items
                 legendItems <- list(
                     tags$span(
-                        style = "display: flex; align-items: center; gap: 8px;",
-                        tags$span(
-                            style = "display: inline-block; width: 24px; height: 24px; background-color: #0fdbd5;"
-                        ),
+                        class = "legend-item",
+                        tags$span(class = "legend-color-swatch legend-color-selected"),
                         tags$span("Selected")
                     ),
                     tags$span(
-                        style = "display: flex; align-items: center; gap: 8px;",
-                        tags$span(
-                            style = "display: inline-block; width: 24px; height: 24px; background-color: #df2e1a;"
-                        ),
+                        class = "legend-item",
+                        tags$span(class = "legend-color-swatch legend-color-not-selected"),
                         tags$span("Not selected")
                     )
                 )
@@ -1215,18 +1046,16 @@ server <- function(input, output, session) {
                 # Add third legend item for follow-up questions
                 if (isFollowUpQuestion) {
                     legendItems[[3]] <- tags$span(
-                        style = "display: flex; align-items: center; gap: 8px;",
-                        tags$span(
-                            style = "display: inline-block; width: 24px; height: 24px; background-color: #888888;"
-                        ),
+                        class = "legend-item",
+                        tags$span(class = "legend-color-swatch legend-color-na"),
                         tags$span("NA")
                     )
                 }
 
                 tags$div(
-                    style = "margin-top: 10px; margin-bottom: 15px; background-color: #f5f5f5; padding: 15px; border-radius: 4px;",
+                    class = "answer-selector-container",
                     tags$label(
-                        style = "font-weight: 500; margin-bottom: 8px; display: block;",
+                        class = "answer-selector-label",
                         "Multiple Selection Question: Choose an answer option to view on the map:"
                     ),
                     selectInput(
@@ -1237,7 +1066,7 @@ server <- function(input, output, session) {
                         width = "100%"
                     ),
                     tags$div(
-                        style = "margin-top: 12px; display: flex; justify-content: center; align-items: center; gap: 20px; font-size: 1em;",
+                        class = "legend-row",
                         legendItems
                     )
                 )
@@ -1765,15 +1594,6 @@ server <- function(input, output, session) {
     ## OUTPUTS ##
 
     output$scoresMap <- renderPlotly({
-        #if (input$dark_mode == "dark") {
-        #    themeBgColor = "#1D1F21"
-        #    themeFgColor = "#ffffff"
-        #    #themeSoftGrey = 0.3
-        #} else {
-        #    themeBgColor = "#ffffff"
-        #    themeFgColor = "#1D1F21"
-        #    #themeSoftGrey = 0.7
-        #}
 
         themeBgColor = "#ffffff"
         themeFgColor = "#1D1F21"
@@ -1891,12 +1711,12 @@ server <- function(input, output, session) {
     output$noQuestionsMessage <- renderUI({
         if (length(activeQuestions()[[1]]) == 0) {
             tags$div(
-                style = "padding: 40px; text-align: center; color: #666; font-size: 1.1em;",
-                tags$i(class = "fa fa-info-circle", style = "font-size: 2em; margin-bottom: 10px;"),
+                class = "no-questions-message",
+                tags$i(class = "fa fa-info-circle no-questions-icon"),
                 tags$br(),
                 "No questions match the active filters.",
                 tags$br(),
-                tags$span(style = "font-size: 0.9em;", "Try adjusting your filter selections.")
+                tags$span(class = "no-questions-hint", "Try adjusting your filter selections.")
             )
         }
     })
@@ -2016,14 +1836,6 @@ server <- function(input, output, session) {
     )
 
     output$dashboardMap <- renderPlotly({
-
-        #if (input$dark_mode == "dark") {
-        #    themeBgColor = "#1D1F21"
-        #    themeFgColor = "#ffffff"
-        #} else {
-        #    themeBgColor = "#ffffff"
-        #    themeFgColor = "#1D1F21"
-        #}
 
         themeBgColor = "#ffffff"
         themeFgColor = "#1D1F21"
