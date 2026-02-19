@@ -10,20 +10,19 @@ RUN mkdir /home/shiny-app
 
 # Install R dependencies
 ## base
-RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'shinyWidgets', 'shinyjs', 'rmarkdown'))"
+RUN R -e "install.packages(c('shinyWidgets', 'shinyjs'))"
 ## data parsing
-RUN R -e "install.packages(c('readxl', 'rjson', 'jsonlite', 'hash', 'openxlsx'))"
+RUN R -e "install.packages(c('rjson', 'openxlsx'))"
 ## map
 ## RUN R -e "install.packages(c())"
 ## plots and tables
-RUN R -e "install.packages(c('countrycode', 'ggplot2', 'echarts4r', 'plotly', 'DT'))"
+RUN R -e "install.packages(c('plotly', 'DT'))"
 ## style
 RUN R -e "install.packages(c('bslib', 'bsicons', 'thematic'))"
 ## email - uses system curl (no R packages needed)
 ##
-RUN R -e "install.packages(c('remotes', 'sf'))"
 ## removed
-## RUN R -e "install.packages(c('remotes', 'sf', 'geos', 'gdal', 'geojsonR', 'geojsonio', 'leaflet'))"
+## RUN R -e "install.packages(c('jqr', 'udunits2', 'dplyr', 'gapminder', 'rmarkdown', 'readxl', 'jsonlite', 'hash', 'countrycode', 'ggplot2', 'echarts4r', 'remotes', 'sf', 'geos', 'gdal', 'geojsonR', 'geojsonio', 'leaflet'))"
 
 # Copy the Shiny app code
 #COPY app.R /home/shiny-app/app.R                           ## mounted in docker compose
