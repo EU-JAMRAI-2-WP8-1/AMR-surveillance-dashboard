@@ -5,14 +5,10 @@
 library(shiny)
 library(shinyWidgets)
 library(shinyjs)
-#library(jsonlite)
 library(rjson)
-library(dplyr)
-library(ggplot2)
 library(plotly)
 library(bslib)
 library(thematic)
-library(stringr)
 library(DT)
 library(openxlsx)
 
@@ -32,7 +28,6 @@ RECIPIENT_EMAIL <- Sys.getenv("RECIPIENT_EMAIL")
 EMAIL_ENABLED <- (SMTP_SERVER != "" && SMTP_USERNAME != "" && SMTP_PASSWORD != "" && SENDER_EMAIL != "" && RECIPIENT_EMAIL != "")
 
 # Add resource directory to server
-#shiny::addResourcePath(prefix = 'www', directoryPath = '/srv/shiny-server/www') ## DOCKER
 shiny::addResourcePath(prefix = 'www', directoryPath = './www') ## R
 
 # Set the app files directory
@@ -67,16 +62,9 @@ thematic_shiny(
 
 ## DATA LOAD AND PREPARATION ##
 
-# Import logos as variables
-#jamraiLogoHeaderLong      <- file.path("www/logos/TRANSPARENT_LONG2.png")
-#jamraiLogoHeaderRect      <- file.path("www/logos/TRANSPARENT_RECTANGULAR.png")
-#jamraiLogoHeaderRectWhite <- file.path("www/logos/TRANSPARENT_LONG1_WHITE-480x107.png")
-#euLogoFundWhite           <- file.path("www/logos/EN_Co-fundedbytheEU_RGB_WHITE-Outline-480x107.png")
-
 # Import Europe polygons
 geojsonEurope <- tryCatch({
     rjson::fromJSON(file = file.path("www/data/CNTR_RG_60M_2024_4326-modified.geojson")) # rjson
-    ##jsonlite::read_json("www/data/CNTR_RG_60M_2024_4326_europe_only.geojson") # jsonlite (unused -> slows down process)
 }, error = function(e) {
     showNotification("Error loading map data", type = "error")
     return(list(features = list())) # Return empty structure
@@ -130,11 +118,6 @@ cultureMaterialList <- c("Blood/CSF", "Urine", "Respiratory tract", "Wound/tissu
 pathogenChoiceNames <- pathogenList
 resistanceChoiceNames <- resistanceList
 cultureMaterialChoiceNames <- cultureMaterialList
-
-# info text
-#pathogensInfoText       <- "Select the pathogen(s) you want to filter by. You can also select 'Not pathogen related' to include questions that are not specific to any pathogen." #NUI
-#resistancesInfoText     <- "Select the resistance(s) you want to filter by. You can also select 'Not resistance related' to include questions that are not specific to any resistance." #NUI
-#cultureMaterialInfoText <- "Select the culture material(s) you want to filter by. You can also select 'Not culture material related' to include questions that are not specific to any culture material." #NUI
 
 # get all questions (short titles) for question filter + set list of multiple choice questions (short titles)
 allShortTitles <- c()
@@ -541,12 +524,7 @@ server <- function(input, output, session) {
                     class = paste("dual-button deselect-btn", if(length(input$cultureMaterialsSelection) == 0) "disabled-btn" else "")),
                 actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-check"></i> All'),
                     class = paste("dual-button select-btn", if(length(input$cultureMaterialsSelection) == length(cultureMaterialList)) "disabled-btn" else ""))
-            ),
-            #tags$button(
-            #    class = "info-button-standalone",
-            #    "?"
-            #),
-            #tags$span(class = "info-sections", cultureMaterialInfoText) #NUI
+            )
         )
     })
 
@@ -559,12 +537,7 @@ server <- function(input, output, session) {
                     class = paste("dual-button deselect-btn", if(length(input$pathogensSelection) == 0) "disabled-btn" else "")),
                 actionButton("selectAllPathogens", HTML('<i class="fa fa-check"></i> All'),
                     class = paste("dual-button select-btn", if(length(input$pathogensSelection) == length(pathogenList)) "disabled-btn" else ""))
-            ),
-            #tags$button(
-            #    class = "info-button-standalone",
-            #    "?"
-            #),
-            #tags$span(class = "info-sections", pathogensInfoText) #NUI
+            )
         )
     })
 
@@ -577,12 +550,7 @@ server <- function(input, output, session) {
                     class = paste("dual-button deselect-btn", if(length(input$resistancesSelection) == 0) "disabled-btn" else "")),
                 actionButton("selectAllResistances", HTML('<i class="fa fa-check"></i> All'),
                     class = paste("dual-button select-btn", if(length(input$resistancesSelection) == length(resistanceList)) "disabled-btn" else ""))
-            ),
-            #tags$button(
-            #    class = "info-button-standalone",
-            #    "?"
-            #), #NUI
-            #tags$span(class = "info-sections", resistancesInfoText) #NUI
+            )
         )
     })
 
