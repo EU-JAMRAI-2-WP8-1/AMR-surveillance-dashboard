@@ -891,18 +891,6 @@ body.section-3 .full-question-title-box {
 }
 
 
-/* INSIGHT TAB */
-
-.insight-coming-soon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-    font-size: 1.5em;
-    color: #aaa;
-}
-
-
 /* SELECT-ALL BUTTON WRAPPERS */
 
 .select-all-wrapper {
