@@ -477,10 +477,16 @@ ui <- shinyUI(fluidPage(
                 tabPanel(
                     "",
                     value = "insight",
+
+                    ## insight tab content here ##
+
+                    ## to be removed ->
                     tags$div(
                         class = "insight-coming-soon",
+                        style = "display: flex; justify-content: center; align-items: center; height: 300px; font-size: 1.5em; color: #aaa;",
                         "Coming soon !"
                     )
+                    ## <-
                 )
 
             ), # /outerTabs
