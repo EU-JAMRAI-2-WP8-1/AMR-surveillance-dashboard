@@ -3,7 +3,7 @@ FROM rocker/shiny:4.4.3
 
 # install Linux R packages dependencies
 RUN apt update
-RUN apt install libcurl4-openssl-dev
+RUN apt -y install libcurl4-openssl-dev
 
 # Make a directory in the container
 RUN mkdir /home/shiny-app

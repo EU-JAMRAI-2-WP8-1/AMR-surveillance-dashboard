@@ -2853,7 +2853,7 @@
         },
         "actual_answers": {
             "Bulgaria": "Yes, when required/requested.",
-            "Spain": "No, not sequenced.",
+            "Spain": "Yes, when required/requested.",
             "Austria": "No, not sequenced.",
             "Lithuania": "No, not sequenced.",
             "Croatia": "Yes, when required/requested.",
@@ -8379,7 +8379,7 @@
         },
         "actual_answers": {
             "Bulgaria": "A subset of CMLs",
-            "Spain": "A subset of CMLs",
+            "Spain": "All CMLs",
             "Austria": "A subset of CMLs",
             "Lithuania": "All CMLs",
             "Croatia": "A subset of CMLs",
@@ -8729,7 +8729,7 @@
         },
         "actual_answers": {
             "Bulgaria": "Not submitted",
-            "Spain": "Not submitted",
+            "Spain": "All CMLs",
             "Austria": "A subset of CMLs",
             "Lithuania": "All CMLs",
             "Croatia": "Not submitted",
@@ -9429,7 +9429,7 @@
         },
         "actual_answers": {
             "Bulgaria": "Not submitted",
-            "Spain": "Not submitted",
+            "Spain": "Other",
             "Austria": "Do not know",
             "Lithuania": "Not submitted",
             "Croatia": "Not submitted",
@@ -11735,7 +11735,7 @@
         },
         "actual_answers": {
             "Bulgaria": "HIGH: all main geographical regions of the country are covered.",
-            "Spain": "MEDIUM: most geographical regions of the country are covered.",
+            "Spain": "HIGH: all main geographical regions of the country are covered.",
             "Austria": "HIGH: all main geographical regions of the country are covered.",
             "Lithuania": "HIGH: all main geographical regions of the country are covered.",
             "Croatia": "HIGH: all main geographical regions of the country are covered.",
@@ -26801,7 +26801,6 @@
                 "Data is published annually in a non-interactive online and/or printed report format."
             ],
             "Sweden": [
-                "Data is published automatically in a real-time dashboard via direct integration between the AMR surveillance system and the dashboard.",
                 "Data is published annually in a non-interactive online and/or printed report format.",
                 "A national analysis of current trends and possible explanations for increases and decreases for AMR pathogens is published with regular intervals."
             ],
