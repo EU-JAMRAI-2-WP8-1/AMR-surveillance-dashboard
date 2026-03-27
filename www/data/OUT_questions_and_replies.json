@@ -2853,7 +2853,7 @@
         },
         "actual_answers": {
             "Bulgaria": "Yes, when required/requested.",
-            "Spain": "No, not sequenced.",
+            "Spain": "Yes, when required/requested.",
             "Austria": "No, not sequenced.",
             "Lithuania": "No, not sequenced.",
             "Croatia": "Yes, when required/requested.",
@@ -7024,16 +7024,16 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.38": {
+    "36.39": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : A. baumannii (carbapenem R and/or P) : Wound/Tissue swab",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Urine - A. baumannii - Carbapenem resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Soft tissue - A. baumannii - Carbapenem resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 77,
+        "position": 97,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Urine",
+            "Wound/tissue",
             "A. baumannii",
             "Carbapenem"
         ],
@@ -7082,18 +7082,18 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.39": {
+    "36.40": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Lower respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Soft tissue - A. baumannii - Carbapenem resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Lower respiratory tract - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 97,
+        "position": 90,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Wound/tissue",
-            "A. baumannii",
-            "Carbapenem"
+            "Respiratory tract",
+            "S. aureus",
+            "Methicillin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -7140,12 +7140,12 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.40": {
+    "36.41": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Upper respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Lower respiratory tract - S. aureus - Methicillin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Upper respiratory tract - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 90,
+        "position": 91,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
@@ -7198,66 +7198,8 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.41": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Lower respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Upper respiratory tract - S. aureus - Methicillin resistant.",
-        "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
-        "type": "SingleChoice",
-        "position": 91,
-        "coefficient": 0.019,
-        "tags": [
-            "National surveillance",
-            "Respiratory tract",
-            "S. aureus",
-            "Methicillin"
-        ],
-        "possible_answers": {
-            "Yes, mandatory": {
-                "color": "#0FDBD5",
-                "score": 1
-            },
-            "Yes, voluntary": {
-                "color": "#F7C948",
-                "score": 1
-            },
-            "No": {
-                "color": "#DF2E1A",
-                "score": 0
-            }
-        },
-        "actual_answers": {
-            "Bulgaria": "Yes, voluntary",
-            "Spain": "Yes, voluntary",
-            "Austria": "Yes, voluntary",
-            "Lithuania": "No",
-            "Croatia": "No",
-            "Netherlands": "Yes, voluntary",
-            "Ireland": "Yes, voluntary",
-            "Germany": "Yes, voluntary",
-            "Poland": "Yes, mandatory",
-            "Italy": "No",
-            "Greece": "Yes, voluntary",
-            "France": "Yes, voluntary",
-            "Czechia": "Yes, voluntary",
-            "Belgium": "Yes, voluntary",
-            "Hungary": "Yes, mandatory",
-            "Finland": "No",
-            "Luxembourg": "Yes, voluntary",
-            "Malta": "Yes, voluntary",
-            "Portugal": "Yes, voluntary",
-            "Norway": "Yes, mandatory",
-            "Slovenia": "No",
-            "Estonia": "Yes, mandatory",
-            "Sweden": "Yes, mandatory",
-            "Ukraine": "No",
-            "Slovak Republic": "Yes, voluntary",
-            "Denmark": "No",
-            "Latvia": "No",
-            "Iceland": "Yes, voluntary"
-        }
-    },
     "36.42": {
-        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Lower respiratory tract",
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Lower respiratory tract",
         "short_title": "Which pathogens are under mandatory national surveillance? - Lower respiratory tract - S. pneumoniae - Penicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
@@ -7284,6 +7226,64 @@
             }
         },
         "actual_answers": {
+            "Bulgaria": "Yes, voluntary",
+            "Spain": "Yes, voluntary",
+            "Austria": "Yes, voluntary",
+            "Lithuania": "No",
+            "Croatia": "No",
+            "Netherlands": "Yes, voluntary",
+            "Ireland": "Yes, voluntary",
+            "Germany": "Yes, voluntary",
+            "Poland": "Yes, mandatory",
+            "Italy": "No",
+            "Greece": "Yes, voluntary",
+            "France": "Yes, voluntary",
+            "Czechia": "Yes, voluntary",
+            "Belgium": "Yes, voluntary",
+            "Hungary": "Yes, mandatory",
+            "Finland": "No",
+            "Luxembourg": "Yes, voluntary",
+            "Malta": "Yes, voluntary",
+            "Portugal": "Yes, voluntary",
+            "Norway": "Yes, mandatory",
+            "Slovenia": "No",
+            "Estonia": "Yes, mandatory",
+            "Sweden": "Yes, mandatory",
+            "Ukraine": "No",
+            "Slovak Republic": "Yes, voluntary",
+            "Denmark": "No",
+            "Latvia": "No",
+            "Iceland": "Yes, voluntary"
+        }
+    },
+    "36.43": {
+        "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Lower respiratory tract",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Lower respiratory tract - H. influenzae - Ampicillin resistant.",
+        "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
+        "type": "SingleChoice",
+        "position": 94,
+        "coefficient": 0.019,
+        "tags": [
+            "National surveillance",
+            "Respiratory tract",
+            "H. influenzae",
+            "Ampicillin"
+        ],
+        "possible_answers": {
+            "Yes, mandatory": {
+                "color": "#0FDBD5",
+                "score": 1
+            },
+            "Yes, voluntary": {
+                "color": "#F7C948",
+                "score": 1
+            },
+            "No": {
+                "color": "#DF2E1A",
+                "score": 0
+            }
+        },
+        "actual_answers": {
             "Bulgaria": "No",
             "Spain": "No",
             "Austria": "Yes, voluntary",
@@ -7314,18 +7314,18 @@
             "Iceland": "Yes, voluntary"
         }
     },
-    "36.43": {
+    "36.44": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Upper respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Lower respiratory tract - H. influenzae - Ampicillin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Upper respiratory tract - S. pneumoniae - Penicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 94,
+        "position": 93,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
             "Respiratory tract",
-            "H. influenzae",
-            "Ampicillin"
+            "S. pneumoniae",
+            "Penicillin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -7372,18 +7372,18 @@
             "Iceland": "Yes, voluntary"
         }
     },
-    "36.44": {
+    "36.45": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Upper respiratory tract",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Upper respiratory tract - S. pneumoniae - Penicillin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Upper respiratory tract - H. influenzae - Ampicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 93,
+        "position": 95,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
             "Respiratory tract",
-            "S. pneumoniae",
-            "Penicillin"
+            "H. influenzae",
+            "Ampicillin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -7430,18 +7430,18 @@
             "Iceland": "Yes, voluntary"
         }
     },
-    "36.45": {
+    "36.46": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Wound/Tissue swab",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Upper respiratory tract - H. influenzae - Ampicillin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Soft tissue - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 95,
+        "position": 98,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Respiratory tract",
-            "H. influenzae",
-            "Ampicillin"
+            "Wound/tissue",
+            "S. aureus",
+            "Methicillin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -7488,16 +7488,16 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.46": {
+    "36.48": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. aureus (methicillin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Soft tissue - S. aureus - Methicillin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Blood - S. aureus - Methicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 98,
+        "position": 66,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Wound/tissue",
+            "Blood/CSF",
             "S. aureus",
             "Methicillin"
         ],
@@ -7546,18 +7546,18 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.47": {
+    "36.49": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. faecium and/or E. faecalis (vancomycin R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Urine - S. aureus - Methicillin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Blood - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 78,
+        "position": 67,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Urine",
-            "S. aureus",
-            "Methicillin"
+            "Blood/CSF",
+            "E. faecium/faecalis",
+            "Vancomycin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -7604,18 +7604,18 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.48": {
+    "36.50": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : E. faecium and/or E. faecalis (vancomycin R) : Urine",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Blood - S. aureus - Methicillin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Urine - E. faecium/faecalis - Vancomycin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 66,
+        "position": 79,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Blood/CSF",
-            "S. aureus",
-            "Methicillin"
+            "Urine",
+            "E. faecium/faecalis",
+            "Vancomycin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -7662,18 +7662,18 @@
             "Iceland": "Yes, mandatory"
         }
     },
-    "36.49": {
+    "36.51": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : S. pneumoniae (penicillin and macrolide R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Blood - E. faecium/faecalis - Vancomycin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Blood - S. pneumoniae - Penicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 67,
+        "position": 68,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
             "Blood/CSF",
-            "E. faecium/faecalis",
-            "Vancomycin"
+            "S. pneumoniae",
+            "Penicillin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -7720,18 +7720,18 @@
             "Iceland": "Yes, voluntary"
         }
     },
-    "36.50": {
+    "36.53": {
         "title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection. : H. influenzae (ampicillin- R) : Blood/CSF",
-        "short_title": "Which pathogens are under mandatory national surveillance? - Urine - E. faecium/faecalis - Vancomycin resistant.",
+        "short_title": "Which pathogens are under mandatory national surveillance? - Blood - H. influenzae - Ampicillin resistant.",
         "display_title": "Which of the following pathogens are under national surveillance? Mandatory: Means that the pathogen is notifiable according to your country communicable disease legislation or an equivalent legislation. Voluntary: Not mandatory/notifiable but still under national surveillance. Screening: culturing to identify carriage and/or colonization. This can be different sample types but not related to clinical infection.",
         "type": "SingleChoice",
-        "position": 79,
+        "position": 69,
         "coefficient": 0.019,
         "tags": [
             "National surveillance",
-            "Urine",
-            "E. faecium/faecalis",
-            "Vancomycin"
+            "Blood/CSF",
+            "H. influenzae",
+            "Ampicillin"
         ],
         "possible_answers": {
             "Yes, mandatory": {
@@ -8379,7 +8379,7 @@
         },
         "actual_answers": {
             "Bulgaria": "A subset of CMLs",
-            "Spain": "A subset of CMLs",
+            "Spain": "All CMLs",
             "Austria": "A subset of CMLs",
             "Lithuania": "All CMLs",
             "Croatia": "A subset of CMLs",
@@ -8729,7 +8729,7 @@
         },
         "actual_answers": {
             "Bulgaria": "Not submitted",
-            "Spain": "Not submitted",
+            "Spain": "All CMLs",
             "Austria": "A subset of CMLs",
             "Lithuania": "All CMLs",
             "Croatia": "Not submitted",
@@ -9429,7 +9429,7 @@
         },
         "actual_answers": {
             "Bulgaria": "Not submitted",
-            "Spain": "Not submitted",
+            "Spain": "Other",
             "Austria": "Do not know",
             "Lithuania": "Not submitted",
             "Croatia": "Not submitted",
@@ -11735,7 +11735,7 @@
         },
         "actual_answers": {
             "Bulgaria": "HIGH: all main geographical regions of the country are covered.",
-            "Spain": "MEDIUM: most geographical regions of the country are covered.",
+            "Spain": "HIGH: all main geographical regions of the country are covered.",
             "Austria": "HIGH: all main geographical regions of the country are covered.",
             "Lithuania": "HIGH: all main geographical regions of the country are covered.",
             "Croatia": "HIGH: all main geographical regions of the country are covered.",
@@ -26801,7 +26801,6 @@
                 "Data is published annually in a non-interactive online and/or printed report format."
             ],
             "Sweden": [
-                "Data is published automatically in a real-time dashboard via direct integration between the AMR surveillance system and the dashboard.",
                 "Data is published annually in a non-interactive online and/or printed report format.",
                 "A national analysis of current trends and possible explanations for increases and decreases for AMR pathogens is published with regular intervals."
             ],

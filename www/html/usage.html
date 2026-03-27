@@ -20,35 +20,27 @@
         </ol>
     </section>
 
+
     <!-- Customize Your View Section -->
     <section style="margin-bottom: 30px;">
-        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">Customize Your View</h2>
+        <h2 style="color: #008aab; font-weight: bold; font-size: 1.4em; margin-bottom: 10px;">Customize Your View (Left Panel)</h2>
         <p style="margin-bottom: 15px;">Use the tools below to focus on what matters to you:</p>
 
-        <!-- Filters -->
-        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Filters (Left Panel)</h3>
-        <p style="margin-bottom: 8px;">Narrow your selection by:</p>
-        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
+        <!-- Tabs -->
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Tabs</h3>
+        <ul style="list-style-type: none; padding-left: 0;">
             <li style="margin-bottom: 8px;">
                 <i class="fa fa-globe" style="color: #666; margin-right: 8px;"></i>
-                <strong>Countries</strong>: Show all or only specific countries.
+                <strong>Graphics</strong>: View answers on a map and bar chart.
             </li>
             <li style="margin-bottom: 8px;">
-                <i class="fa fa-flask" style="color: #666; margin-right: 8px;"></i>
-                <strong>Culture material</strong>: Filter by specimen type (e.g., blood, urine).
-            </li>
-            <li style="margin-bottom: 8px;">
-                <i class="fa fa-bacteria" style="color: #666; margin-right: 8px;"></i>
-                <strong>Pathogens</strong>: Focus on specific bacterial pathogens.
-            </li>
-            <li style="margin-bottom: 8px;">
-                <i class="fa fa-triangle-exclamation" style="color: #666; margin-right: 8px;"></i>
-                <strong>Resistances</strong>: Select specific antibiotic resistances.
+                <i class="fa fa-table" style="color: #666; margin-right: 8px;"></i>
+                <strong>Table</strong>: See answers in an interactive table (filters apply here too - see here below).
             </li>
         </ul>
 
         <!-- Sections -->
-        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Sections (Top Buttons)</h3>
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Sections</h3>
         <p style="margin-bottom: 8px;">Questions are grouped into three categories:</p>
         <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
             <li style="margin-bottom: 8px;">
@@ -68,22 +60,28 @@
             </li>
         </ul>
 
-        <!-- Tabs -->
-        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Tabs</h3>
-        <ul style="list-style-type: none; padding-left: 0;">
+        <!-- Filters -->
+        <h3 style="color: #008aab; font-weight: normal; font-size: 1.15em; margin-bottom: 8px;">Filters</h3>
+        <p style="margin-bottom: 8px;">Narrow your selection by:</p>
+        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
             <li style="margin-bottom: 8px;">
                 <i class="fa fa-globe" style="color: #666; margin-right: 8px;"></i>
-                <strong>Visuals</strong>: View answers on a map and bar chart.
+                <strong>Countries</strong>: Show all or only specific countries.
             </li>
             <li style="margin-bottom: 8px;">
-                <i class="fa fa-table" style="color: #666; margin-right: 8px;"></i>
-                <strong>Table</strong>: See answers in an interactive table (filters apply here too).
+                <i class="fa fa-flask" style="color: #666; margin-right: 8px;"></i>
+                <strong>Culture material</strong>: Filter by specimen type (e.g., blood, urine).
             </li>
             <li style="margin-bottom: 8px;">
-                <i class="fa fa-info-circle" style="color: #666; margin-right: 8px;"></i>
-                <strong>Info</strong>: Learn about the project, legal details, and contacts.
+                <i class="fa fa-bacteria" style="color: #666; margin-right: 8px;"></i>
+                <strong>Pathogens</strong>: Focus on specific bacterial pathogens.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-triangle-exclamation" style="color: #666; margin-right: 8px;"></i>
+                <strong>Resistances</strong>: Select specific antibiotic resistances.
             </li>
         </ul>
+        
     </section>
 
     <!-- Tips Section -->
@@ -112,8 +110,7 @@ $(document).ready(function() {
         e.preventDefault();
         $('.modal').modal('hide');
         setTimeout(function() {
-            // Find and click the Contact tab
-            $('.nav-tabs li:has(a:contains("Contact")) a').click();
+            $('#showContactModal').click();
         }, 300);
     });
 });
