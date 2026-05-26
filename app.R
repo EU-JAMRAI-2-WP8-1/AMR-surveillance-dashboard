@@ -2439,11 +2439,11 @@ server <- function(input, output, session) {
             #filter(Country %in% c("Luxembourg","Sweden")) |> 
             filter(Country %in% c(input$plot_selected)) |> 
             dplyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |> 
-            transmute(Country,
+            dplyr::transmute(Country,
                       "No surveillance" = No,
                       `Yes, voluntary`,
                       `Yes, mandatory`) |> 
-            mutate(across(c(`No surveillance`,`Yes, voluntary`, `Yes, mandatory`), ~ paste0(round(.x,2),"%"))
+            dplyr::mutate(across(c(`No surveillance`,`Yes, voluntary`, `Yes, mandatory`), ~ paste0(round(.x,2),"%"))
             )
         
         # transmute(Country) |> distinct()#selected_states())#c("Sweden"))
