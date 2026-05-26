@@ -4,3 +4,5 @@ idees_claude.txt
 rsconnect/
 .Renviron
 email-test/
+.Rproj.user
+renv/

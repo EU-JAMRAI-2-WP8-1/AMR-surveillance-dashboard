@@ -11,6 +11,10 @@ library(bslib)
 library(thematic)
 library(DT)
 library(openxlsx)
+library(ggiraph)
+library(systemfonts)
+library(glue)
+library(patchwork)
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
@@ -128,7 +132,7 @@ for (question in surveyData) {
     if (question$type == "FreeText") next # skip free text questions
     if (question$short_title %in% allShortTitles) next # skip if alredy in (as matrix question have the same short title)
     allShortTitles <- c(allShortTitles, question$short_title)
-
+    
     if (question$type == "MultipleChoice") {
         multipleChoiceShortTitles <- c(multipleChoiceShortTitles, question$short_title)
     }
@@ -163,37 +167,80 @@ participationDataOccurrences <- data.frame(
 # Convert raw counts to percentages
 participationDataOccurrences$occurences <- (participationDataOccurrences$occurences / sum(participationDataOccurrences$occurences)) * 100
 
+## ==== Insight tab data prep start ==
+
+it1 <- readRDS("www/data/data_insighttab_1.rds")
+
+df_longNEW22 <- it1$hm
+percent_all_NEW_C <- it1$bp
+
+
+surv_colors <- c("Yes, mandatory" = "#086D6A",
+                 "Yes, voluntary" = "#0fdbd5",
+                 "No" = "#949494")
+
+gg_hm <- df_longNEW22 %>% 
+    
+    ggplot(aes(x = xlab,
+               y = Country,
+               fill = value,
+               data_id = Country)) +
+    geom_tile_interactive(aes(tooltip = glue("In <b>{Country}</b>, the national suveillance
+                                            for <b>{abr} <i>{bug}</i> </b> in <b>{type}</b>
+                                            {surv_lab}")),
+                          color = "white", linewidth = 0.5) +
+    facet_grid(cols = vars(type), scales = "free_x", space='free', switch = "both") +
+    scale_fill_manual(name = "Surveillance Type",
+                      values = surv_colors,
+                      breaks = c("Yes, mandatory", "Yes, voluntary", "No"),
+                      labels = c("Mandatory", "Voluntary", "No")) +
+    theme_minimal() +
+    theme(
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust=.5),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        legend.position = "none",
+        strip.placement = "outside",
+        strip.clip = "off"
+    )
+
+
+## ==== Insight tab data prep end==
+
+
 
 ## USER INTERFACE ##
 
 # user interface
 ui <- shinyUI(fluidPage(
-
+    
     # set theme
     theme = custom_theme,
-
+    
     # enable shinyjs
     useShinyjs(),
-
+    
     # import CSS
     includeCSS(file.path("www/css/style.css")),
-
+    
     # import JS
     includeScript("www/js/script.js"),
-
+    
     # add favicon
     tags$head(tags$link(rel="shortcut icon", href=file.path("www/favicons/jamrai_favicon_32x32.png"))),
-
+    
     # Layout type
     sidebarLayout(
-
+        
         position = "left",
-
+        
         # side bar (filters)
         sidebarPanel(
             class = "sidebar-panel",
             width = 2,
-
+            
             # logo
             tags$div(
                 class = "sidebar-logo-wrapper",
@@ -203,12 +250,12 @@ ui <- shinyUI(fluidPage(
                     alt = "JAMREYE Logo"
                 )
             ),
-
+            
             tags$span(
                 class = "reset-filters-wrapper",
                 actionButton("showInstructions", "Instructions", class = "btn btn-outline-info", icon = icon("circle-info"))
             ),
-
+            
             # Toggle between Graphics and Table views
             tags$div(
                 class = "view-toggle-wrapper",
@@ -226,7 +273,7 @@ ui <- shinyUI(fluidPage(
                     status = "primary"
                 )
             ),
-
+            
             # Sections filter - moved to sidebar
             tags$div(
                 class = "sections-wrapper-sidebar",
@@ -245,7 +292,7 @@ ui <- shinyUI(fluidPage(
                     status = "primary"
                 )
             ),
-
+            
             accordion(                
                 accordion_panel(
                     title = HTML('<div class="filter-progress-bar" id="progress-cultureMaterials"></div><i class="fa fa-flask accordion-icon accordion-icon-culture"></i> Culture material'),
@@ -300,13 +347,13 @@ ui <- shinyUI(fluidPage(
                     uiOutput("selectAllCountriesButton")
                 )
             ),
-
+            
             # Reset filters button
             tags$span(
                 class = "reset-filters-wrapper",
                 actionButton("resetFilters", "Reset filters", class = "btn btn-outline-primary", icon = icon("filter-circle-xmark"))
             ),
-
+            
             # Toggle between Dashboard and Insight views
             tags$div(
                 class = "outer-toggle-wrapper",
@@ -324,7 +371,7 @@ ui <- shinyUI(fluidPage(
                     status = "primary"
                 )
             ),
-
+            
             # Bottom buttons: Info, Legal, Contact
             tags$div(
                 class = "sidebar-bottom-buttons",
@@ -332,27 +379,27 @@ ui <- shinyUI(fluidPage(
                 actionButton("showLegalModalSidebar", "Legal", class = "btn btn-outline-secondary btn-sm", icon = icon("scale-balanced")),
                 actionButton("showContactModal", "Contact", class = "btn btn-outline-secondary btn-sm", icon = icon("envelope"))
             ),
-
+            
             tags$div(
                 class = "sidebar-filler"
             )
         ),
-
+        
         # main panel
         mainPanel(
             width = 10,
-
+            
             # tabs
             tabsetPanel(
                 id = "outerTabs",
-
+                
                 # dashboard tab (contains graphics + table)
                 tabPanel(
                     "",
                     value = "dashboard",
                     tabsetPanel(
                         id = "mainTabs",
-
+                        
                         # map and bar chart
                         tabPanel(
                             "",
@@ -410,7 +457,7 @@ ui <- shinyUI(fluidPage(
                                 )
                             )
                         ),
-
+                        
                         # survey results (table)
                         tabPanel(
                             "",
@@ -423,7 +470,7 @@ ui <- shinyUI(fluidPage(
                                 downloadButton("downloadDataExcel", "Download Excel", class = "btn btn-outline-primary")
                             )
                         ),
-
+                        
                         # map - Joint results tab (commented out for beta release)
                         # tabPanel(
                         #     tags$span(
@@ -472,14 +519,93 @@ ui <- shinyUI(fluidPage(
                         # ),
                     ) # /mainTabs
                 ), # /dashboard tabPanel
-
+                
                 # insight tab
                 tabPanel(
                     "",
                     value = "insight",
-
+                    
                     ## insight tab content here ##
-
+                    navset_card_underline(
+                        
+                        nav_panel("Insight #1",
+                                  page_fillable(
+                                      titlePanel("National surveillance of AMR priority pathogens"),
+                                      fluidRow(
+                                          column(6,
+                                                 tags$style(
+                                                     HTML("
+             .selectize-input {
+             border-radius: 10px !important;
+             }
+             .selectize-dropdown {
+             border-radius: 10px !important;
+             }
+                  ")
+                                                 ),
+                                          ),
+                                          
+                                      ),
+                                      layout_columns(
+                                          card(
+                                              actionButton("reset", label = "Reset selection"),
+                                              #girafeOutput("plot_bp", height = "100%"),
+                                              girafeOutput("plot", height = "100%"),
+                                          ),
+                                          card("💡 What we can learn from this",
+                                               
+                                               markdown("
+         ##### A European baseline for surveillance of AMR priority pathogens: <span style='color:#086D6A;font-weight:bold'>mandatory</span>, <span style='color:#0fdbd5;font-weight:bold'>voluntary</span> or <span style='color:#949494;font-weight:bold'>no</span> surveillance 
+         
+         🤝🏻 **Policy commitment:** Support EU Council Recommendation on AMR (B5b), AMR pathogens resistant to last line treatments should be notifiable under national legislation.
+         
+        
+          ##### Major Trends in AMR Surveillance 
+          "),
+                                               tags$ul(
+                                                   tags$li(
+                                                       span("Comprehensive surveillance of invasive infections but disparities for other culture materials... ℹ️",
+                                                            title = "European surveillance systems strongly priorities invasive infections, with widespread monitoring of AMR priority pathogens from blood/CSF. However, coverage is uneven: mandatory surveillance is reported by 54% of countries for blood/CSF but only 25% for urine. Significant gaps remain for urine and lower respiratory tract infections, limiting understanding of AMR in common community infections. ")
+                                                   ),
+                                                   tags$li(
+                                                       span("Comprehensive surveillance of carbapenem-resistant E. coli and K. pneumoniae... ℹ️", 
+                                                            title = "Comprehensive surveillance of carbapenem-resistant E. coli and K. pneumoniae is particularly well established across several culture materials.")
+                                                   ),
+                                                   
+                                                   tags$li(
+                                                       span("Variability in national practices... ℹ️", 
+                                                            title = "Variability in national practices: While two countries report mandatory surveillance for all AMR priority pathogens, five rely solely on voluntary systems.")
+                                                   )),
+                                               tags$h4("Actions for change:"),
+                                               tags$body("Closing surveillance gaps will require expanding mandatory reporting and establishing surveillance where none exists, 
+         with priority given to carbapenem-resistant pathogens. Strengthening legal frameworks and embedding surveillance requirements 
+         in AMR National Action Plans could accelerate progress toward 2030 policy targets."),
+                                               
+                                               tags$h4("Why does mandatory surveillance matter?"),
+                                               tags$body("While mandatory surveillance does not always ensure high-quality data, it elevates the political recognition of 
+         AMR pathogens as a public health threat and priority. Although voluntary systems can be effective in some countries, 43% of 
+         countries report that voluntary surveillance negatively impacts their data completeness, highlighting the need for legally 
+         backed approaches. Shifting to mandatory systems should be prioritised where the benefits clearly outweigh those of voluntary efforts."),
+                                               tags$br(),
+                                               tags$br(),
+                                               tags$body("Note: Here we define mandatory surveillance as notifiable under national legislation. In some European countries, 
+                   communicable disease legislations distinguish between mandatory surveillance and notifiable pathogens, where both are
+                   legally obligatory but notifiable legislation imposes stricter requirements for reporting to support real-time outbreak control.
+                   In that case both mandatory and notifiable are included in the answers.")       
+                                               
+                                          ),
+                                      ),
+                                      card("Selected countrie(s) head-to-head comparison:",
+                                           tableOutput("country_context")
+                                      ),
+                                      col_widths = c(5, 7, 12),
+                                      row_heights = c(5,4)
+                                  )
+                        ),
+                        
+                        
+                    ),
+                    
                     ## to be removed ->
                     tags$div(
                         class = "insight-coming-soon",
@@ -488,7 +614,7 @@ ui <- shinyUI(fluidPage(
                     )
                     ## <-
                 )
-
+                
             ), # /outerTabs
         )
     ),
@@ -498,9 +624,9 @@ ui <- shinyUI(fluidPage(
 ## SERVER ##
 
 server <- function(input, output, session) {
-
+    
     ## OBSERVE ##
-
+    
     # "Reset filters" button
     observeEvent(input$resetFilters, {
         updateRadioButtons(session, "sectionsSelection", selected = sectionList[1])
@@ -509,97 +635,97 @@ server <- function(input, output, session) {
         updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
         updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
     })
-
+    
     # Two separate buttons for select and deselect
     output$selectAllCountriesButton <- renderUI({
         tags$div(
             class = "dual-button-container",
             actionButton("deselectAllCountries", HTML('<i class="fa fa-times"></i> Clear'),
-                class = paste("dual-button deselect-btn", if(length(input$countriesSelection) == 0) "disabled-btn" else "")),
+                         class = paste("dual-button deselect-btn", if(length(input$countriesSelection) == 0) "disabled-btn" else "")),
             actionButton("selectAllCountries", HTML('<i class="fa fa-check"></i> All'),
-                class = paste("dual-button select-btn", if(length(input$countriesSelection) == length(participatingCountries)) "disabled-btn" else ""))
+                         class = paste("dual-button select-btn", if(length(input$countriesSelection) == length(participatingCountries)) "disabled-btn" else ""))
         )
     })
-
+    
     output$selectAllCultureMaterialsButton <- renderUI({
         tags$div(
             class = "select-all-wrapper",
             tags$div(
                 class = "dual-button-container",
                 actionButton("deselectAllCultureMaterials", HTML('<i class="fa fa-times"></i> Clear'),
-                    class = paste("dual-button deselect-btn", if(length(input$cultureMaterialsSelection) == 0) "disabled-btn" else "")),
+                             class = paste("dual-button deselect-btn", if(length(input$cultureMaterialsSelection) == 0) "disabled-btn" else "")),
                 actionButton("selectAllCultureMaterials", HTML('<i class="fa fa-check"></i> All'),
-                    class = paste("dual-button select-btn", if(length(input$cultureMaterialsSelection) == length(cultureMaterialList)) "disabled-btn" else ""))
+                             class = paste("dual-button select-btn", if(length(input$cultureMaterialsSelection) == length(cultureMaterialList)) "disabled-btn" else ""))
             )
         )
     })
-
+    
     output$selectAllPathogensButton <- renderUI({
         tags$div(
             class = "select-all-wrapper",
             tags$div(
                 class = "dual-button-container",
                 actionButton("deselectAllPathogens", HTML('<i class="fa fa-times"></i> Clear'),
-                    class = paste("dual-button deselect-btn", if(length(input$pathogensSelection) == 0) "disabled-btn" else "")),
+                             class = paste("dual-button deselect-btn", if(length(input$pathogensSelection) == 0) "disabled-btn" else "")),
                 actionButton("selectAllPathogens", HTML('<i class="fa fa-check"></i> All'),
-                    class = paste("dual-button select-btn", if(length(input$pathogensSelection) == length(pathogenList)) "disabled-btn" else ""))
+                             class = paste("dual-button select-btn", if(length(input$pathogensSelection) == length(pathogenList)) "disabled-btn" else ""))
             )
         )
     })
-
+    
     output$selectAllResistancesButton <- renderUI({
         tags$div(
             class = "select-all-wrapper",
             tags$div(
                 class = "dual-button-container",
                 actionButton("deselectAllResistances", HTML('<i class="fa fa-times"></i> Clear'),
-                    class = paste("dual-button deselect-btn", if(length(input$resistancesSelection) == 0) "disabled-btn" else "")),
+                             class = paste("dual-button deselect-btn", if(length(input$resistancesSelection) == 0) "disabled-btn" else "")),
                 actionButton("selectAllResistances", HTML('<i class="fa fa-check"></i> All'),
-                    class = paste("dual-button select-btn", if(length(input$resistancesSelection) == length(resistanceList)) "disabled-btn" else ""))
+                             class = paste("dual-button select-btn", if(length(input$resistancesSelection) == length(resistanceList)) "disabled-btn" else ""))
             )
         )
     })
-
+    
     # Select all button for countries
     observeEvent(input$selectAllCountries, {
         updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = participatingCountries)
     })
-
+    
     # Deselect all button for countries
     observeEvent(input$deselectAllCountries, {
         updateCheckboxGroupInput(session, "countriesSelection", choices = participatingCountries, selected = c())
     })
-
+    
     # Select all button for pathogens
     observeEvent(input$selectAllPathogens, {
         updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = pathogenList)
     })
-
+    
     # Deselect all button for pathogens
     observeEvent(input$deselectAllPathogens, {
         updateCheckboxGroupInput(session, "pathogensSelection", choices = pathogenList, selected = c())
     })
-
+    
     # Select all button for resistances
     observeEvent(input$selectAllResistances, {
         updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = resistanceList)
     })
-
+    
     # Deselect all button for resistances
     observeEvent(input$deselectAllResistances, {
         updateCheckboxGroupInput(session, "resistancesSelection", choices = resistanceList, selected = c())
     })
-
+    
     # Select all button for culture materials
     observeEvent(input$selectAllCultureMaterials, {
         updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = cultureMaterialList)
     })
-
+    
     # Deselect all button for culture materials
     observeEvent(input$deselectAllCultureMaterials, {
         updateCheckboxGroupInput(session, "cultureMaterialsSelection", choices = cultureMaterialList, selected = c())
     })
-
+    
     # Legal information modal (from Info tab button)
     observeEvent(input$showLegalModal, {
         showModal(modalDialog(
@@ -614,7 +740,7 @@ server <- function(input, output, session) {
             size = "l"
         ))
     })
-
+    
     # Legal information modal (from sidebar button)
     observeEvent(input$showLegalModalSidebar, {
         showModal(modalDialog(
@@ -629,7 +755,7 @@ server <- function(input, output, session) {
             size = "l"
         ))
     })
-
+    
     # Info modal (from sidebar button)
     observeEvent(input$showInfoModal, {
         showModal(modalDialog(
@@ -644,7 +770,7 @@ server <- function(input, output, session) {
             size = "l"
         ))
     })
-
+    
     # Contact modal (from sidebar button)
     observeEvent(input$showContactModal, {
         showModal(modalDialog(
@@ -667,7 +793,7 @@ server <- function(input, output, session) {
             size = "m"
         ))
     })
-
+    
     # Outer toggle - switch between Dashboard and Insight tabs
     observeEvent(input$outerToggle, {
         if (input$outerToggle == "dashboard") {
@@ -692,7 +818,7 @@ server <- function(input, output, session) {
             shinyjs::addClass(selector = ".sidebar-panel", class = "filters-inactive")
         }
     })
-
+    
     # View toggle - switch between Graphics and Table tabs
     observeEvent(input$viewToggle, {
         if (input$viewToggle == "graphics") {
@@ -701,7 +827,7 @@ server <- function(input, output, session) {
             updateTabsetPanel(session, "mainTabs", selected = "table")
         }
     })
-
+    
     # Geo data disclaimer modal
     observeEvent(input$showGeoDataDisclaimer, {
         showModal(modalDialog(
@@ -716,7 +842,7 @@ server <- function(input, output, session) {
             size = "l"
         ))
     })
-
+    
     # Welcome/Usage modal - shows on page load
     observeEvent(TRUE, {
         showModal(modalDialog(
@@ -749,7 +875,7 @@ server <- function(input, output, session) {
             size = "l"
         ))
     }, once = TRUE, ignoreInit = FALSE)
-
+    
     # Instructions button - reopens the usage modal
     observeEvent(input$showInstructions, {
         showModal(modalDialog(
@@ -782,7 +908,7 @@ server <- function(input, output, session) {
             size = "l"
         ))
     })
-
+    
     # Contact form submission
     observeEvent(input$submitContact, {
         # Check if email is configured
@@ -796,13 +922,13 @@ server <- function(input, output, session) {
             })
             return()
         }
-
+        
         # Validate inputs
         name <- trimws(input$contactName)
         email <- trimws(input$contactEmail)
         subject <- trimws(input$contactSubject)
         message <- trimws(input$contactMessage)
-
+        
         # Check if all required fields are filled
         if (name == "" || email == "" || subject == "" || message == "") {
             output$contactStatus <- renderUI({
@@ -814,7 +940,7 @@ server <- function(input, output, session) {
             })
             return()
         }
-
+        
         # Basic email validation
         emailPattern <- "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
         if (!grepl(emailPattern, email)) {
@@ -827,7 +953,7 @@ server <- function(input, output, session) {
             })
             return()
         }
-
+        
         # Disable submit button and show "Sending..." indicator immediately
         shinyjs::disable("submitContact")
         output$contactStatus <- renderUI({
@@ -837,12 +963,12 @@ server <- function(input, output, session) {
                 "Sending your message..."
             )
         })
-
+        
         # Send email using system curl with TLS 1.2+
         tryCatch({
             # Parse recipient emails (supports comma-separated list)
             recipient_list <- trimws(unlist(strsplit(RECIPIENT_EMAIL, ",")))
-
+            
             # Create email body (plain text format for curl)
             email_body_text <- paste0(
                 "New contact form submission\n\n",
@@ -853,7 +979,7 @@ server <- function(input, output, session) {
                 "---\n",
                 "Sent from JAMREYE AMR Surveillance Dashboard at ", format(Sys.time(), '%Y-%m-%d %H:%M:%S')
             )
-
+            
             # Send email to each recipient
             for (recipient in recipient_list) {
                 # Create email message with headers
@@ -864,29 +990,29 @@ server <- function(input, output, session) {
                     "\r\n",
                     email_body_text, "\r\n"
                 )
-
+                
                 # Write to temporary file
                 tmp_file <- tempfile(fileext = ".txt")
                 writeLines(email_content, tmp_file)
-
+                
                 # Build curl command with TLS 1.2+ support and timeouts
                 curl_cmd <- sprintf(
                     'curl --url "smtp://%s:%s" --ssl-reqd --mail-from "%s" --mail-rcpt "%s" --upload-file "%s" --user "%s:%s" --tlsv1.2 --connect-timeout 10 --max-time 30 --silent --show-error 2>&1',
                     SMTP_SERVER, SMTP_PORT, SENDER_EMAIL, recipient, tmp_file, SMTP_USERNAME, SMTP_PASSWORD
                 )
-
+                
                 # Execute curl command
                 exit_code <- system(curl_cmd, ignore.stdout = TRUE, ignore.stderr = FALSE)
-
+                
                 # Clean up temp file
                 unlink(tmp_file)
-
+                
                 # Check if sending failed
                 if (exit_code != 0) {
                     stop(paste("Failed to send email to", recipient, "- curl exit code:", exit_code))
                 }
             }
-
+            
             # Show success message
             output$contactStatus <- renderUI({
                 tags$div(
@@ -895,14 +1021,14 @@ server <- function(input, output, session) {
                     "Your message has been sent. We'll get back to you soon."
                 )
             })
-
+            
             # Clear form fields and re-enable button
             updateTextInput(session, "contactName", value = "")
             updateTextInput(session, "contactEmail", value = "")
             updateTextInput(session, "contactSubject", value = "")
             updateTextAreaInput(session, "contactMessage", value = "")
             shinyjs::enable("submitContact")
-
+            
         }, error = function(e) {
             # Show error message with details for debugging
             output$contactStatus <- renderUI({
@@ -917,29 +1043,29 @@ server <- function(input, output, session) {
             print(paste("Contact form error:", e$message))
         })
     })
-
+    
     # update the question selection list
     observeEvent(input$sectionsSelection, {
         # Create named vector: names = HTML with badges (for display), values = short titles (for selection)
         choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
         updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
-
+    
     observeEvent(input$pathogensSelection, {
         choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
         updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
-
+    
     observeEvent(input$resistancesSelection, {
         choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
         updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
-
+    
     observeEvent(input$cultureMaterialsSelection, {
         choicesWithBadges <- setNames(c("Participating countries", activeQuestions()[[2]]), c("Participating countries", activeQuestions()[[3]]))
         updateSelectizeInput(session, "questionSelection", choices = choicesWithBadges, selected = c("Participating countries"))
     }, ignoreNULL = FALSE)
-
+    
     # Remove country from selection when cross button is clicked
     observeEvent(input$remove_country, {
         countryToRemove <- input$remove_country$country
@@ -948,7 +1074,7 @@ server <- function(input, output, session) {
             updateCheckboxGroupInput(session, "countriesSelection", selected = updatedSelection)
         }
     })
-
+    
     # Dynamic UI for the plot with adjusted height
     output$dashboardPlotUI <- renderUI({
         if (input$questionSelection %in% multipleChoiceShortTitles) {
@@ -959,7 +1085,7 @@ server <- function(input, output, session) {
             plotlyOutput("dashboardPlot", height = "700px")
         }
     })
-
+    
     # Display full question title above the map
     output$fullQuestionTitle <- renderUI({
         if (input$questionSelection == "Participating countries") {
@@ -977,7 +1103,7 @@ server <- function(input, output, session) {
                     break
                 }
             }
-
+            
             if (!is.null(fullTitle)) {
                 tags$div(
                     class = "question-title-text",
@@ -987,7 +1113,7 @@ server <- function(input, output, session) {
             }
         }
     })
-
+    
     # Dynamic UI for multiple-choice answer selection
     output$multipleChoiceAnswerSelector <- renderUI({
         if (input$questionSelection %in% multipleChoiceShortTitles) {
@@ -1001,7 +1127,7 @@ server <- function(input, output, session) {
                     break
                 }
             }
-
+            
             if (length(possibleAnswers) > 0) {
                 # Build legend items
                 legendItems <- list(
@@ -1016,7 +1142,7 @@ server <- function(input, output, session) {
                         tags$span("Not selected")
                     )
                 )
-
+                
                 # Add third legend item for follow-up questions
                 if (isFollowUpQuestion) {
                     legendItems[[3]] <- tags$span(
@@ -1025,7 +1151,7 @@ server <- function(input, output, session) {
                         tags$span("NA")
                     )
                 }
-
+                
                 tags$div(
                     class = "answer-selector-container",
                     tags$label(
@@ -1047,18 +1173,18 @@ server <- function(input, output, session) {
             }
         }
     })
-
-
+    
+    
     ## FUNCTIONS ##
-
+    
     # Calculates country scores based on filters
     getCountryScores <- function() {
-
+        
         ### this function returns a list
         #     - scores (ratios on 1) for each country (vector)
         #     - max scores (vector)
         #     - amount of questions active (numeric)
-
+        
         # check sections: if none selected -> all zeros and stop
         if (length(input$sectionsSelection) == 0) { # 
             return(
@@ -1069,24 +1195,24 @@ server <- function(input, output, session) {
                 )
             )
         }
-
+        
         # initiate output vector
         countryScores <- rep(0, length(repliedCountries))
         countryMaxScores <- rep(0, length(repliedCountries))
-
+        
         # initiate questions counter (counts based on coefficient, 1 Complex Table question = 1 question)
         activeQuestionsAmount <- 0
-
+        
         # loop over questions
         for (column in 2:ncol(countryScoreTable)) { # skip col 1 = country name
-
+            
             ## check if question must be taken or not ##
-
+            
             # if question not in selected question list, skip it
             if (!(countryScoreTable[1, column] %in% activeQuestions()[[1]])) next
-
+            
             activeQuestionsAmount <- activeQuestionsAmount + as.double(countryScoreTable[3, column])
-
+            
             # loop over countries
             for (row in 1:(((nrow(countryScoreTable) - 3) / 2))) { # -3 -> ignore question title, tags and coefficient rows ; /2 because 2 lines per country (score + max score)
                 # if country is not selected -> skip the country
@@ -1098,35 +1224,35 @@ server <- function(input, output, session) {
                 countryMaxScores[row] <- countryMaxScores[row] + as.double(countryScoreTable[(row * 2) + 3, column]) # line just below
             }
         }
-
+        
         # init - create vectors for scores without unselected countries
         countryScoreRatios <- c()
         countryScoresClean <- c()
         countryMaxScoresClean <- c()
-    
+        
         # calculate score ratios + create vectors without unselected countries
         for (i in 1:length(repliedCountries)) {
-
+            
             if (countryMaxScores[i] != 0) {
                 countryScoreRatios <- c(countryScoreRatios, countryScores[i] / countryMaxScores[i])
                 countryScoresClean <- c(countryScoresClean, countryScores[i])
                 countryMaxScoresClean <- c(countryMaxScoresClean, countryMaxScores[i]/activeQuestionsAmount)
             }
         }
-
+        
         # in case empty...
         if (length(countryScoreRatios) == 0) {
             countryScoreRatios <- rep(0, length(intersect(repliedCountries, input$countriesSelection)))
         }
-
+        
         return(list(countryScoreRatios, countryMaxScoresClean))
-
+        
     }
-
+    
     createResultsTable <- function() {
-
+        
         # returns a datafrme for the Survey Results tab
-
+        
         # Helper function to get badge color (only for sections)
         getBadgeColor <- function(tag) {
             # Sections - use specific colors
@@ -1136,7 +1262,7 @@ server <- function(input, output, session) {
             # All other filters - gray
             return("#888888")
         }
-
+        
         # Helper function to get badge icon
         getBadgeIcon <- function(tag) {
             # Sections
@@ -1150,17 +1276,17 @@ server <- function(input, output, session) {
             # Default
             return("")
         }
-
+        
         formatQuestionWithBadges <- function(questionTitle, tagsString) {
             tagsList <- strsplit(tagsString, ", ")[[1]]
             # Remove "Section 0" and "Not ... related" tags (don't display these)
             tagsList <- tagsList[tagsList != "Section 0"]
             tagsList <- tagsList[!grepl("^Not .* related$", tagsList)]
-
+            
             if (length(tagsList) == 0) {
                 return(questionTitle)
             }
-
+            
             # Create badge HTML for each tag
             badgesHtml <- paste(
                 sapply(tagsList, function(tag) {
@@ -1172,14 +1298,14 @@ server <- function(input, output, session) {
                 }),
                 collapse = " "
             )
-
+            
             # Combine badges and question on separate lines
             return(paste0(badgesHtml, '<br/>', questionTitle))
         }
-
+        
         # get active questions (titles)
         activeQuestions <- activeQuestions()[[1]]
-
+        
         # Build list of active questions with their positions
         activeQuestionsData <- list()
         for (question in surveyData) {
@@ -1190,52 +1316,52 @@ server <- function(input, output, session) {
                 )
             }
         }
-
+        
         # Sort by position
         if (length(activeQuestionsData) > 0) {
             positions <- sapply(activeQuestionsData, function(x) x$position)
             sortOrder <- order(positions)
             activeQuestionsData <- activeQuestionsData[sortOrder]
         }
-
+        
         # Build formatted questions in sorted order
         questionsWithBadges <- c()
         for (item in activeQuestionsData) {
             formattedQuestion <- formatQuestionWithBadges(item$question$title, toString(item$question$tags))
             questionsWithBadges <- c(questionsWithBadges, formattedQuestion)
         }
-
+        
         # add columns to DF
         resultsTable <- data.frame("Question" = questionsWithBadges, stringsAsFactors = FALSE)
-
+        
         # loop over selected countries
         for (country in input$countriesSelection) {
-
+            
             # (re)set country replies vector
             countryReplies <- c()
-
+            
             # loop over questions in sorted order
             for (item in activeQuestionsData) {
                 question <- item$question
-
+                
                 if (length(question$actual_answers[[country]]) == 0) {
                     countryReplies <- c(countryReplies, NA)
-
+                    
                 } else {
                     countryReplies <- c(countryReplies, toString(question$actual_answers[[country]])) # toString -> to convert Multiple Choice replies
                 }
             }
-
+            
             resultsTable[[country]] <- countryReplies
         }
-
+        
         return(resultsTable)
-
+        
     }
-
+    
     getSingleQuestionReplies <- function() {
         # 
-
+        
         # if selected question is "Participating countries", just return output
         if (input$questionSelection == "Participating countries"){
             return(
@@ -1247,7 +1373,7 @@ server <- function(input, output, session) {
                 )
             )
         }
-
+        
         # loop over questions to find it/them
         for (question in surveyData) {
             # check filters - rem.: the question selection is pre-filtered based on the selected "main" filters. Except for Complex Table sub-questions, which share the same short title
@@ -1255,17 +1381,17 @@ server <- function(input, output, session) {
                 (question[["short_title"]] == input$questionSelection) # check question selection
                 & (question[["type"]] == "SingleChoice") # check type
             ) {
-
+                
                 # get possible answers
                 possibleAnswers <- question[["possible_answers"]]
-
+                
                 # get country answers
                 actualAnswers <- question[["actual_answers"]]
-
+                
                 # change replies to numeric matching color scale
                 answersNumericReference <- (1:length(possibleAnswers))
                 answersNumeric <- c()
-
+                
                 for (answer in names(actualAnswers)) {
                     if (!(answer %in% input$countriesSelection)) next # skip if country not selected
                     i <- 1
@@ -1277,7 +1403,7 @@ server <- function(input, output, session) {
                     }
                     
                 }
-
+                
                 # get possible answer keys, colors, and occurrences
                 possibleAnswerText <- c()
                 possibleAnswerColors <- c()
@@ -1285,7 +1411,7 @@ server <- function(input, output, session) {
                 colorIndex <- 1
                 for (possibleAnswer in names(possibleAnswers)) {
                     possibleAnswerText <- c(possibleAnswerText, possibleAnswer)
-
+                    
                     # extract color from JSON structure
                     answerColor <- possibleAnswers[[possibleAnswer]][["color"]]
                     if (is.null(answerColor)) {
@@ -1296,7 +1422,7 @@ server <- function(input, output, session) {
                     }
                     possibleAnswerColors <- c(possibleAnswerColors, answerColor)
                     colorIndex <- colorIndex + 1
-
+                    
                     # get occurences of each possible reply
                     occurencesCounter <- 0
                     for (answer in names(actualAnswers)) {
@@ -1307,10 +1433,10 @@ server <- function(input, output, session) {
                     }
                     possibleAnswerOccurences <- c(possibleAnswerOccurences, occurencesCounter)
                 }
-
+                
                 # use colors from JSON
                 customColorScale <- possibleAnswerColors
-
+                
                 # convert to percentage
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
                 
@@ -1322,25 +1448,25 @@ server <- function(input, output, session) {
                         possibleAnswerPercentReplied
                     )
                 )
-
+                
             }
-
+            
             else if ((question[["short_title"]] == input$questionSelection) & (question[["type"]] == "MultipleChoice")) {
-
+                
                 # get possible answers
                 possibleAnswers <- question[["possible_answers"]]
-
+                
                 # get country answers and stack them in a single vector
                 actualAnswers <- question[["actual_answers"]]
-
+                
                 # Filter to only include selected countries
                 selectedCountries <- intersect(input$countriesSelection, repliedCountries)
                 filteredActualAnswers <- actualAnswers[names(actualAnswers) %in% selectedCountries]
                 allActualAnswers <- unlist(filteredActualAnswers, use.names = FALSE)
-
+                
                 # Check if this is a follow-up question (starts with "You answered")
                 isFollowUpQuestion <- grepl("^You answered", question[["title"]], ignore.case = FALSE)
-
+                
                 # loop over possible answers and get occurence of each, plus extract colors
                 possibleAnswerOccurences <- c()
                 possibleAnswerText <- c()
@@ -1349,7 +1475,7 @@ server <- function(input, output, session) {
                 for (possibleAnswer in names(possibleAnswers)) {
                     possibleAnswerText <- c(possibleAnswerText, possibleAnswer)
                     possibleAnswerOccurences <- c(possibleAnswerOccurences, sum(allActualAnswers == possibleAnswer))
-
+                    
                     # extract color from JSON structure
                     answerColor <- possibleAnswers[[possibleAnswer]][["color"]]
                     if (is.null(answerColor)) {
@@ -1361,13 +1487,13 @@ server <- function(input, output, session) {
                     possibleAnswerColors <- c(possibleAnswerColors, answerColor)
                     colorIndex <- colorIndex + 1
                 }
-
+                
                 possibleAnswerPercentReplied = (possibleAnswerOccurences/length(intersect(input$countriesSelection, repliedCountries)) * 100)
-
+                
                 # For the MAP: create data for selected answer
                 answersNumeric <- NULL
                 customColorScaleMap <- NULL
-
+                
                 if (!is.null(input$selectedAnswer)) {
                     answersNumeric <- c()
                     for (country in intersect(repliedCountries, input$countriesSelection)) {
@@ -1384,7 +1510,7 @@ server <- function(input, output, session) {
                                 }
                             }
                         }
-
+                        
                         if (hasAnswers) {
                             # Country has answers - check if selected answer is in the list
                             if (input$selectedAnswer %in% countryAnswers) {
@@ -1401,7 +1527,7 @@ server <- function(input, output, session) {
                             }
                         }
                     }
-
+                    
                     # Set color scale based on question type
                     if (isFollowUpQuestion) {
                         # Use three colors: selected, not selected, not asked
@@ -1411,7 +1537,7 @@ server <- function(input, output, session) {
                         customColorScaleMap <- c("#0fdbd5", "#df2e1a")
                     }
                 }
-
+                
                 return(
                     list(
                         answersNumeric,  # For map (binary or ternary: selected/not selected/not asked)
@@ -1423,7 +1549,7 @@ server <- function(input, output, session) {
                 )
             }
         }
-
+        
         return(
             list(
                 answersNumeric = NULL,
@@ -1434,11 +1560,11 @@ server <- function(input, output, session) {
         )
         
     }
-
+    
     getActiveQuestions <- function() {
-
+        
         # used to filter the question selection list
-
+        
         # Helper function to get badge color (only for sections)
         getBadgeColor <- function(tag) {
             # Sections - use specific colors
@@ -1448,7 +1574,7 @@ server <- function(input, output, session) {
             # All other filters - gray
             return("#888888")
         }
-
+        
         # Helper function to get badge icon
         getBadgeIcon <- function(tag) {
             # Sections
@@ -1462,17 +1588,17 @@ server <- function(input, output, session) {
             # Default
             return("")
         }
-
+        
         formatShortTitleWithBadges <- function(shortTitle, tagsString) {
             tagsList <- strsplit(tagsString, ", ")[[1]]
             # Remove "Section 0" and "Not ... related" tags (don't display these)
             tagsList <- tagsList[tagsList != "Section 0"]
             tagsList <- tagsList[!grepl("^Not .* related$", tagsList)]
-
+            
             if (length(tagsList) == 0) {
                 return(shortTitle)
             }
-
+            
             badgesHtml <- paste(
                 sapply(tagsList, function(tag) {
                     color <- getBadgeColor(tag)
@@ -1483,46 +1609,46 @@ server <- function(input, output, session) {
                 }),
                 collapse = ""
             )
-
+            
             return(paste0(badgesHtml, '<br/>', shortTitle))
         }
-
+        
         activeQuestionTitles <- c()
         activeQuestionShortTitles <- c()
         activeQuestionShortTitlesWithBadges <- c()
         activeQuestionPositions <- c()
-
+        
         for (question in surveyData) {
-
+            
             # skip section 0
             if ("Section 0" %in% question$tags) next
-
+            
             # skip sections that are not selected
             if (length(intersect(input$sectionsSelection, question$tags)) == 0) next
-
+            
             # skip free text questions
             if (question$type == "FreeText") next
-
+            
             # check if question tags and active filters do match
             if (length(intersect(input$pathogensSelection, question$tags)) == 0) next
-
+            
             if (length(intersect(input$resistancesSelection, question$tags)) == 0) next
-
+            
             if (length(intersect(input$cultureMaterialsSelection, question$tags)) == 0) next
-
+            
             # question has to be taken -> append titles to vectors
             activeQuestionTitles <- c(activeQuestionTitles, question[["title"]])
             activeQuestionShortTitles <- c(activeQuestionShortTitles, question[["short_title"]])
-
+            
             # Add short title with badges
             formattedShortTitle <- formatShortTitleWithBadges(question[["short_title"]], toString(question$tags))
             activeQuestionShortTitlesWithBadges <- c(activeQuestionShortTitlesWithBadges, formattedShortTitle)
-
+            
             # Add position
             activeQuestionPositions <- c(activeQuestionPositions, ifelse(is.null(question[["position"]]), 9999, question[["position"]]))
-
+            
         }
-
+        
         # Sort by position
         if (length(activeQuestionPositions) > 0) {
             sortOrder <- order(activeQuestionPositions)
@@ -1530,32 +1656,32 @@ server <- function(input, output, session) {
             activeQuestionShortTitles <- activeQuestionShortTitles[sortOrder]
             activeQuestionShortTitlesWithBadges <- activeQuestionShortTitlesWithBadges[sortOrder]
         }
-
+        
         return(list(activeQuestionTitles, activeQuestionShortTitles, activeQuestionShortTitlesWithBadges))
-
+        
     }
-
-
+    
+    
     ## REACTIVE ##
-
+    
     countryScores <- reactive({
         getCountryScores()
     })
-
+    
     countryReplies <- reactive({
         getSingleQuestionReplies()
     })
-
+    
     activeQuestions <- reactive({
         getActiveQuestions()
         # use activeQuestions()[[1]] for titles
         # use activeQuestions()[[2]] for short titles
     })
-
+    
     getNonParticipatingCountries <- reactive({
         c(setdiff(repliedCountries, input$countriesSelection), nonParticipatingCountries)
     })
-
+    
     getParticipatingCountries <- reactive({
         data.frame(
             "Country" = intersect(repliedCountries, input$countriesSelection),
@@ -1563,21 +1689,21 @@ server <- function(input, output, session) {
             "Answered" = round(countryScores()[[2]] * 100, 1)
         )
     })
-
-
+    
+    
     ## OUTPUTS ##
-
+    
     output$scoresMap <- renderPlotly({
-
+        
         themeBgColor = "#ffffff"
         themeFgColor = "#1D1F21"
-
+        
         #countryReplies %>%
         scoresMap <- plot_ly(
             #height = 800,
             #width = 800
         )
-
+        
         scoresMap <- scoresMap %>% add_trace( # displays results
             type = 'choropleth',
             #featureidkey='properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
@@ -1618,7 +1744,7 @@ server <- function(input, output, session) {
                 )
             )
         )
-
+        
         scoresMap <- scoresMap %>% add_trace( # non-participating countries
             name = "Not participating",
             type = "choropleth",
@@ -1640,7 +1766,7 @@ server <- function(input, output, session) {
                 )
             )
         )
-
+        
         scoresMap <- scoresMap %>% layout(
             geo = list(
                 scope = "europe",
@@ -1671,7 +1797,7 @@ server <- function(input, output, session) {
             autosize = TRUE
         )
     })
-
+    
     output$scoresTable <- DT::renderDT(
         getParticipatingCountries(),
         rownames = FALSE,
@@ -1681,7 +1807,7 @@ server <- function(input, output, session) {
             pageLength = 100
         )
     )
-
+    
     output$noQuestionsMessage <- renderUI({
         if (length(activeQuestions()[[1]]) == 0) {
             tags$div(
@@ -1694,7 +1820,7 @@ server <- function(input, output, session) {
             )
         }
     })
-
+    
     output$resultsTable <- DT::renderDT(
         createResultsTable(),
         rownames = FALSE,
@@ -1788,7 +1914,7 @@ server <- function(input, output, session) {
             )
         )
     )
-
+    
     # CSV download
     output$downloadDataCSV <- downloadHandler(
         filename = function() {
@@ -1798,7 +1924,7 @@ server <- function(input, output, session) {
             write.csv(createResultsTable(), file, row.names = FALSE)
         }
     )
-
+    
     # Excel download
     output$downloadDataExcel <- downloadHandler(
         filename = function() {
@@ -1808,19 +1934,19 @@ server <- function(input, output, session) {
             write.xlsx(createResultsTable(), file, rowNames = FALSE)
         }
     )
-
+    
     output$dashboardMap <- renderPlotly({
-
+        
         themeBgColor = "#ffffff"
         themeFgColor = "#1D1F21"
-
+        
         if (input$questionSelection == "Participating countries") {
-
+            
             dashboardMap <- plot_ly(
                 #height = 800,
                 #width = 800
             )
-
+            
             dashboardMap <- dashboardMap %>% add_trace( # displays results
                 type = 'choropleth',
                 #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
@@ -1845,20 +1971,20 @@ server <- function(input, output, session) {
                 )
             )
         }
-
+        
         else if (input$questionSelection %in% multipleChoiceShortTitles){
-
+            
             # Check if answer is selected (handles NULL case)
             if (is.null(countryReplies()[[1]]) || is.null(countryReplies()[[2]])) {
                 return(NULL)
             }
-
+            
             # Multiple choice questions - show map for selected answer option
             dashboardMap <- plot_ly(
                 #height = 800,
                 #width = 800
             )
-
+            
             dashboardMap <- dashboardMap %>% add_trace( # displays results
                 type = 'choropleth',
                 #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
@@ -1882,7 +2008,7 @@ server <- function(input, output, session) {
                     )
                 )
             )
-
+            
             dashboardMap <- dashboardMap %>% add_trace( # non-participating countries
                 name = "Not participating",
                 type = 'choropleth',
@@ -1904,7 +2030,7 @@ server <- function(input, output, session) {
                     )
                 )
             )
-
+            
         }
         
         else {
@@ -1913,7 +2039,7 @@ server <- function(input, output, session) {
                 #height = 800,
                 #width = 800
             )
-
+            
             dashboardMap <- dashboardMap %>% add_trace( # displays results
                 type = 'choropleth',
                 #featureidkey = 'properties.NAME_ENGL', # id added directly in source in geojson -> might be different from name_engl (ex: Slovakia / Slovak Republik)
@@ -1937,7 +2063,7 @@ server <- function(input, output, session) {
                     )
                 )
             )
-
+            
             dashboardMap <- dashboardMap %>% add_trace( # non-participating countries
                 name = "Not participating",
                 type = 'choropleth',
@@ -1959,9 +2085,9 @@ server <- function(input, output, session) {
                     )
                 )
             )
-
+            
         }
-
+        
         dashboardMap <- dashboardMap %>% layout(
             geo = list(
                 scope = "europe",
@@ -1991,34 +2117,34 @@ server <- function(input, output, session) {
             dragmode = FALSE,
             autosize = TRUE
         ) %>%
-        config(
-            displaylogo = FALSE
-        )
-
-
+            config(
+                displaylogo = FALSE
+            )
+        
+        
     })
-
+    
     output$dashboardPlot <- renderPlotly({
-
+        
         # Helper function to wrap long labels into multiple lines
         wrapLabel <- function(label, maxCharsPerLine = 24) {
             if (nchar(label) <= maxCharsPerLine) {
                 return(label)
             }
-
+            
             split <- strsplit(label, " ")[[1]]
             lines <- c()
             currentLine <- ""
-
+            
             for (word in split) {
                 # Test if adding this word would exceed the limit
                 testLine <- if (nchar(currentLine) == 0) word else paste(currentLine, word)
-
+                
                 if (nchar(testLine) > maxCharsPerLine && nchar(currentLine) > 0) {
                     # Current line is full, save it and start a new line
                     lines <- c(lines, currentLine)
                     currentLine <- word
-
+                    
                     # Check if we've reached 3 lines
                     if (length(lines) >= 3) {
                         lines[3] <- paste0(lines[3], "...")
@@ -2029,30 +2155,30 @@ server <- function(input, output, session) {
                     currentLine <- testLine
                 }
             }
-
+            
             # Add the last line
             if (nchar(currentLine) > 0) {
                 lines <- c(lines, currentLine)
             }
-
+            
             return(paste(lines, collapse = "<br>"))
         }
-
+        
         if (input$questionSelection == "Participating countries"){
-
+            
             # Calculate dynamic height based on number of bars
             numBars <- nrow(participationDataOccurrences)
             plotHeight <- max(400, numBars * 90 + 150)
-
+            
             # Prepare data and sort by occurrences (ascending, so highest appears at top)
             sortOrder <- order(participationDataOccurrences$occurences, decreasing = FALSE)
             replies <- participationDataOccurrences$reply[sortOrder]
             occurrences <- participationDataOccurrences$occurences[sortOrder]
             barColors <- c(colorSequence[1], colorSequence[2], "#b3b3b3")[sortOrder]
-
+            
             # Wrap labels if needed
             wrappedLabels <- sapply(replies, wrapLabel)
-
+            
             # Create text labels with positioning
             # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
             # but display reversed on screen. Text positions use data coordinates:
@@ -2063,7 +2189,7 @@ server <- function(input, output, session) {
                                     occurrences - 3,  # Inside the bar
                                     occurrences + 12)  # Outside the bar (increased to move labels more to the left)
             textColors <- ifelse(occurrences >= 20, "white", "black")
-
+            
             # Create the plot
             p <- plot_ly(height = plotHeight) %>%
                 add_bars(
@@ -2075,7 +2201,7 @@ server <- function(input, output, session) {
                     hovertemplate = paste0("%{y}: %{x:.2f}%<extra></extra>"),
                     showlegend = FALSE
                 )
-
+            
             # Add annotations individually to properly set colors
             for (i in seq_along(wrappedLabels)) {
                 p <- p %>% add_annotations(
@@ -2087,7 +2213,7 @@ server <- function(input, output, session) {
                     font = list(size = 20, color = textColors[i], family = "Arial")
                 )
             }
-
+            
             p %>%
                 layout(
                     xaxis = list(
@@ -2127,34 +2253,34 @@ server <- function(input, output, session) {
                     displaylogo = FALSE,
                     responsive = TRUE
                 )
-
+            
         } else {
             # Check if data is available
             if (is.null(countryReplies()[[3]]) || is.null(countryReplies()[[4]])) {
                 return(NULL)
             }
-
+            
             # Calculate dynamic height based on number of bars
             numBars <- length(countryReplies()[[3]])
             plotHeight <- max(400, numBars * 90 + 150)
-
+            
             # Prepare data and sort by occurrences (ascending, so highest appears at top)
             sortOrder <- order(countryReplies()[[4]], decreasing = FALSE)
             replies <- countryReplies()[[3]][sortOrder]
             occurrences <- countryReplies()[[4]][sortOrder]
-
+            
             # For multiple-choice questions, use JAMRAI blue; for others, use custom colors
             barColors <- if (input$questionSelection %in% multipleChoiceShortTitles && length(countryReplies()) >= 5) {
                 rep("#008aab", length(replies))
             } else {
                 countryReplies()[[2]][sortOrder]
             }
-
+            
             # Wrap labels if needed (calculate threshold based on max label length)
             maxLabelLength <- max(nchar(replies))
             threshold <- if (maxLabelLength <= 24) 24 else min(ceiling(maxLabelLength / 3), 24)
             wrappedLabels <- sapply(replies, function(x) wrapLabel(x, threshold))
-
+            
             # Create text labels with positioning
             # With reversed axis (range 100->0), bars extend from 0 to occurrence in data space
             # but display reversed on screen. Text positions use data coordinates:
@@ -2165,10 +2291,10 @@ server <- function(input, output, session) {
                                     occurrences - 3,  # Inside the bar
                                     occurrences + 12)  # Outside the bar (increased to move labels more to the left)
             textColors <- ifelse(occurrences >= 20, "white", "black")
-
+            
             # Set axis label based on question type
             yAxisLabel <- "% of selected countries"
-
+            
             # Create the plot
             p <- plot_ly(height = plotHeight) %>%
                 add_bars(
@@ -2180,7 +2306,7 @@ server <- function(input, output, session) {
                     hovertemplate = paste0("%{y}: %{x:.2f}%<extra></extra>"),
                     showlegend = FALSE
                 )
-
+            
             # Add annotations individually to properly set colors
             for (i in seq_along(wrappedLabels)) {
                 p <- p %>% add_annotations(
@@ -2192,7 +2318,7 @@ server <- function(input, output, session) {
                     font = list(size = 20, color = textColors[i], family = "Arial")
                 )
             }
-
+            
             p %>%
                 layout(
                     xaxis = list(
@@ -2233,9 +2359,95 @@ server <- function(input, output, session) {
                     responsive = TRUE
                 )
         }
-
+        
     })
-
+    
+    ## Insight tab related stuff
+    
+    ## select country via clic
+    output$hover_selected <- renderPrint({
+        input$plot_selected
+    })
+    
+    output$plot <- renderGirafe({
+        x <- girafe(code = print(gg_hm),
+                    width_svg = 6, height_svg = 5,
+                    options = list(
+                        opts_hover_inv(css = "opacity:0.5;"),
+                        opts_hover(css = "stroke-width:1;cursor:pointer",reactive=TRUE),
+                        opts_tooltip(use_fill = TRUE, css = "padding:5px;border-radius:3px;"),
+                        opts_zoom(max = 5),
+                        opts_selection(
+                            css = "stroke: black; stroke-width: 1.5px;",
+                            type = "multiple",
+                            only_shiny = TRUE,
+                            selected = input$selected_country),
+                        opts_sizing(rescale = TRUE),
+                        opts_toolbar(saveaspng = TRUE,
+                                     position = "top",
+                                     pngname = "JAMREYE_InsideTab_1",
+                                     delay_mouseout = 2000))
+        ) 
+        
+        x
+    })
+    
+    observeEvent(input$reset, {
+        session$sendCustomMessage(type = 'plot_set', message = character(0))
+    })
+    
+    # Update selectInput when a country is clicked in the plot
+    observeEvent(input$combined_selection, {
+        req(input$hover_selected)
+        selected <- df_longNEW22 %>%
+            filter(Country %in% input$hover_selected)
+        if (length(selected) > 0) {
+            updateSelectInput(
+                session,
+                "selected_country",
+                selected = input$hover_selected#selected
+            )
+        }
+    })
+    
+    output$country_context <- renderTable({
+        req(input$plot_selected)
+        #out <- 
+        df_longNEW22 %>% # Count per country and response category
+            group_by(Country, value) %>%
+            summarise(Number = n(), .groups = "drop") %>%
+            # Ensure all three categories appear for each country
+            complete(
+                Country,
+                value = c("Yes, mandatory", "Yes, voluntary", "No"),
+                fill = list(Number = 0)
+            ) %>%
+            # Calculate percentage within each country
+            group_by(Country) %>%
+            mutate(
+                Percent = 100 * Number / sum(Number)
+            ) %>%
+            ungroup() |> 
+            #filter(Country %in% c("Luxembourg","Sweden")) |> 
+            filter(Country %in% c(input$plot_selected)) |> 
+            pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |> 
+            transmute(Country,
+                      "No surveillance" = No,
+                      `Yes, voluntary`,
+                      `Yes, mandatory`) |> 
+            mutate(across(c(`No surveillance`,`Yes, voluntary`, `Yes, mandatory`), ~ paste0(round(.x,2),"%"))
+            )
+        
+        # transmute(Country) |> distinct()#selected_states())#c("Sweden"))
+        #if( nrow(out) < 1 ) return(NULL)
+        #row.names(out) <- NULL
+        #out
+    })
+    
+    
+    
+    
+    
 }
 
 # run
