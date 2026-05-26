@@ -15,6 +15,7 @@ library(ggiraph)
 library(systemfonts)
 library(glue)
 library(patchwork)
+library(tidyverse)
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
@@ -2437,7 +2438,7 @@ server <- function(input, output, session) {
             ungroup() |> 
             #filter(Country %in% c("Luxembourg","Sweden")) |> 
             filter(Country %in% c(input$plot_selected)) |> 
-            pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |> 
+            dplyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |> 
             transmute(Country,
                       "No surveillance" = No,
                       `Yes, voluntary`,
