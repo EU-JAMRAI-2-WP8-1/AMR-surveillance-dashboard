@@ -1,4 +1,7 @@
 #
+.Rproj.user/
+.Rhistory
+.RData
 files/data/old
 idees_claude.txt
 rsconnect/

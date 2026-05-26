@@ -452,7 +452,7 @@
 
 .tabbable > .tab-content {
     padding: 12px;
-    overflow-x: auto;
+    /*overflow-x: auto;*/
 }
 
 #resultsTable {
