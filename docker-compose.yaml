@@ -6,7 +6,6 @@ services:
     working_dir: /srv/shiny-server
     volumes:
       - ./app.R:/home/shiny-app/app.R
-      - ./www/css/style.css:/srv/shiny-server/www/css/style.css
-      - ./www/js/script.js:/srv/shiny-server/www/js/script.js
+      - ./www:/srv/shiny-server/www
     ports:
       - 8180:8180
