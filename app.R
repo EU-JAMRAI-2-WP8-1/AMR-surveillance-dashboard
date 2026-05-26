@@ -604,6 +604,13 @@ ui <- shinyUI(fluidPage(
                         ),
                         
                         
+                        nav_panel("Insight #2",
+                                  page_fillable()),
+                        nav_panel("Insight #3",
+                                  page_fillable()),
+                        nav_panel("Insight #4",
+                                  page_fillable())
+                        
                     ),
                     
                     ## to be removed ->
