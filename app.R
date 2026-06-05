@@ -535,14 +535,13 @@ ui <- shinyUI(fluidPage(
                                       fluidRow(
                                           column(6,
                                                  tags$style(
-                                                     HTML("
-             .selectize-input {
-             border-radius: 10px !important;
-             }
-             .selectize-dropdown {
-             border-radius: 10px !important;
-             }
-                  ")
+                                                     HTML(".selectize-input {
+                                                              border-radius: 10px !important;
+                                                     }
+                                                            .selectize-dropdown {
+                                                            border-radius: 10px !important;
+                                                            }
+                                                          ")
                                                  ),
                                           ),
                                           
@@ -550,51 +549,9 @@ ui <- shinyUI(fluidPage(
                                       layout_columns(
                                           card(
                                               actionButton("reset", label = "Reset selection"),
-                                              #girafeOutput("plot_bp", height = "100%"),
-                                              girafeOutput("plot", height = "100%"),
+                                              girafeOutput("plot_it1", height = "100%"),
                                           ),
-                                          card("💡 What we can learn from this",
-                                               
-                                               markdown("
-         ##### A European baseline for surveillance of AMR priority pathogens: <span style='color:#086D6A;font-weight:bold'>mandatory</span>, <span style='color:#0fdbd5;font-weight:bold'>voluntary</span> or <span style='color:#949494;font-weight:bold'>no</span> surveillance 
-         
-         🤝🏻 **Policy commitment:** Support EU Council Recommendation on AMR (B5b), AMR pathogens resistant to last line treatments should be notifiable under national legislation.
-         
-        
-          ##### Major Trends in AMR Surveillance 
-          "),
-                                               tags$ul(
-                                                   tags$li(
-                                                       span("Comprehensive surveillance of invasive infections but disparities for other culture materials... ℹ️",
-                                                            title = "European surveillance systems strongly priorities invasive infections, with widespread monitoring of AMR priority pathogens from blood/CSF. However, coverage is uneven: mandatory surveillance is reported by 54% of countries for blood/CSF but only 25% for urine. Significant gaps remain for urine and lower respiratory tract infections, limiting understanding of AMR in common community infections. ")
-                                                   ),
-                                                   tags$li(
-                                                       span("Comprehensive surveillance of carbapenem-resistant E. coli and K. pneumoniae... ℹ️", 
-                                                            title = "Comprehensive surveillance of carbapenem-resistant E. coli and K. pneumoniae is particularly well established across several culture materials.")
-                                                   ),
-                                                   
-                                                   tags$li(
-                                                       span("Variability in national practices... ℹ️", 
-                                                            title = "Variability in national practices: While two countries report mandatory surveillance for all AMR priority pathogens, five rely solely on voluntary systems.")
-                                                   )),
-                                               tags$h4("Actions for change:"),
-                                               tags$body("Closing surveillance gaps will require expanding mandatory reporting and establishing surveillance where none exists, 
-         with priority given to carbapenem-resistant pathogens. Strengthening legal frameworks and embedding surveillance requirements 
-         in AMR National Action Plans could accelerate progress toward 2030 policy targets."),
-                                               
-                                               tags$h4("Why does mandatory surveillance matter?"),
-                                               tags$body("While mandatory surveillance does not always ensure high-quality data, it elevates the political recognition of 
-         AMR pathogens as a public health threat and priority. Although voluntary systems can be effective in some countries, 43% of 
-         countries report that voluntary surveillance negatively impacts their data completeness, highlighting the need for legally 
-         backed approaches. Shifting to mandatory systems should be prioritised where the benefits clearly outweigh those of voluntary efforts."),
-                                               tags$br(),
-                                               tags$br(),
-                                               tags$body("Note: Here we define mandatory surveillance as notifiable under national legislation. In some European countries, 
-                   communicable disease legislations distinguish between mandatory surveillance and notifiable pathogens, where both are
-                   legally obligatory but notifiable legislation imposes stricter requirements for reporting to support real-time outbreak control.
-                   In that case both mandatory and notifiable are included in the answers.")       
-                                               
-                                          ),
+                                          card(),
                                       ),
                                       card("Selected countrie(s) head-to-head comparison:",
                                            tableOutput("country_context")
@@ -603,15 +560,107 @@ ui <- shinyUI(fluidPage(
                                       row_heights = c(5,4)
                                   )
                         ),
-                        
+                        nav_panel("Insight #1_mdinput",
+                                  page_fillable(
+                                      titlePanel("National surveillance of AMR priority pathogens"),
+                                      fluidRow(
+                                          column(6,
+                                                 tags$style(
+                                                     HTML(".selectize-input {
+                                                                border-radius: 10px !important;
+                                                                }
+                                                           .selectize-dropdown {
+                                                                border-radius: 10px !important;
+                                                                }
+                                                          ")
+                                                 ),
+                                          ),
+                                          
+                                      ),
+                                      layout_columns(
+                                          card(
+                                              actionButton("reset", label = "Reset selection"),
+                                              girafeOutput("plot", height = "100%"),
+                                          ),
+                                          card(
+                                              uiOutput("md_content_it1")
+                                          ),
+                                      ),
+                                      card("Selected countrie(s) head-to-head comparison:",
+                                           tableOutput("country_context")
+                                      ),
+                                      col_widths = c(5, 7, 12),
+                                      row_heights = c(5,4)
+                                      
+                                      
+                                  )),
                         
                         nav_panel("Insight #2",
-                                  page_fillable()),
+                                  page_fillable(
+                                      titlePanel("Population coverage and geographical representativeness"),
+                                      fluidRow(
+                                          column(6,
+                                                 tags$style(
+                                                     HTML(".selectize-input {
+                                                                border-radius: 10px !important;
+                                                                }
+                                                           .selectize-dropdown {
+                                                                border-radius: 10px !important;
+                                                                }
+                                                          ")
+                                                 ),
+                                          ),
+                                          
+                                      ),
+                                      layout_columns(
+                                          card(
+                                              actionButton("reset", label = "Reset selection"),
+                                              girafeOutput("plot", height = "100%"),
+                                          ),
+                                          card(
+                                              uiOutput("md_content_it2")
+                                          ),
+                                      ),
+                                      card("Selected countrie(s) head-to-head comparison:",
+                                           tableOutput("country_context")
+                                      ),
+                                      col_widths = c(5, 7, 12),
+                                      row_heights = c(5,4)
+                                      )
+                                  ),
                         nav_panel("Insight #3",
-                                  page_fillable()),
-                        nav_panel("Insight #4",
-                                  page_fillable())
-                        
+                                  page_fillable(
+                                      titlePanel("Population coverage and geographical representativeness"),
+                                      fluidRow(
+                                          column(6,
+                                                 tags$style(
+                                                     HTML(".selectize-input {
+                                                                border-radius: 10px !important;
+                                                                }
+                                                           .selectize-dropdown {
+                                                                border-radius: 10px !important;
+                                                                }
+                                                          ")
+                                                 ),
+                                          ),
+                                          
+                                      ),
+                                      layout_columns(
+                                          card(
+                                              actionButton("reset", label = "Reset selection"),
+                                              girafeOutput("plot", height = "100%"),
+                                          ),
+                                          card(
+                                              uiOutput("md_content_it3")
+                                          ),
+                                      ),
+                                      card("Selected countrie(s) head-to-head comparison:",
+                                           tableOutput("country_context")
+                                      ),
+                                      col_widths = c(5, 7, 12),
+                                      row_heights = c(5,4)
+                                  )
+                                  )
                     ),
                     
                     ## to be removed ->
@@ -2377,7 +2426,7 @@ server <- function(input, output, session) {
         input$plot_selected
     })
     
-    output$plot <- renderGirafe({
+    output$plot_it1 <- renderGirafe({
         x <- girafe(code = print(gg_hm),
                     width_svg = 6, height_svg = 5,
                     options = list(
@@ -2450,6 +2499,19 @@ server <- function(input, output, session) {
         #if( nrow(out) < 1 ) return(NULL)
         #row.names(out) <- NULL
         #out
+    })
+    
+    output$md_content_it1 <- renderUI({
+        md <- readLines("www/md/tab1.md")
+        HTML(markdown::markdownToHTML(paste(md, collapse = "\n")))
+    })
+    output$md_content_it2 <- renderUI({
+        md <- readLines("www/md/tab2.md")
+        HTML(markdown::markdownToHTML(paste(md, collapse = "\n")))
+    })
+    output$md_content_it3 <- renderUI({
+        md <- readLines("www/md/tab3.md")
+        HTML(markdown::markdownToHTML(paste(md, collapse = "\n")))
     })
     
     
