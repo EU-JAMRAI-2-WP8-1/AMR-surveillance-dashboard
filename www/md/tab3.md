@@ -2,6 +2,8 @@
 
 ## 💡 What can we learn from this?
 
+###### Text <span style='color:#044556;font-weight:bold'>Yes</span>, <span style='color:#F9BCB3;font-weight:bold'>No</span> or <span style='color:#949494;font-weight:bold'>Do not know</span> text 
+
 ###### Improving patient outcome by supporting data driven national empiric treatment guidance for common infections
 
 🤝🏻 **Policy commitment:** Support EU Council Recommendation on AMR (13) by working towards development of EU guidelines for treatment of common infections recognizing that resistance patterns can vary in different regions [condensed].
@@ -30,4 +32,3 @@ Empiric treatment guidance lays the foundation for harmonized and effective pati
 **Note:** Having data-driven national empiric treatment guidance in place does not guarantee that they are implemented and widely used. However, having guidance in place lays a necessary foundation for AMR stewardship activities.
 
 
-###### Text <span style='color:#086D6A;font-weight:bold'>legend color1</span>, <span style='color:#0fdbd5;font-weight:bold'>legendcolor2</span> or <span style='color:#949494;font-weight:bold'>legend color3</span> text 
