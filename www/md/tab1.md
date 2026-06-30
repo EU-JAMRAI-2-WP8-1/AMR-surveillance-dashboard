@@ -37,4 +37,4 @@ backed approaches. Shifting to mandatory systems should be prioritised where the
 Note: Here we define mandatory surveillance as notifiable under national legislation. In some European countries, 
 communicable disease legislations distinguish between mandatory surveillance and notifiable pathogens, where both are
 legally obligatory but notifiable legislation imposes stricter requirements for reporting to support real-time outbreak control.
-In that case both mandatory and notifiable are included in the answers.
+In that case both mandatory and notifiable are included in the answers. TEST TEST TEST
