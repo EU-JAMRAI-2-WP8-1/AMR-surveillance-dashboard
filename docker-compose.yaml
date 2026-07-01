@@ -7,5 +7,8 @@ services:
     volumes:
       - ./app.R:/home/shiny-app/app.R
       - ./www:/srv/shiny-server/www
+      - ./data:/srv/shiny-server/data
+      - ./content:/srv/shiny-server/content
+      - ./R:/srv/shiny-server/R
     ports:
       - 8180:8180

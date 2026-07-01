@@ -415,7 +415,7 @@
     margin-top: -24px !important;
 }
 
-#countriesSelection .shiny-options-group { /* Optimize space use for country selection filter */
+#filters-countriesSelection .shiny-options-group { /* Optimize space use for country selection filter */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -455,33 +455,33 @@
     /*overflow-x: auto;*/
 }
 
-#resultsTable {
+#table-resultsTable {
     font-size: 0.9rem !important;
 }
 
-#resultsTable tr > th {
+#table-resultsTable tr > th {
     min-width: 160px;
     transition: background-color 0.3s ease;
 }
 
-#resultsTable tr > th:first-child {
+#table-resultsTable tr > th:first-child {
     min-width: 540px;
 }
 
 /* Fixed table header colors - JAMRAI colors */
-#resultsTable tr > th:first-child {
+#table-resultsTable tr > th:first-child {
     background-color: #008aab !important;
     color: #ffffff !important;
     border-right: 2px solid #008aab !important;
 }
 
-#resultsTable tr > th:not(:first-child) {
+#table-resultsTable tr > th:not(:first-child) {
     background-color: #0fdbd5 !important;
     color: #ffffff !important;
 }
 
 /* Fixed border for first column cells - JAMRAI dark blue */
-#resultsTable td.first-column-cell {
+#table-resultsTable td.first-column-cell {
     border-right: 1px solid #008aab !important;
 }
 
@@ -546,11 +546,11 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 /* Question selection dropdown menu */
-#questionSelection + .selectize-control .selectize-dropdown-content {
+#graphics-questionSelection + .selectize-control .selectize-dropdown-content {
     max-height: 600px !important;
 }
 
-#questionSelection + .selectize-control .selectize-dropdown > .selectize-dropdown-content > div{
+#graphics-questionSelection + .selectize-control .selectize-dropdown > .selectize-dropdown-content > div{
     padding: 12px 8px 12px 8px !important;
     border-bottom: 1px solid #e8e8e8;
 }
@@ -659,7 +659,7 @@ body.section-3 .question-selector-card .selectize-input {
     justify-content: space-between;
 }
 
-.sections-wrapper-sidebar #sectionsSelection .btn {
+.sections-wrapper-sidebar #filters-sectionsSelection .btn {
     width: calc(33.33% - 3px) !important;
     /*border-radius: 4px !important;*/
     padding: 8px 4px !important;
@@ -671,7 +671,7 @@ body.section-3 .question-selector-card .selectize-input {
     line-height: 1.2;
 }
 
-.sections-wrapper-sidebar #sectionsSelection .btn .btn-text {
+.sections-wrapper-sidebar #filters-sectionsSelection .btn .btn-text {
     display: block;
     font-size: 0.95em;
     margin-top: 4px;
@@ -679,12 +679,12 @@ body.section-3 .question-selector-card .selectize-input {
     white-space: normal;
 }
 
-.sections-wrapper-sidebar #sectionsSelection .btn i {
+.sections-wrapper-sidebar #filters-sectionsSelection .btn i {
     font-size: 1.2em;
 }
 
 
-#sectionsSelection .btn {
+#filters-sectionsSelection .btn {
     width: 280px;
     padding: 6px 12px !important;
     background-color: #e0e0e0 !important;
@@ -694,55 +694,55 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 /* Pill-shaped button group for sections */
-#sectionsSelection .btn:first-of-type {
+#filters-sectionsSelection .btn:first-of-type {
     border-radius: 60px 0 0 60px !important;
 }
 
-#sectionsSelection .btn:last-of-type {
+#filters-sectionsSelection .btn:last-of-type {
     border-radius: 0 60px 60px 0 !important;
 }
 
-#sectionsSelection .btn:only-of-type {
+#filters-sectionsSelection .btn:only-of-type {
     border-radius: 60px !important;
 }
 
-#sectionsSelection .btn:hover {
+#filters-sectionsSelection .btn:hover {
     background-color: #d0d0d0 !important;
     border-color: #d0d0d0 !important;
 }
 
 /* Section 1 - National surveillance (teal) */
-#sectionsSelection input:nth-of-type(1):checked + .btn {
+#filters-sectionsSelection input:nth-of-type(1):checked + .btn {
     background-color: #2a9d8f !important;
     border-color: #2a9d8f !important;
     color: white !important;
 }
 
-#sectionsSelection input:nth-of-type(1):checked + .btn:hover {
+#filters-sectionsSelection input:nth-of-type(1):checked + .btn:hover {
     background-color: #1f7a6f !important;
     border-color: #1f7a6f !important;
 }
 
 /* Section 2 - National genomic surveillance (gold) */
-#sectionsSelection input:nth-of-type(2):checked + .btn {
+#filters-sectionsSelection input:nth-of-type(2):checked + .btn {
     background-color: #d4a843 !important;
     border-color: #d4a843 !important;
     color: white !important;
 }
 
-#sectionsSelection input:nth-of-type(2):checked + .btn:hover {
+#filters-sectionsSelection input:nth-of-type(2):checked + .btn:hover {
     background-color: #b8920f !important;
     border-color: #b8920f !important;
 }
 
 /* Section 3 - National guidance (soft red) */
-#sectionsSelection input:nth-of-type(3):checked + .btn {
+#filters-sectionsSelection input:nth-of-type(3):checked + .btn {
     background-color: #cc8888 !important;
     border-color: #cc8888 !important;
     color: white !important;
 }
 
-#sectionsSelection input:nth-of-type(3):checked + .btn:hover {
+#filters-sectionsSelection input:nth-of-type(3):checked + .btn:hover {
     background-color: #b87373 !important;
     border-color: #b87373 !important;
 }
@@ -973,11 +973,11 @@ body.section-3 .full-question-title-box {
     }
 
     /* Section buttons - hide text on mobile */
-    #sectionsSelection .btn-text {
+    #filters-sectionsSelection .btn-text {
         display: none;
     }
 
-    #sectionsSelection .btn {
+    #filters-sectionsSelection .btn {
         width: auto !important;
         min-width: 50px;
     }

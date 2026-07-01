@@ -1,6 +1,6 @@
 // Update body class based on section selection (for color theming)
 $(document).on('shiny:inputchanged', function(event) {
-    if (event.name === 'sectionsSelection') {
+    if (event.name === 'filters-sectionsSelection') {
         $('body').removeClass('section-1 section-2 section-3');
         if (event.value === 'National surveillance') {
             $('body').addClass('section-1');
@@ -74,30 +74,30 @@ $(document).on('shiny:connected', function() {
 
     // Initialize and update on change for Countries
     $(document).on('shiny:inputchanged', function(event) {
-        if (event.name === 'countriesSelection') {
-            const total = getTotalCount('countriesSelection');
-            updateProgressBar('countriesSelection', 'progress-countries', total);
+        if (event.name === 'filters-countriesSelection') {
+            const total = getTotalCount('filters-countriesSelection');
+            updateProgressBar('filters-countriesSelection', 'progress-countries', total);
         }
-        if (event.name === 'cultureMaterialsSelection') {
-            const total = getTotalCount('cultureMaterialsSelection');
-            updateProgressBar('cultureMaterialsSelection', 'progress-cultureMaterials', total);
+        if (event.name === 'filters-cultureMaterialsSelection') {
+            const total = getTotalCount('filters-cultureMaterialsSelection');
+            updateProgressBar('filters-cultureMaterialsSelection', 'progress-cultureMaterials', total);
         }
-        if (event.name === 'pathogensSelection') {
-            const total = getTotalCount('pathogensSelection');
-            updateProgressBar('pathogensSelection', 'progress-pathogens', total);
+        if (event.name === 'filters-pathogensSelection') {
+            const total = getTotalCount('filters-pathogensSelection');
+            updateProgressBar('filters-pathogensSelection', 'progress-pathogens', total);
         }
-        if (event.name === 'resistancesSelection') {
-            const total = getTotalCount('resistancesSelection');
-            updateProgressBar('resistancesSelection', 'progress-resistances', total);
+        if (event.name === 'filters-resistancesSelection') {
+            const total = getTotalCount('filters-resistancesSelection');
+            updateProgressBar('filters-resistancesSelection', 'progress-resistances', total);
         }
     });
 
     // Initial update after a short delay to ensure DOM is ready
     setTimeout(function() {
-        updateProgressBar('countriesSelection', 'progress-countries', getTotalCount('countriesSelection'));
-        updateProgressBar('cultureMaterialsSelection', 'progress-cultureMaterials', getTotalCount('cultureMaterialsSelection'));
-        updateProgressBar('pathogensSelection', 'progress-pathogens', getTotalCount('pathogensSelection'));
-        updateProgressBar('resistancesSelection', 'progress-resistances', getTotalCount('resistancesSelection'));
+        updateProgressBar('filters-countriesSelection', 'progress-countries', getTotalCount('filters-countriesSelection'));
+        updateProgressBar('filters-cultureMaterialsSelection', 'progress-cultureMaterials', getTotalCount('filters-cultureMaterialsSelection'));
+        updateProgressBar('filters-pathogensSelection', 'progress-pathogens', getTotalCount('filters-pathogensSelection'));
+        updateProgressBar('filters-resistancesSelection', 'progress-resistances', getTotalCount('filters-resistancesSelection'));
     }, 500);
 });
 

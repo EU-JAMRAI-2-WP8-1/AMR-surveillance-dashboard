@@ -8,4 +8,4 @@ rsconnect/
 .Renviron
 email-test/
 .Rproj.user
-renv/
+#renv/ --> ./renv/.gitignore
