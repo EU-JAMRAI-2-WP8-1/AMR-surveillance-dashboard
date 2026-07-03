@@ -21,7 +21,7 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
 
       - name: Install rsconnect
-        run: Rscript -e 'install.packages("rsconnect")'
+        run: Rscript -e 'renv::install("rsconnect"); renv::snapshot(prompt = FALSE)'
 
       - name: Deploy to shinyapps.io
         env:
