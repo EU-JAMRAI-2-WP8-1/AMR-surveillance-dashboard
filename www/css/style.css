@@ -233,6 +233,7 @@
     border: none !important;
 }
 
+
 /* View toggle wrapper in sidebar */
 .view-toggle-wrapper {
     padding: 12px 12px;
@@ -748,6 +749,50 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 
+/* Insight tab selection buttons */
+.view-toggle-wrapper #insightTabToggle .btn {
+    flex: 1;
+    padding: 11px 4px !important;
+    background-color: #e0e0e0 !important;
+    border-color: #e0e0e0 !important;
+    color: #666 !important;
+    border-radius: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.view-toggle-wrapper #insightTabToggle .btn .insight-tab-num {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.view-toggle-wrapper #insightTabToggle .btn:first-of-type {
+    border-radius: 60px 0 0 60px !important;
+}
+
+.view-toggle-wrapper #insightTabToggle .btn:last-of-type {
+    border-radius: 0 60px 60px 0 !important;
+}
+
+.view-toggle-wrapper #insightTabToggle .btn:hover {
+    background-color: #d0d0d0 !important;
+    border-color: #d0d0d0 !important;
+}
+
+.view-toggle-wrapper #insightTabToggle input:checked + .btn {
+    background-color: #008aab !important;
+    border-color: #008aab !important;
+    color: white !important;
+}
+
+.view-toggle-wrapper #insightTabToggle input:checked + .btn:hover {
+    background-color: #006d88 !important;
+    border-color: #006d88 !important;
+}
+
+
 .reset-filters-wrapper {
     display: flex;
     justify-content: center;
@@ -756,6 +801,48 @@ body.section-3 .question-selector-card .selectize-input {
 
 .reset-filters-wrapper > button {
     width: 100%;
+}
+
+/* Insight tab markdown content - identical style to Instructions modal */
+.insight-md-content {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+    padding: 8px 4px;
+}
+
+.insight-md-content h2 {
+    color: #008aab;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.insight-md-content h3 {
+    color: #008aab;
+    font-weight: normal;
+    font-size: 1.15em;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.insight-md-content p {
+    margin-bottom: 10px;
+}
+
+.insight-md-content ul,
+.insight-md-content ol {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.insight-md-content li {
+    margin-bottom: 5px;
+}
+
+.insight-md-content em {
+    font-style: italic;
 }
 
 /* Instructions button with JAMRAI turquoise color on hover */

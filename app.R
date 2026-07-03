@@ -227,27 +227,7 @@ ui <- shinyUI(fluidPage(
         class = "reset-filters-wrapper",
         actionButton("showInstructions", "Instructions", class = "btn btn-outline-info", icon = icon("circle-info"))
       ),
-      
-      # Toggle between Graphics and Table views
-      tags$div(
-        class = "view-toggle-wrapper",
-        radioGroupButtons(
-          inputId = "viewToggle",
-          label = NULL,
-          choiceNames = list(
-            HTML('<i class="fa fa-globe"></i><span class="btn-text"> Graphics</span>'),
-            HTML('<i class="fa fa-table"></i><span class="btn-text"> Table</span>')
-          ),
-          choiceValues = c("graphics", "table"),
-          selected = "graphics",
-          individual = FALSE,
-          checkIcon = list(),
-          status = "primary"
-        )
-      ),
-      
-      mod_filters_ui("filters"),
-      
+
       # Toggle between Dashboard and Insight views
       tags$div(
         class = "outer-toggle-wrapper",
@@ -263,6 +243,53 @@ ui <- shinyUI(fluidPage(
           individual = FALSE,
           checkIcon = list(),
           status = "primary"
+        )
+      ),
+
+      # Dashboard-only controls
+      conditionalPanel(
+        condition = "input.outerToggle == 'dashboard'",
+
+        # Toggle between Graphics and Table views
+        tags$div(
+          class = "view-toggle-wrapper",
+          radioGroupButtons(
+            inputId = "viewToggle",
+            label = NULL,
+            choiceNames = list(
+              HTML('<i class="fa fa-globe"></i><span class="btn-text"> Graphics</span>'),
+              HTML('<i class="fa fa-table"></i><span class="btn-text"> Table</span>')
+            ),
+            choiceValues = c("graphics", "table"),
+            selected = "graphics",
+            individual = FALSE,
+            checkIcon = list(),
+            status = "primary"
+          )
+        ),
+
+        mod_filters_ui("filters")
+      ),
+
+      # Insight-only controls
+      conditionalPanel(
+        condition = "input.outerToggle == 'insight'",
+        tags$div(
+          class = "view-toggle-wrapper",
+          radioGroupButtons(
+            inputId = "insightTabToggle",
+            label = NULL,
+            choiceNames = list(
+              HTML('<span class="insight-tab-num">#1</span>'),
+              HTML('<span class="insight-tab-num">#2</span>'),
+              HTML('<span class="insight-tab-num">#3</span>')
+            ),
+            choiceValues = c("tab1", "tab2", "tab3"),
+            selected = "tab1",
+            individual = FALSE,
+            checkIcon = list(),
+            status = "primary"
+          )
         )
       ),
       
@@ -335,9 +362,11 @@ ui <- shinyUI(fluidPage(
 ## SERVER ##
 
 server <- function(input, output, session) {
-  
+
+  thematic::thematic_shiny(bg = "white", fg = "#333333", accent = "#008aab")
+
   ## OBSERVE ##
-  
+
   ## Modals ----
   setup_modals(input, output, session, email_config = list(
     enabled         = EMAIL_ENABLED,
@@ -356,27 +385,7 @@ server <- function(input, output, session) {
 
   # Outer toggle - switch between Dashboard and Insight tabs
   observeEvent(input$outerToggle, {
-    if (input$outerToggle == "dashboard") {
-      updateTabsetPanel(session, "outerTabs", selected = "dashboard")
-      shinyjs::enable("viewToggle")
-      shinyjs::enable(filters_ns("sectionsSelection"))
-      shinyjs::enable(filters_ns("cultureMaterialsSelection"))
-      shinyjs::enable(filters_ns("pathogensSelection"))
-      shinyjs::enable(filters_ns("resistancesSelection"))
-      shinyjs::enable(filters_ns("countriesSelection"))
-      shinyjs::enable(filters_ns("resetFilters"))
-      shinyjs::removeClass(selector = ".sidebar-panel", class = "filters-inactive")
-    } else if (input$outerToggle == "insight") {
-      updateTabsetPanel(session, "outerTabs", selected = "insight")
-      shinyjs::disable("viewToggle")
-      shinyjs::disable(filters_ns("sectionsSelection"))
-      shinyjs::disable(filters_ns("cultureMaterialsSelection"))
-      shinyjs::disable(filters_ns("pathogensSelection"))
-      shinyjs::disable(filters_ns("resistancesSelection"))
-      shinyjs::disable(filters_ns("countriesSelection"))
-      shinyjs::disable(filters_ns("resetFilters"))
-      shinyjs::addClass(selector = ".sidebar-panel", class = "filters-inactive")
-    }
+    updateTabsetPanel(session, "outerTabs", selected = input$outerToggle)
   })
   
   # View toggle - switch between Graphics and Table tabs
@@ -511,7 +520,10 @@ server <- function(input, output, session) {
   
   
   ## Insight ----
-  mod_insight_server("insight", it1 = it1, it2 = it2, it2_2 = it2_2, it3 = it3)
+  mod_insight_server("insight",
+    it1 = it1, it2 = it2, it2_2 = it2_2, it3 = it3,
+    selected_tab = reactive(input$insightTabToggle)
+  )
 
 }
 
