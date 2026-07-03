@@ -20,6 +20,9 @@ jobs:
       - name: Setup renv
         uses: r-lib/actions/setup-renv@v2
 
+      - name: Install rsconnect
+        run: Rscript -e 'install.packages("rsconnect")'
+
       - name: Deploy to shinyapps.io
         env:
           SHINYAPPS_ACCOUNT:      ${{ secrets.SHINYAPPS_ACCOUNT }}
