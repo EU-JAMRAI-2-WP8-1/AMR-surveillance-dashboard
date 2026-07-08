@@ -3600,6 +3600,12 @@
       "Maintainer": "Yihui Xie <xie@yihui.name>",
       "Repository": "https://packagemanager.posit.co/cran/__linux__/noble/latest"
     },
+    "rsconnect": {
+      "Package": "rsconnect",
+      "Version": "1.10.0",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
     "rstudioapi": {
       "Package": "rstudioapi",
       "Version": "0.19.0",
