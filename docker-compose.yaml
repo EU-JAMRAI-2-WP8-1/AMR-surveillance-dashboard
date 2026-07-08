@@ -6,6 +6,7 @@ services:
     working_dir: /srv/shiny-server
     volumes:
       - ./app.R:/home/shiny-app/app.R
+      - ./global.R:/srv/shiny-server/global.R
       - ./www:/srv/shiny-server/www
       - ./data:/srv/shiny-server/data
       - ./content:/srv/shiny-server/content

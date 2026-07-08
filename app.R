@@ -17,12 +17,9 @@ library(glue)
 library(patchwork)
 library(tidyverse)
 
-# Source all modules from R/
-# NOTE: only needed when running via Docker (Rscript app.R). When launching
-# through shiny::runApp(), Shiny auto-sources the R/ directory automatically.
-for (f in list.files("R", pattern = "\\.R$", full.names = TRUE)) {
-  source(f)
-}
+# Load global.R when running via Docker (Rscript app.R).
+# On shinyapps.io, Shiny auto-sources global.R in globalenv() before app.R runs.
+if (!exists("sectionList")) source("global.R")
 
 # Specify the application port
 options(shiny.host = "0.0.0.0")
@@ -70,116 +67,6 @@ thematic_shiny(
   inherit = FALSE,
   session = shiny::getDefaultReactiveDomain()
 )
-
-
-## DATA LOAD AND PREPARATION ##
-
-# Import Europe polygons
-geojsonEurope <- tryCatch({
-  rjson::fromJSON(file = file.path("data/CNTR_RG_60M_2024_4326-modified.geojson")) # rjson
-}, error = function(e) {
-  showNotification("Error loading map data", type = "error")
-  return(list(features = list())) # Return empty structure
-})
-
-## source: https://ec.europa.eu/eurostat/web/gisco/geodata/administrative-units/countries (modified to include only european countries)
-
-# Import survey questions and replies from JSON
-surveyDataFile <- file.path("data/OUT_questions_and_replies.json")
-surveyData <- tryCatch({
-  rjson::fromJSON(paste(readLines(surveyDataFile), collapse="")) # rjson
-  ##jsonlite::fromJSON(surveyDataFile) # jsonlite
-}, error = function(e) {
-  showNotification("Error loading survey data", type = "error")
-  return(NULL)
-})
-
-# Import survey score table from CSV - set first column as row names
-countryScoreTable <- tryCatch({
-  read.csv("data/OUT_country_scores.csv", header=TRUE)
-}, error = function(e) {
-  showNotification("Error loading country scores", type = "error")
-  return(data.frame()) # Return empty dataframe
-})
-
-# Europe country list
-euroCountryList <- c()
-for (country in geojsonEurope$features) {
-  euroCountryList <- c(euroCountryList, country$id)
-}
-
-# Country question index (/!\ might change in future versions of the survey)
-countryQuestionIndex <- 3
-
-# Participating country list
-participatingCountries <- names(surveyData[[countryQuestionIndex]][["possible_answers"]])
-
-# Countries that have replied
-repliedCountries <- names(surveyData[[countryQuestionIndex]][["actual_answers"]])
-
-# Not-participating countries (grey on the map)
-nonParticipatingCountries <- setdiff(euroCountryList, repliedCountries)
-
-# Filters : pathogens under surveillance / resistances / culture materials
-sectionList         <- c("National surveillance", "National genomic surveillance", "National guidance") # order is reverted compared to the survey (3, 2, 1)
-pathogenList        <- c("E. coli", "K. pneumoniae", "P. aeruginosa", "A. baumannii", "S. aureus", "E. faecium/faecalis", "S. pneumoniae", "H. influenzae", "C. difficile", "Not pathogen related")
-resistanceList      <- c("Carbapenem", "3rd-generation Cephalosporin", "Colistin", "Methicillin", "Vancomycin", "Penicillin", "Ampicillin", "Not resistance related")
-cultureMaterialList <- c("Blood/CSF", "Urine", "Respiratory tract", "Wound/tissue", "Stool", "Screening", "Not culture material related")
-
-# No special display modification needed - just use the lists as-is
-pathogenChoiceNames <- pathogenList
-resistanceChoiceNames <- resistanceList
-cultureMaterialChoiceNames <- cultureMaterialList
-
-# get all questions (short titles) for question filter + set list of multiple choice questions (short titles)
-allShortTitles <- c()
-multipleChoiceShortTitles <- c()
-for (question in surveyData) {
-  #if (question$coefficient == "0") next # skip question without scores
-  if ("Section 0" %in% question$tags) next # skip section 0
-  if (question$type == "FreeText") next # skip free text questions
-  if (question$short_title %in% allShortTitles) next # skip if alredy in (as matrix question have the same short title)
-  allShortTitles <- c(allShortTitles, question$short_title)
-  
-  if (question$type == "MultipleChoice") {
-    multipleChoiceShortTitles <- c(multipleChoiceShortTitles, question$short_title)
-  }
-}
-
-# initiate dicrete colors sequence for maps and plots
-colorSequence <- c("#0fdbd5", "#df2e1a", "#f7c948", "#6a4c93", "#25c414", "#1982c4", "#e76f51", "#2a9d8f", "#f4a261", "#264653", "#8ecae6", "#ffb4a2", "#000000") # old red: #ff6f61
-
-# create a dataset for participation map
-participationData <- data.frame(
-  "country" = euroCountryList,
-  "survey_participation" = rep(NA, length(euroCountryList))
-)
-for (country in euroCountryList) {
-  if (country %in% repliedCountries) {
-    participationData[participationData$country == country, "survey_participation"] <- 1 #"Yes"
-  } else if (country %in% participatingCountries) {
-    participationData[participationData$country == country, "survey_participation"] <- 2 #"No"
-  } else {
-    participationData[participationData$country == country, "survey_participation"] <- 3 #"Not in JAMRAI"
-  }
-}
-participationDataOccurrences <- data.frame(
-  "reply" = c("Yes", "No", "Not in JAMRAI"),
-  "occurences" = c(
-    sum(participationData$survey_participation == 1),
-    sum(participationData$survey_participation == 2),
-    sum(participationData$survey_participation == 3)
-  )
-)
-
-# Convert raw counts to percentages
-participationDataOccurrences$occurences <- (participationDataOccurrences$occurences / sum(participationDataOccurrences$occurences)) * 100
-
-## Insight tab data ----
-it1   <- readRDS("data/data_insighttab_1.rds")
-it2   <- readRDS("data/data_insighttab_2.rds")
-it2_2 <- readRDS("data/data_insighttab_2_2.rds")
-it3   <- readRDS("data/data_insighttab_3.rds")
 
 
 
