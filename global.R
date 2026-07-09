@@ -101,7 +101,9 @@ participationDataOccurrences <- data.frame(
 participationDataOccurrences$occurences <- (participationDataOccurrences$occurences / sum(participationDataOccurrences$occurences)) * 100
 
 # Insight tab data
-it1   <- tryCatch(readRDS("data/data_insighttab_1.rds"),   error = function(e) { message("Error loading insight tab 1 data: ",  e$message); NULL })
-it2   <- tryCatch(readRDS("data/data_insighttab_2.rds"),   error = function(e) { message("Error loading insight tab 2 data: ",  e$message); NULL })
-it2_2 <- tryCatch(readRDS("data/data_insighttab_2_2.rds"), error = function(e) { message("Error loading insight tab 2b data: ", e$message); NULL })
-it3   <- tryCatch(readRDS("data/data_insighttab_3.rds"),   error = function(e) { message("Error loading insight tab 3 data: ",  e$message); NULL })
+it1     <- tryCatch(readRDS("data/data_insighttab_1.rds"),     error = function(e) { message("Error loading insight tab 1 data: ",    e$message); NULL })
+it2     <- tryCatch(readRDS("data/data_insighttab_2.rds"),     error = function(e) { message("Error loading insight tab 2 data: ",    e$message); NULL })
+it2_2   <- tryCatch(readRDS("data/data_insighttab_2_2.rds"),   error = function(e) { message("Error loading insight tab 2b data: ",   e$message); NULL })
+it3     <- tryCatch(readRDS("data/data_insighttab_3.rds"),     error = function(e) { message("Error loading insight tab 3 data: ",    e$message); NULL })
+it3_ast <- tryCatch(readRDS("data/data_insighttab_3_ast.rds"), error = function(e) { message("Error loading insight tab 3 AST data: ", e$message); NULL })
+it3_wgt <- tryCatch(readRDS("data/data_insighttab_3_wgt.rds"), error = function(e) { message("Error loading insight tab 3 WGT data: ", e$message); NULL })

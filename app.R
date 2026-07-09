@@ -409,6 +409,7 @@ server <- function(input, output, session) {
   ## Insight ----
   mod_insight_server("insight",
     it1 = it1, it2 = it2, it2_2 = it2_2, it3 = it3,
+    it3_ast = it3_ast, it3_wgt = it3_wgt,
     selected_tab = reactive(input$insightTabToggle)
   )
 
