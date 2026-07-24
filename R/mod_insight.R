@@ -11,8 +11,8 @@ mod_insight_ui <- function(id) {
       ),
       fluidRow(
         column(6,
-          actionButton(ns("reset_it1"), "Reset selection", class = "btn btn-outline-primary", width = "100%"),
-          girafeOutput(ns("plot_it1"))
+          girafeOutput(ns("plot_it1")),
+          actionButton(ns("reset_it1"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
         ),
         column(6,
           uiOutput(ns("md_content_it1"))
@@ -28,39 +28,48 @@ mod_insight_ui <- function(id) {
 
     tabPanel("Insight #2", value = "tab2",
       fluidRow(
-        column(12, h3("Population coverage"))
+        column(12, h3("Population coverage and geographical representativeness"))
       ),
-      # Population coverage
       fluidRow(
         column(6,
-          actionButton(ns("reset_it2"), "Reset selection", class = "btn btn-outline-primary", width = "100%"),
-          girafeOutput(ns("plot_it2"))
+          tabsetPanel(
+            id = ns("it2SubTabs"),
+
+            # Population coverage
+            tabPanel(title = tagList(icon("people-group"), " Population coverage"), value = "population_coverage",
+              fluidRow(
+                column(12,
+                  girafeOutput(ns("plot_it2")),
+                  actionButton(ns("reset_it2"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
+                )
+              ),
+              fluidRow(
+                column(12,
+                  tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
+                  tableOutput(ns("country_context_if2"))
+                )
+              )
+            ),
+
+            # Geographical representativeness
+            tabPanel(title = tagList(icon("map"), " Geographical representativeness"), value = "geographical_representativeness",
+              fluidRow(
+                column(12,
+                  girafeOutput(ns("plot_it2_2")),
+                  actionButton(ns("reset_it2_2"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
+                )
+              ),
+              fluidRow(
+                column(12,
+                  tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
+                  tableOutput(ns("country_context_if2_2"))
+                )
+              )
+            )
+          )
         ),
         column(6,
           uiOutput(ns("md_content_it2"))
-        )
-      ),
-      fluidRow(
-        column(12,
-          tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
-          tableOutput(ns("country_context_if2"))
-        )
-      ),
-      # Geographical representativeness
-      fluidRow(
-        column(12, h4("Geographical representativeness"))
-      ),
-      fluidRow(
-        column(6,
-          actionButton(ns("reset_it2_2"), "Reset selection", class = "btn btn-outline-primary", width = "100%"),
-          girafeOutput(ns("plot_it2_2"))
-        ),
-        column(6)
-      ),
-      fluidRow(
-        column(12,
-          tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
-          tableOutput(ns("country_context_if2_2"))
         )
       )
     ),
@@ -71,20 +80,15 @@ mod_insight_ui <- function(id) {
       ),
       fluidRow(
         column(6,
-          actionButton(ns("reset_it3"), "Reset selection", class = "btn btn-outline-primary", width = "100%"),
-          girafeOutput(ns("plot_it3"))
+          girafeOutput(ns("plot_it3")),
+          actionButton(ns("reset_it3"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
         ),
         column(6,
           uiOutput(ns("md_content_it3"))
         )
       ),
       fluidRow(
-        column(12,
-          tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
-          tableOutput(ns("country_context_if3"))
-        )
-      ),
-      fluidRow(
+        style = "margin-top: 30px;",
         column(6,
           h4("AST data used for national treatment guidance"),
           girafeOutput(ns("plot_it3_ast"))
@@ -99,12 +103,92 @@ mod_insight_ui <- function(id) {
   )
 }
 
-mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab) {
+mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation) {
   moduleServer(id, function(input, output, session) {
 
     observeEvent(selected_tab(), {
       updateTabsetPanel(session, "insightTabs", selected = selected_tab())
     })
+
+    ## Country filter integration ----
+    # "shown" countries are the ones displayed on the graphs (selected + activated);
+    # "activated" countries are additionally pre-selected on the graphs, as if the user
+    # had clicked their row/tile.
+    #
+    # Rebuilding a girafe widget (ggplot -> SVG -> interactive post-processing) is
+    # expensive, so we're careful about what actually triggers it:
+    #  - shownCountries() only changes value (and so only invalidates the plots below)
+    #    when the set of displayed countries genuinely differs. Toggling a country
+    #    to/from "activated" doesn't change what's shown, so it must not rebuild anything.
+    #  - shownCountries() is debounced so toggling several countries in quick succession
+    #    collapses into a single rebuild once the user pauses, instead of one per click.
+    #  - activatedCountries() changes are pushed to the already-rendered widgets via
+    #    ggiraph's lightweight "_set" client message (same mechanism as the reset
+    #    buttons below), which updates the highlighted selection without regenerating
+    #    the plot at all.
+
+    shownCountriesRV <- reactiveVal(character(0))
+    observe({
+      newShown <- sort(insight_filters()$shown)
+      if (!identical(newShown, isolate(shownCountriesRV()))) {
+        shownCountriesRV(newShown)
+      }
+    })
+    shownCountries     <- debounce(reactive({ shownCountriesRV() }), 400)
+    activatedCountries <- reactive({ insight_filters()$activated })
+
+    # Sync graph selection -> country filter: selecting/deselecting a country directly
+    # on any graph activates/deactivates the same country in the sidebar filter (the
+    # reverse of the filter -> graph "_set" push in each renderGirafe block below).
+    # Tracked per-graph as an add/remove delta against the *shared* filter state, so
+    # switching between graphs never clobbers a country activated from a different tab.
+    sync_graph_selection <- function(input_name) {
+      previousSelection <- reactiveVal(isolate(activatedCountries()))
+      observeEvent(input[[input_name]], {
+        newSelection <- input[[input_name]]
+        oldSelection <- previousSelection()
+        sync_activation(
+          added   = setdiff(newSelection, oldSelection),
+          removed = setdiff(oldSelection, newSelection)
+        )
+        previousSelection(newSelection)
+      }, ignoreNULL = FALSE)
+    }
+
+    sync_graph_selection("plot_it1_selected")
+    sync_graph_selection("plot_it2_selected")
+    sync_graph_selection("plot_it2_2_selected")
+    sync_graph_selection("plot_it3_selected")
+
+    # Re-derive the bar chart aggregates (count/total/proportion per group) from the
+    # country-level heatmap data, so the bar charts stay consistent with whichever
+    # countries are currently shown (the pre-computed *_bp.rds objects assume all countries).
+    recompute_bp <- function(hm_data, group_vars, prop_name) {
+      agg <- hm_data %>%
+        group_by(!!!rlang::syms(c(group_vars, "value"))) %>%
+        summarise(count = n(), .groups = "drop_last") %>%
+        mutate(total = sum(count)) %>%
+        ungroup() %>%
+        mutate(prop = count / total)
+      rename(agg, !!prop_name := prop)
+    }
+
+    # droplevels() so unselected countries don't linger as empty rows/bars on the
+    # discrete Country axis (ggplot otherwise keeps unused factor levels as breaks).
+    it1_hm_f   <- reactive({ filter(it1$hm,   as.character(Country) %in% shownCountries()) %>% droplevels() })
+    it1_bp_f   <- reactive({ recompute_bp(it1_hm_f(), c("type", "xlab"), "percentage") })
+
+    it2_hm_f   <- reactive({ filter(it2$hm,   as.character(Country) %in% shownCountries()) %>% droplevels() })
+    it2_bp_f   <- reactive({ recompute_bp(it2_hm_f(), c("type", "xlab"), "proportion") })
+
+    it2_2_hm_f <- reactive({ filter(it2_2$hm, as.character(Country) %in% shownCountries()) %>% droplevels() })
+    it2_2_bp_f <- reactive({ recompute_bp(it2_2_hm_f(), c("type", "xlab"), "proportion") })
+
+    it3_hm_f   <- reactive({ filter(it3$hm,   as.character(Country) %in% shownCountries()) %>% droplevels() })
+    it3_bp_f   <- reactive({ recompute_bp(it3_hm_f(), "xlab", "proportion") })
+
+    it3_ast_f  <- reactive({ filter(it3_ast, as.character(Country) %in% shownCountries()) %>% droplevels() })
+    it3_wgt_f  <- reactive({ filter(it3_wgt, as.character(Country) %in% shownCountries()) %>% droplevels() })
 
     ## Color scales ----
 
@@ -152,197 +236,231 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
 
     ## Build ggplot objects ----
+    # Reactive on the filtered *_bp_f()/*_hm_f() data so the charts stay in sync with
+    # the country filter (shown countries appear, unselected ones are dropped entirely).
 
     # --- Tab 1 ---
 
-    gg_bp_it1 <- it1$bp %>%
-      group_by(type, xlab) %>%
-      mutate(percentage = percentage / sum(percentage)) %>%
-      ungroup() %>%
-      ggplot(aes(x       = xlab,
-                 y       = percentage,
-                 fill    = value,
-                 tooltip = glue("{value}: {round(percentage * 100, 1)}%"))) +
-      geom_col_interactive(position = "stack") +
-      geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
-      facet_grid(cols = vars(type), scales = "free_x", space = "free") +
-      scale_fill_manual(values = surv_colors) +
-      scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
-      bp_theme
+    gg_bp_it1 <- reactive({
+      it1_bp_f() %>%
+        group_by(type, xlab) %>%
+        mutate(percentage = percentage / sum(percentage)) %>%
+        ungroup() %>%
+        ggplot(aes(x       = xlab,
+                   y       = percentage,
+                   fill    = value,
+                   tooltip = glue("{value}: {round(percentage * 100, 1)}%"))) +
+        geom_col_interactive(position = "stack") +
+        geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
+        facet_grid(cols = vars(type), scales = "free_x", space = "free") +
+        scale_fill_manual(values = surv_colors) +
+        scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        bp_theme
+    })
 
-    gg_hm_it1 <- it1$hm %>%
-      ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
-      geom_tile_interactive(aes(tooltip = glue("In <b>{Country}</b>, the national suveillance
-                                                for <b>{abr} <i>{bug}</i> </b> in <b>{type}</b>
-                                                {surv_lab}")),
-                            color = "white", linewidth = 0.5) +
-      facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
-      scale_fill_manual(name   = "Surveillance Type",
-                        values = surv_colors,
-                        breaks = c("Yes, mandatory", "Yes, voluntary", "No"),
-                        labels = c("Mandatory", "Voluntary", "No")) +
-      theme_minimal() +
-      theme(
-        axis.title.x     = element_blank(),
-        axis.title.y     = element_blank(),
-        axis.text.x      = element_text(angle = 90, hjust = 1, vjust = .5),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.position  = "none",
-        strip.placement  = "outside",
-        strip.clip       = "off"
-      )
+    gg_hm_it1 <- reactive({
+      it1_hm_f() %>%
+        ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
+        geom_tile_interactive(aes(tooltip = glue("In <b>{Country}</b>, the national suveillance
+                                                  for <b>{abr} <i>{bug}</i> </b> in <b>{type}</b>
+                                                  {surv_lab}")),
+                              color = "white", linewidth = 0.5) +
+        facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
+        scale_fill_manual(name   = "Surveillance Type",
+                          values = surv_colors,
+                          breaks = c("Yes, mandatory", "Yes, voluntary", "No"),
+                          labels = c("Mandatory", "Voluntary", "No")) +
+        theme_minimal() +
+        theme(
+          axis.title.x     = element_blank(),
+          axis.title.y     = element_blank(),
+          axis.text.x      = element_text(angle = 90, hjust = 1, vjust = .5),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position  = "none",
+          strip.placement  = "outside",
+          strip.clip       = "off"
+        )
+    })
 
     # --- Tab 2: population coverage ---
 
-    gg_bp_it2 <- it2$bp %>%
-      group_by(type, xlab) %>%
-      mutate(proportion = proportion / sum(proportion)) %>%
-      ungroup() %>%
-      ggplot(aes(x       = xlab,
-                 y       = proportion,
-                 fill    = value,
-                 tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
-      geom_col_interactive(position = "stack") +
-      geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
-      facet_grid(cols = vars(type), scales = "free_x", space = "free") +
-      scale_fill_manual(values = surv_colorsPC) +
-      scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
-      bp_theme
+    gg_bp_it2 <- reactive({
+      it2_bp_f() %>%
+        group_by(type, xlab) %>%
+        mutate(proportion = proportion / sum(proportion)) %>%
+        ungroup() %>%
+        ggplot(aes(x       = xlab,
+                   y       = proportion,
+                   fill    = value,
+                   tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
+        geom_col_interactive(position = "stack") +
+        geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
+        facet_grid(cols = vars(type), scales = "free_x", space = "free") +
+        scale_fill_manual(values = surv_colorsPC) +
+        scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        bp_theme
+    })
 
-    gg_hm_it2 <- it2$hm |>
-      mutate(tooltip = glue("In <b>{Country}")) |>
-      ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
-      geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
-      facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
-      scale_fill_manual(name   = "Population coverage",
-                        values = surv_colorsPC,
-                        breaks = c("76-100%", "51-75%", "26-50%", "1-25%",
-                                   "Not part of national surveillance", "Do not know"),
-                        labels = c("76-100%", "51-75%", "26-50%", "1-25%",
-                                   "Not part of national surveillance", "Do not know")) +
-      theme_minimal() +
-      theme(
-        axis.text.x      = element_text(angle = 90, hjust = 1),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.title       = element_blank(),
-        legend.position  = "right",
-        strip.placement  = "outside",
-        strip.clip       = "off"
-      )
+    gg_hm_it2 <- reactive({
+      it2_hm_f() |>
+        mutate(tooltip = glue("In <b>{Country}")) |>
+        ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
+        geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
+        facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
+        scale_fill_manual(name   = "Population coverage",
+                          values = surv_colorsPC,
+                          breaks = c("76-100%", "51-75%", "26-50%", "1-25%",
+                                     "Not part of national surveillance", "Do not know"),
+                          labels = c("76-100%", "51-75%", "26-50%", "1-25%",
+                                     "Not part of national surveillance", "Do not know")) +
+        theme_minimal() +
+        theme(
+          axis.text.x      = element_text(angle = 90, hjust = 1),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          axis.title       = element_blank(),
+          legend.position  = "right",
+          strip.placement  = "outside",
+          strip.clip       = "off"
+        )
+    })
 
     # --- Tab 2: geographical representativeness ---
 
-    gg_bp_it2_2 <- it2_2$bp %>%
-      group_by(type, xlab) %>%
-      mutate(proportion = proportion / sum(proportion)) %>%
-      ungroup() %>%
-      ggplot(aes(x       = xlab,
-                 y       = proportion,
-                 fill    = value,
-                 tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
-      geom_col_interactive(position = "stack") +
-      geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
-      facet_grid(cols = vars(type), scales = "free_x", space = "free") +
-      scale_fill_manual(values = surv_colorsGR) +
-      scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
-      bp_theme
+    gg_bp_it2_2 <- reactive({
+      it2_2_bp_f() %>%
+        group_by(type, xlab) %>%
+        mutate(proportion = proportion / sum(proportion)) %>%
+        ungroup() %>%
+        ggplot(aes(x       = xlab,
+                   y       = proportion,
+                   fill    = value,
+                   tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
+        geom_col_interactive(position = "stack") +
+        geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
+        facet_grid(cols = vars(type), scales = "free_x", space = "free") +
+        scale_fill_manual(values = surv_colorsGR) +
+        scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        bp_theme
+    })
 
-    gg_hm_it2_2 <- it2_2$hm |>
-      mutate(tooltip = glue("In <b>{Country}")) |>
-      ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
-      geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
-      facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
-      scale_fill_manual(
-        name   = "Geographical representativeness",
-        values = surv_colorsGR,
-        breaks = c(
-          "HIGH: all main geographical regions of the country are covered.",
-          "MEDIUM: most geographical regions of the country are covered.",
-          "LOW: a few geographical areas of the country are covered.",
-          "Not part of national surveillance",
-          "Do not know"
-        ),
-        labels = c(
-          "HIGH: all main geographical\nregions covered",
-          "MEDIUM: most geographical\nregions covered",
-          "LOW: a few geographical\nareas covered",
-          "Not part of national surveillance",
-          "Do not know"
+    gg_hm_it2_2 <- reactive({
+      it2_2_hm_f() |>
+        mutate(tooltip = glue("In <b>{Country}")) |>
+        ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
+        geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
+        facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
+        scale_fill_manual(
+          name   = "Geographical representativeness",
+          values = surv_colorsGR,
+          breaks = c(
+            "HIGH: all main geographical regions of the country are covered.",
+            "MEDIUM: most geographical regions of the country are covered.",
+            "LOW: a few geographical areas of the country are covered.",
+            "Not part of national surveillance",
+            "Do not know"
+          ),
+          labels = c(
+            "HIGH: all main geographical\nregions covered",
+            "MEDIUM: most geographical\nregions covered",
+            "LOW: a few geographical\nareas covered",
+            "Not part of national surveillance",
+            "Do not know"
+          )
+        ) +
+        theme_minimal() +
+        theme(
+          axis.text.x      = element_text(angle = 90, hjust = 1),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          axis.title       = element_blank(),
+          legend.position  = "right",
+          strip.placement  = "outside",
+          strip.clip       = "off"
         )
-      ) +
-      theme_minimal() +
-      theme(
-        axis.text.x      = element_text(angle = 90, hjust = 1),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.title       = element_blank(),
-        legend.position  = "right",
-        strip.placement  = "outside",
-        strip.clip       = "off"
-      )
+    })
 
     # --- Tab 3 ---
 
-    gg_bp_it3 <- it3$bp |>
-      group_by(xlab) %>%
-      mutate(proportion = proportion / sum(proportion)) %>%
-      ungroup() %>%
-      ggplot(aes(x       = xlab,
-                 y       = proportion,
-                 fill    = value,
-                 tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
-      geom_col_interactive(position = "stack") +
-      geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
-      scale_fill_manual(values = surv_colorsEG) +
-      scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
-      bp_theme
+    gg_bp_it3 <- reactive({
+      it3_bp_f() |>
+        group_by(xlab) %>%
+        mutate(proportion = proportion / sum(proportion)) %>%
+        ungroup() %>%
+        ggplot(aes(x       = xlab,
+                   y       = proportion,
+                   fill    = value,
+                   tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
+        geom_col_interactive(position = "stack") +
+        geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
+        scale_fill_manual(values = surv_colorsEG) +
+        scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        bp_theme
+    })
 
-    gg_hm_it3 <- it3$hm |>
-      mutate(tooltip = glue("In <b>{Country}")) |>
-      ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
-      geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
-      scale_fill_manual(name   = "National guidance in place",
-                        values = surv_colorsEG,
-                        breaks = c("Yes", "No", "Do not know")) +
-      theme_minimal() +
-      theme(
-        axis.text.x      = element_text(angle = 90, hjust = 1, vjust = 0.5),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        legend.position  = "none"
-      )
+    gg_hm_it3 <- reactive({
+      it3_hm_f() |>
+        mutate(tooltip = glue("In <b>{Country}")) |>
+        ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
+        geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
+        scale_fill_manual(name   = "National guidance in place",
+                          values = surv_colorsEG,
+                          breaks = c("Yes", "No", "Do not know")) +
+        theme_minimal() +
+        theme(
+          axis.title       = element_blank(),
+          axis.text.x      = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 11),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          legend.position  = "none"
+        )
+    })
 
     ## Combine bar charts and heatmaps ----
 
     hm_no_strip <- theme(strip.text = element_blank())
 
-    gg_combined_it1 <- (
-      gg_bp_it1 + plot_spacer() + (gg_hm_it1 + hm_no_strip) +
+    gg_combined_it1 <- reactive({
+      gg_bp_it1() + plot_spacer() + (gg_hm_it1() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
         theme(text = element_text(size = 10))
-    )
+    })
 
-    gg_combined_it2 <- (
-      gg_bp_it2 + plot_spacer() + (gg_hm_it2 + hm_no_strip) +
+    gg_combined_it2 <- reactive({
+      gg_bp_it2() + plot_spacer() + (gg_hm_it2() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
         theme(text = element_text(size = 10))
-    )
+    })
 
-    gg_combined_it2_2 <- (
-      gg_bp_it2_2 + plot_spacer() + (gg_hm_it2_2 + hm_no_strip) +
+    gg_combined_it2_2 <- reactive({
+      gg_bp_it2_2() + plot_spacer() + (gg_hm_it2_2() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
         theme(text = element_text(size = 10))
-    )
+    })
 
-    gg_combined_it3 <- (
-      gg_bp_it3 + plot_spacer() + (gg_hm_it3 + hm_no_strip) +
+    gg_combined_it3 <- reactive({
+      gg_bp_it3() + plot_spacer() + (gg_hm_it3() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
         theme(text = element_text(size = 10))
-    )
+    })
 
     ## Shared girafe options ----
+
+    # Highlight color for "activated" countries on the graphs - keep in sync with
+    # .country-pill-activated in www/css/style.css.
+    #
+    # Uses an inset outline rather than a stroke: adjacent heatmap tiles share their
+    # border line exactly, and a stroke is centered on that shared line, so whichever
+    # tile happens to come later in the SVG's paint order can partially paint over (and
+    # hide) the other's border. CSS draws the outline starting at outline-offset from
+    # the true edge and extending outward by outline-width, so the offset magnitude
+    # must exceed the width - otherwise the outline's outer edge still lands exactly on
+    # the shared boundary (as it did before: 1.5px offset + 1.5px width = 0, i.e. right
+    # on the edge) where a neighboring tile's border can still paint over it. Offset here
+    # is comfortably larger than the width so the whole outline sits inside the tile,
+    # clear of that shared line regardless of paint order.
+    selection_css <- "outline: 1px solid #ff6a00; outline-offset: -2px;"
 
     girafe_opts <- list(
       opts_hover_inv(css = "opacity:0.5;"),
@@ -356,19 +474,28 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     ## Insight tab 1 ----
 
     output$plot_it1 <- renderGirafe({
-      girafe(code    = print(gg_combined_it1),
+      req(nrow(it1_hm_f()) > 0)
+      girafe(code    = print(gg_combined_it1()),
              width_svg  = 6,
              height_svg = 6.5,
              options = c(girafe_opts, list(
                opts_selection(
-                 css        = "stroke: black; stroke-width: 1.5px;",
+                 css        = selection_css,
                  type       = "multiple",
                  only_shiny = TRUE,
-                 selected   = input$selected_country_it1),
+                 selected   = isolate(activatedCountries())),
                opts_toolbar(saveaspng = TRUE, position = "bottomright",
                             pngname = "JAMREYE_InsightTab_1", delay_mouseout = 2000)
              )))
     })
+
+    # Sync the highlighted selection to the client without rebuilding the widget.
+    observeEvent(activatedCountries(), {
+      session$sendCustomMessage(
+        type    = paste0(session$ns("plot_it1"), "_set"),
+        message = activatedCountries()
+      )
+    }, ignoreInit = TRUE)
 
     observeEvent(input$reset_it1, {
       session$sendCustomMessage(
@@ -408,19 +535,28 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     ## Insight tab 2 — population coverage ----
 
     output$plot_it2 <- renderGirafe({
-      girafe(code    = print(gg_combined_it2),
+      req(nrow(it2_hm_f()) > 0)
+      girafe(code    = print(gg_combined_it2()),
              width_svg  = 6,
              height_svg = 6.5,
              options = c(girafe_opts, list(
                opts_selection(
-                 css        = "stroke: black; stroke-width: 1.5px;",
+                 css        = selection_css,
                  type       = "multiple",
                  only_shiny = TRUE,
-                 selected   = input$selected_country_it2),
+                 selected   = isolate(activatedCountries())),
                opts_toolbar(saveaspng = TRUE, position = "bottomright",
                             pngname = "JAMREYE_InsightTab_2", delay_mouseout = 2000)
              )))
     })
+
+    # Sync the highlighted selection to the client without rebuilding the widget.
+    observeEvent(activatedCountries(), {
+      session$sendCustomMessage(
+        type    = paste0(session$ns("plot_it2"), "_set"),
+        message = activatedCountries()
+      )
+    }, ignoreInit = TRUE)
 
     observeEvent(input$reset_it2, {
       session$sendCustomMessage(
@@ -455,19 +591,28 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     ## Insight tab 2 — geographical representativeness ----
 
     output$plot_it2_2 <- renderGirafe({
-      girafe(code    = print(gg_combined_it2_2),
+      req(nrow(it2_2_hm_f()) > 0)
+      girafe(code    = print(gg_combined_it2_2()),
              width_svg  = 6,
              height_svg = 6.5,
              options = c(girafe_opts, list(
                opts_selection(
-                 css        = "stroke: black; stroke-width: 1.5px;",
+                 css        = selection_css,
                  type       = "multiple",
                  only_shiny = TRUE,
-                 selected   = input$selected_country_it2_2),
+                 selected   = isolate(activatedCountries())),
                opts_toolbar(saveaspng = TRUE, position = "bottomright",
                             pngname = "JAMREYE_InsightTab_2b", delay_mouseout = 2000)
              )))
     })
+
+    # Sync the highlighted selection to the client without rebuilding the widget.
+    observeEvent(activatedCountries(), {
+      session$sendCustomMessage(
+        type    = paste0(session$ns("plot_it2_2"), "_set"),
+        message = activatedCountries()
+      )
+    }, ignoreInit = TRUE)
 
     observeEvent(input$reset_it2_2, {
       session$sendCustomMessage(
@@ -503,40 +648,34 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     ## Insight tab 3 ----
 
     output$plot_it3 <- renderGirafe({
-      girafe(code    = print(gg_combined_it3),
+      req(nrow(it3_hm_f()) > 0)
+      girafe(code    = print(gg_combined_it3()),
              width_svg  = 6,
              height_svg = 6.5,
              options = c(girafe_opts, list(
                opts_selection(
-                 css        = "stroke: black; stroke-width: 1.5px;",
+                 css        = selection_css,
                  type       = "multiple",
                  only_shiny = TRUE,
-                 selected   = input$selected_country_it3),
+                 selected   = isolate(activatedCountries())),
                opts_toolbar(saveaspng = TRUE, position = "bottomright",
                             pngname = "JAMREYE_InsightTab_3", delay_mouseout = 2000)
              )))
     })
+
+    # Sync the highlighted selection to the client without rebuilding the widget.
+    observeEvent(activatedCountries(), {
+      session$sendCustomMessage(
+        type    = paste0(session$ns("plot_it3"), "_set"),
+        message = activatedCountries()
+      )
+    }, ignoreInit = TRUE)
 
     observeEvent(input$reset_it3, {
       session$sendCustomMessage(
         type    = paste0(session$ns("plot_it3"), "_set"),
         message = character(0)
       )
-    })
-
-    output$country_context_if3 <- renderTable({
-      req(input$plot_it3_selected)
-      it3$hm %>%
-        group_by(Country, value) %>%
-        summarise(Number = n(), .groups = "drop") %>%
-        complete(Country,
-                 value = c("Yes", "No", "Do not know"),
-                 fill  = list(Number = 0)) %>%
-        group_by(Country) %>%
-        mutate(Percent = 100 * Number / sum(Number)) %>%
-        ungroup() |>
-        filter(Country %in% input$plot_it3_selected) |>
-        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent)
     })
 
     output$md_content_it3 <- renderUI({
@@ -562,26 +701,29 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                            "International AST data.", "International guidance",
                            "No AST data used", "Other")
 
-    gg_it3_ast <- it3_ast |>
-      ggplot(aes(x       = count,
-                 y       = Country,
-                 fill    = AST.data.used.for.national.treatment.guidance,
-                 tooltip = glue("{AST.data.used.for.national.treatment.guidance}"))) +
-      geom_col_interactive(position = "stack") +
-      scale_fill_manual(name   = "Information type",
-                        values = surv_colorsNTG,
-                        limits = coverage_orderNTG) +
-      scale_x_continuous(breaks = scales::breaks_pretty()) +
-      labs(x = "Number of countries") +
-      theme_minimal() +
-      theme(
-        axis.title.y     = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor   = element_blank()
-      )
+    gg_it3_ast <- reactive({
+      it3_ast_f() |>
+        ggplot(aes(x       = count,
+                   y       = Country,
+                   fill    = AST.data.used.for.national.treatment.guidance,
+                   tooltip = glue("{AST.data.used.for.national.treatment.guidance}"))) +
+        geom_col_interactive(position = "stack") +
+        scale_fill_manual(name   = "Information type",
+                          values = surv_colorsNTG,
+                          limits = coverage_orderNTG) +
+        scale_x_continuous(breaks = scales::breaks_pretty()) +
+        labs(x = "Number of countries") +
+        theme_minimal() +
+        theme(
+          axis.title.y     = element_blank(),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor   = element_blank()
+        )
+    })
 
     output$plot_it3_ast <- renderGirafe({
-      girafe(code       = print(gg_it3_ast),
+      req(nrow(it3_ast_f()) > 0)
+      girafe(code       = print(gg_it3_ast()),
              width_svg  = 6,
              height_svg = 5,
              options    = list(
@@ -607,26 +749,29 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     coverage_orderWGT <- c("Regional and/or local guidance", "The healthcare facility",
                            "The treating physician(s).", "Clinical microbiologist(s)", "Other.")
 
-    gg_it3_wgt <- it3_wgt |>
-      ggplot(aes(x       = count,
-                 y       = Country,
-                 fill    = Who.guides.empiric.antibiotic.treatment.,
-                 tooltip = glue("{Who.guides.empiric.antibiotic.treatment.}"))) +
-      geom_col_interactive(position = "stack") +
-      scale_fill_manual(name   = "Place / person",
-                        values = surv_colorsWGT,
-                        limits = coverage_orderWGT) +
-      scale_x_continuous(breaks = scales::breaks_pretty()) +
-      labs(x = "Number of countries") +
-      theme_minimal() +
-      theme(
-        axis.title.y       = element_blank(),
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor   = element_blank()
-      )
+    gg_it3_wgt <- reactive({
+      it3_wgt_f() |>
+        ggplot(aes(x       = count,
+                   y       = Country,
+                   fill    = Who.guides.empiric.antibiotic.treatment.,
+                   tooltip = glue("{Who.guides.empiric.antibiotic.treatment.}"))) +
+        geom_col_interactive(position = "stack") +
+        scale_fill_manual(name   = "Place / person",
+                          values = surv_colorsWGT,
+                          limits = coverage_orderWGT) +
+        scale_x_continuous(breaks = scales::breaks_pretty()) +
+        labs(x = "Number of countries") +
+        theme_minimal() +
+        theme(
+          axis.title.y       = element_blank(),
+          panel.grid.major.y = element_blank(),
+          panel.grid.minor   = element_blank()
+        )
+    })
 
     output$plot_it3_wgt <- renderGirafe({
-      girafe(code       = print(gg_it3_wgt),
+      req(nrow(it3_wgt_f()) > 0)
+      girafe(code       = print(gg_it3_wgt()),
              width_svg  = 6,
              height_svg = 5,
              options    = list(

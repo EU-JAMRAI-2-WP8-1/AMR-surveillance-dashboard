@@ -217,6 +217,67 @@
     color: white;
 }
 
+/* Insight sidebar country filter - tap-to-cycle pills (unselected / selected / activated) */
+
+/* uiOutput's own wrapper div is "display: contents" (a bslib/Shiny default), so it has no
+   box of its own and can't be padded - pad the actual rendered content div instead.
+   Same 18px as the Dashboard country filter's .accordion-body > .form-group */
+.insight-country-pills {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 18px;
+    margin-bottom: 0px;
+}
+
+.country-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 12px;
+    margin: 2px;
+    border-radius: 20px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    user-select: none;
+    color: #666;
+    min-height: 26px;
+    box-sizing: border-box;
+}
+
+.country-pill:hover {
+    background-color: #d0d0d0;
+    transform: translateY(-1px);
+}
+
+.country-pill i {
+    font-size: 14px;
+}
+
+/* Selected (shown) */
+.country-pill-selected {
+    background-color: #008aab;
+    color: white;
+    font-weight: 500;
+}
+
+.country-pill-selected:hover {
+    background-color: #007494;
+}
+
+/* Actively-selected (shown + highlighted on the graphs) */
+.country-pill-activated {
+    background-color: #ff6a00;
+    color: white;
+    font-weight: 500;
+}
+
+.country-pill-activated:hover {
+    background-color: #e65f00;
+}
+
 
 /* OVERWRITE BOOTSTRAP */
 
@@ -231,6 +292,60 @@
     margin: 0 !important;
     overflow: hidden !important;
     border: none !important;
+}
+
+/* Insight #2 sub-tabs (Population coverage / Geographical representativeness) have no
+   sidebar shortcut, so keep their nav-tabs bar visible unlike the other tabsets above.
+   Styled to match the sidebar toggle buttons (e.g. #outerToggle). */
+#insight-it2SubTabs {
+    visibility: visible !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 0 !important;
+    margin: 0 0 12px 0 !important;
+    overflow: visible !important;
+    border: none !important;
+    display: flex !important;
+    flex-direction: row;
+    width: 100%;
+}
+
+#insight-it2SubTabs > li {
+    flex: 1;
+    list-style: none;
+}
+
+#insight-it2SubTabs > li > a {
+    display: block;
+    padding: 11px 12px !important;
+    background-color: #e0e0e0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    color: #666 !important;
+    text-align: center;
+}
+
+#insight-it2SubTabs > li:first-of-type > a {
+    border-radius: 24px 0 0 24px !important;
+}
+
+#insight-it2SubTabs > li:last-of-type > a {
+    border-radius: 0 24px 24px 0 !important;
+}
+
+#insight-it2SubTabs > li > a:hover {
+    background-color: #d0d0d0 !important;
+    border: none !important;
+}
+
+#insight-it2SubTabs > li > a.active {
+    background-color: #008aab !important;
+    color: white !important;
+}
+
+#insight-it2SubTabs > li > a.active:hover {
+    background-color: #008aab !important;
+    color: white !important;
 }
 
 
@@ -284,7 +399,7 @@
 
 /* Outer toggle wrapper in sidebar (dashboard / insight) */
 .outer-toggle-wrapper {
-    padding: 32px 12px;
+    padding: 12px 12px;
 }
 
 .outer-toggle-wrapper .btn-group-container-sw {
@@ -327,6 +442,18 @@
     background-color: #008aab !important;
     border-color: #008aab !important;
     color: white !important;
+}
+
+/* Divider marking the end of the section switch, before the per-section
+   controls (view toggle / filters, or insight tab toggle) begin */
+.outer-toggle-divider {
+    border: none;
+    border-top: 1px solid #008AAB;
+    width: 80%;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 /* Dim filters and view toggle when Insight tab is active */

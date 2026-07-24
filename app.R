@@ -132,6 +132,7 @@ ui <- shinyUI(fluidPage(
           status = "primary"
         )
       ),
+      tags$hr(class = "outer-toggle-divider"),
 
       # Dashboard-only controls
       conditionalPanel(
@@ -177,7 +178,9 @@ ui <- shinyUI(fluidPage(
             checkIcon = list(),
             status = "primary"
           )
-        )
+        ),
+
+        mod_insight_filters_ui("insight_filters")
       ),
       
       # Bottom buttons: Info, Legal, Contact
@@ -269,6 +272,10 @@ server <- function(input, output, session) {
   filters_mod <- mod_filters_server("filters")
   filters     <- filters_mod$filters
   filters_ns  <- NS("filters")
+
+  ## Insight filters module ----
+  insight_filters_mod <- mod_insight_filters_server("insight_filters")
+  insight_filters     <- insight_filters_mod$filters
 
   # Outer toggle - switch between Dashboard and Insight tabs
   observeEvent(input$outerToggle, {
@@ -410,7 +417,9 @@ server <- function(input, output, session) {
   mod_insight_server("insight",
     it1 = it1, it2 = it2, it2_2 = it2_2, it3 = it3,
     it3_ast = it3_ast, it3_wgt = it3_wgt,
-    selected_tab = reactive(input$insightTabToggle)
+    selected_tab = reactive(input$insightTabToggle),
+    insight_filters = insight_filters,
+    sync_activation = insight_filters_mod$syncActivation
   )
 
 }

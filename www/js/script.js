@@ -106,3 +106,17 @@ $(document).on('click', '.geo-disclaimer-link', function(e) {
     e.preventDefault();
     Shiny.setInputValue('showGeoDataDisclaimer', Math.random(), {priority: 'event'});
 });
+
+// Insight country filter: tapping a country pill cycles it through
+// selected -> activated -> unselected -> selected -> ...
+// (the server owns the state and re-renders the pills; this just reports the click)
+$(document).on('click', '.country-pill', function() {
+    Shiny.setInputValue('insight_filters-countryClicked', $(this).data('country'), {priority: 'event'});
+});
+
+// Progress bar for the Insight country filter - the server computes the percentage
+// (it owns the actual state) and pushes it here directly, so there's no dependency
+// on DOM render timing.
+Shiny.addCustomMessageHandler('insightCountriesProgress', function(message) {
+    $('#progress-insight-countries').css('width', 'calc(' + message.percentage + '%)');
+});
