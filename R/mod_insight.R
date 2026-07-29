@@ -11,8 +11,7 @@ mod_insight_ui <- function(id) {
       ),
       fluidRow(
         column(6,
-          girafeOutput(ns("plot_it1")),
-          actionButton(ns("reset_it1"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
+          girafeOutput(ns("plot_it1"))
         ),
         column(6,
           uiOutput(ns("md_content_it1"))
@@ -39,8 +38,7 @@ mod_insight_ui <- function(id) {
             tabPanel(title = tagList(icon("people-group"), " Population coverage"), value = "population_coverage",
               fluidRow(
                 column(12,
-                  girafeOutput(ns("plot_it2")),
-                  actionButton(ns("reset_it2"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
+                  girafeOutput(ns("plot_it2"))
                 )
               ),
               fluidRow(
@@ -55,8 +53,7 @@ mod_insight_ui <- function(id) {
             tabPanel(title = tagList(icon("map"), " Geographical representativeness"), value = "geographical_representativeness",
               fluidRow(
                 column(12,
-                  girafeOutput(ns("plot_it2_2")),
-                  actionButton(ns("reset_it2_2"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
+                  girafeOutput(ns("plot_it2_2"))
                 )
               ),
               fluidRow(
@@ -80,8 +77,7 @@ mod_insight_ui <- function(id) {
       ),
       fluidRow(
         column(6,
-          girafeOutput(ns("plot_it3")),
-          actionButton(ns("reset_it3"), "Reset selection", class = "btn btn-outline-primary", width = "100%")
+          girafeOutput(ns("plot_it3"))
         ),
         column(6,
           uiOutput(ns("md_content_it3"))
@@ -137,6 +133,41 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     shownCountries     <- debounce(reactive({ shownCountriesRV() }), 400)
     activatedCountries <- reactive({ insight_filters()$activated })
 
+    # Culture material / Pathogens filters — same "guard then debounce" treatment as
+    # shownCountries above, and for the same reason: insight_filters() is one combined
+    # reactive, so toggling *any* filter (say, a country) invalidates it and would
+    # otherwise re-publish these too, even though $culture_materials/$pathogens didn't
+    # actually change - reactiveVal doesn't dedupe by value on its own, so without the
+    # identical() guard that spurious re-publish still invalidates the expensive girafe
+    # rebuilds below, on top of the one legitimately triggered by the filter that did
+    # change (i.e. the "graphs reload twice" symptom).
+    cultureMaterialsRV <- reactiveVal(insightCultureMaterialList)
+    observe({
+      newSelection <- insight_filters()$culture_materials
+      if (!identical(newSelection, isolate(cultureMaterialsRV()))) {
+        cultureMaterialsRV(newSelection)
+      }
+    })
+    selectedCultureMaterials <- debounce(reactive({ cultureMaterialsRV() }), 400)
+
+    pathogensRV <- reactiveVal(insightPathogenList)
+    observe({
+      newSelection <- insight_filters()$pathogens
+      if (!identical(newSelection, isolate(pathogensRV()))) {
+        pathogensRV(newSelection)
+      }
+    })
+    selectedPathogens <- debounce(reactive({ pathogensRV() }), 400)
+
+    resistancesRV <- reactiveVal(insightResistanceList)
+    observe({
+      newSelection <- insight_filters()$resistances
+      if (!identical(newSelection, isolate(resistancesRV()))) {
+        resistancesRV(newSelection)
+      }
+    })
+    selectedResistances <- debounce(reactive({ resistancesRV() }), 400)
+
     # Sync graph selection -> country filter: selecting/deselecting a country directly
     # on any graph activates/deactivates the same country in the sidebar filter (the
     # reverse of the filter -> graph "_set" push in each renderGirafe block below).
@@ -173,18 +204,60 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       rename(agg, !!prop_name := prop)
     }
 
-    # droplevels() so unselected countries don't linger as empty rows/bars on the
-    # discrete Country axis (ggplot otherwise keeps unused factor levels as breaks).
-    it1_hm_f   <- reactive({ filter(it1$hm,   as.character(Country) %in% shownCountries()) %>% droplevels() })
+    # droplevels() so unselected countries/culture materials/pathogens/resistances don't
+    # linger as empty rows/bars or facets (ggplot otherwise keeps unused factor levels as
+    # breaks).
+    #
+    # it1's x-axis ticks combine a pathogen and a resistance into a single code (some
+    # opaque, e.g. "MRSA"), so insightTab1XlabInfo is joined in to recover both dimensions
+    # behind each one. it2/it2_2's ticks are already one pathogen each (no resistance
+    # dimension at all), just spelled without the genus-initial space, so a simple lookup
+    # vector is enough there.
+    it1_hm_f   <- reactive({
+      it1$hm %>%
+        # Join via a plain-character copy of xlab, rather than overwriting xlab itself,
+        # so the factor's level order (i.e. the x-axis tick order on the graphs) survives.
+        mutate(xlab_key = as.character(xlab)) %>%
+        left_join(insightTab1XlabInfo, by = c("xlab_key" = "xlab")) %>%
+        select(-xlab_key) %>%
+        filter(as.character(Country) %in% shownCountries(),
+               as.character(type)    %in% selectedCultureMaterials(),
+               pathogen               %in% selectedPathogens(),
+               resistance             %in% selectedResistances()) %>%
+        droplevels()
+    })
     it1_bp_f   <- reactive({ recompute_bp(it1_hm_f(), c("type", "xlab"), "percentage") })
 
-    it2_hm_f   <- reactive({ filter(it2$hm,   as.character(Country) %in% shownCountries()) %>% droplevels() })
+    it2_hm_f   <- reactive({
+      it2$hm %>%
+        mutate(pathogen = insightPathogenByXlabCode[as.character(xlab)]) %>%
+        filter(as.character(Country) %in% shownCountries(),
+               as.character(type)    %in% selectedCultureMaterials(),
+               pathogen               %in% selectedPathogens()) %>%
+        droplevels()
+    })
     it2_bp_f   <- reactive({ recompute_bp(it2_hm_f(), c("type", "xlab"), "proportion") })
 
-    it2_2_hm_f <- reactive({ filter(it2_2$hm, as.character(Country) %in% shownCountries()) %>% droplevels() })
+    it2_2_hm_f <- reactive({
+      it2_2$hm %>%
+        mutate(pathogen = insightPathogenByXlabCode[as.character(xlab)]) %>%
+        filter(as.character(Country) %in% shownCountries(),
+               as.character(type)    %in% selectedCultureMaterials(),
+               pathogen               %in% selectedPathogens()) %>%
+        droplevels()
+    })
     it2_2_bp_f <- reactive({ recompute_bp(it2_2_hm_f(), c("type", "xlab"), "proportion") })
 
-    it3_hm_f   <- reactive({ filter(it3$hm,   as.character(Country) %in% shownCountries()) %>% droplevels() })
+    # it3 has no culture-material column of its own - its x-axis is an infection syndrome
+    # (BSI, UTI, ...), so insightTab3XlabToCultureMaterial translates each syndrome to the
+    # specimen it's cultured from, letting the Culture material filter drive this graph too.
+    it3_hm_f   <- reactive({
+      it3$hm %>%
+        mutate(culture_material = insightTab3XlabToCultureMaterial[as.character(xlab)]) %>%
+        filter(as.character(Country) %in% shownCountries(),
+               culture_material      %in% selectedCultureMaterials()) %>%
+        droplevels()
+    })
     it3_bp_f   <- reactive({ recompute_bp(it3_hm_f(), "xlab", "proportion") })
 
     it3_ast_f  <- reactive({ filter(it3_ast, as.character(Country) %in% shownCountries()) %>% droplevels() })
@@ -465,7 +538,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     girafe_opts <- list(
       opts_hover_inv(css = "opacity:0.5;"),
       opts_hover(css = "stroke-width:1;cursor:pointer", reactive = TRUE),
-      opts_tooltip(use_fill = TRUE, css = "padding:5px;border-radius:3px;"),
+      opts_tooltip(use_fill = TRUE, css = paste0(
+        "padding:5px;border-radius:3px;color:#000;text-shadow:",
+        "-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff,",
+        "0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 1px 0 0 #fff;"
+      )),
       opts_zoom(max = 5),
       opts_sizing(rescale = TRUE),
       opts_toolbar(saveaspng = TRUE, position = "bottomright", delay_mouseout = 2000)
@@ -496,13 +573,6 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         message = activatedCountries()
       )
     }, ignoreInit = TRUE)
-
-    observeEvent(input$reset_it1, {
-      session$sendCustomMessage(
-        type    = paste0(session$ns("plot_it1"), "_set"),
-        message = character(0)
-      )
-    })
 
     output$country_context_if1 <- renderTable({
       req(input$plot_it1_selected)
@@ -558,13 +628,6 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
     }, ignoreInit = TRUE)
 
-    observeEvent(input$reset_it2, {
-      session$sendCustomMessage(
-        type    = paste0(session$ns("plot_it2"), "_set"),
-        message = character(0)
-      )
-    })
-
     output$country_context_if2 <- renderTable({
       req(input$plot_it2_selected)
       it2$hm %>%
@@ -613,13 +676,6 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         message = activatedCountries()
       )
     }, ignoreInit = TRUE)
-
-    observeEvent(input$reset_it2_2, {
-      session$sendCustomMessage(
-        type    = paste0(session$ns("plot_it2_2"), "_set"),
-        message = character(0)
-      )
-    })
 
     output$country_context_if2_2 <- renderTable({
       req(input$plot_it2_2_selected)
@@ -670,13 +726,6 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         message = activatedCountries()
       )
     }, ignoreInit = TRUE)
-
-    observeEvent(input$reset_it3, {
-      session$sendCustomMessage(
-        type    = paste0(session$ns("plot_it3"), "_set"),
-        message = character(0)
-      )
-    })
 
     output$md_content_it3 <- renderUI({
       md <- readLines("content/md/tab3.md")
@@ -729,7 +778,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
              options    = list(
                opts_hover_inv(css = "opacity:0.5;"),
                opts_hover(css = "stroke-width:1;"),
-               opts_tooltip(use_fill = TRUE, css = "padding:5px;border-radius:3px;"),
+               opts_tooltip(use_fill = TRUE, css = paste0(
+                 "padding:5px;border-radius:3px;color:#000;text-shadow:",
+                 "-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff,",
+                 "0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 1px 0 0 #fff;"
+               )),
                opts_sizing(rescale = TRUE),
                opts_toolbar(saveaspng = TRUE, position = "bottomright",
                             pngname = "JAMREYE_InsightTab_3_AST", delay_mouseout = 2000)
@@ -777,7 +830,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
              options    = list(
                opts_hover_inv(css = "opacity:0.5;"),
                opts_hover(css = "stroke-width:1;"),
-               opts_tooltip(use_fill = TRUE, css = "padding:5px;border-radius:3px;"),
+               opts_tooltip(use_fill = TRUE, css = paste0(
+                 "padding:5px;border-radius:3px;color:#000;text-shadow:",
+                 "-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff,",
+                 "0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 1px 0 0 #fff;"
+               )),
                opts_sizing(rescale = TRUE),
                opts_toolbar(saveaspng = TRUE, position = "bottomright",
                             pngname = "JAMREYE_InsightTab_3_WGT", delay_mouseout = 2000)

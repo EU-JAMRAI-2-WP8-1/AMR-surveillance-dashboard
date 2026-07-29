@@ -90,6 +90,18 @@ $(document).on('shiny:connected', function() {
             const total = getTotalCount('filters-resistancesSelection');
             updateProgressBar('filters-resistancesSelection', 'progress-resistances', total);
         }
+        if (event.name === 'insight_filters-cultureMaterialsSelection') {
+            const total = getTotalCount('insight_filters-cultureMaterialsSelection');
+            updateProgressBar('insight_filters-cultureMaterialsSelection', 'progress-insight-cultureMaterials', total);
+        }
+        if (event.name === 'insight_filters-pathogensSelection') {
+            const total = getTotalCount('insight_filters-pathogensSelection');
+            updateProgressBar('insight_filters-pathogensSelection', 'progress-insight-pathogens', total);
+        }
+        if (event.name === 'insight_filters-resistancesSelection') {
+            const total = getTotalCount('insight_filters-resistancesSelection');
+            updateProgressBar('insight_filters-resistancesSelection', 'progress-insight-resistances', total);
+        }
     });
 
     // Initial update after a short delay to ensure DOM is ready
@@ -98,6 +110,9 @@ $(document).on('shiny:connected', function() {
         updateProgressBar('filters-cultureMaterialsSelection', 'progress-cultureMaterials', getTotalCount('filters-cultureMaterialsSelection'));
         updateProgressBar('filters-pathogensSelection', 'progress-pathogens', getTotalCount('filters-pathogensSelection'));
         updateProgressBar('filters-resistancesSelection', 'progress-resistances', getTotalCount('filters-resistancesSelection'));
+        updateProgressBar('insight_filters-cultureMaterialsSelection', 'progress-insight-cultureMaterials', getTotalCount('insight_filters-cultureMaterialsSelection'));
+        updateProgressBar('insight_filters-pathogensSelection', 'progress-insight-pathogens', getTotalCount('insight_filters-pathogensSelection'));
+        updateProgressBar('insight_filters-resistancesSelection', 'progress-insight-resistances', getTotalCount('insight_filters-resistancesSelection'));
     }, 500);
 });
 

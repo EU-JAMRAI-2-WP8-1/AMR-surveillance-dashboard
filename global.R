@@ -17,6 +17,85 @@ pathogenChoiceNames        <- pathogenList
 resistanceChoiceNames      <- resistanceList
 cultureMaterialChoiceNames <- cultureMaterialList
 
+# Culture materials filter for the Insight tabs - a subset of cultureMaterialList, since
+# the Insight #1/#2 graphs only ever break data down by these 5 categories (no "Stool" or
+# "Not culture material related"). Values must match the "type" column of the Insight
+# tab datasets (data/data_insighttab_*.rds) exactly, including the embedded newlines used
+# to wrap long facet labels on the graphs; choice names are the same labels without those
+# newlines, purely for a clean checkbox display - "Respiratory tract" and "Wound/tissue"
+# reuse the Dashboard's own naming for those categories rather than the graphs' more
+# specific wording ("Lower respiratory tract", "Wound/tissue swab"); on Insight #3,
+# "Respiratory tract" also covers URTI (upper respiratory) via
+# insightTab3XlabToCultureMaterial below. Only the display labels differ from the
+# underlying data - insightCultureMaterialList (the actual filter/match values) still has
+# to match the graphs' "type" column exactly, newlines included.
+insightCultureMaterialList        <- c("Blood/CSF", "Urine", "Lower respiratory/\ntract", "Wound/\nTissue swab", "Screening")
+insightCultureMaterialChoiceNames <- c("Blood/CSF", "Urine", "Respiratory tract", "Wound/tissue", "Screening")
+
+# Pathogens filter for the Insight tabs - a subset of pathogenList, since the Insight
+# datasets only ever cover these 8 pathogens (no "C. difficile" or "Not pathogen related").
+insightPathogenList        <- setdiff(pathogenList, c("C. difficile", "Not pathogen related"))
+insightPathogenChoiceNames <- insightPathogenList
+
+# Resistances filter for the Insight tabs - a subset of resistanceList (no "Not resistance
+# related"). Only Insight #1's x-axis carries a resistance dimension at all (#2/#2b break
+# down by pathogen alone), via the insightTab1XlabInfo lookup below.
+insightResistanceList        <- setdiff(resistanceList, "Not resistance related")
+insightResistanceChoiceNames <- insightResistanceList
+
+# Insight #1's x-axis combines a pathogen and a resistance into a single tick - some
+# explicitly (e.g. "E.coli.CR" = E. coli + Carbapenem), some as an opaque abbreviation
+# that names neither dimension outright (e.g. "MRSA" = S. aureus + Methicillin, "VRE" =
+# E. faecium/faecalis + Vancomycin, "PNSP" = S. pneumoniae + Penicillin). This table
+# records both dimensions for every one of tab #1's x-axis codes, so either can be
+# filtered on even when the tick label alone doesn't spell it out. Values match
+# pathogenList/resistanceList so the Pathogens/Resistances filters can share the same
+# choices as the Dashboard section.
+insightTab1XlabInfo <- data.frame(
+  xlab = c("E.coli.CR", "E.coli.3GC", "E.coli.CT",
+           "K.pneumoniae.CR", "K.pneumoniae.3GC", "K.pneumoniae.CT",
+           "A.baumannii.CR", "P.aeruginosa.CR", "H.influenzae.AMP",
+           "MRSA", "VRE", "PNSP"),
+  pathogen = c("E. coli", "E. coli", "E. coli",
+               "K. pneumoniae", "K. pneumoniae", "K. pneumoniae",
+               "A. baumannii", "P. aeruginosa", "H. influenzae",
+               "S. aureus", "E. faecium/faecalis", "S. pneumoniae"),
+  resistance = c("Carbapenem", "3rd-generation Cephalosporin", "Colistin",
+                 "Carbapenem", "3rd-generation Cephalosporin", "Colistin",
+                 "Carbapenem", "Carbapenem", "Ampicillin",
+                 "Methicillin", "Vancomycin", "Penicillin"),
+  stringsAsFactors = FALSE
+)
+
+# Insight #2/#2b's x-axis is already one pathogen per tick, just written without the
+# space after the genus initial (e.g. "E.coli" vs pathogenList's "E. coli").
+insightPathogenByXlabCode <- c(
+  "A.baumannii"        = "A. baumannii",
+  "E.coli"             = "E. coli",
+  "E.faecium/faecalis" = "E. faecium/faecalis",
+  "H.influenzae"       = "H. influenzae",
+  "K.pneumoniae"       = "K. pneumoniae",
+  "P.aeruginosa"       = "P. aeruginosa",
+  "S.aureus"           = "S. aureus",
+  "S.pneumoniae"       = "S. pneumoniae"
+)
+
+# Insight #3's top graph (bar chart + heatmap combined) breaks down by infection syndrome
+# rather than culture material directly - but each syndrome implies the specimen it's
+# cultured from, so the existing Culture material filter can drive it via this syndrome ->
+# culture material mapping instead of needing a filter of its own. Values on the right must
+# match insightCultureMaterialList exactly (including the embedded newlines used to wrap
+# facet/axis labels). URTI and LRTI both map to the same "Respiratory tract" category,
+# since that's the only respiratory specimen category the Culture material filter has.
+insightTab3XlabToCultureMaterial <- c(
+  "BSI"         = "Blood/CSF",              # Bloodstream infection -> blood culture
+  "uncomp. UTI" = "Urine",                  # Uncomplicated urinary tract infection -> urine culture
+  "comp. UTI"   = "Urine",                  # Complicated urinary tract infection -> urine culture
+  "URTI"        = "Lower respiratory/\ntract", # Upper respiratory tract infection
+  "LRTI"        = "Lower respiratory/\ntract", # Lower respiratory tract infection
+  "SSTI"        = "Wound/\nTissue swab"     # Skin and soft tissue infection -> wound/tissue swab
+)
+
 
 ## DATA LOAD AND PREPARATION ##
 

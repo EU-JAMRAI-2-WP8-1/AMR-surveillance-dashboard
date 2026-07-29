@@ -100,6 +100,18 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+/* Activate button (Select all) */
+.activate-btn {
+    background-color: rgba(255, 106, 0, 0.12);
+    color: #b34b00;
+}
+
+.activate-btn:hover:not(.disabled-btn) {
+    background-color: rgba(255, 106, 0, 0.22);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 /* Disabled state */
 .disabled-btn {
     opacity: 0.4;
