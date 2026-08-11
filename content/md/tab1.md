@@ -9,32 +9,21 @@ treatments should be notifiable under national legislation.
 
 ### Major Trends in AMR Surveillance 
 
-- European surveillance systems strongly priorities invasive infections, with widespread monitoring of AMR 
-priority pathogens from blood/CSF. However, coverage is uneven: mandatory surveillance is reported by 54% of 
-countries for blood/CSF but only 25% for urine. Significant gaps remain for urine and lower respiratory tract 
-infections, limiting understanding of AMR in common community infections. 
+- European surveillance of AMR priority pathogens has a strong priority for invasive infections (blood/CSF) and significant gaps exist for other culture materials. For example, 61 gaps (No surveillance, grey colour) were identified in urine, versus 14 in blood/CSF. 
 
-- Comprehensive surveillance of carbapenem-resistant *E. coli* and *K. pneumoniae* is particularly well established
-across several culture materials.
+- Surveillance of carbapenem-resistant *E. coli* and *K. pneumoniae* is particularly well established across culture materials. However, mandatory surveillance of carbapenem-resistant *Acinetobacter baumannii* and *Pseudomonas aeruginosa* is lacking in several countries. This results in that only 50% of partner countries have implemented mandatory surveillance for all carbapenem-resistant gram negatives in blood/CSF.
 
-- Variability in national practices: While two countries report mandatory surveillance for all AMR priority pathogens,
-five rely solely on voluntary systems.
+- National practices have a strong influence mandatory surveillance where two countries reported mandatory surveillance for all AMR priority pathogens and five reported exclusively voluntary surveillance.
 
 
 ### Actions for change:
 
-Closing surveillance gaps will require expanding mandatory reporting and establishing surveillance where none exists, 
-with priority given to carbapenem-resistant pathogens. Strengthening legal frameworks and embedding surveillance requirements 
-in AMR National Action Plans could accelerate progress toward 2030 policy targets.
+Closing surveillance gaps will require expanding mandatory surveillance, as well as establishing surveillance where none exists, with priority given to carbapenem-resistant pathogens. Strengthening legal frameworks and embedding surveillance requirements in AMR National Action Plans could accelerate progress toward 2030 policy targets. 
+Right now, the surveillance gaps in culture materials beyond invasive infections limits our understanding of the wider burden of AMR In Europe.
+
 
 ### Why does mandatory surveillance matter?
 
-While mandatory surveillance does not always ensure high-quality data, it elevates the political recognition of 
-AMR pathogens as a public health threat and priority. Although voluntary systems can be effective in some countries, 43% of 
-countries report that voluntary surveillance negatively impacts their data completeness, highlighting the need for legally 
-backed approaches. Shifting to mandatory systems should be prioritised where the benefits clearly outweigh those of voluntary efforts.
+While mandatory surveillance does not always ensure high-quality data, it elevates the political recognition of AMR pathogens as a prioritised public health threat. Although voluntary systems can be effective in some countries, 43% of countries report that voluntary surveillance negatively impacts their data completeness, highlighting the need for legally backed approaches. Shifting to mandatory systems should be prioritised where the benefits clearly outweigh those of voluntary efforts.
+Note: Here we define mandatory surveillance as notifiable under national legislation. In some European countries, communicable disease legislations distinguish between mandatory and notifiable pathogens, where both are legally obligatory but notifiable legislation imposes stricter requirements for reporting to support real-time outbreak control. In that case both mandatory and notifiable are included in the answers.
 
-Note: Here we define mandatory surveillance as notifiable under national legislation. In some European countries, 
-communicable disease legislations distinguish between mandatory surveillance and notifiable pathogens, where both are
-legally obligatory but notifiable legislation imposes stricter requirements for reporting to support real-time outbreak control.
-In that case both mandatory and notifiable are included in the answers.
