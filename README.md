@@ -1,7 +1,7 @@
 # EU-JAMRAI 2: AMR surveillance dashboard
 ## Proposing Changes to the development branch
 
-[Development - Dashboard]([https://example.com](https://eu-jamrai-2-wp8-1.shinyapps.io/amr-surveillance-dashboard-development/))
+[Development - Dashboard](https://eu-jamrai-2-wp8-1.shinyapps.io/amr-surveillance-dashboard-development/)
 
 ---
 
