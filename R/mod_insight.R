@@ -5,6 +5,21 @@ mod_insight_ui <- function(id) {
   tabsetPanel(
     id = ns("insightTabs"),
 
+    tabPanel("Insight - landing page", value = "landing",
+      fluidRow(
+        column(12,
+          h3("Insight - landing page (work in progress)")
+        )
+      ),
+      fluidRow(
+        column(12,
+          actionButton(ns("goto_tab1"), "AMR priority pathogens", icon = icon("ranking-star"), class = "btn btn-outline-primary insight-landing-btn"),
+          actionButton(ns("goto_tab2"), "Coverage and representativeness", icon = icon("map-location-dot"), class = "btn btn-outline-primary insight-landing-btn"),
+          actionButton(ns("goto_tab3"), "Guidance - common infections", icon = icon("book"), class = "btn btn-outline-primary insight-landing-btn")
+        )
+      )
+    ),
+
     tabPanel("Insight #1", value = "tab1",
       fluidRow(
         column(12, h3("National surveillance of AMR priority pathogens"))
@@ -19,7 +34,7 @@ mod_insight_ui <- function(id) {
       ),
       fluidRow(
         column(12,
-          tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
+          uiOutput(ns("country_comparison_header_if1")),
           tableOutput(ns("country_context_if1"))
         )
       )
@@ -43,7 +58,7 @@ mod_insight_ui <- function(id) {
               ),
               fluidRow(
                 column(12,
-                  tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
+                  uiOutput(ns("country_comparison_header_if2")),
                   tableOutput(ns("country_context_if2"))
                 )
               )
@@ -58,7 +73,7 @@ mod_insight_ui <- function(id) {
               ),
               fluidRow(
                 column(12,
-                  tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
+                  uiOutput(ns("country_comparison_header_if2_2")),
                   tableOutput(ns("country_context_if2_2"))
                 )
               )
@@ -99,12 +114,84 @@ mod_insight_ui <- function(id) {
   )
 }
 
-mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation) {
+# Renders an insight tab's markdown "What can we learn from this?" text with each
+# "###" paragraph individually collapsible, without splitting the source file: the
+# raw markdown is cut into chunks at each level-3 heading, each chunk is rendered to
+# HTML on its own, and its <h3> is pulled back out so a toggle arrow can be attached
+# to it while the rest of the chunk becomes the collapsible body. The heading itself
+# is always shown; only the paragraph underneath it can be hidden.
+render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL) {
+  lines <- readLines(path)
+
+  h3_idx <- which(grepl("^###\\s", lines))
+
+  preamble_end <- if (length(h3_idx)) h3_idx[1] - 1 else length(lines)
+  preamble     <- lines[seq_len(preamble_end)]
+  preamble_html <- HTML(markdown::markdownToHTML(paste(preamble, collapse = "\n"), fragment.only = TRUE))
+
+  if (length(h3_idx) == 0) return(tagList(preamble_html, disclaimer))
+
+  section_ends <- c(h3_idx[-1] - 1, length(lines))
+
+  sections <- Map(function(start, end, i) {
+    chunk_html <- markdown::markdownToHTML(paste(lines[start:end], collapse = "\n"), fragment.only = TRUE)
+    chunk_html <- sub("^\\s+", "", chunk_html)
+
+    parts        <- regmatches(chunk_html, regexec("(?s)^(<h3[^>]*>.*?</h3>)(.*)$", chunk_html, perl = TRUE))[[1]]
+    heading_html <- parts[2]
+    body_html    <- parts[3]
+
+    # A heading with no text underneath (e.g. a legend-only "###" line) has nothing
+    # to toggle, so it's shown as a plain heading with no arrow.
+    if (!nzchar(trimws(gsub("<[^>]+>", "", body_html)))) {
+      return(tags$div(class = "insight-md-subtitle", HTML(heading_html)))
+    }
+
+    section_id <- paste0(id_prefix, "-section-", i)
+
+    tagList(
+      tags$div(class = "insight-md-subtitle",
+        tags$a(class = "insight-md-toggle",
+          `data-bs-toggle` = "collapse",
+          href             = paste0("#", section_id),
+          role             = "button",
+          `aria-expanded`  = "true",
+          `aria-controls`  = section_id,
+          tags$i(class = "fa fa-chevron-down")
+        ),
+        HTML(heading_html)
+      ),
+      tags$div(id = section_id, class = "collapse show insight-md-section",
+        HTML(body_html)
+      )
+    )
+  }, h3_idx, section_ends, seq_along(h3_idx))
+
+  tagList(preamble_html, disclaimer, sections)
+}
+
+# The head-to-head comparison table only has content once at least one country is
+# selected on the graph above it; this renders either its header or, in the meantime,
+# a placeholder sentence instead of a header with nothing underneath it.
+country_comparison_header <- function(selected) {
+  if (length(selected) == 0) {
+    tags$p(em("Select countries for head-to-head comparison !"))
+  } else {
+    tags$p(tags$strong("Selected countries head-to-head comparison:"))
+  }
+}
+
+mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation, set_selected_tab) {
   moduleServer(id, function(input, output, session) {
 
     observeEvent(selected_tab(), {
       updateTabsetPanel(session, "insightTabs", selected = selected_tab())
     })
+
+    ## Landing page navigation buttons ----
+    observeEvent(input$goto_tab1, { set_selected_tab("tab1") })
+    observeEvent(input$goto_tab2, { set_selected_tab("tab2") })
+    observeEvent(input$goto_tab3, { set_selected_tab("tab3") })
 
     ## Country filter integration ----
     # "shown" countries are the ones displayed on the graphs (selected + activated);
@@ -167,6 +254,32 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       }
     })
     selectedResistances <- debounce(reactive({ resistancesRV() }), 400)
+
+    # Whether the non-country filters relevant to each tab's graph have been changed from
+    # their default (all-selected) state - used to warn that the fixed narrative text next
+    # to the graph describes the default/unfiltered data, not the current selection. Country
+    # selection is deliberately excluded: the text is about overall European findings, and
+    # narrowing to a few countries doesn't make it stale the way changing culture
+    # material/pathogen/resistance does.
+    it1_filters_modified <- reactive({
+      !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList)) ||
+        !identical(sort(selectedPathogens()),       sort(insightPathogenList))       ||
+        !identical(sort(selectedResistances()),     sort(insightResistanceList))
+    })
+
+    it2_filters_modified <- reactive({
+      !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList)) ||
+        !identical(sort(selectedPathogens()),       sort(insightPathogenList))
+    })
+
+    it3_filters_modified <- reactive({
+      !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList))
+    })
+
+    insight_text_disclaimer <- tags$p(class = "insight-md-disclaimer",
+      icon("triangle-exclamation"),
+      "This text reflects the default (unfiltered) data and may not match your current filter selection."
+    )
 
     # Sync graph selection -> country filter: selecting/deselecting a country directly
     # on any graph activates/deactivates the same country in the sidebar filter (the
@@ -372,6 +485,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colorsPC) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # guides(fill = "none") rather than relying only on bp_theme's legend.position = "none":
+        # the combined plot forces legend.position = "top" via `&` so the single collected
+        # legend (from the heatmap) sits above the whole figure, and that same `&` theme would
+        # otherwise also un-hide this bar chart's own (redundant) legend.
+        guides(fill = "none") +
         bp_theme
     })
 
@@ -415,6 +533,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colorsGR) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # See gg_bp_it2 above for why guides(fill = "none") is needed in addition to bp_theme.
+        guides(fill = "none") +
         bp_theme
     })
 
@@ -438,9 +558,17 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
             "HIGH: all main geographical\nregions covered",
             "MEDIUM: most geographical\nregions covered",
             "LOW: a few geographical\nareas covered",
-            "Not part of national surveillance",
+            "Not part of national\nsurveillance",
             "Do not know"
-          )
+          ),
+          # Forced 2-column layout: the collected legend sits above a plot that's only
+          # width_svg = 6in wide, and these labels are long enough that ggplot's automatic
+          # legend wrapping (which works fine for the shorter Population coverage labels)
+          # lays all 5 keys out on one line here and runs off the right edge. title.position
+          # = "top" stacks the (also long) legend title above the key grid instead of beside
+          # it - left as the default "left", the title alone eats over a third of the 6in
+          # width, squeezing the 2-column key grid enough to clip "MEDIUM: most geographical".
+          guide = guide_legend(ncol = 2, byrow = TRUE, title.position = "top")
         ) +
         theme_minimal() +
         theme(
@@ -503,13 +631,13 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     gg_combined_it2 <- reactive({
       gg_bp_it2() + plot_spacer() + (gg_hm_it2() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        theme(text = element_text(size = 10), legend.position = "top")
     })
 
     gg_combined_it2_2 <- reactive({
       gg_bp_it2_2() + plot_spacer() + (gg_hm_it2_2() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        theme(text = element_text(size = 10), legend.position = "top")
     })
 
     gg_combined_it3 <- reactive({
@@ -574,6 +702,10 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
     }, ignoreInit = TRUE)
 
+    output$country_comparison_header_if1 <- renderUI({
+      country_comparison_header(input$plot_it1_selected)
+    })
+
     output$country_context_if1 <- renderTable({
       req(input$plot_it1_selected)
       it1$hm %>%
@@ -592,13 +724,14 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                          `Yes, voluntary`,
                          `Yes, mandatory`) |>
         dplyr::mutate(across(c(`No surveillance`, `Yes, voluntary`, `Yes, mandatory`),
-                             ~ paste0(round(.x, 2), "%")))
+                             ~ paste0(round(.x, 0), "%")))
     })
 
     output$md_content_it1 <- renderUI({
-      md <- readLines("content/md/tab1.md")
       div(class = "insight-md-content",
-        HTML(markdown::markdownToHTML(paste(md, collapse = "\n"), fragment.only = TRUE))
+        render_collapsible_insight_md("content/md/tab1.md", session$ns("it1"),
+          disclaimer = if (it1_filters_modified()) insight_text_disclaimer
+        )
       )
     })
 
@@ -628,6 +761,10 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
     }, ignoreInit = TRUE)
 
+    output$country_comparison_header_if2 <- renderUI({
+      country_comparison_header(input$plot_it2_selected)
+    })
+
     output$country_context_if2 <- renderTable({
       req(input$plot_it2_selected)
       it2$hm %>%
@@ -641,13 +778,15 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         mutate(Percent = 100 * Number / sum(Number)) %>%
         ungroup() |>
         filter(Country %in% input$plot_it2_selected) |>
-        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent)
+        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
+        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%")))
     })
 
     output$md_content_it2 <- renderUI({
-      md <- readLines("content/md/tab2.md")
       div(class = "insight-md-content",
-        HTML(markdown::markdownToHTML(paste(md, collapse = "\n"), fragment.only = TRUE))
+        render_collapsible_insight_md("content/md/tab2.md", session$ns("it2"),
+          disclaimer = if (it2_filters_modified()) insight_text_disclaimer
+        )
       )
     })
 
@@ -677,6 +816,10 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
     }, ignoreInit = TRUE)
 
+    output$country_comparison_header_if2_2 <- renderUI({
+      country_comparison_header(input$plot_it2_2_selected)
+    })
+
     output$country_context_if2_2 <- renderTable({
       req(input$plot_it2_2_selected)
       it2_2$hm %>%
@@ -698,7 +841,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           grepl("^LOW",    value) ~ "LOW",
           TRUE                    ~ value
         )) |>
-        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent)
+        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
+        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%")))
     })
 
     ## Insight tab 3 ----
@@ -728,9 +872,10 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     }, ignoreInit = TRUE)
 
     output$md_content_it3 <- renderUI({
-      md <- readLines("content/md/tab3.md")
       div(class = "insight-md-content",
-        HTML(markdown::markdownToHTML(paste(md, collapse = "\n"), fragment.only = TRUE))
+        render_collapsible_insight_md("content/md/tab3.md", session$ns("it3"),
+          disclaimer = if (it3_filters_modified()) insight_text_disclaimer
+        )
       )
     })
 

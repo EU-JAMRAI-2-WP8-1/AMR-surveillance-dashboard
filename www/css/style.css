@@ -732,6 +732,23 @@ body.section-3 .question-selector-card .selectize-input {
     margin-bottom: 0;
 }
 
+/* Shared heading rules for content injected into modal bodies (usage, about, legal,
+   geo disclaimer). Modal titles render as h4, so section/subsection headings inside
+   the body use h5/h6 to keep a correct heading hierarchy. */
+.modal-section-title {
+    color: #008aab;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.modal-subsection-title {
+    color: #008aab;
+    font-weight: normal;
+    font-size: 1.15em;
+    margin-bottom: 8px;
+}
+
 .modal-header-right {
     display: flex;
     flex-direction: column;
@@ -888,31 +905,37 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 
-/* Insight tab selection buttons */
+/* Insight tab selection buttons - stacked one per row, each its own pill */
+.view-toggle-wrapper #insightTabToggle .btn-group-container-sw {
+    flex-direction: column !important;
+    gap: 8px;
+}
+
 .view-toggle-wrapper #insightTabToggle .btn {
     flex: 1;
-    padding: 11px 4px !important;
+    padding: 11px 14px !important;
     background-color: #e0e0e0 !important;
     border-color: #e0e0e0 !important;
     color: #666 !important;
-    border-radius: 0 !important;
+    border-radius: 999px !important;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
-.view-toggle-wrapper #insightTabToggle .btn .insight-tab-num {
-    font-size: 1.2em;
-    font-weight: bold;
+.view-toggle-wrapper #insightTabToggle .btn .btn-text {
+    white-space: normal;
+    line-height: 1.2;
 }
 
-.view-toggle-wrapper #insightTabToggle .btn:first-of-type {
-    border-radius: 60px 0 0 60px !important;
+.view-toggle-wrapper #insightTabToggle .btn i {
+    margin-right: 6px;
 }
 
-.view-toggle-wrapper #insightTabToggle .btn:last-of-type {
-    border-radius: 0 60px 60px 0 !important;
+/* Insight landing page shortcut buttons */
+.insight-landing-btn i {
+    margin-right: 6px;
 }
 
 .view-toggle-wrapper #insightTabToggle .btn:hover {
@@ -962,8 +985,51 @@ body.section-3 .question-selector-card .selectize-input {
     color: #008aab;
     font-weight: normal;
     font-size: 1.15em;
+    margin: 0;
+}
+
+.insight-md-disclaimer {
+    font-size: 0.85em;
+    font-style: italic;
+    color: #a15c00;
+    background-color: #fff6e5;
+    border-left: 3px solid #e3a008;
+    padding: 6px 10px;
+    margin: 0 0 16px 0;
+    border-radius: 4px;
+}
+
+.insight-md-disclaimer i {
+    margin-right: 4px;
+}
+
+.insight-md-subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
     margin-top: 20px;
     margin-bottom: 8px;
+}
+
+.insight-md-toggle {
+    flex-shrink: 0;
+    display: inline-flex;
+    color: #008aab;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.insight-md-toggle:hover {
+    color: #006d88;
+}
+
+.insight-md-toggle i {
+    transition: transform 0.2s ease;
+}
+
+.insight-md-toggle.collapsed i {
+    transform: rotate(-90deg);
 }
 
 .insight-md-content p {
