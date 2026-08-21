@@ -1,5 +1,87 @@
 # EU-JAMRAI 2: AMR surveillance dashboard
+## Proposing Changes to the development branch
 
+[Development - Dashboard](https://eu-jamrai-2-wp8-1.shinyapps.io/amr-surveillance-dashboard-development/)
+
+---
+
+## Overview
+
+This guide outlines the process for proposing changes to the repository. Follow these steps to ensure a smooth and organized workflow.
+
+---
+
+## Steps to Propose Changes
+
+1. **Start from the `development` Branch**
+  - Always begin by pulling the latest changes from the `development` branch:
+2. **Create a Feature Branch**
+  - Create a new branch from `development` for the specific change you want to propose.
+  - Name your branch using the format: `<your-name>-<component>-<description>`.  
+  Example: If you are modifying `insight-tab1`, create a branch like:
+    ```bash
+    git checkout -b julius-insighttab1-text-update
+    ```
+3. **Make Your Changes**
+  - Implement your changes in the new branch.
+  - Commit your changes with clear and descriptive messages. Follow the [Commit Message Guidelines](#commit-message-guidelines) below.
+    ```bash
+    git add .
+    git commit -m "Updated text in insight-tab1"
+    ```
+  - You can make multiple commits as needed.
+4. **Push Your Branch**
+  - Push your branch to the remote repository:
+5. **Create a Pull Request (PR)**
+  - Go to the repository on GitHub.
+  - Create a new Pull Request to merge your branch into `development`.
+  - Provide a clear title and description for your PR, explaining the changes you made.
+6. **Review and Merge**
+  - Baptiste and Julius will review your proposed changes.
+  - If approved, they will merge your branch into `development`.
+
+---
+
+## Commit Message Guidelines
+
+To maintain a clean and understandable commit history, follow these best practices:
+
+1. **Use the Imperative Mood**
+  - Write commit messages as if you are giving a command:
+    - ✅ **"Add new feature"** (not "Added new feature" or "Adds new feature").
+    - ✅ **"Fix bug in login"** (not "Fixed bug in login").
+2. **Keep It Short and Clear**
+  - **Subject Line**: Limit to **50 characters or less**. Summarize the change succinctly.
+    - Example: `"Update README with contribution guidelines"`
+  - **Body (Optional)**: Use for detailed explanations. Wrap at **72 characters** for readability.
+3. **Separate Subject from Body**
+  - Use a blank line between the subject and body (if a body is needed).
+4. **Be Specific**
+  - Avoid vague messages like `"Fix stuff"` or `"Update code"`.
+  - Instead, specify **what** and **why**:
+    - ✅ `"Fix login timeout error by increasing session duration"`
+    - ✅ `"Refactor data processing for better performance"`
+5. **Reference Issues or Tickets**
+  - If your commit relates to a GitHub issue, or similar, include it:
+    - `"Fix login bug (closes #123)"`
+6. **Avoid Unnecessary Details**
+  - Focus on **what changed** and **why**, not **how** (the code itself shows the "how").
+7. **Use Bullet Points for Multiple Changes**
+  - If a commit includes multiple related changes, list them clearly:
+8. **Avoid Special Characters**
+  - Stick to plain text. Avoid emojis, symbols, or non-ASCII characters unless they are part of a convention your team uses.
+
+---
+
+## Notes
+
+- Ensure your branch is up-to-date with `development` before creating a PR.
+- Keep your branch focused on a single feature or fix.
+- Use meaningful commit messages to describe your changes.
+
+---
+
+c
 
 ## Run the Shiny application locally
 
