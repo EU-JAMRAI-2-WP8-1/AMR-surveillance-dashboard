@@ -168,12 +168,12 @@ ui <- shinyUI(fluidPage(
             inputId = "insightTabToggle",
             label = NULL,
             choiceNames = list(
-              HTML('<span class="insight-tab-num">#1</span>'),
-              HTML('<span class="insight-tab-num">#2</span>'),
-              HTML('<span class="insight-tab-num">#3</span>')
+              HTML('<i class="fa fa-ranking-star"></i><span class="btn-text">AMR priority pathogens</span>'),
+              HTML('<i class="fa fa-map-location-dot"></i><span class="btn-text">Coverage and representativeness</span>'),
+              HTML('<i class="fa fa-book"></i><span class="btn-text">Guidance - common infections</span>')
             ),
             choiceValues = c("tab1", "tab2", "tab3"),
-            selected = "tab1",
+            selected = character(0),
             individual = FALSE,
             checkIcon = list(),
             status = "primary"
@@ -277,9 +277,25 @@ server <- function(input, output, session) {
   insight_filters_mod <- mod_insight_filters_server("insight_filters")
   insight_filters     <- insight_filters_mod$filters
 
+  # Insight tab selection - defaults to the landing page, updated by the #1/#2/#3 buttons
+  # (either the sidebar toggle or the landing page's own shortcut buttons)
+  insightSelectedTab <- reactiveVal("landing")
+  observeEvent(input$insightTabToggle, {
+    insightSelectedTab(input$insightTabToggle)
+  })
+  setInsightSelectedTab <- function(tab) {
+    insightSelectedTab(tab)
+    updateRadioGroupButtons(session, "insightTabToggle", selected = tab)
+  }
+
   # Outer toggle - switch between Dashboard and Insight tabs
   observeEvent(input$outerToggle, {
     updateTabsetPanel(session, "outerTabs", selected = input$outerToggle)
+    if (input$outerToggle == "insight") {
+      insightSelectedTab("landing")
+      # Empty selection un-checks all 3 buttons (none of them is "active" while on the landing page)
+      updateRadioGroupButtons(session, "insightTabToggle", selected = character(0))
+    }
   })
   
   # View toggle - switch between Graphics and Table tabs
@@ -417,9 +433,10 @@ server <- function(input, output, session) {
   mod_insight_server("insight",
     it1 = it1, it2 = it2, it2_2 = it2_2, it3 = it3,
     it3_ast = it3_ast, it3_wgt = it3_wgt,
-    selected_tab = reactive(input$insightTabToggle),
+    selected_tab = insightSelectedTab,
     insight_filters = insight_filters,
-    sync_activation = insight_filters_mod$syncActivation
+    sync_activation = insight_filters_mod$syncActivation,
+    set_selected_tab = setInsightSelectedTab
   )
 
 }
