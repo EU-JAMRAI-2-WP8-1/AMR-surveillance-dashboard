@@ -8,21 +8,14 @@ mod_insight_ui <- function(id) {
     tabPanel("Insight - landing page", value = "landing",
       fluidRow(
         column(12,
-          h3("Insight - landing page (work in progress)")
-        )
-      ),
-      fluidRow(
-        column(12,
-          actionButton(ns("goto_tab1"), "AMR priority pathogens", icon = icon("ranking-star"), class = "btn btn-outline-primary insight-landing-btn"),
-          actionButton(ns("goto_tab2"), "Coverage and representativeness", icon = icon("map-location-dot"), class = "btn btn-outline-primary insight-landing-btn"),
-          actionButton(ns("goto_tab3"), "Guidance - common infections", icon = icon("book"), class = "btn btn-outline-primary insight-landing-btn")
+          uiOutput(ns("md_content_landing"))
         )
       )
     ),
 
     tabPanel("Insight #1", value = "tab1",
       fluidRow(
-        column(12, h3("National surveillance of AMR priority pathogens"))
+        column(12, h1("National surveillance of AMR priority pathogens"))
       ),
       fluidRow(
         column(6,
@@ -42,7 +35,7 @@ mod_insight_ui <- function(id) {
 
     tabPanel("Insight #2", value = "tab2",
       fluidRow(
-        column(12, h3("Population coverage and geographical representativeness"))
+        column(12, h1("Population coverage and geographical representativeness"))
       ),
       fluidRow(
         column(6,
@@ -88,7 +81,7 @@ mod_insight_ui <- function(id) {
 
     tabPanel("Insight #3", value = "tab3",
       fluidRow(
-        column(12, h3("National guidance on treatment of common infections"))
+        column(12, h1("National guidance on treatment of common infections"))
       ),
       fluidRow(
         column(6,
@@ -170,6 +163,81 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL) {
   tagList(preamble_html, disclaimer, sections)
 }
 
+# A clickable stand-in for the flowchart that used to live in landing.md as a mermaid
+# code block: mermaid has no built-in way to bridge a node click into a Shiny input,
+# so the diagram is rebuilt here as plain HTML/actionButtons wired to the same
+# set_selected_tab() navigation used by the module's goto_tabX observers. Styled
+# like the "Reset filters" button (btn btn-outline-primary) for consistency.
+insight_flow_diagram <- function(ns) {
+  insight_box <- function(input_id, icon_name, label) {
+    actionButton(ns(input_id), label, icon = icon(icon_name),
+      class = "btn btn-outline-primary insight-flow-box"
+    )
+  }
+
+  # Three separate arrows (root -> each box) drawn as an SVG fan rather than CSS
+  # borders, since a fan of non-vertical lines isn't expressible with box borders.
+  # The line endpoints (29.17 / 87.5 / 145.83, i.e. 1/6, 1/2, 5/6 of the 175-wide
+  # viewBox) assume the row below lays out as three equal-width, non-wrapped
+  # columns (see .insight-flow-row / nowrap in CSS); on narrow screens the row
+  # switches to a stacked layout and the fan is hidden instead of being drawn
+  # against geometry it no longer matches.
+  #
+  # The viewBox is 175x10 (not a square 100x100) and .insight-flow-links is given
+  # a matching `aspect-ratio: 175 / 10` in CSS, so the viewBox maps onto the
+  # container with a single uniform scale factor. Stretching a square viewBox to
+  # fit this box's actual short/wide shape (as a naive `preserveAspectRatio="none"`
+  # would) distorts x and y by very different amounts, which squashes the
+  # arrowhead triangles into an unrecognizable sliver - matching the "is that an
+  # arrowhead or a rendering artifact?" symptom this was written to fix.
+  arrows <- HTML('
+    <svg class="insight-flow-svg" viewBox="0 0 175 10" aria-hidden="true">
+      <defs>
+        <marker id="insight-flow-arrowhead" viewBox="0 0 10 10" refX="8" refY="5"
+                markerWidth="4.5" markerHeight="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#0fdbd5" />
+        </marker>
+      </defs>
+      <line x1="72.5" y1="0" x2="29.1667" y2="10" marker-end="url(#insight-flow-arrowhead)" />
+      <line x1="87.5" y1="0" x2="87.5" y2="10" marker-end="url(#insight-flow-arrowhead)" />
+      <line x1="102.5" y1="0" x2="145.8333" y2="10" marker-end="url(#insight-flow-arrowhead)" />
+    </svg>
+  ')
+
+  tags$div(class = "insight-flow-diagram",
+    tags$div(class = "insight-flow-root", "JAMREYE insights"),
+    tags$div(class = "insight-flow-links", arrows),
+    tags$div(class = "insight-flow-row",
+      insight_box("goto_tab1", "ranking-star",
+        "Insight 1: Mandatory surveillance of AMR priority pathogens"),
+      insight_box("goto_tab2", "map-location-dot",
+        "Insight 2: Expansion of European surveillance beyond invasive infections"),
+      insight_box("goto_tab3", "book",
+        "Insight 3: Use of surveillance data for national treatment guidance")
+    )
+  )
+}
+
+# Renders landing.md like render_collapsible_insight_md's preamble (no collapsible
+# sections needed here), but splices the interactive insight_flow_diagram() in at the
+# "<!-- insight-flow-diagram -->" marker left in the source in place of the old
+# mermaid block.
+render_landing_md <- function(path, ns) {
+  lines  <- readLines(path)
+  marker <- which(grepl("^<!--\\s*insight-flow-diagram\\s*-->$", lines))
+
+  to_html <- function(md_lines) {
+    HTML(markdown::markdownToHTML(paste(md_lines, collapse = "\n"), fragment.only = TRUE))
+  }
+
+  if (length(marker) == 0) return(to_html(lines))
+
+  before <- if (marker[1] > 1) lines[seq_len(marker[1] - 1)] else character(0)
+  after  <- if (marker[1] < length(lines)) lines[(marker[1] + 1):length(lines)] else character(0)
+
+  tagList(to_html(before), insight_flow_diagram(ns), to_html(after))
+}
+
 # The head-to-head comparison table only has content once at least one country is
 # selected on the graph above it; this renders either its header or, in the meantime,
 # a placeholder sentence instead of a header with nothing underneath it.
@@ -188,7 +256,14 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       updateTabsetPanel(session, "insightTabs", selected = selected_tab())
     })
 
-    ## Landing page navigation buttons ----
+    ## Landing page ----
+    output$md_content_landing <- renderUI({
+      div(class = "insight-md-content",
+        render_landing_md("content/md/landing.md", session$ns)
+      )
+    })
+
+    ## Landing page flow-diagram navigation ----
     observeEvent(input$goto_tab1, { set_selected_tab("tab1") })
     observeEvent(input$goto_tab2, { set_selected_tab("tab2") })
     observeEvent(input$goto_tab3, { set_selected_tab("tab3") })

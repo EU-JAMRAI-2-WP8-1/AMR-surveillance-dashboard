@@ -7,12 +7,7 @@ Explore each insight to delve deeper into the findings.
 You can hover over the figures and select countries for further details. 
 
 
-```mermaid
-flowchart TD
-    JAMREYE_insights((JAMREYE insights)) --> Insight1[Insight 1: Mandatory surveillance of AMR priority pathogens]
-    JAMREYE_insights((JAMREYE insights)) --> Insight2[Insight 2: Expansion of European surveillance beyond invasive infections]
-    JAMREYE_insights((JAMREYE insights)) --> Insight3[Insight 3: Use of surveillance data for national treatment guidance]
-```
+<!-- insight-flow-diagram -->
 
 ## Our Goal
 The data and insights provided here are designed to support public health authorities in:

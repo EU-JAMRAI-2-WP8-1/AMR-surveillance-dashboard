@@ -933,11 +933,6 @@ body.section-3 .question-selector-card .selectize-input {
     margin-right: 6px;
 }
 
-/* Insight landing page shortcut buttons */
-.insight-landing-btn i {
-    margin-right: 6px;
-}
-
 .view-toggle-wrapper #insightTabToggle .btn:hover {
     background-color: #d0d0d0 !important;
     border-color: #d0d0d0 !important;
@@ -965,6 +960,17 @@ body.section-3 .question-selector-card .selectize-input {
     width: 100%;
 }
 
+/* Page-level heading (Insight tab titles, landing page welcome heading). Brand
+   color taken from .modal-title-text, sized above .insight-md-content h2/h3 so the
+   h1 -> h2 -> h3 outline stays visually distinct. h4-h6 are reserved for modals. */
+h1 {
+    color: #008aab;
+    font-weight: bold;
+    font-size: 1.75em;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
 /* Insight tab markdown content - identical style to Instructions modal */
 .insight-md-content {
     font-size: 1rem;
@@ -986,6 +992,105 @@ body.section-3 .question-selector-card .selectize-input {
     font-weight: normal;
     font-size: 1.15em;
     margin: 0;
+}
+
+/* Insight landing page - clickable flowchart replacing the old mermaid diagram */
+.insight-flow-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.insight-flow-root {
+    background-color: #008aab;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 8px 18px;
+    margin-bottom: 10px;
+}
+
+/* aspect-ratio must match the SVG's viewBox (175 x 10, see insight_flow_diagram())
+   so it scales uniformly in both directions instead of being stretched to fit a
+   short, wide box - a non-uniform stretch would squash the arrowhead markers into
+   an unrecognizable sliver. */
+.insight-flow-links {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    aspect-ratio: 175 / 10;
+    margin-bottom: 14px;
+}
+
+.insight-flow-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /* the arrowhead markers extend slightly past y2="10" (the line endpoints,
+       at the bottom edge of the viewBox) - without this they get clipped there */
+    overflow: visible;
+}
+
+.insight-flow-svg line {
+    stroke: #0fdbd5;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+}
+
+.insight-flow-row {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+}
+
+/* Visuals (border/colors/hover) come from the btn btn-outline-primary classes
+   applied alongside this one - same look as the "Reset filters" button. This
+   class only handles fitting the 3 buttons evenly into the row. */
+.insight-flow-box {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 280px;
+}
+
+.insight-flow-box i {
+    margin-right: 6px;
+}
+
+/* Below this width the three boxes stack instead of sitting in a row, so the
+   arrow fan's endpoints (tied to a 3-equal-column layout) no longer line up
+   with the boxes and are hidden in favor of a single connecting line. */
+@media (max-width: 700px) {
+    .insight-flow-links {
+        max-width: none;
+        aspect-ratio: auto;
+        height: 24px;
+    }
+
+    .insight-flow-svg {
+        display: none;
+    }
+
+    .insight-flow-links::before {
+        content: "";
+        display: block;
+        width: 2px;
+        height: 100%;
+        margin: 0 auto;
+        background-color: #0fdbd5;
+    }
+
+    .insight-flow-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .insight-flow-box {
+        max-width: none;
+    }
 }
 
 .insight-md-disclaimer {
