@@ -17,12 +17,12 @@ To assess the feasibility of developing and implementing EU-wide treatment guide
 - Only 61% of countries have national treatment guidance for bloodstream infections.
 - Sixteen countries report using routine AST data for writing their treatment guidance. See source of AST data per country (fold out figure).
 
-<span style='color:#0000FF;font-weight:bold'>Blue figure fold out</span>
+<!-- insight-tab3-ast-figure -->
 
 
 - Thirteen countries lack guidance for at least one common infection and four countries lack guidance for all six infections. Who guides empiric treatment when national guidelines are missing? (fold out figure)
 
-<span style='color:#FFC0CB;font-weight:bold'>Pink figure fold out</span>
+<!-- insight-tab3-wgt-figure -->
 
 
 ### Actions for change:

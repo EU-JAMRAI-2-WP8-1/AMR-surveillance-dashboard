@@ -90,54 +90,93 @@ mod_insight_ui <- function(id) {
         column(6,
           uiOutput(ns("md_content_it3"))
         )
-      ),
-      fluidRow(
-        style = "margin-top: 30px;",
-        column(6,
-          h4("AST data used for national treatment guidance"),
-          girafeOutput(ns("plot_it3_ast"))
-        ),
-        column(6,
-          h4("Who guides empiric antibiotic treatment"),
-          girafeOutput(ns("plot_it3_wgt"))
-        )
       )
     )
 
   )
 }
 
+# Renders a run of markdown lines to HTML, except for any line that (once trimmed)
+# exactly matches a name in `markers` - that line is replaced by the live UI
+# `markers[[line]]()` produces (e.g. a Shiny plot output) instead of being passed
+# through markdownToHTML. Lets a source .md file mark a spot for a widget that plain
+# markdown can't express, the same way render_landing_md splices insight_flow_diagram()
+# in at its own marker.
+render_md_with_markers <- function(lines, markers = list()) {
+  if (length(lines) == 0 || !any(nzchar(trimws(lines)))) return(NULL)
+
+  to_html <- function(md_lines) {
+    if (!any(nzchar(trimws(md_lines)))) return(NULL)
+    HTML(markdown::markdownToHTML(paste(md_lines, collapse = "\n"), fragment.only = TRUE))
+  }
+
+  marker_idx <- which(trimws(lines) %in% names(markers))
+  if (length(marker_idx) == 0) return(to_html(lines))
+
+  pieces <- list()
+  start  <- 1
+  for (idx in marker_idx) {
+    if (idx > start) pieces[[length(pieces) + 1]] <- to_html(lines[start:(idx - 1)])
+    pieces[[length(pieces) + 1]] <- markers[[trimws(lines[idx])]]()
+    start <- idx + 1
+  }
+  if (start <= length(lines)) pieces[[length(pieces) + 1]] <- to_html(lines[start:length(lines)])
+
+  tagList(pieces)
+}
+
+# A boxed, collapsible plot spliced into insight markdown text in place of a marker
+# line (see render_md_with_markers) - same toggle-arrow mechanism as a "###" section
+# in render_collapsible_insight_md, just wrapping a single girafeOutput instead of a
+# whole section. width/height should match the plot's own width_svg/height_svg ratio;
+# see the ast-figure usage below for why.
+insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px", height = "600px") {
+  tags$div(class = "insight-md-inline-figure",
+    tags$div(class = "insight-md-subtitle",
+      tags$a(class = "insight-md-toggle",
+        `data-bs-toggle` = "collapse",
+        href             = paste0("#", fig_id),
+        role             = "button",
+        `aria-expanded`  = "true",
+        `aria-controls`  = fig_id,
+        tags$i(class = "fa fa-chevron-down")
+      ),
+      h5(title)
+    ),
+    tags$div(id = fig_id, class = "collapse show",
+      girafeOutput(ns(output_id), width = width, height = height)
+    )
+  )
+}
+
 # Renders an insight tab's markdown "What can we learn from this?" text with each
 # "###" paragraph individually collapsible, without splitting the source file: the
-# raw markdown is cut into chunks at each level-3 heading, each chunk is rendered to
-# HTML on its own, and its <h3> is pulled back out so a toggle arrow can be attached
-# to it while the rest of the chunk becomes the collapsible body. The heading itself
-# is always shown; only the paragraph underneath it can be hidden.
-render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL) {
+# raw markdown is cut into chunks at each level-3 heading, the heading line and its
+# body are rendered separately so a toggle arrow can be attached to the heading while
+# the body becomes the collapsible content. The heading itself is always shown; only
+# the paragraph underneath it can be hidden. `markers` (see render_md_with_markers)
+# lets a body splice in live content, e.g. a plot, in place of a placeholder line.
+render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, markers = list()) {
   lines <- readLines(path)
 
   h3_idx <- which(grepl("^###\\s", lines))
 
   preamble_end <- if (length(h3_idx)) h3_idx[1] - 1 else length(lines)
-  preamble     <- lines[seq_len(preamble_end)]
-  preamble_html <- HTML(markdown::markdownToHTML(paste(preamble, collapse = "\n"), fragment.only = TRUE))
+  preamble      <- lines[seq_len(preamble_end)]
+  preamble_html <- render_md_with_markers(preamble, markers)
 
   if (length(h3_idx) == 0) return(tagList(preamble_html, disclaimer))
 
   section_ends <- c(h3_idx[-1] - 1, length(lines))
 
   sections <- Map(function(start, end, i) {
-    chunk_html <- markdown::markdownToHTML(paste(lines[start:end], collapse = "\n"), fragment.only = TRUE)
-    chunk_html <- sub("^\\s+", "", chunk_html)
-
-    parts        <- regmatches(chunk_html, regexec("(?s)^(<h3[^>]*>.*?</h3>)(.*)$", chunk_html, perl = TRUE))[[1]]
-    heading_html <- parts[2]
-    body_html    <- parts[3]
+    heading_html <- HTML(markdown::markdownToHTML(lines[start], fragment.only = TRUE))
+    body_lines   <- if (end >= start + 1) lines[(start + 1):end] else character(0)
 
     # A heading with no text underneath (e.g. a legend-only "###" line) has nothing
     # to toggle, so it's shown as a plain heading with no arrow.
-    if (!nzchar(trimws(gsub("<[^>]+>", "", body_html)))) {
-      return(tags$div(class = "insight-md-subtitle", HTML(heading_html)))
+    if (!any(nzchar(trimws(body_lines)))) {
+      return(tags$div(class = "insight-md-subtitle", heading_html))
     }
 
     section_id <- paste0(id_prefix, "-section-", i)
@@ -152,10 +191,10 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL) {
           `aria-controls`  = section_id,
           tags$i(class = "fa fa-chevron-down")
         ),
-        HTML(heading_html)
+        heading_html
       ),
       tags$div(id = section_id, class = "collapse show insight-md-section",
-        HTML(body_html)
+        render_md_with_markers(body_lines, markers)
       )
     )
   }, h3_idx, section_ends, seq_along(h3_idx))
@@ -949,7 +988,22 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     output$md_content_it3 <- renderUI({
       div(class = "insight-md-content",
         render_collapsible_insight_md("content/md/tab3.md", session$ns("it3"),
-          disclaimer = if (it3_filters_modified()) insight_text_disclaimer
+          disclaimer = if (it3_filters_modified()) insight_text_disclaimer,
+          # width/height on both figures below match their plot's own width_svg=6,
+          # height_svg=5 ratio rather than width="100%": with rescale=TRUE, a
+          # container wider than that ratio leaves slack space that ggiraph
+          # letterboxes by centering the SVG in it - matching the ratio removes the
+          # slack so the plot sits flush against the box's left edge.
+          markers = list(
+            "<!-- insight-tab3-ast-figure -->" = function() {
+              insight_inline_figure(session$ns, session$ns("it3-ast-figure"),
+                "AST data used for national treatment guidance", "plot_it3_ast")
+            },
+            "<!-- insight-tab3-wgt-figure -->" = function() {
+              insight_inline_figure(session$ns, session$ns("it3-wgt-figure"),
+                "Who guides empiric antibiotic treatment", "plot_it3_wgt")
+            }
+          )
         )
       )
     })

@@ -1155,6 +1155,36 @@ h1 {
     font-style: italic;
 }
 
+/* Plot embedded inline in insight markdown text (e.g. the AST-data fold-out figure
+   in tab3.md), sized down and boxed off from the surrounding paragraphs. */
+.insight-md-inline-figure {
+    margin: 10px 0 16px;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow-x: auto;
+    width: fit-content;
+}
+
+.insight-md-inline-figure h5 {
+    color: #008aab;
+    font-weight: bold;
+    font-size: 0.95em;
+    text-align: left;
+    margin: 0;
+}
+
+/* The toggle header sits right against the box's own padding, so it doesn't need
+   the 20px top margin insight-md-subtitle normally adds before a section heading. */
+.insight-md-inline-figure .insight-md-subtitle {
+    margin-top: 0;
+    margin-bottom: 6px;
+}
+
+.insight-md-inline-figure > .girafe {
+    margin-left: 0;
+}
+
 /* Instructions button with JAMRAI turquoise color on hover */
 #showInstructions {
     background-color: transparent !important;
