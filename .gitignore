@@ -9,3 +9,4 @@ rsconnect/
 email-test/
 .Rproj.user
 #renv/ --> ./renv/.gitignore
+*.Rproj
