@@ -625,6 +625,44 @@
     border-right: 1px solid #008aab !important;
 }
 
+/* Insight country head-to-head comparison tables - same DT widget and JAMRAI
+   header colors as #table-resultsTable above, just without that table's
+   wide-column sizing (these only ever have a handful of columns). */
+#insight-country_context_if1,
+#insight-country_context_if2,
+#insight-country_context_if2_2 {
+    font-size: 0.9rem !important;
+}
+
+#insight-country_context_if1 tr > th,
+#insight-country_context_if2 tr > th,
+#insight-country_context_if2_2 tr > th {
+    transition: background-color 0.3s ease;
+}
+
+/* Fixed table header colors - JAMRAI colors */
+#insight-country_context_if1 tr > th:first-child,
+#insight-country_context_if2 tr > th:first-child,
+#insight-country_context_if2_2 tr > th:first-child {
+    background-color: #008aab !important;
+    color: #ffffff !important;
+    border-right: 2px solid #008aab !important;
+}
+
+#insight-country_context_if1 tr > th:not(:first-child),
+#insight-country_context_if2 tr > th:not(:first-child),
+#insight-country_context_if2_2 tr > th:not(:first-child) {
+    background-color: #0fdbd5 !important;
+    color: #ffffff !important;
+}
+
+/* Fixed border for first column cells - JAMRAI dark blue */
+#insight-country_context_if1 td.first-column-cell,
+#insight-country_context_if2 td.first-column-cell,
+#insight-country_context_if2_2 td.first-column-cell {
+    border-right: 1px solid #008aab !important;
+}
+
 /* Question selector card */
 .question-selector-card {
     background-color: #e8f6f9;

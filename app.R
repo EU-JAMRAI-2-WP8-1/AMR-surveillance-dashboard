@@ -297,6 +297,16 @@ server <- function(input, output, session) {
       updateRadioGroupButtons(session, "insightTabToggle", selected = character(0))
     }
   })
+
+  # Re-clicking "Insight" while already in the Insight section doesn't change
+  # input$outerToggle (its value was already "insight"), so the observer above
+  # never fires. script.js reports every click on that button regardless, so
+  # this always resets back to the Insight landing page.
+  observeEvent(input$insightHomeClick, {
+    updateTabsetPanel(session, "outerTabs", selected = "insight")
+    insightSelectedTab("landing")
+    updateRadioGroupButtons(session, "insightTabToggle", selected = character(0))
+  })
   
   # View toggle - switch between Graphics and Table tabs
   observeEvent(input$viewToggle, {

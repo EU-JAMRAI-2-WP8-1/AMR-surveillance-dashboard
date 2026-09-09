@@ -122,6 +122,22 @@ $(document).on('click', '.geo-disclaimer-link', function(e) {
     Shiny.setInputValue('showGeoDataDisclaimer', Math.random(), {priority: 'event'});
 });
 
+// The Dashboard/Insight toggle only reports a change to Shiny when its selected
+// value actually changes, so re-clicking "Insight" while already on the Insight
+// section does nothing by default. Report every click on that button so the
+// server can always reset to the Insight landing page, even when re-clicked.
+// Bound on the capture phase directly on document (rather than delegated jQuery
+// .on('click', ...), which listens on the bubble phase) so this still fires even
+// if the button's own Bootstrap/shinyWidgets click handler stops propagation.
+document.addEventListener('click', function(e) {
+    var el = e.target.closest('#outerToggle .btn, #outerToggle input[type="radio"]');
+    if (!el) return;
+    var val = el.matches('input') ? el.value : (el.querySelector('input') || {}).value;
+    if (val === 'insight') {
+        Shiny.setInputValue('insightHomeClick', Math.random(), {priority: 'event'});
+    }
+}, true);
+
 // Insight country filter: tapping a country pill cycles it through
 // selected -> activated -> unselected -> selected -> ...
 // (the server owns the state and re-renders the pills; this just reports the click)

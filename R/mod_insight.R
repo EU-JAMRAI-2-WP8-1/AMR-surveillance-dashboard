@@ -15,28 +15,18 @@ mod_insight_ui <- function(id) {
 
     tabPanel("Insight #1", value = "tab1",
       fluidRow(
-        column(12, h1("National surveillance of AMR priority pathogens"))
-      ),
-      fluidRow(
         column(6,
-          girafeOutput(ns("plot_it1"))
+          girafeOutput(ns("plot_it1")),
+          uiOutput(ns("country_comparison_header_if1")),
+          DT::dataTableOutput(ns("country_context_if1"))
         ),
         column(6,
           uiOutput(ns("md_content_it1"))
-        )
-      ),
-      fluidRow(
-        column(12,
-          uiOutput(ns("country_comparison_header_if1")),
-          tableOutput(ns("country_context_if1"))
         )
       )
     ),
 
     tabPanel("Insight #2", value = "tab2",
-      fluidRow(
-        column(12, h1("Population coverage and geographical representativeness"))
-      ),
       fluidRow(
         column(6,
           tabsetPanel(
@@ -52,7 +42,7 @@ mod_insight_ui <- function(id) {
               fluidRow(
                 column(12,
                   uiOutput(ns("country_comparison_header_if2")),
-                  tableOutput(ns("country_context_if2"))
+                  DT::dataTableOutput(ns("country_context_if2"))
                 )
               )
             ),
@@ -67,7 +57,7 @@ mod_insight_ui <- function(id) {
               fluidRow(
                 column(12,
                   uiOutput(ns("country_comparison_header_if2_2")),
-                  tableOutput(ns("country_context_if2_2"))
+                  DT::dataTableOutput(ns("country_context_if2_2"))
                 )
               )
             )
@@ -80,9 +70,6 @@ mod_insight_ui <- function(id) {
     ),
 
     tabPanel("Insight #3", value = "tab3",
-      fluidRow(
-        column(12, h1("National guidance on treatment of common infections"))
-      ),
       fluidRow(
         column(6,
           girafeOutput(ns("plot_it3"))
@@ -280,12 +267,78 @@ render_landing_md <- function(path, ns) {
 # The head-to-head comparison table only has content once at least one country is
 # selected on the graph above it; this renders either its header or, in the meantime,
 # a placeholder sentence instead of a header with nothing underneath it.
-country_comparison_header <- function(selected) {
+country_comparison_header <- function(selected, filters_modified = FALSE) {
   if (length(selected) == 0) {
     tags$p(em("Select countries for head-to-head comparison !"))
   } else {
-    tags$p(tags$strong("Selected countries head-to-head comparison:"))
+    tagList(
+      tags$p(tags$strong("Selected countries head-to-head comparison:")),
+      if (filters_modified) insight_table_filters_note
+    )
   }
+}
+
+# Same styling/gating as insight_text_disclaimer below, but for the head-to-head
+# table rather than the narrative text - shown whenever the pathogen/resistance/
+# culture material filters (i.e. anything but the country filter) have been
+# narrowed from their default (all-selected) state.
+insight_table_filters_note <- tags$p(class = "insight-md-disclaimer",
+  icon("circle-info"),
+  "This table reflects your current filter selection."
+)
+
+# Renders a country head-to-head comparison table with the same DT widget and
+# JAMRAI styling used by the Dashboard "Table" tab (see #table-resultsTable in
+# www/css/style.css) - first column (Country) styled as the "locked" column,
+# other columns styled as regular header columns.
+render_country_comparison_table <- function(df) {
+  DT::datatable(
+    df,
+    rownames = FALSE,
+    class    = "display",
+    options  = list(
+      dom         = "t",
+      paging      = FALSE,
+      searching   = FALSE,
+      ordering    = FALSE,
+      columnDefs  = list(list(className = "first-column-cell", targets = 0))
+    )
+  ) %>%
+    # Give the two summary rows appended by with_country_summary_rows() their own,
+    # distinct look (each from the other too) so they read as "special" aggregate
+    # rows rather than just two more countries in the list.
+    DT::formatStyle(
+      "Country",
+      target          = "row",
+      fontWeight      = DT::styleEqual(c("Selection mean", "Overall mean"), c("bold", "bold")),
+      fontStyle       = DT::styleEqual(c("Selection mean", "Overall mean"), c("italic", "normal")),
+      backgroundColor = DT::styleEqual(c("Selection mean", "Overall mean"), c("#e6f9f8", "#fff6e5")),
+      borderTop       = DT::styleEqual(c("Selection mean", "Overall mean"), c("2px solid #008aab", "1px solid #e3a008"))
+    )
+}
+
+# Appends "Selection mean" (the unweighted average of each selected country's own
+# percentage) and "Overall mean" (the same average taken over every country in
+# `pct_long`, i.e. the full filtered/shown universe the graph above is drawn from,
+# not just the selected subset) as two extra rows at the bottom of a long-format
+# Country/value/Percent table, before it's pivoted into the display table.
+with_country_summary_rows <- function(pct_long, selected) {
+  selection_row <- pct_long %>%
+    filter(Country %in% selected) %>%
+    group_by(value) %>%
+    summarise(Percent = mean(Percent), .groups = "drop") %>%
+    mutate(Country = "Selection mean")
+
+  overall_row <- pct_long %>%
+    group_by(value) %>%
+    summarise(Percent = mean(Percent), .groups = "drop") %>%
+    mutate(Country = "Overall mean")
+
+  bind_rows(
+    filter(pct_long, Country %in% selected),
+    selection_row,
+    overall_row
+  )
 }
 
 mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation, set_selected_tab) {
@@ -401,15 +454,28 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     # Tracked per-graph as an add/remove delta against the *shared* filter state, so
     # switching between graphs never clobbers a country activated from a different tab.
     sync_graph_selection <- function(input_name) {
-      previousSelection <- reactiveVal(isolate(activatedCountries()))
-      observeEvent(input[[input_name]], {
-        newSelection <- input[[input_name]]
-        oldSelection <- previousSelection()
+      # Debounced, and diffed against the *current* activatedCountries() rather than
+      # a per-plot "previousSelection" memory that only ever advanced from this same
+      # input's own past values. That combination used to cause an infinite activation
+      # flip-flop under rapid clicking: each pill click pushes a fresh "_set" message
+      # to all 4 plots, which each echo back as a change to this input; with 4
+      # independently-timed echo round-trips in flight at once, a plot could process
+      # a stale echo (from a "_set" push that another, newer click had already
+      # superseded) against its own stale "previousSelection", compute a spurious
+      # non-empty added/removed delta, and feed it back into sync_activation() -
+      # re-triggering another round of "_set" pushes and never settling. Debouncing
+      # collapses a burst of rapid echoes into the single final value once the
+      # round-trips quiesce, and diffing against the live activatedCountries() (not
+      # a stale local copy) means an echo that merely confirms what the server
+      # already pushed always yields an empty, no-op delta.
+      debounced_selection <- debounce(reactive({ input[[input_name]] }), 400)
+      observeEvent(debounced_selection(), {
+        newSelection <- debounced_selection()
+        oldSelection <- isolate(activatedCountries())
         sync_activation(
           added   = setdiff(newSelection, oldSelection),
           removed = setdiff(oldSelection, newSelection)
         )
-        previousSelection(newSelection)
       }, ignoreNULL = FALSE)
     }
 
@@ -555,6 +621,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colors) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # See gg_bp_it2 below for why guides(fill = "none") is needed in addition to bp_theme.
+        guides(fill = "none") +
         bp_theme
     })
 
@@ -577,7 +645,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           axis.text.x      = element_text(angle = 90, hjust = 1, vjust = .5),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
-          legend.position  = "none",
+          legend.position  = "right",
           strip.placement  = "outside",
           strip.clip       = "off"
         )
@@ -618,7 +686,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                           breaks = c("76-100%", "51-75%", "26-50%", "1-25%",
                                      "Not part of national surveillance", "Do not know"),
                           labels = c("76-100%", "51-75%", "26-50%", "1-25%",
-                                     "Not part of national surveillance", "Do not know")) +
+                                     "Not part of national surveillance", "Do not know"),
+                          # Forced single row (see Geographical representativeness's
+                          # scale_fill_manual below for why this can't be left to
+                          # ggplot's automatic wrapping).
+                          guide = guide_legend(nrow = 1, title.position = "top")) +
         theme_minimal() +
         theme(
           axis.text.x      = element_text(angle = 90, hjust = 1),
@@ -668,21 +740,22 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
             "Not part of national surveillance",
             "Do not know"
           ),
+          # 3 lines rather than 2 (unlike the other Insight legends) - narrower per
+          # key, needed so all 5 keys fit on the single forced row below.
           labels = c(
-            "HIGH: all main geographical\nregions covered",
-            "MEDIUM: most geographical\nregions covered",
-            "LOW: a few geographical\nareas covered",
-            "Not part of national\nsurveillance",
+            "HIGH: all main\ngeographical\nregions covered",
+            "MEDIUM: most\ngeographical\nregions covered",
+            "LOW: a few\ngeographical\nareas covered",
+            "Not part of\nnational\nsurveillance",
             "Do not know"
           ),
-          # Forced 2-column layout: the collected legend sits above a plot that's only
-          # width_svg = 6in wide, and these labels are long enough that ggplot's automatic
-          # legend wrapping (which works fine for the shorter Population coverage labels)
-          # lays all 5 keys out on one line here and runs off the right edge. title.position
-          # = "top" stacks the (also long) legend title above the key grid instead of beside
-          # it - left as the default "left", the title alone eats over a third of the 6in
-          # width, squeezing the 2-column key grid enough to clip "MEDIUM: most geographical".
-          guide = guide_legend(ncol = 2, byrow = TRUE, title.position = "top")
+          # Forced single-row layout (all 4 Insight legends match: title on its own
+          # line above a single row of keys, each key's own label allowed to wrap
+          # onto multiple lines via the "\n"s above). nrow = 1 rather than leaving it
+          # to ggplot's automatic wrapping, which - even with the small legend.text
+          # size set on the combined plot below - would otherwise wrap these long
+          # labels across more than one row of keys.
+          guide = guide_legend(nrow = 1, title.position = "top")
         ) +
         theme_minimal() +
         theme(
@@ -711,8 +784,19 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         scale_fill_manual(values = surv_colorsEG) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # See gg_bp_it2 above for why guides(fill = "none") is needed in addition to bp_theme.
+        guides(fill = "none") +
         bp_theme
     })
+
+    it3_xlab_labels <- c(
+      "BSI"         = "Bloodstream\ninfection",
+      "uncomp. UTI" = "Uncomplicated\nurinary tract infection",
+      "comp. UTI"   = "Complicated\nurinary tract infection",
+      "URTI"        = "Upper respiratory\ntract infection",
+      "LRTI"        = "Lower respiratory\ntract infection",
+      "SSTI"        = "Skin and soft\ntissue infection"
+    )
 
     gg_hm_it3 <- reactive({
       it3_hm_f() |>
@@ -722,13 +806,14 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         scale_fill_manual(name   = "National guidance in place",
                           values = surv_colorsEG,
                           breaks = c("Yes", "No", "Do not know")) +
+        scale_x_discrete(labels = it3_xlab_labels) +
         theme_minimal() +
         theme(
           axis.title       = element_blank(),
-          axis.text.x      = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 11),
+          axis.text.x      = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 8),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
-          legend.position  = "none"
+          legend.position  = "right"
         )
     })
 
@@ -738,26 +823,46 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
 
     gg_combined_it1 <- reactive({
       gg_bp_it1() + plot_spacer() + (gg_hm_it1() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     gg_combined_it2 <- reactive({
       gg_bp_it2() + plot_spacer() + (gg_hm_it2() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10), legend.position = "top")
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     gg_combined_it2_2 <- reactive({
       gg_bp_it2_2() + plot_spacer() + (gg_hm_it2_2() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10), legend.position = "top")
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     gg_combined_it3 <- reactive({
       gg_bp_it3() + plot_spacer() + (gg_hm_it3() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     ## Shared girafe options ----
@@ -817,12 +922,13 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     }, ignoreInit = TRUE)
 
     output$country_comparison_header_if1 <- renderUI({
-      country_comparison_header(input$plot_it1_selected)
+      country_comparison_header(input$plot_it1_selected, it1_filters_modified())
     })
 
-    output$country_context_if1 <- renderTable({
+    output$country_context_if1 <- DT::renderDT({
       req(input$plot_it1_selected)
-      it1$hm %>%
+      pct <- it1_hm_f() %>%
+        mutate(Country = as.character(Country)) %>%
         group_by(Country, value) %>%
         summarise(Number = n(), .groups = "drop") %>%
         complete(Country,
@@ -830,15 +936,17 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                  fill  = list(Number = 0)) %>%
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
-        ungroup() |>
-        filter(Country %in% input$plot_it1_selected) |>
+        ungroup()
+
+      with_country_summary_rows(pct, input$plot_it1_selected) |>
         tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
         dplyr::transmute(Country,
                          "No surveillance" = No,
                          `Yes, voluntary`,
                          `Yes, mandatory`) |>
         dplyr::mutate(across(c(`No surveillance`, `Yes, voluntary`, `Yes, mandatory`),
-                             ~ paste0(round(.x, 0), "%")))
+                             ~ paste0(round(.x, 0), "%"))) |>
+        render_country_comparison_table()
     })
 
     output$md_content_it1 <- renderUI({
@@ -876,12 +984,13 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     }, ignoreInit = TRUE)
 
     output$country_comparison_header_if2 <- renderUI({
-      country_comparison_header(input$plot_it2_selected)
+      country_comparison_header(input$plot_it2_selected, it2_filters_modified())
     })
 
-    output$country_context_if2 <- renderTable({
+    output$country_context_if2 <- DT::renderDT({
       req(input$plot_it2_selected)
-      it2$hm %>%
+      pct <- it2_hm_f() %>%
+        mutate(Country = as.character(Country)) %>%
         group_by(Country, value) %>%
         summarise(Number = n(), .groups = "drop") %>%
         complete(Country,
@@ -890,10 +999,12 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                  fill  = list(Number = 0)) %>%
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
-        ungroup() |>
-        filter(Country %in% input$plot_it2_selected) |>
+        ungroup()
+
+      with_country_summary_rows(pct, input$plot_it2_selected) |>
         tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
-        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%")))
+        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%"))) |>
+        render_country_comparison_table()
     })
 
     output$md_content_it2 <- renderUI({
@@ -931,12 +1042,13 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     }, ignoreInit = TRUE)
 
     output$country_comparison_header_if2_2 <- renderUI({
-      country_comparison_header(input$plot_it2_2_selected)
+      country_comparison_header(input$plot_it2_2_selected, it2_filters_modified())
     })
 
-    output$country_context_if2_2 <- renderTable({
+    output$country_context_if2_2 <- DT::renderDT({
       req(input$plot_it2_2_selected)
-      it2_2$hm %>%
+      pct <- it2_2_hm_f() %>%
+        mutate(Country = as.character(Country)) %>%
         group_by(Country, value) %>%
         summarise(Number = n(), .groups = "drop") %>%
         complete(Country,
@@ -947,8 +1059,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                  fill  = list(Number = 0)) %>%
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
-        ungroup() |>
-        filter(Country %in% input$plot_it2_2_selected) |>
+        ungroup()
+
+      with_country_summary_rows(pct, input$plot_it2_2_selected) |>
         mutate(value = case_when(
           grepl("^HIGH",   value) ~ "HIGH",
           grepl("^MEDIUM", value) ~ "MEDIUM",
@@ -956,7 +1069,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           TRUE                    ~ value
         )) |>
         tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
-        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%")))
+        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%"))) |>
+        render_country_comparison_table()
     })
 
     ## Insight tab 3 ----
