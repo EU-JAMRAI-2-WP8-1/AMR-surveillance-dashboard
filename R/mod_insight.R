@@ -317,12 +317,12 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     gg_bp_it1 <- reactive({
       it1_bp_f() %>%
         group_by(type, xlab) %>%
-        mutate(percentage = percentage / sum(percentage)) %>%
+        mutate(percentage = percentage / sum(percentage))%>%
         ungroup() %>%
         ggplot(aes(x       = xlab,
                    y       = percentage,
                    fill    = value,
-                   tooltip = glue("{value}: {round(percentage * 100, 1)}%"))) +
+                   tooltip = glue("{round(percentage * 100)}%"))) +
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
@@ -334,9 +334,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     gg_hm_it1 <- reactive({
       it1_hm_f() %>%
         ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
-        geom_tile_interactive(aes(tooltip = glue("In <b>{Country}</b>, the national suveillance
-                                                  for <b>{abr} <i>{bug}</i> </b> in <b>{type}</b>
-                                                  {surv_lab}")),
+        geom_tile_interactive(aes(tooltip = glue("In <b>{Country}</b>, suveillance of <b>{abr} 
+                                                  resistant <i>{bug}</i> </b> in <b>{type}</b> {surv_lab}")),
                               color = "white", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
         scale_fill_manual(name   = "Surveillance Type",
@@ -366,7 +365,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         ggplot(aes(x       = xlab,
                    y       = proportion,
                    fill    = value,
-                   tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
+                   tooltip = glue("{round(proportion * 100)}%"))) +
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
@@ -377,11 +376,12 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
 
     gg_hm_it2 <- reactive({
       it2_hm_f() |>
-        mutate(tooltip = glue("In <b>{Country}")) |>
+        mutate(tooltip = glue("In <b>{Country}</b>, the population coverage for national AST data 
+                              from <b><i>{xlab}</i></b> in <b>{type}</b> is <b>{value}</b>")) |>
         ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
-        geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
+        geom_tile_interactive(aes(tooltip = tooltip),color = "white", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
-        scale_fill_manual(name   = "Population coverage",
+        scale_fill_manual(name   = "Population coverage for national AST data",
                           values = surv_colorsPC,
                           breaks = c("76-100%", "51-75%", "26-50%", "1-25%",
                                      "Not part of national surveillance", "Do not know"),
@@ -409,7 +409,13 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         ggplot(aes(x       = xlab,
                    y       = proportion,
                    fill    = value,
-                   tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
+                   tooltip = glue("{
+                                   case_when(
+	      value == 'HIGH: all main geographical regions of the country are covered.' ~ 'High',
+	      value == 'MEDIUM: most geographical regions of the country are covered.'  ~ 'Medium',
+	      value == 'LOW: a few geographical areas of the country are covered.'      ~ 'Low',
+	      TRUE                      ~ as.character(value)
+	    )}, {round(proportion * 100)}%"))) +
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
@@ -420,12 +426,21 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
 
     gg_hm_it2_2 <- reactive({
       it2_2_hm_f() |>
-        mutate(tooltip = glue("In <b>{Country}")) |>
+        mutate(tooltip = glue("In <b>{Country}</b> the geographical representativeness for national AST data 
+                              from <b><i>{xlab}</i></b> in <b>{type}</b> is <b>{
+                                case_when(
+                                  value == 'HIGH: all main geographical regions of the country are covered.' ~ 'High',
+                                  value == 'MEDIUM: most geographical regions of the country are covered.' ~ 'Medium',
+                                  value == 'LOW: a few geographical areas of the country are covered.' ~ 'Low',
+                                  value == 'Do not know' ~ 'Unknown',
+                                  TRUE ~ as.character(value)
+                                )
+                              }</b>")) |>
         ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
         geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
         scale_fill_manual(
-          name   = "Geographical representativeness",
+          name   = "Geographical representativeness for national AST data",
           values = surv_colorsGR,
           breaks = c(
             "HIGH: all main geographical regions of the country are covered.",
@@ -464,7 +479,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         ggplot(aes(x       = xlab,
                    y       = proportion,
                    fill    = value,
-                   tooltip = glue("{value}: {round(proportion * 100, 1)}%"))) +
+                   tooltip = glue("{round(proportion * 100)}%"))) +
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         scale_fill_manual(values = surv_colorsEG) +
@@ -474,7 +489,24 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
 
     gg_hm_it3 <- reactive({
       it3_hm_f() |>
-        mutate(tooltip = glue("In <b>{Country}")) |>
+        mutate(tooltip = glue("In <b>{Country}</b> national treatment guidance 
+                               for <b>{
+                              case_when(
+                                  xlab == 'BSI' ~ 'bloodstream infections',
+                                  xlab == 'uncomp. UTI' ~ 'uncomplicated urinary tract infections',
+                                  xlab == 'comp. UTI' ~ 'complicated urinary tract infections',
+                                  xlab == 'URTI' ~ 'upper respiratory tract infections',
+                                  xlab == 'LRTI' ~ 'lower respiratory tract infections',
+                                  xlab == 'SSTI' ~ 'skin and soft tissue infections',
+                                  TRUE ~ as.character(xlab)
+                                )}</b> 
+                                is <b>{
+                                case_when(
+                                  value == 'Yes' ~ 'in place',
+                                  value == 'No' ~ 'not in place',
+                                  value == 'Do not know' ~ 'currently unknown',
+                                  TRUE ~ as.character(value)
+                              )}</b>")) |>
         ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
         geom_tile_interactive(aes(tooltip = tooltip), color = "white", linewidth = 0.5) +
         scale_fill_manual(name   = "National guidance in place",
