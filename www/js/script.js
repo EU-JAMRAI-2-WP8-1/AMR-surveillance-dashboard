@@ -151,3 +151,13 @@ $(document).on('click', '.country-pill', function() {
 Shiny.addCustomMessageHandler('insightCountriesProgress', function(message) {
     $('#progress-insight-countries').css('width', 'calc(' + message.percentage + '%)');
 });
+
+// Insight tab 3's collapsible right-side figures (AST/WGT) start folded. The
+// girafe plot inside sizes itself from its container's dimensions once, when
+// it's first bound - if that happens while still hidden (display:none), it can
+// end up sized 0x0 and never resize on its own afterward. Unlike Shiny's own
+// tabsetPanel, a plain Bootstrap collapse isn't wired up to trigger a resize on
+// show, so nudge one manually once a figure is actually unfolded.
+$(document).on('shown.bs.collapse', '.insight-md-inline-figure .collapse', function() {
+    $(window).trigger('resize');
+});

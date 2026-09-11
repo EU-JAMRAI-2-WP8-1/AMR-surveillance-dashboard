@@ -1033,32 +1033,50 @@ h1 {
 }
 
 /* Insight landing page - clickable flowchart replacing the old mermaid diagram */
+/* Runs left-to-right: root on the left, the arrow fan, then the 3 boxes stacked
+   in a column on the right (rotated 90 degrees from the original top-to-bottom
+   layout - see insight_flow_diagram() in R/mod_insight.R for the matching SVG). */
 .insight-flow-diagram {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0;
+    flex-direction: row;
+    align-items: stretch;
+    /* padding rather than margin-top: this is the first (only) child of its
+       column, so a top margin here would collapse with the column's own top
+       edge and the requested gap from the top of the page would disappear. */
+    padding: 30px 0 20px;
+    gap: 6px;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: 24px;
 }
 
 .insight-flow-root {
     background-color: #008aab;
     color: white;
     font-weight: bold;
-    border-radius: 20px;
-    padding: 8px 18px;
-    margin-bottom: 10px;
+    text-align: center;
+    line-height: 1.3;
+    border-radius: 999px;
+    padding: 18px 30px;
+    flex-shrink: 0;
+    align-self: center;
+    height: fit-content;
 }
 
-/* aspect-ratio must match the SVG's viewBox (175 x 10, see insight_flow_diagram())
-   so it scales uniformly in both directions instead of being stretched to fit a
-   short, wide box - a non-uniform stretch would squash the arrowhead markers into
-   an unrecognizable sliver. */
+/* Fixed width, height comes from align-self: stretch (matching the box column
+   beside it, via the parent's align-items: stretch). Deriving the width from
+   that stretched height via aspect-ratio instead (to mirror the SVG's 10 x 175
+   viewBox exactly) turned out unreliable across browsers when the only child is
+   absolutely positioned (contributing no intrinsic size of its own) - it could
+   collapse to zero width and hide the arrows entirely. A fixed width plus the
+   SVG's own default preserveAspectRatio (xMidYMid meet, i.e. no "none" override)
+   still keeps the arrowheads undistorted even though the box's actual aspect
+   ratio no longer exactly matches the viewBox's. */
 .insight-flow-links {
     position: relative;
-    width: 100%;
-    max-width: 700px;
-    aspect-ratio: 175 / 10;
-    margin-bottom: 14px;
+    align-self: stretch;
+    width: 80px;
+    flex-shrink: 0;
 }
 
 .insight-flow-svg {
@@ -1066,45 +1084,80 @@ h1 {
     inset: 0;
     width: 100%;
     height: 100%;
-    /* the arrowhead markers extend slightly past y2="10" (the line endpoints,
-       at the bottom edge of the viewBox) - without this they get clipped there */
+    /* the arrowhead markers extend slightly past x2="10" (the line endpoints,
+       at the right edge of the viewBox) - without this they get clipped there */
     overflow: visible;
 }
 
 .insight-flow-svg line {
     stroke: #0fdbd5;
-    stroke-width: 2;
+    stroke-width: 3;
     vector-effect: non-scaling-stroke;
 }
 
 .insight-flow-row {
     display: flex;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 16px;
-    width: 100%;
+    gap: 44px;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
-/* Visuals (border/colors/hover) come from the btn btn-outline-primary classes
-   applied alongside this one - same look as the "Reset filters" button. This
-   class only handles fitting the 3 buttons evenly into the row. */
+/* Same pill look as the sidebar's insight-tab shortcut buttons (see
+   .view-toggle-wrapper #insightTabToggle .btn above) - flat grey pill, darkens
+   on hover. These are plain actionButtons (not a radio group), so there's no
+   "active" state to match; !important overrides the btn-outline-primary classes
+   still applied alongside this one in R (kept for the base button reset/focus
+   styles). white-space: normal + max-width let the (fairly long) labels wrap
+   onto a few lines instead of forcing one very wide single-line button. */
 .insight-flow-box {
     flex: 1 1 0;
     min-width: 0;
-    max-width: 280px;
+    width: 100%;
+    max-width: 240px;
+    padding: 11px 14px !important;
+    background-color: #e0e0e0 !important;
+    border-color: #e0e0e0 !important;
+    color: #666 !important;
+    border-radius: 999px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.2;
+}
+
+.insight-flow-box:hover {
+    background-color: #d0d0d0 !important;
+    border-color: #d0d0d0 !important;
+    color: #666 !important;
 }
 
 .insight-flow-box i {
     margin-right: 6px;
 }
 
-/* Below this width the three boxes stack instead of sitting in a row, so the
-   arrow fan's endpoints (tied to a 3-equal-column layout) no longer line up
-   with the boxes and are hidden in favor of a single connecting line. */
+/* Below this width there's no longer room for root + arrow fan + box column
+   side by side, so it falls back to the original top-to-bottom stack (root on
+   top, single connecting line, boxes stacked full-width) - the fan's endpoints
+   (tied to a 3-equal-row layout) no longer line up with the boxes either way,
+   so the SVG is hidden in favor of a single connecting line regardless of axis. */
 @media (max-width: 700px) {
+    .insight-flow-diagram {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .insight-flow-root {
+        align-self: auto;
+    }
+
     .insight-flow-links {
-        max-width: none;
-        aspect-ratio: auto;
+        align-self: auto;
+        width: 100%;
         height: 24px;
     }
 
@@ -1122,7 +1175,7 @@ h1 {
     }
 
     .insight-flow-row {
-        flex-direction: column;
+        width: 100%;
         align-items: stretch;
     }
 
@@ -1176,7 +1229,7 @@ h1 {
 }
 
 .insight-md-content p {
-    margin-bottom: 10px;
+    margin-bottom: 18px;
 }
 
 .insight-md-content ul,
@@ -1278,6 +1331,18 @@ h1 {
     border-left: 4px solid #2a9d8f;
     border-radius: 2px;
     transition: border-color 0.3s ease;
+}
+
+/* Same box style as .full-question-title-box (Dashboard's full-question box), but
+   with a fixed JAMRAI blue border rather than one that tracks the Dashboard's
+   currently selected section - used for the Insight tabs' intro text. */
+.insight-intro-box {
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    border-left: 4px solid #008aab;
+    border-radius: 2px;
 }
 
 /* Dynamic border color based on selected section */

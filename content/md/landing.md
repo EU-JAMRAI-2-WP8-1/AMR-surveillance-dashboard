@@ -1,7 +1,11 @@
 <!---  Landing page for insight tabs --->
-# <i class="fa-regular fa-lightbulb"></i>  Welcome to JAMREYE Insights!
+# Welcome to JAMREYE Insights!
+
+## <i class="fa fa-circle-info"></i> Introduction
 
 This section presents dashboard data in an interactive and comparative format, supporting surveillance experts and policymakers to make data-driven decisions. By analysing data related to the three policy commitments (outlined in the [2023 Council Recommendation on AMR](https://health.ec.europa.eu/publications/council-recommendation-stepping-eu-actions-combat-antimicrobial-resistance-one-health-approach_en)) we have established a baseline evaluation of Europe’s progress toward implementation.
+
+## <i class="fa fa-circle-question"></i> How to
 
 Explore each insight to delve deeper into the findings. 
 You can hover over the figures and select countries for further details. 
@@ -9,7 +13,7 @@ You can hover over the figures and select countries for further details.
 
 <!-- insight-flow-diagram -->
 
-## Our Goal
+## <i class="fa fa-bullseye"></i> Our Goal
 The data and insights provided here are designed to support public health authorities in:
 -	Prioritising interventions.
 -	Allocating investments.

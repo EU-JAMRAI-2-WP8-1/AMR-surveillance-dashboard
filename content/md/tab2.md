@@ -1,5 +1,5 @@
 <!---  Figure 2 (Population coverage and geographical representativeness) --->
-#### **Expanding European surveillance beyond invasive infections**
+# Expanding European surveillance beyond invasive infections
 
 To estimate how extensive European countries perform surveillance in different culture materials we asked partner countries to estimate the population coverage and geographical representativeness of their national antimicrobial susceptibility (AST) data for pathogens isolated from four different culture materials.  
 

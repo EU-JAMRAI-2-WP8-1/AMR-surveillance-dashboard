@@ -7,8 +7,11 @@ mod_insight_ui <- function(id) {
 
     tabPanel("Insight - landing page", value = "landing",
       fluidRow(
-        column(12,
+        column(6,
           uiOutput(ns("md_content_landing"))
+        ),
+        column(6,
+          uiOutput(ns("landing_flow_diagram"))
         )
       )
     ),
@@ -120,17 +123,17 @@ render_md_with_markers <- function(lines, markers = list()) {
 insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px", height = "600px") {
   tags$div(class = "insight-md-inline-figure",
     tags$div(class = "insight-md-subtitle",
-      tags$a(class = "insight-md-toggle",
+      tags$a(class = "insight-md-toggle collapsed",
         `data-bs-toggle` = "collapse",
         href             = paste0("#", fig_id),
         role             = "button",
-        `aria-expanded`  = "true",
+        `aria-expanded`  = "false",
         `aria-controls`  = fig_id,
         tags$i(class = "fa fa-chevron-down")
       ),
       h5(title)
     ),
-    tags$div(id = fig_id, class = "collapse show",
+    tags$div(id = fig_id, class = "collapse",
       girafeOutput(ns(output_id), width = width, height = height)
     )
   )
@@ -143,14 +146,44 @@ insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px",
 # the body becomes the collapsible content. The heading itself is always shown; only
 # the paragraph underneath it can be hidden. `markers` (see render_md_with_markers)
 # lets a body splice in live content, e.g. a plot, in place of a placeholder line.
-render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, markers = list()) {
+render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, markers = list(), box_intro = FALSE) {
   lines <- readLines(path)
 
   h3_idx <- which(grepl("^###\\s", lines))
 
   preamble_end <- if (length(h3_idx)) h3_idx[1] - 1 else length(lines)
   preamble      <- lines[seq_len(preamble_end)]
-  preamble_html <- render_md_with_markers(preamble, markers)
+
+  if (box_intro) {
+    # Box just the tab's intro text - the preamble content between its leading
+    # "#"/"##" title line and the next heading line (e.g. the "## What can we learn
+    # from this?" line), if any - styled like the Dashboard's full-question box
+    # (see .insight-intro-box in www/css/style.css) but with a fixed JAMRAI blue
+    # border rather than one tied to the Dashboard's currently selected section.
+    # Anything from that next heading onward is rendered as-is, outside the box.
+    heading_idx <- which(grepl("^#+\\s", preamble))
+    if (length(heading_idx) == 0) {
+      heading_lines <- character(0)
+      body_lines    <- character(0)
+      after_lines   <- preamble
+    } else {
+      title_end     <- heading_idx[1]
+      box_end       <- if (length(heading_idx) >= 2) heading_idx[2] - 1 else length(preamble)
+      heading_lines <- preamble[seq_len(title_end)]
+      body_lines    <- if (box_end >= title_end + 1) preamble[(title_end + 1):box_end] else character(0)
+      after_lines   <- if (box_end < length(preamble)) preamble[(box_end + 1):length(preamble)] else character(0)
+    }
+
+    preamble_html <- tagList(
+      render_md_with_markers(heading_lines, markers),
+      if (any(nzchar(trimws(body_lines)))) {
+        tags$div(class = "insight-intro-box", render_md_with_markers(body_lines, markers))
+      },
+      render_md_with_markers(after_lines, markers)
+    )
+  } else {
+    preamble_html <- render_md_with_markers(preamble, markers)
+  }
 
   if (length(h3_idx) == 0) return(tagList(preamble_html, disclaimer))
 
@@ -168,19 +201,24 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, ma
 
     section_id <- paste0(id_prefix, "-section-", i)
 
+    # The closing "Why does X matter?" section of each tab starts folded in;
+    # "Major trends"/"Actions for change" (and anything else) start folded out.
+    starts_collapsed <- grepl("^###\\s+Why\\b", lines[start], ignore.case = TRUE)
+
     tagList(
       tags$div(class = "insight-md-subtitle",
-        tags$a(class = "insight-md-toggle",
+        tags$a(class = if (starts_collapsed) "insight-md-toggle collapsed" else "insight-md-toggle",
           `data-bs-toggle` = "collapse",
           href             = paste0("#", section_id),
           role             = "button",
-          `aria-expanded`  = "true",
+          `aria-expanded`  = if (starts_collapsed) "false" else "true",
           `aria-controls`  = section_id,
           tags$i(class = "fa fa-chevron-down")
         ),
         heading_html
       ),
-      tags$div(id = section_id, class = "collapse show insight-md-section",
+      tags$div(id = section_id,
+        class = if (starts_collapsed) "collapse insight-md-section" else "collapse show insight-md-section",
         render_md_with_markers(body_lines, markers)
       )
     )
@@ -203,35 +241,38 @@ insight_flow_diagram <- function(ns) {
 
   # Three separate arrows (root -> each box) drawn as an SVG fan rather than CSS
   # borders, since a fan of non-vertical lines isn't expressible with box borders.
-  # The line endpoints (29.17 / 87.5 / 145.83, i.e. 1/6, 1/2, 5/6 of the 175-wide
-  # viewBox) assume the row below lays out as three equal-width, non-wrapped
-  # columns (see .insight-flow-row / nowrap in CSS); on narrow screens the row
-  # switches to a stacked layout and the fan is hidden instead of being drawn
-  # against geometry it no longer matches.
+  # Diagram runs left-to-right (root on the left, boxes stacked in a column on the
+  # right - see .insight-flow-diagram/.insight-flow-row in CSS), so the fan's near
+  # ends (72.5/87.5/102.5, clustered near the root) sit on the viewBox's left edge
+  # and its far ends (29.17/87.5/145.83, i.e. 1/6, 1/2, 5/6 of the 175-tall
+  # viewBox) spread down the right edge to meet each of the three equal-height,
+  # non-wrapped rows (see .insight-flow-row / nowrap in CSS); on narrow screens
+  # the row switches to a stacked layout and the fan is hidden instead of being
+  # drawn against geometry it no longer matches.
   #
-  # The viewBox is 175x10 (not a square 100x100) and .insight-flow-links is given
-  # a matching `aspect-ratio: 175 / 10` in CSS, so the viewBox maps onto the
+  # The viewBox is 10x175 (not a square 100x100) and .insight-flow-links is given
+  # a matching `aspect-ratio: 10 / 175` in CSS, so the viewBox maps onto the
   # container with a single uniform scale factor. Stretching a square viewBox to
-  # fit this box's actual short/wide shape (as a naive `preserveAspectRatio="none"`
+  # fit this box's actual narrow/tall shape (as a naive `preserveAspectRatio="none"`
   # would) distorts x and y by very different amounts, which squashes the
   # arrowhead triangles into an unrecognizable sliver - matching the "is that an
   # arrowhead or a rendering artifact?" symptom this was written to fix.
   arrows <- HTML('
-    <svg class="insight-flow-svg" viewBox="0 0 175 10" aria-hidden="true">
+    <svg class="insight-flow-svg" viewBox="0 0 10 175" aria-hidden="true">
       <defs>
         <marker id="insight-flow-arrowhead" viewBox="0 0 10 10" refX="8" refY="5"
-                markerWidth="4.5" markerHeight="4.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+                markerWidth="6.5" markerHeight="6.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="#0fdbd5" />
         </marker>
       </defs>
-      <line x1="72.5" y1="0" x2="29.1667" y2="10" marker-end="url(#insight-flow-arrowhead)" />
-      <line x1="87.5" y1="0" x2="87.5" y2="10" marker-end="url(#insight-flow-arrowhead)" />
-      <line x1="102.5" y1="0" x2="145.8333" y2="10" marker-end="url(#insight-flow-arrowhead)" />
+      <line x1="0" y1="72.5" x2="10" y2="29.1667" marker-end="url(#insight-flow-arrowhead)" />
+      <line x1="0" y1="87.5" x2="10" y2="87.5" marker-end="url(#insight-flow-arrowhead)" />
+      <line x1="0" y1="102.5" x2="10" y2="145.8333" marker-end="url(#insight-flow-arrowhead)" />
     </svg>
   ')
 
   tags$div(class = "insight-flow-diagram",
-    tags$div(class = "insight-flow-root", "JAMREYE insights"),
+    tags$div(class = "insight-flow-root", "JAMREYE", tags$br(), "insights"),
     tags$div(class = "insight-flow-links", arrows),
     tags$div(class = "insight-flow-row",
       insight_box("goto_tab1", "ranking-star",
@@ -245,10 +286,12 @@ insight_flow_diagram <- function(ns) {
 }
 
 # Renders landing.md like render_collapsible_insight_md's preamble (no collapsible
-# sections needed here), but splices the interactive insight_flow_diagram() in at the
-# "<!-- insight-flow-diagram -->" marker left in the source in place of the old
-# mermaid block.
-render_landing_md <- function(path, ns) {
+# sections needed here). The interactive insight_flow_diagram() used to be spliced
+# inline at the "<!-- insight-flow-diagram -->" marker left in the source (in place
+# of the old mermaid block); the landing page is now split into a text column and a
+# separate diagram column (see mod_insight_ui's "landing" tabPanel and
+# output$landing_flow_diagram), so that marker line is simply dropped from the text.
+render_landing_md <- function(path) {
   lines  <- readLines(path)
   marker <- which(grepl("^<!--\\s*insight-flow-diagram\\s*-->$", lines))
 
@@ -256,12 +299,9 @@ render_landing_md <- function(path, ns) {
     HTML(markdown::markdownToHTML(paste(md_lines, collapse = "\n"), fragment.only = TRUE))
   }
 
-  if (length(marker) == 0) return(to_html(lines))
+  if (length(marker) > 0) lines <- lines[-marker[1]]
 
-  before <- if (marker[1] > 1) lines[seq_len(marker[1] - 1)] else character(0)
-  after  <- if (marker[1] < length(lines)) lines[(marker[1] + 1):length(lines)] else character(0)
-
-  tagList(to_html(before), insight_flow_diagram(ns), to_html(after))
+  to_html(lines)
 }
 
 # The head-to-head comparison table only has content once at least one country is
@@ -351,8 +391,12 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     ## Landing page ----
     output$md_content_landing <- renderUI({
       div(class = "insight-md-content",
-        render_landing_md("content/md/landing.md", session$ns)
+        render_landing_md("content/md/landing.md")
       )
+    })
+
+    output$landing_flow_diagram <- renderUI({
+      insight_flow_diagram(session$ns)
     })
 
     ## Landing page flow-diagram navigation ----
@@ -984,7 +1028,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     output$md_content_it1 <- renderUI({
       div(class = "insight-md-content",
         render_collapsible_insight_md("content/md/tab1.md", session$ns("it1"),
-          disclaimer = if (it1_filters_modified()) insight_text_disclaimer
+          disclaimer = if (it1_filters_modified()) insight_text_disclaimer,
+          box_intro  = TRUE
         )
       )
     })
@@ -1042,7 +1087,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     output$md_content_it2 <- renderUI({
       div(class = "insight-md-content",
         render_collapsible_insight_md("content/md/tab2.md", session$ns("it2"),
-          disclaimer = if (it2_filters_modified()) insight_text_disclaimer
+          disclaimer = if (it2_filters_modified()) insight_text_disclaimer,
+          box_intro  = TRUE
         )
       )
     })
@@ -1135,6 +1181,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       div(class = "insight-md-content",
         render_collapsible_insight_md("content/md/tab3.md", session$ns("it3"),
           disclaimer = if (it3_filters_modified()) insight_text_disclaimer,
+          box_intro  = TRUE,
           # width/height on both figures below match their plot's own width_svg=6,
           # height_svg=5 ratio rather than width="100%": with rescale=TRUE, a
           # container wider than that ratio leaves slack space that ggiraph
@@ -1181,10 +1228,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                           values = surv_colorsNTG,
                           limits = coverage_orderNTG) +
         scale_x_continuous(breaks = scales::breaks_pretty()) +
-        labs(x = "Number of countries") +
         theme_minimal() +
         theme(
-          axis.title.y     = element_blank(),
+          axis.title       = element_blank(),
           panel.grid.major.y = element_blank(),
           panel.grid.minor   = element_blank()
         )
@@ -1233,10 +1279,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                           values = surv_colorsWGT,
                           limits = coverage_orderWGT) +
         scale_x_continuous(breaks = scales::breaks_pretty()) +
-        labs(x = "Number of countries") +
         theme_minimal() +
         theme(
-          axis.title.y       = element_blank(),
+          axis.title         = element_blank(),
           panel.grid.major.y = element_blank(),
           panel.grid.minor   = element_blank()
         )
