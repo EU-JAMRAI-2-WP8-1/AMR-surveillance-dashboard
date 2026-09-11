@@ -1,14 +1,15 @@
 <!---  Figure 2 (Population coverage and geographical representativeness) --->
-
-
-## <i class="fa-regular fa-lightbulb"></i> What can we learn from this?
-
-#### Expanding European surveillance beyond invasive infections
+#### **Expanding European surveillance beyond invasive infections**
 
 To estimate how extensive European countries perform surveillance in different culture materials we asked partner countries to estimate the population coverage and geographical representativeness of their national antimicrobial susceptibility (AST) data for pathogens isolated from four different culture materials.  
 
 
 <i class="fa fa-handshake"></i> **Policy commitment:** Support EU Council Recommendation on AMR (B5a), ensuring that surveillance of AMR encompasses not only blood/CSF isolates but also all other isolates from clinical microbiology laboratories [condensed].
+
+
+
+## <i class="fa-regular fa-lightbulb"></i> What can we learn from this?
+
 
 ### Major trends:
 
