@@ -1,10 +1,10 @@
 <!--- Figure 3 (Use of AMR surveillance data to improve patient outcomes) --->
-#### **Supporting data driven national empiric treatment guidance for common infections**
+#### **Insight 3: Supporting data driven national treatment guidance for common infections**
 
 To assess the feasibility of developing and implementing EU-wide treatment guidelines, we asked countries whether they have national empiric treatment guidance for six common infections. This can be seen as a logical first step toward determining if EU guidelines could be effective. We also asked follow-up questions about the data used to develop this guidance.
 
 
-<i class="fa fa-handshake"></i> **Policy commitment:** Support EU Council Recommendation on AMR (13) by working towards development of EU guidelines for treatment of common infections recognizing that resistance patterns can vary in different regions [condensed].
+<i class="fa fa-handshake"></i> **Policy commitment:** Support EU Council Recommendation on AMR (13) by working towards development of EU guidelines for treatment of common infections recognising that resistance patterns can vary in different regions [condensed].
 
 
 
