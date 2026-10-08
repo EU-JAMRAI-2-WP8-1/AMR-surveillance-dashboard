@@ -72,7 +72,7 @@ setup_modals <- function(input, output, session, email_config) {
   # Geo data disclaimer modal
   observeEvent(input$showGeoDataDisclaimer, {
     showModal(modalDialog(
-      title = "Geospatial Data - Legal Notice",
+      title = tags$div(class = "modal-title-text", "Geospatial Data - Legal Notice"),
       tryCatch({
         includeHTML("content/html/geo_data_disclaimer.html")
       }, error = function(e) {

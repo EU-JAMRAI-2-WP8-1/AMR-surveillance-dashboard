@@ -122,6 +122,22 @@ $(document).on('click', '.geo-disclaimer-link', function(e) {
     Shiny.setInputValue('showGeoDataDisclaimer', Math.random(), {priority: 'event'});
 });
 
+// The Dashboard/Insight toggle only reports a change to Shiny when its selected
+// value actually changes, so re-clicking "Insight" while already on the Insight
+// section does nothing by default. Report every click on that button so the
+// server can always reset to the Insight landing page, even when re-clicked.
+// Bound on the capture phase directly on document (rather than delegated jQuery
+// .on('click', ...), which listens on the bubble phase) so this still fires even
+// if the button's own Bootstrap/shinyWidgets click handler stops propagation.
+document.addEventListener('click', function(e) {
+    var el = e.target.closest('#outerToggle .btn, #outerToggle input[type="radio"]');
+    if (!el) return;
+    var val = el.matches('input') ? el.value : (el.querySelector('input') || {}).value;
+    if (val === 'insight') {
+        Shiny.setInputValue('insightHomeClick', Math.random(), {priority: 'event'});
+    }
+}, true);
+
 // Insight country filter: tapping a country pill cycles it through
 // selected -> activated -> unselected -> selected -> ...
 // (the server owns the state and re-renders the pills; this just reports the click)
@@ -134,4 +150,14 @@ $(document).on('click', '.country-pill', function() {
 // on DOM render timing.
 Shiny.addCustomMessageHandler('insightCountriesProgress', function(message) {
     $('#progress-insight-countries').css('width', 'calc(' + message.percentage + '%)');
+});
+
+// Insight tab 3's collapsible right-side figures (AST/WGT) start folded. The
+// girafe plot inside sizes itself from its container's dimensions once, when
+// it's first bound - if that happens while still hidden (display:none), it can
+// end up sized 0x0 and never resize on its own afterward. Unlike Shiny's own
+// tabsetPanel, a plain Bootstrap collapse isn't wired up to trigger a resize on
+// show, so nudge one manually once a figure is actually unfolded.
+$(document).on('shown.bs.collapse', '.insight-md-inline-figure .collapse', function() {
+    $(window).trigger('resize');
 });

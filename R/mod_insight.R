@@ -5,30 +5,31 @@ mod_insight_ui <- function(id) {
   tabsetPanel(
     id = ns("insightTabs"),
 
-    tabPanel("Insight #1", value = "tab1",
-      fluidRow(
-        column(12, h3("National surveillance of AMR priority pathogens"))
-      ),
+    tabPanel("Insight - landing page", value = "landing",
       fluidRow(
         column(6,
-          girafeOutput(ns("plot_it1"))
+          uiOutput(ns("md_content_landing"))
+        ),
+        column(6,
+          uiOutput(ns("landing_flow_diagram"))
+        )
+      )
+    ),
+
+    tabPanel("Insight #1", value = "tab1",
+      fluidRow(
+        column(6,
+          girafeOutput(ns("plot_it1")),
+          uiOutput(ns("country_comparison_header_if1")),
+          DT::dataTableOutput(ns("country_context_if1"))
         ),
         column(6,
           uiOutput(ns("md_content_it1"))
-        )
-      ),
-      fluidRow(
-        column(12,
-          tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
-          tableOutput(ns("country_context_if1"))
         )
       )
     ),
 
     tabPanel("Insight #2", value = "tab2",
-      fluidRow(
-        column(12, h3("Population coverage and geographical representativeness"))
-      ),
       fluidRow(
         column(6,
           tabsetPanel(
@@ -43,8 +44,8 @@ mod_insight_ui <- function(id) {
               ),
               fluidRow(
                 column(12,
-                  tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
-                  tableOutput(ns("country_context_if2"))
+                  uiOutput(ns("country_comparison_header_if2")),
+                  DT::dataTableOutput(ns("country_context_if2"))
                 )
               )
             ),
@@ -58,8 +59,8 @@ mod_insight_ui <- function(id) {
               ),
               fluidRow(
                 column(12,
-                  tags$p(tags$strong("Selected countrie(s) head-to-head comparison:")),
-                  tableOutput(ns("country_context_if2_2"))
+                  uiOutput(ns("country_comparison_header_if2_2")),
+                  DT::dataTableOutput(ns("country_context_if2_2"))
                 )
               )
             )
@@ -73,25 +74,11 @@ mod_insight_ui <- function(id) {
 
     tabPanel("Insight #3", value = "tab3",
       fluidRow(
-        column(12, h3("National guidance on treatment of common infections"))
-      ),
-      fluidRow(
         column(6,
           girafeOutput(ns("plot_it3"))
         ),
         column(6,
           uiOutput(ns("md_content_it3"))
-        )
-      ),
-      fluidRow(
-        style = "margin-top: 30px;",
-        column(6,
-          h4("AST data used for national treatment guidance"),
-          girafeOutput(ns("plot_it3_ast"))
-        ),
-        column(6,
-          h4("Who guides empiric antibiotic treatment"),
-          girafeOutput(ns("plot_it3_wgt"))
         )
       )
     )
@@ -99,12 +86,323 @@ mod_insight_ui <- function(id) {
   )
 }
 
-mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation) {
+# Renders a run of markdown lines to HTML, except for any line that (once trimmed)
+# exactly matches a name in `markers` - that line is replaced by the live UI
+# `markers[[line]]()` produces (e.g. a Shiny plot output) instead of being passed
+# through markdownToHTML. Lets a source .md file mark a spot for a widget that plain
+# markdown can't express, the same way render_landing_md splices insight_flow_diagram()
+# in at its own marker.
+render_md_with_markers <- function(lines, markers = list()) {
+  if (length(lines) == 0 || !any(nzchar(trimws(lines)))) return(NULL)
+
+  to_html <- function(md_lines) {
+    if (!any(nzchar(trimws(md_lines)))) return(NULL)
+    HTML(markdown::markdownToHTML(paste(md_lines, collapse = "\n"), fragment.only = TRUE))
+  }
+
+  marker_idx <- which(trimws(lines) %in% names(markers))
+  if (length(marker_idx) == 0) return(to_html(lines))
+
+  pieces <- list()
+  start  <- 1
+  for (idx in marker_idx) {
+    if (idx > start) pieces[[length(pieces) + 1]] <- to_html(lines[start:(idx - 1)])
+    pieces[[length(pieces) + 1]] <- markers[[trimws(lines[idx])]]()
+    start <- idx + 1
+  }
+  if (start <= length(lines)) pieces[[length(pieces) + 1]] <- to_html(lines[start:length(lines)])
+
+  tagList(pieces)
+}
+
+# A boxed, collapsible plot spliced into insight markdown text in place of a marker
+# line (see render_md_with_markers) - same toggle-arrow mechanism as a "###" section
+# in render_collapsible_insight_md, just wrapping a single girafeOutput instead of a
+# whole section. width/height should match the plot's own width_svg/height_svg ratio;
+# see the ast-figure usage below for why.
+insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px", height = "600px") {
+  tags$div(class = "insight-md-inline-figure",
+    tags$div(class = "insight-md-subtitle",
+      tags$a(class = "insight-md-toggle collapsed",
+        `data-bs-toggle` = "collapse",
+        href             = paste0("#", fig_id),
+        role             = "button",
+        `aria-expanded`  = "false",
+        `aria-controls`  = fig_id,
+        tags$i(class = "fa fa-chevron-down")
+      ),
+      h5(title)
+    ),
+    tags$div(id = fig_id, class = "collapse",
+      girafeOutput(ns(output_id), width = width, height = height)
+    )
+  )
+}
+
+# Renders an insight tab's markdown "What can we learn from this?" text with each
+# "###" paragraph individually collapsible, without splitting the source file: the
+# raw markdown is cut into chunks at each level-3 heading, the heading line and its
+# body are rendered separately so a toggle arrow can be attached to the heading while
+# the body becomes the collapsible content. The heading itself is always shown; only
+# the paragraph underneath it can be hidden. `markers` (see render_md_with_markers)
+# lets a body splice in live content, e.g. a plot, in place of a placeholder line.
+render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, markers = list(), box_intro = FALSE) {
+  lines <- readLines(path)
+
+  h3_idx <- which(grepl("^###\\s", lines))
+
+  preamble_end <- if (length(h3_idx)) h3_idx[1] - 1 else length(lines)
+  preamble      <- lines[seq_len(preamble_end)]
+
+  if (box_intro) {
+    # Box just the tab's intro text - the preamble content between its leading
+    # "#"/"##" title line and the next heading line (e.g. the "## What can we learn
+    # from this?" line), if any - styled like the Dashboard's full-question box
+    # (see .insight-intro-box in www/css/style.css) but with a fixed JAMRAI blue
+    # border rather than one tied to the Dashboard's currently selected section.
+    # Anything from that next heading onward is rendered as-is, outside the box.
+    heading_idx <- which(grepl("^#+\\s", preamble))
+    if (length(heading_idx) == 0) {
+      heading_lines <- character(0)
+      body_lines    <- character(0)
+      after_lines   <- preamble
+    } else {
+      title_end     <- heading_idx[1]
+      box_end       <- if (length(heading_idx) >= 2) heading_idx[2] - 1 else length(preamble)
+      heading_lines <- preamble[seq_len(title_end)]
+      body_lines    <- if (box_end >= title_end + 1) preamble[(title_end + 1):box_end] else character(0)
+      after_lines   <- if (box_end < length(preamble)) preamble[(box_end + 1):length(preamble)] else character(0)
+    }
+
+    preamble_html <- tagList(
+      render_md_with_markers(heading_lines, markers),
+      if (any(nzchar(trimws(body_lines)))) {
+        tags$div(class = "insight-intro-box", render_md_with_markers(body_lines, markers))
+      },
+      render_md_with_markers(after_lines, markers)
+    )
+  } else {
+    preamble_html <- render_md_with_markers(preamble, markers)
+  }
+
+  if (length(h3_idx) == 0) return(tagList(preamble_html, disclaimer))
+
+  section_ends <- c(h3_idx[-1] - 1, length(lines))
+
+  sections <- Map(function(start, end, i) {
+    heading_html <- HTML(markdown::markdownToHTML(lines[start], fragment.only = TRUE))
+    body_lines   <- if (end >= start + 1) lines[(start + 1):end] else character(0)
+
+    # A heading with no text underneath (e.g. a legend-only "###" line) has nothing
+    # to toggle, so it's shown as a plain heading with no arrow.
+    if (!any(nzchar(trimws(body_lines)))) {
+      return(tags$div(class = "insight-md-subtitle", heading_html))
+    }
+
+    section_id <- paste0(id_prefix, "-section-", i)
+
+    # The closing "Why does X matter?" section of each tab starts folded in;
+    # "Major trends"/"Actions for change" (and anything else) start folded out.
+    starts_collapsed <- grepl("^###\\s+Why\\b", lines[start], ignore.case = TRUE)
+
+    tagList(
+      tags$div(class = "insight-md-subtitle",
+        tags$a(class = if (starts_collapsed) "insight-md-toggle collapsed" else "insight-md-toggle",
+          `data-bs-toggle` = "collapse",
+          href             = paste0("#", section_id),
+          role             = "button",
+          `aria-expanded`  = if (starts_collapsed) "false" else "true",
+          `aria-controls`  = section_id,
+          tags$i(class = "fa fa-chevron-down")
+        ),
+        heading_html
+      ),
+      tags$div(id = section_id,
+        class = if (starts_collapsed) "collapse insight-md-section" else "collapse show insight-md-section",
+        render_md_with_markers(body_lines, markers)
+      )
+    )
+  }, h3_idx, section_ends, seq_along(h3_idx))
+
+  tagList(preamble_html, disclaimer, sections)
+}
+
+# A clickable stand-in for the flowchart that used to live in landing.md as a mermaid
+# code block: mermaid has no built-in way to bridge a node click into a Shiny input,
+# so the diagram is rebuilt here as plain HTML/actionButtons wired to the same
+# set_selected_tab() navigation used by the module's goto_tabX observers. Styled
+# like the "Reset filters" button (btn btn-outline-primary) for consistency.
+insight_flow_diagram <- function(ns) {
+  insight_box <- function(input_id, icon_name, label) {
+    actionButton(ns(input_id), label, icon = icon(icon_name),
+      class = "btn btn-outline-primary insight-flow-box"
+    )
+  }
+
+  # Three separate arrows (root -> each box) drawn as an SVG fan rather than CSS
+  # borders, since a fan of non-vertical lines isn't expressible with box borders.
+  # Diagram runs left-to-right (root on the left, boxes stacked in a column on the
+  # right - see .insight-flow-diagram/.insight-flow-row in CSS), so the fan's near
+  # ends (72.5/87.5/102.5, clustered near the root) sit on the viewBox's left edge
+  # and its far ends (29.17/87.5/145.83, i.e. 1/6, 1/2, 5/6 of the 175-tall
+  # viewBox) spread down the right edge to meet each of the three equal-height,
+  # non-wrapped rows (see .insight-flow-row / nowrap in CSS); on narrow screens
+  # the row switches to a stacked layout and the fan is hidden instead of being
+  # drawn against geometry it no longer matches.
+  #
+  # The viewBox is 10x175 (not a square 100x100) and .insight-flow-links is given
+  # a matching `aspect-ratio: 10 / 175` in CSS, so the viewBox maps onto the
+  # container with a single uniform scale factor. Stretching a square viewBox to
+  # fit this box's actual narrow/tall shape (as a naive `preserveAspectRatio="none"`
+  # would) distorts x and y by very different amounts, which squashes the
+  # arrowhead triangles into an unrecognizable sliver - matching the "is that an
+  # arrowhead or a rendering artifact?" symptom this was written to fix.
+  arrows <- HTML('
+    <svg class="insight-flow-svg" viewBox="0 0 10 175" aria-hidden="true">
+      <defs>
+        <marker id="insight-flow-arrowhead" viewBox="0 0 10 10" refX="8" refY="5"
+                markerWidth="6.5" markerHeight="6.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#0fdbd5" />
+        </marker>
+      </defs>
+      <line x1="0" y1="72.5" x2="10" y2="29.1667" marker-end="url(#insight-flow-arrowhead)" />
+      <line x1="0" y1="87.5" x2="10" y2="87.5" marker-end="url(#insight-flow-arrowhead)" />
+      <line x1="0" y1="102.5" x2="10" y2="145.8333" marker-end="url(#insight-flow-arrowhead)" />
+    </svg>
+  ')
+
+  tags$div(class = "insight-flow-diagram",
+    tags$div(class = "insight-flow-root", "JAMREYE", tags$br(), "insights"),
+    tags$div(class = "insight-flow-links", arrows),
+    tags$div(class = "insight-flow-row",
+      insight_box("goto_tab1", "ranking-star",
+        "Insight 1: Mandatory surveillance of AMR priority pathogens"),
+      insight_box("goto_tab2", "map-location-dot",
+        "Insight 2: Expansion of European surveillance beyond invasive infections"),
+      insight_box("goto_tab3", "book",
+        "Insight 3: Use of surveillance data for national treatment guidance")
+    )
+  )
+}
+
+# Renders landing.md like render_collapsible_insight_md's preamble (no collapsible
+# sections needed here). The interactive insight_flow_diagram() used to be spliced
+# inline at the "<!-- insight-flow-diagram -->" marker left in the source (in place
+# of the old mermaid block); the landing page is now split into a text column and a
+# separate diagram column (see mod_insight_ui's "landing" tabPanel and
+# output$landing_flow_diagram), so that marker line is simply dropped from the text.
+render_landing_md <- function(path) {
+  lines  <- readLines(path)
+  marker <- which(grepl("^<!--\\s*insight-flow-diagram\\s*-->$", lines))
+
+  to_html <- function(md_lines) {
+    HTML(markdown::markdownToHTML(paste(md_lines, collapse = "\n"), fragment.only = TRUE))
+  }
+
+  if (length(marker) > 0) lines <- lines[-marker[1]]
+
+  to_html(lines)
+}
+
+# The head-to-head comparison table only has content once at least one country is
+# selected on the graph above it; this renders either its header or, in the meantime,
+# a placeholder sentence instead of a header with nothing underneath it.
+country_comparison_header <- function(selected, filters_modified = FALSE) {
+  if (length(selected) == 0) {
+    tags$p(em("Select countries for head-to-head comparison !"))
+  } else {
+    tagList(
+      tags$p(tags$strong("Selected countries head-to-head comparison:")),
+      if (filters_modified) insight_table_filters_note
+    )
+  }
+}
+
+# Same styling/gating as insight_text_disclaimer below, but for the head-to-head
+# table rather than the narrative text - shown whenever the pathogen/resistance/
+# culture material filters (i.e. anything but the country filter) have been
+# narrowed from their default (all-selected) state.
+insight_table_filters_note <- tags$p(class = "insight-md-disclaimer",
+  icon("circle-info"),
+  "This table reflects your current filter selection."
+)
+
+# Renders a country head-to-head comparison table with the same DT widget and
+# JAMRAI styling used by the Dashboard "Table" tab (see #table-resultsTable in
+# www/css/style.css) - first column (Country) styled as the "locked" column,
+# other columns styled as regular header columns.
+render_country_comparison_table <- function(df) {
+  DT::datatable(
+    df,
+    rownames = FALSE,
+    class    = "display",
+    options  = list(
+      dom         = "t",
+      paging      = FALSE,
+      searching   = FALSE,
+      ordering    = FALSE,
+      columnDefs  = list(list(className = "first-column-cell", targets = 0))
+    )
+  ) %>%
+    # Give the two summary rows appended by with_country_summary_rows() their own,
+    # distinct look (each from the other too) so they read as "special" aggregate
+    # rows rather than just two more countries in the list.
+    DT::formatStyle(
+      "Country",
+      target          = "row",
+      fontWeight      = DT::styleEqual(c("Selection mean", "Overall mean"), c("bold", "bold")),
+      fontStyle       = DT::styleEqual(c("Selection mean", "Overall mean"), c("italic", "normal")),
+      backgroundColor = DT::styleEqual(c("Selection mean", "Overall mean"), c("#e6f9f8", "#fff6e5")),
+      borderTop       = DT::styleEqual(c("Selection mean", "Overall mean"), c("2px solid #008aab", "1px solid #e3a008"))
+    )
+}
+
+# Appends "Selection mean" (the unweighted average of each selected country's own
+# percentage) and "Overall mean" (the same average taken over every country in
+# `pct_long`, i.e. the full filtered/shown universe the graph above is drawn from,
+# not just the selected subset) as two extra rows at the bottom of a long-format
+# Country/value/Percent table, before it's pivoted into the display table.
+with_country_summary_rows <- function(pct_long, selected) {
+  selection_row <- pct_long %>%
+    filter(Country %in% selected) %>%
+    group_by(value) %>%
+    summarise(Percent = mean(Percent), .groups = "drop") %>%
+    mutate(Country = "Selection mean")
+
+  overall_row <- pct_long %>%
+    group_by(value) %>%
+    summarise(Percent = mean(Percent), .groups = "drop") %>%
+    mutate(Country = "Overall mean")
+
+  bind_rows(
+    filter(pct_long, Country %in% selected),
+    selection_row,
+    overall_row
+  )
+}
+
+mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation, set_selected_tab) {
   moduleServer(id, function(input, output, session) {
 
     observeEvent(selected_tab(), {
       updateTabsetPanel(session, "insightTabs", selected = selected_tab())
     })
+
+    ## Landing page ----
+    output$md_content_landing <- renderUI({
+      div(class = "insight-md-content",
+        render_landing_md("content/md/landing.md")
+      )
+    })
+
+    output$landing_flow_diagram <- renderUI({
+      insight_flow_diagram(session$ns)
+    })
+
+    ## Landing page flow-diagram navigation ----
+    observeEvent(input$goto_tab1, { set_selected_tab("tab1") })
+    observeEvent(input$goto_tab2, { set_selected_tab("tab2") })
+    observeEvent(input$goto_tab3, { set_selected_tab("tab3") })
 
     ## Country filter integration ----
     # "shown" countries are the ones displayed on the graphs (selected + activated);
@@ -168,21 +466,60 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     })
     selectedResistances <- debounce(reactive({ resistancesRV() }), 400)
 
+    # Whether the non-country filters relevant to each tab's graph have been changed from
+    # their default (all-selected) state - used to warn that the fixed narrative text next
+    # to the graph describes the default/unfiltered data, not the current selection. Country
+    # selection is deliberately excluded: the text is about overall European findings, and
+    # narrowing to a few countries doesn't make it stale the way changing culture
+    # material/pathogen/resistance does.
+    it1_filters_modified <- reactive({
+      !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList)) ||
+        !identical(sort(selectedPathogens()),       sort(insightPathogenList))       ||
+        !identical(sort(selectedResistances()),     sort(insightResistanceList))
+    })
+
+    it2_filters_modified <- reactive({
+      !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList)) ||
+        !identical(sort(selectedPathogens()),       sort(insightPathogenList))
+    })
+
+    it3_filters_modified <- reactive({
+      !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList))
+    })
+
+    insight_text_disclaimer <- tags$p(class = "insight-md-disclaimer",
+      icon("triangle-exclamation"),
+      "This text reflects the default (unfiltered) data and may not match your current filter selection."
+    )
+
     # Sync graph selection -> country filter: selecting/deselecting a country directly
     # on any graph activates/deactivates the same country in the sidebar filter (the
     # reverse of the filter -> graph "_set" push in each renderGirafe block below).
     # Tracked per-graph as an add/remove delta against the *shared* filter state, so
     # switching between graphs never clobbers a country activated from a different tab.
     sync_graph_selection <- function(input_name) {
-      previousSelection <- reactiveVal(isolate(activatedCountries()))
-      observeEvent(input[[input_name]], {
-        newSelection <- input[[input_name]]
-        oldSelection <- previousSelection()
+      # Debounced, and diffed against the *current* activatedCountries() rather than
+      # a per-plot "previousSelection" memory that only ever advanced from this same
+      # input's own past values. That combination used to cause an infinite activation
+      # flip-flop under rapid clicking: each pill click pushes a fresh "_set" message
+      # to all 4 plots, which each echo back as a change to this input; with 4
+      # independently-timed echo round-trips in flight at once, a plot could process
+      # a stale echo (from a "_set" push that another, newer click had already
+      # superseded) against its own stale "previousSelection", compute a spurious
+      # non-empty added/removed delta, and feed it back into sync_activation() -
+      # re-triggering another round of "_set" pushes and never settling. Debouncing
+      # collapses a burst of rapid echoes into the single final value once the
+      # round-trips quiesce, and diffing against the live activatedCountries() (not
+      # a stale local copy) means an echo that merely confirms what the server
+      # already pushed always yields an empty, no-op delta.
+      debounced_selection <- debounce(reactive({ input[[input_name]] }), 400)
+      observeEvent(debounced_selection(), {
+        newSelection <- debounced_selection()
+        oldSelection <- isolate(activatedCountries())
         sync_activation(
           added   = setdiff(newSelection, oldSelection),
           removed = setdiff(oldSelection, newSelection)
         )
-        previousSelection(newSelection)
       }, ignoreNULL = FALSE)
     }
 
@@ -328,6 +665,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colors) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # See gg_bp_it2 below for why guides(fill = "none") is needed in addition to bp_theme.
+        guides(fill = "none") +
         bp_theme
     })
 
@@ -349,7 +688,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           axis.text.x      = element_text(angle = 90, hjust = 1, vjust = .5),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
-          legend.position  = "none",
+          legend.position  = "right",
           strip.placement  = "outside",
           strip.clip       = "off"
         )
@@ -371,6 +710,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colorsPC) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # guides(fill = "none") rather than relying only on bp_theme's legend.position = "none":
+        # the combined plot forces legend.position = "top" via `&` so the single collected
+        # legend (from the heatmap) sits above the whole figure, and that same `&` theme would
+        # otherwise also un-hide this bar chart's own (redundant) legend.
+        guides(fill = "none") +
         bp_theme
     })
 
@@ -386,7 +730,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                           breaks = c("76-100%", "51-75%", "26-50%", "1-25%",
                                      "Not part of national surveillance", "Do not know"),
                           labels = c("76-100%", "51-75%", "26-50%", "1-25%",
-                                     "Not part of national surveillance", "Do not know")) +
+                                     "Not part of national surveillance", "Do not know"),
+                          # Forced single row (see Geographical representativeness's
+                          # scale_fill_manual below for why this can't be left to
+                          # ggplot's automatic wrapping).
+                          guide = guide_legend(nrow = 1, title.position = "top")) +
         theme_minimal() +
         theme(
           axis.text.x      = element_text(angle = 90, hjust = 1),
@@ -421,6 +769,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colorsGR) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # See gg_bp_it2 above for why guides(fill = "none") is needed in addition to bp_theme.
+        guides(fill = "none") +
         bp_theme
     })
 
@@ -449,13 +799,22 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
             "Not part of national surveillance",
             "Do not know"
           ),
+          # 3 lines rather than 2 (unlike the other Insight legends) - narrower per
+          # key, needed so all 5 keys fit on the single forced row below.
           labels = c(
-            "HIGH: all main geographical\nregions covered",
-            "MEDIUM: most geographical\nregions covered",
-            "LOW: a few geographical\nareas covered",
-            "Not part of national surveillance",
+            "HIGH: all main\ngeographical\nregions covered",
+            "MEDIUM: most\ngeographical\nregions covered",
+            "LOW: a few\ngeographical\nareas covered",
+            "Not part of\nnational\nsurveillance",
             "Do not know"
-          )
+          ),
+          # Forced single-row layout (all 4 Insight legends match: title on its own
+          # line above a single row of keys, each key's own label allowed to wrap
+          # onto multiple lines via the "\n"s above). nrow = 1 rather than leaving it
+          # to ggplot's automatic wrapping, which - even with the small legend.text
+          # size set on the combined plot below - would otherwise wrap these long
+          # labels across more than one row of keys.
+          guide = guide_legend(nrow = 1, title.position = "top")
         ) +
         theme_minimal() +
         theme(
@@ -484,8 +843,19 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         scale_fill_manual(values = surv_colorsEG) +
         scale_y_continuous(labels = scales::percent, limits = c(0, 1), expand = c(0, 0)) +
+        # See gg_bp_it2 above for why guides(fill = "none") is needed in addition to bp_theme.
+        guides(fill = "none") +
         bp_theme
     })
+
+    it3_xlab_labels <- c(
+      "BSI"         = "Bloodstream\ninfection",
+      "uncomp. UTI" = "Uncomplicated\nurinary tract infection",
+      "comp. UTI"   = "Complicated\nurinary tract infection",
+      "URTI"        = "Upper respiratory\ntract infection",
+      "LRTI"        = "Lower respiratory\ntract infection",
+      "SSTI"        = "Skin and soft\ntissue infection"
+    )
 
     gg_hm_it3 <- reactive({
       it3_hm_f() |>
@@ -512,13 +882,14 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         scale_fill_manual(name   = "National guidance in place",
                           values = surv_colorsEG,
                           breaks = c("Yes", "No", "Do not know")) +
+        scale_x_discrete(labels = it3_xlab_labels) +
         theme_minimal() +
         theme(
           axis.title       = element_blank(),
-          axis.text.x      = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 11),
+          axis.text.x      = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 8),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
-          legend.position  = "none"
+          legend.position  = "right"
         )
     })
 
@@ -528,26 +899,46 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
 
     gg_combined_it1 <- reactive({
       gg_bp_it1() + plot_spacer() + (gg_hm_it1() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     gg_combined_it2 <- reactive({
       gg_bp_it2() + plot_spacer() + (gg_hm_it2() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     gg_combined_it2_2 <- reactive({
       gg_bp_it2_2() + plot_spacer() + (gg_hm_it2_2() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     gg_combined_it3 <- reactive({
       gg_bp_it3() + plot_spacer() + (gg_hm_it3() + hm_no_strip) +
-        plot_layout(ncol = 1, heights = c(4, -0.5, 10), guides = "collect") &
-        theme(text = element_text(size = 10))
+        plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
+        theme(text        = element_text(size = 10),
+              legend.position = "top",
+              legend.text     = element_text(size = 6, margin = margin(l = 2, unit = "pt")),
+              legend.title    = element_text(size = 8),
+              legend.title.position = "top",
+              legend.key.spacing.x = unit(6, "pt"))
     })
 
     ## Shared girafe options ----
@@ -606,9 +997,14 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
     }, ignoreInit = TRUE)
 
-    output$country_context_if1 <- renderTable({
+    output$country_comparison_header_if1 <- renderUI({
+      country_comparison_header(input$plot_it1_selected, it1_filters_modified())
+    })
+
+    output$country_context_if1 <- DT::renderDT({
       req(input$plot_it1_selected)
-      it1$hm %>%
+      pct <- it1_hm_f() %>%
+        mutate(Country = as.character(Country)) %>%
         group_by(Country, value) %>%
         summarise(Number = n(), .groups = "drop") %>%
         complete(Country,
@@ -616,21 +1012,25 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                  fill  = list(Number = 0)) %>%
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
-        ungroup() |>
-        filter(Country %in% input$plot_it1_selected) |>
+        ungroup()
+
+      with_country_summary_rows(pct, input$plot_it1_selected) |>
         tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
         dplyr::transmute(Country,
                          "No surveillance" = No,
                          `Yes, voluntary`,
                          `Yes, mandatory`) |>
         dplyr::mutate(across(c(`No surveillance`, `Yes, voluntary`, `Yes, mandatory`),
-                             ~ paste0(round(.x, 2), "%")))
+                             ~ paste0(round(.x, 0), "%"))) |>
+        render_country_comparison_table()
     })
 
     output$md_content_it1 <- renderUI({
-      md <- readLines("content/md/tab1.md")
       div(class = "insight-md-content",
-        HTML(markdown::markdownToHTML(paste(md, collapse = "\n"), fragment.only = TRUE))
+        render_collapsible_insight_md("content/md/tab1.md", session$ns("it1"),
+          disclaimer = if (it1_filters_modified()) insight_text_disclaimer,
+          box_intro  = TRUE
+        )
       )
     })
 
@@ -660,9 +1060,14 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
     }, ignoreInit = TRUE)
 
-    output$country_context_if2 <- renderTable({
+    output$country_comparison_header_if2 <- renderUI({
+      country_comparison_header(input$plot_it2_selected, it2_filters_modified())
+    })
+
+    output$country_context_if2 <- DT::renderDT({
       req(input$plot_it2_selected)
-      it2$hm %>%
+      pct <- it2_hm_f() %>%
+        mutate(Country = as.character(Country)) %>%
         group_by(Country, value) %>%
         summarise(Number = n(), .groups = "drop") %>%
         complete(Country,
@@ -671,15 +1076,20 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                  fill  = list(Number = 0)) %>%
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
-        ungroup() |>
-        filter(Country %in% input$plot_it2_selected) |>
-        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent)
+        ungroup()
+
+      with_country_summary_rows(pct, input$plot_it2_selected) |>
+        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
+        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%"))) |>
+        render_country_comparison_table()
     })
 
     output$md_content_it2 <- renderUI({
-      md <- readLines("content/md/tab2.md")
       div(class = "insight-md-content",
-        HTML(markdown::markdownToHTML(paste(md, collapse = "\n"), fragment.only = TRUE))
+        render_collapsible_insight_md("content/md/tab2.md", session$ns("it2"),
+          disclaimer = if (it2_filters_modified()) insight_text_disclaimer,
+          box_intro  = TRUE
+        )
       )
     })
 
@@ -709,9 +1119,14 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       )
     }, ignoreInit = TRUE)
 
-    output$country_context_if2_2 <- renderTable({
+    output$country_comparison_header_if2_2 <- renderUI({
+      country_comparison_header(input$plot_it2_2_selected, it2_filters_modified())
+    })
+
+    output$country_context_if2_2 <- DT::renderDT({
       req(input$plot_it2_2_selected)
-      it2_2$hm %>%
+      pct <- it2_2_hm_f() %>%
+        mutate(Country = as.character(Country)) %>%
         group_by(Country, value) %>%
         summarise(Number = n(), .groups = "drop") %>%
         complete(Country,
@@ -722,15 +1137,18 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                  fill  = list(Number = 0)) %>%
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
-        ungroup() |>
-        filter(Country %in% input$plot_it2_2_selected) |>
+        ungroup()
+
+      with_country_summary_rows(pct, input$plot_it2_2_selected) |>
         mutate(value = case_when(
           grepl("^HIGH",   value) ~ "HIGH",
           grepl("^MEDIUM", value) ~ "MEDIUM",
           grepl("^LOW",    value) ~ "LOW",
           TRUE                    ~ value
         )) |>
-        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent)
+        tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
+        dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%"))) |>
+        render_country_comparison_table()
     })
 
     ## Insight tab 3 ----
@@ -760,9 +1178,26 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     }, ignoreInit = TRUE)
 
     output$md_content_it3 <- renderUI({
-      md <- readLines("content/md/tab3.md")
       div(class = "insight-md-content",
-        HTML(markdown::markdownToHTML(paste(md, collapse = "\n"), fragment.only = TRUE))
+        render_collapsible_insight_md("content/md/tab3.md", session$ns("it3"),
+          disclaimer = if (it3_filters_modified()) insight_text_disclaimer,
+          box_intro  = TRUE,
+          # width/height on both figures below match their plot's own width_svg=6,
+          # height_svg=5 ratio rather than width="100%": with rescale=TRUE, a
+          # container wider than that ratio leaves slack space that ggiraph
+          # letterboxes by centering the SVG in it - matching the ratio removes the
+          # slack so the plot sits flush against the box's left edge.
+          markers = list(
+            "<!-- insight-tab3-ast-figure -->" = function() {
+              insight_inline_figure(session$ns, session$ns("it3-ast-figure"),
+                "AST data used for national treatment guidance", "plot_it3_ast")
+            },
+            "<!-- insight-tab3-wgt-figure -->" = function() {
+              insight_inline_figure(session$ns, session$ns("it3-wgt-figure"),
+                "Who guides empiric antibiotic treatment", "plot_it3_wgt")
+            }
+          )
+        )
       )
     })
 
@@ -793,10 +1228,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                           values = surv_colorsNTG,
                           limits = coverage_orderNTG) +
         scale_x_continuous(breaks = scales::breaks_pretty()) +
-        labs(x = "Number of countries") +
         theme_minimal() +
         theme(
-          axis.title.y     = element_blank(),
+          axis.title       = element_blank(),
           panel.grid.major.y = element_blank(),
           panel.grid.minor   = element_blank()
         )
@@ -845,10 +1279,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                           values = surv_colorsWGT,
                           limits = coverage_orderWGT) +
         scale_x_continuous(breaks = scales::breaks_pretty()) +
-        labs(x = "Number of countries") +
         theme_minimal() +
         theme(
-          axis.title.y       = element_blank(),
+          axis.title         = element_blank(),
           panel.grid.major.y = element_blank(),
           panel.grid.minor   = element_blank()
         )

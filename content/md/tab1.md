@@ -1,15 +1,11 @@
 <!---  Figure 1 (A European baseline for surveillance of AMR priority pathogens) --->
-#### **Insight 1: Mandatory surveillance of AMR priority pathogens**
-
+# **Insight 1: Mandatory surveillance of AMR priority pathogens**
 ___
-
 
 *To overview how countries connect AMR priority pathogens to their communicable disease legislation, we asked them to specify whether surveillance for each pathogen and culture material was mandatory (notifiable), voluntary, or non-existent.*
 
 <i class="fa fa-handshake"></i> **Policy commitment:** Support EU Council Recommendation on AMR (B5b), AMR pathogens resistant to last line 
 treatments should be notifiable under national legislation.  
-
-___
 
 ## <i class="fa-regular fa-lightbulb"></i> What can we learn from this?
 
