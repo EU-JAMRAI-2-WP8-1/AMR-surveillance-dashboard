@@ -1,6 +1,5 @@
 <!---  Figure 1 (A European baseline for surveillance of AMR priority pathogens) --->
 # **Insight 1: Mandatory surveillance of AMR priority pathogens**
-___
 
 *To overview how countries connect AMR priority pathogens to their communicable disease legislation, we asked them to specify whether surveillance for each pathogen and culture material was mandatory (notifiable), voluntary, or non-existent.*
 
