@@ -96,6 +96,18 @@ insightTab3XlabToCultureMaterial <- c(
   "SSTI"        = "Wound/\nTissue swab"     # Skin and soft tissue infection -> wound/tissue swab
 )
 
+# Insight #1's violin plot data (it1$vp) names its culture materials ("Sample" column) with
+# the Dashboard's wording rather than the heatmap's - mapped back here so the Culture
+# material filter can drive it too. Values on the right must match insightCultureMaterialList
+# exactly. Its Pathogen/Antibiotic columns already use the Pathogens/Resistances filter values.
+insightTab1VpSampleToCultureMaterial <- c(
+  "Blood/CSF"         = "Blood/CSF",
+  "Urine"             = "Urine",
+  "Respiratory tract" = "Lower respiratory/\ntract",
+  "Wound/tissue"      = "Wound/\nTissue swab",
+  "Screening"         = "Screening"
+)
+
 
 ## DATA LOAD AND PREPARATION ##
 

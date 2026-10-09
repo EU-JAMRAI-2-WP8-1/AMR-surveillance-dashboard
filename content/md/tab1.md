@@ -17,6 +17,8 @@ treatments should be notifiable under national legislation.
 
 - Countries treat AMR priority pathogens differently when it comes to integration in their communicable disease laws. For example, two countries reported mandatory surveillance for all AMR priority pathogens and five reported exclusively voluntary surveillance.
 
+<!-- insight-tab1-vp-figure -->
+
 
 ### Actions for change:
 

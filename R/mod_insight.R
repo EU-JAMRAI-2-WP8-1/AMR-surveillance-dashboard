@@ -564,6 +564,15 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         droplevels()
     })
     it1_bp_f   <- reactive({ recompute_bp(it1_hm_f(), c("type", "xlab"), "percentage") })
+    # No Country column in the violin data (values are already "% of countries"), so only
+    # the culture material/pathogen/resistance filters apply to it.
+    it1_vp_f   <- reactive({
+      it1$vp %>%
+        filter(!is.na(value),
+               insightTab1VpSampleToCultureMaterial[Sample] %in% selectedCultureMaterials(),
+               Pathogen   %in% selectedPathogens(),
+               Antibiotic %in% selectedResistances())
+    })
 
     it2_hm_f   <- reactive({
       it2$hm %>%
@@ -692,6 +701,31 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           strip.placement  = "outside",
           strip.clip       = "off"
         )
+    })
+
+    # Split violins (R/geom_split_violin.R) can't carry tooltips - ggiraph has no interactive
+    # version of geom_split_violin - so the overlaid boxplots carry them instead, with
+    # their quartiles pre-computed per variable/surveillance type for the tooltip text.
+    gg_vp_it1 <- reactive({
+      it1_vp_f() %>%
+        group_by(variable, Surveillance_type) %>%
+        mutate(var_label = gsub("\n", " ", variable),
+               tooltip   = glue("<b>{var_label}</b> ({Surveillance_type})<br>",
+                                "Median: {round(median(value))}%<br>",
+                                "Q1-Q3: {round(quantile(value, .25))}-{round(quantile(value, .75))}%")) %>%
+        ungroup() %>%
+        ggplot(aes(x = variable, y = value, fill = Surveillance_type)) +
+        geom_split_violin(trim = TRUE, scale = "width") +
+        geom_boxplot_interactive(aes(tooltip = tooltip),
+                                 alpha = 0, width = 0.5, colour = "black", linewidth = 0.6,
+                                 show.legend = FALSE) +
+        scale_y_continuous(limits = c(0, 100)) +
+        scale_fill_manual(values = c("Mandatory" = surv_colors[["Yes, mandatory"]],
+                                     "Voluntary" = surv_colors[["Yes, voluntary"]])) +
+        labs(x = "Patient information", y = "Countries (%)", fill = "Surveillance type") +
+        theme_minimal() +
+        theme(axis.text.x     = element_text(angle = 90, hjust = 1, vjust = .5),
+              legend.position = "top")
     })
 
     # --- Tab 2: population coverage ---
@@ -1029,9 +1063,35 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       div(class = "insight-md-content",
         render_collapsible_insight_md("content/md/tab1.md", session$ns("it1"),
           disclaimer = if (it1_filters_modified()) insight_text_disclaimer,
-          box_intro  = TRUE
+          box_intro  = TRUE,
+          # See md_content_it3 below for why width/height match width_svg/height_svg.
+          markers = list(
+            "<!-- insight-tab1-vp-figure -->" = function() {
+              insight_inline_figure(session$ns, session$ns("it1-vp-figure"),
+                "Patient information gathered, by surveillance type", "plot_it1_vp")
+            }
+          )
         )
       )
+    })
+
+    output$plot_it1_vp <- renderGirafe({
+      req(nrow(it1_vp_f()) > 0)
+      girafe(code       = print(gg_vp_it1()),
+             width_svg  = 6,
+             height_svg = 5,
+             options    = list(
+               opts_hover_inv(css = "opacity:0.5;"),
+               opts_hover(css = "stroke-width:1;"),
+               opts_tooltip(use_fill = TRUE, css = paste0(
+                 "padding:5px;border-radius:3px;color:#000;text-shadow:",
+                 "-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff,",
+                 "0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff, 1px 0 0 #fff;"
+               )),
+               opts_sizing(rescale = TRUE),
+               opts_toolbar(saveaspng = TRUE, position = "bottomright",
+                            pngname = "JAMREYE_InsightTab_1_VP", delay_mouseout = 2000)
+             ))
     })
 
     ## Insight tab 2 — population coverage ----
