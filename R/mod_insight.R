@@ -717,7 +717,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         ggplot(aes(x = variable, y = value, fill = Surveillance_type)) +
         geom_split_violin(trim = TRUE, scale = "width") +
         geom_boxplot_interactive(aes(tooltip = tooltip),
-                                 alpha = 0, width = 0.5, colour = "black", linewidth = 0.6,
+                                 alpha = 0, width = 0.5, colour = "black", linewidth = 0.4,median.linewidth = 0.4,
                                  show.legend = FALSE) +
         scale_y_continuous(limits = c(0, 100)) +
         scale_fill_manual(values = c("Mandatory" = surv_colors[["Yes, mandatory"]],
