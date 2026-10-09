@@ -1,5 +1,6 @@
 <!---  Figure 1 (A European baseline for surveillance of AMR priority pathogens) --->
-# A European baseline for surveillance of AMR priority pathogens
+# **Insight 1: Mandatory surveillance of AMR priority pathogens**
+___
 
 *To overview how countries connect AMR priority pathogens to their communicable disease legislation, we asked them to specify whether surveillance for each pathogen and culture material was mandatory (notifiable), voluntary, or non-existent.*
 
@@ -28,6 +29,10 @@ Currently, existing surveillance gaps seen in different culture materials beyond
 
 ### Why does mandatory surveillance matter?
 
-While mandatory surveillance does not always ensure high-quality data, it elevates the political recognition of AMR pathogens as a prioritised public health threat. Although voluntary systems can be effective in some countries, 43% of countries report that voluntary surveillance negatively affects their data completeness, highlighting the need for legally supported approaches. Shifting to mandatory systems should be prioritised where the benefits clearly outweigh those of voluntary efforts.
+While mandatory surveillance does not alone ensure high-quality data, it elevates the political recognition of AMR pathogens as a prioritised public health threat. Although voluntary systems can be effective in some countries, 43% of countries report that voluntary surveillance negatively affects their data completeness, highlighting the need for legally supported approaches. In addition, patient data had higher availability for pathogens under mandatory surveillance, with basic parameters, including age, sex, sample date, and geographical location, reported in over 75% of countries on average, compared with only 50% for pathogens under voluntary surveillance. 
+
+Patient data availability for mandatory versus voluntary surveillance. 
+
+Shifting to mandatory systems should be prioritised where the benefits clearly outweigh those of voluntary efforts.
 
 *Note: Here we define mandatory surveillance as notifiable under national legislation. In some European countries, communicable disease legislations distinguish between mandatory and notifiable pathogens, where both are legally obligated but notifiable legislation imposes stricter requirements for reporting in order to support real-time outbreak control. The response “mandatory surveillance” includes as well notifiable in countries where this is relevant.*
