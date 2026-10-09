@@ -6,14 +6,7 @@ mod_insight_ui <- function(id) {
     id = ns("insightTabs"),
 
     tabPanel("Insight - landing page", value = "landing",
-      fluidRow(
-        column(6,
-          uiOutput(ns("md_content_landing"))
-        ),
-        column(6,
-          uiOutput(ns("landing_flow_diagram"))
-        )
-      )
+      uiOutput(ns("md_content_landing"))
     ),
 
     tabPanel("Insight #1", value = "tab1",
@@ -90,7 +83,7 @@ mod_insight_ui <- function(id) {
 # exactly matches a name in `markers` - that line is replaced by the live UI
 # `markers[[line]]()` produces (e.g. a Shiny plot output) instead of being passed
 # through markdownToHTML. Lets a source .md file mark a spot for a widget that plain
-# markdown can't express, the same way render_landing_md splices insight_flow_diagram()
+# markdown can't express, the same way render_landing_md splices the insight boxes
 # in at its own marker.
 render_md_with_markers <- function(lines, markers = list()) {
   if (length(lines) == 0 || !any(nzchar(trimws(lines)))) return(NULL)
@@ -119,8 +112,17 @@ render_md_with_markers <- function(lines, markers = list()) {
 # line (see render_md_with_markers) - same toggle-arrow mechanism as a "###" section
 # in render_collapsible_insight_md, just wrapping a single girafeOutput instead of a
 # whole section. width/height should match the plot's own width_svg/height_svg ratio;
-# see the ast-figure usage below for why.
-insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px", height = "600px") {
+# see the ast-figure usage below for why. collapsible = FALSE drops the toggle and
+# always shows the plot - for figures already inside a collapsible "###" section.
+insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px", height = "600px",
+                                  collapsible = TRUE) {
+  if (!collapsible) {
+    return(tags$div(class = "insight-md-inline-figure",
+      tags$div(class = "insight-md-subtitle", h5(title)),
+      girafeOutput(ns(output_id), width = width, height = height)
+    ))
+  }
+
   tags$div(class = "insight-md-inline-figure",
     tags$div(class = "insight-md-subtitle",
       tags$a(class = "insight-md-toggle collapsed",
@@ -227,81 +229,62 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, ma
   tagList(preamble_html, disclaimer, sections)
 }
 
-# A clickable stand-in for the flowchart that used to live in landing.md as a mermaid
-# code block: mermaid has no built-in way to bridge a node click into a Shiny input,
-# so the diagram is rebuilt here as plain HTML/actionButtons wired to the same
-# set_selected_tab() navigation used by the module's goto_tabX observers. Styled
-# like the "Reset filters" button (btn btn-outline-primary) for consistency.
-insight_flow_diagram <- function(ns) {
-  insight_box <- function(input_id, icon_name, label) {
-    actionButton(ns(input_id), label, icon = icon(icon_name),
-      class = "btn btn-outline-primary insight-flow-box"
+# The landing page's three clickable insight boxes, spliced into landing.md at its
+# "<!-- insight-cards -->" marker. Each box is an actionLink wired to the same
+# set_selected_tab() navigation as the module's goto_tabX observers.
+insight_landing_cards <- function(ns) {
+  card <- function(input_id, icon_name, number, title) {
+    actionLink(ns(input_id), class = "insight-landing-card",
+      label = tagList(
+        tags$span(class = "insight-landing-card-watermark", `aria-hidden` = "true", number),
+        tags$span(class = "insight-landing-card-body",
+          tags$span(class = "insight-landing-card-number", paste("Insight", number)),
+          tags$span(class = "insight-landing-card-head",
+            tags$span(class = "insight-landing-card-icon", icon(icon_name)),
+            tags$span(class = "insight-landing-card-title", title)
+          ),
+          tags$span(class = "insight-landing-card-cta", "Explore", icon("arrow-right"))
+        )
+      )
     )
   }
 
-  # Three separate arrows (root -> each box) drawn as an SVG fan rather than CSS
-  # borders, since a fan of non-vertical lines isn't expressible with box borders.
-  # Diagram runs left-to-right (root on the left, boxes stacked in a column on the
-  # right - see .insight-flow-diagram/.insight-flow-row in CSS), so the fan's near
-  # ends (72.5/87.5/102.5, clustered near the root) sit on the viewBox's left edge
-  # and its far ends (29.17/87.5/145.83, i.e. 1/6, 1/2, 5/6 of the 175-tall
-  # viewBox) spread down the right edge to meet each of the three equal-height,
-  # non-wrapped rows (see .insight-flow-row / nowrap in CSS); on narrow screens
-  # the row switches to a stacked layout and the fan is hidden instead of being
-  # drawn against geometry it no longer matches.
-  #
-  # The viewBox is 10x175 (not a square 100x100) and .insight-flow-links is given
-  # a matching `aspect-ratio: 10 / 175` in CSS, so the viewBox maps onto the
-  # container with a single uniform scale factor. Stretching a square viewBox to
-  # fit this box's actual narrow/tall shape (as a naive `preserveAspectRatio="none"`
-  # would) distorts x and y by very different amounts, which squashes the
-  # arrowhead triangles into an unrecognizable sliver - matching the "is that an
-  # arrowhead or a rendering artifact?" symptom this was written to fix.
-  arrows <- HTML('
-    <svg class="insight-flow-svg" viewBox="0 0 10 175" aria-hidden="true">
-      <defs>
-        <marker id="insight-flow-arrowhead" viewBox="0 0 10 10" refX="8" refY="5"
-                markerWidth="6.5" markerHeight="6.5" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 z" fill="#0fdbd5" />
-        </marker>
-      </defs>
-      <line x1="0" y1="72.5" x2="10" y2="29.1667" marker-end="url(#insight-flow-arrowhead)" />
-      <line x1="0" y1="87.5" x2="10" y2="87.5" marker-end="url(#insight-flow-arrowhead)" />
-      <line x1="0" y1="102.5" x2="10" y2="145.8333" marker-end="url(#insight-flow-arrowhead)" />
-    </svg>
-  ')
-
-  tags$div(class = "insight-flow-diagram",
-    tags$div(class = "insight-flow-root", "JAMREYE", tags$br(), "insights"),
-    tags$div(class = "insight-flow-links", arrows),
-    tags$div(class = "insight-flow-row",
-      insight_box("goto_tab1", "ranking-star",
-        "Insight 1: Mandatory surveillance of AMR priority pathogens"),
-      insight_box("goto_tab2", "map-location-dot",
-        "Insight 2: Expansion of European surveillance beyond invasive infections"),
-      insight_box("goto_tab3", "book",
-        "Insight 3: Use of surveillance data for national treatment guidance")
-    )
+  tags$div(class = "insight-landing-cards",
+    card("goto_tab1", "ranking-star", 1, "Mandatory surveillance of AMR priority pathogens"),
+    card("goto_tab2", "map-location-dot", 2, "Expansion of European surveillance beyond invasive infections"),
+    card("goto_tab3", "book", 3, "Use of surveillance data for national treatment guidance")
   )
 }
 
-# Renders landing.md like render_collapsible_insight_md's preamble (no collapsible
-# sections needed here). The interactive insight_flow_diagram() used to be spliced
-# inline at the "<!-- insight-flow-diagram -->" marker left in the source (in place
-# of the old mermaid block); the landing page is now split into a text column and a
-# separate diagram column (see mod_insight_ui's "landing" tabPanel and
-# output$landing_flow_diagram), so that marker line is simply dropped from the text.
-render_landing_md <- function(path) {
-  lines  <- readLines(path)
-  marker <- which(grepl("^<!--\\s*insight-flow-diagram\\s*-->$", lines))
+# Renders landing.md as a single-column page: the "#" title and the text under it
+# become the banner box at the top (background image in CSS, see
+# .insight-landing-hero), and each "##" heading starts its own section below it.
+# Bullet lists inside a section are styled as a row of small boxes in CSS
+# (.insight-landing-section ul), and the "<!-- insight-cards -->" marker line is
+# replaced by insight_landing_cards().
+render_landing_md <- function(path, ns) {
+  lines <- readLines(path)
+  lines <- lines[!grepl("^<!---.*--->\\s*$", lines)]  # source-file comments
 
-  to_html <- function(md_lines) {
-    HTML(markdown::markdownToHTML(paste(md_lines, collapse = "\n"), fragment.only = TRUE))
-  }
+  markers <- list("<!-- insight-cards -->" = function() insight_landing_cards(ns))
 
-  if (length(marker) > 0) lines <- lines[-marker[1]]
+  h2_idx   <- which(grepl("^##\\s", lines))
+  hero_end <- if (length(h2_idx)) h2_idx[1] - 1 else length(lines)
 
-  to_html(lines)
+  hero <- tags$div(class = "insight-landing-hero",
+    tags$div(class = "insight-landing-hero-text",
+      render_md_with_markers(lines[seq_len(hero_end)], markers)
+    )
+  )
+
+  section_ends <- c(h2_idx[-1] - 1, length(lines))
+  sections <- Map(function(start, end) {
+    tags$section(class = "insight-landing-section",
+      render_md_with_markers(lines[start:end], markers)
+    )
+  }, h2_idx, section_ends)
+
+  tagList(hero, sections)
 }
 
 # The head-to-head comparison table only has content once at least one country is
@@ -390,16 +373,12 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
 
     ## Landing page ----
     output$md_content_landing <- renderUI({
-      div(class = "insight-md-content",
-        render_landing_md("content/md/landing.md")
+      div(class = "insight-md-content insight-landing",
+        render_landing_md("content/md/landing.md", session$ns)
       )
     })
 
-    output$landing_flow_diagram <- renderUI({
-      insight_flow_diagram(session$ns)
-    })
-
-    ## Landing page flow-diagram navigation ----
+    ## Landing page insight-box navigation ----
     observeEvent(input$goto_tab1, { set_selected_tab("tab1") })
     observeEvent(input$goto_tab2, { set_selected_tab("tab2") })
     observeEvent(input$goto_tab3, { set_selected_tab("tab3") })
@@ -1068,7 +1047,8 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           markers = list(
             "<!-- insight-tab1-vp-figure -->" = function() {
               insight_inline_figure(session$ns, session$ns("it1-vp-figure"),
-                "Patient information gathered, by surveillance type", "plot_it1_vp")
+                "Patient data availability for mandatory versus voluntary surveillance",
+                "plot_it1_vp", collapsible = FALSE)
             }
           )
         )

@@ -18,8 +18,6 @@ treatments should be notifiable under national legislation.
 
 - Countries treat AMR priority pathogens differently when it comes to integration in their communicable disease laws. For example, two countries reported mandatory surveillance for all AMR priority pathogens and five reported exclusively voluntary surveillance.
 
-<!-- insight-tab1-vp-figure -->
-
 
 ### Actions for change:
 
@@ -31,7 +29,7 @@ Currently, existing surveillance gaps seen in different culture materials beyond
 
 While mandatory surveillance does not alone ensure high-quality data, it elevates the political recognition of AMR pathogens as a prioritised public health threat. Although voluntary systems can be effective in some countries, 43% of countries report that voluntary surveillance negatively affects their data completeness, highlighting the need for legally supported approaches. In addition, patient data had higher availability for pathogens under mandatory surveillance, with basic parameters, including age, sex, sample date, and geographical location, reported in over 75% of countries on average, compared with only 50% for pathogens under voluntary surveillance. 
 
-Patient data availability for mandatory versus voluntary surveillance. 
+<!-- insight-tab1-vp-figure -->
 
 Shifting to mandatory systems should be prioritised where the benefits clearly outweigh those of voluntary efforts.
 

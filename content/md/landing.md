@@ -1,24 +1,24 @@
 <!---  Landing page for insight tabs --->
-# Welcome to JAMREYE Insights!
-
-## <i class="fa fa-circle-info"></i> Introduction
+<!---  The "#" title and the text under it form the banner at the top of the page; each "##" heading starts a new section below it. --->
+<!---  Bullet points are shown as a row of small boxes; the insight-cards marker is replaced by the three clickable insight boxes. --->
+# Welcome to <span class="jamreye-word">JAMREYE</span> Insights!
 
 This section presents dashboard data in an interactive and comparative format, supporting surveillance experts and policymakers to make data-driven decisions. By analysing data related to the three policy commitments (outlined in the [2023 Council Recommendation on AMR](https://health.ec.europa.eu/publications/council-recommendation-stepping-eu-actions-combat-antimicrobial-resistance-one-health-approach_en)) we have established a baseline evaluation of Europe’s progress toward implementation.
 
-## <i class="fa fa-circle-question"></i> How to
+## Explore our three insights
 
-Explore each insight to delve deeper into the findings. 
-You can hover over the figures and select countries for further details. 
+Each insight combines an interactive figure with its key findings. Click on an insight to delve deeper, hover over the figures for details and select countries to compare them side by side.
 
+<!-- insight-cards -->
 
-<!-- insight-flow-diagram -->
+## Why these insights matter
 
-## <i class="fa fa-bullseye"></i> Our Goal
 The data and insights provided here are designed to support public health authorities in:
--	Prioritising interventions.
--	Allocating investments.
--	Designing capacity-strengthening activities.
--	Refining national and European policy strategies.
+
+-	<i class="fa fa-arrow-up-wide-short"></i> Prioritising interventions.
+-	<i class="fa fa-coins"></i> Allocating investments.
+-	<i class="fa fa-users-gear"></i> Designing capacity-strengthening activities.
+-	<i class="fa fa-landmark"></i> Refining national and European policy strategies.
 
 We believe this data and framework have the potential to shape AMR surveillance practices across Europe, ultimately contributing to efforts to estimate and reduce the burden and spread of AMR.
 
