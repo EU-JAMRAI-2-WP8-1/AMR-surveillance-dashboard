@@ -643,11 +643,35 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       it1_bp_f() %>%
         group_by(type, xlab) %>%
         mutate(percentage = percentage / sum(percentage))%>%
+        mutate(abr = case_when(str_detect(xlab,"CR")~"Carbapenem resistent",
+                         str_detect(xlab,"3GC")~"3rd-generation Cephalosporin",
+                         str_detect(xlab,"CT")~"Colistin resistent",
+                         str_detect(xlab,"AMP")~"Ampicillin resistent",
+                         
+                         str_detect(xlab,"MRSA")~"Methicillin-resistant <i>S. aureus</i>",
+                         str_detect(xlab,"VRE")~"Vancomycin-resistant Enterococci",
+                         str_detect(xlab,"PNSP")~"Penicillin-nonsusceptible Pneumococcus",
+                         
+                         .default = NA),
+         bug = case_when(str_detect(xlab,"E.coli")~"E. coli",
+                         str_detect(xlab,"K.pneumoniae")~"K. pneumoniae",
+                         str_detect(xlab,"A.baumannii")~"A. baumannii",
+                         str_detect(xlab,"P.aeruginosa")~"P. aeruginosa",
+                         str_detect(xlab,"H.influenzae") ~"H. influenzae",
+                         
+                         
+                         .default = ""),
+         surv_lab = case_when(value=="No" ~ "does <b>not exist.</b>",
+                              value=="Yes, voluntary" ~ "is <b>voluntary</b>.",
+                              value=="Yes, mandatory" ~ "is <b>mandatory</b>.",
+                              .default = "")
+  ) |> 
         ungroup() %>%
         ggplot(aes(x       = xlab,
                    y       = percentage,
                    fill    = value,
-                   tooltip = glue("{round(percentage * 100)}%"))) +
+                   tooltip = glue::glue("European suveillance of <b>{abr} 
+                                                  resistant <i>{bug}</i> </b>in <b>{type}</b> is {round(percentage,2)}%."))) + 
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
