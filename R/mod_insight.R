@@ -236,7 +236,6 @@ insight_landing_cards <- function(ns) {
   card <- function(input_id, icon_name, number, title) {
     actionLink(ns(input_id), class = "insight-landing-card",
       label = tagList(
-        tags$span(class = "insight-landing-card-watermark", `aria-hidden` = "true", number),
         tags$span(class = "insight-landing-card-body",
           tags$span(class = "insight-landing-card-number", paste("Insight", number)),
           tags$span(class = "insight-landing-card-head",
@@ -697,6 +696,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           axis.title.x     = element_blank(),
           axis.title.y     = element_blank(),
           axis.text.x      = element_text(angle = 90, hjust = 1, vjust = .5),
+          axis.text.y      = element_text(size = 8.5),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           legend.position  = "right",
@@ -774,6 +774,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         theme_minimal() +
         theme(
           axis.text.x      = element_text(angle = 90, hjust = 1),
+          axis.text.y      = element_text(size = 8.5),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           axis.title       = element_blank(),
@@ -855,6 +856,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         theme_minimal() +
         theme(
           axis.text.x      = element_text(angle = 90, hjust = 1),
+          axis.text.y      = element_text(size = 8.5),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           axis.title       = element_blank(),
@@ -923,6 +925,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         theme(
           axis.title       = element_blank(),
           axis.text.x      = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 8),
+          axis.text.y      = element_text(size = 8.5),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           legend.position  = "right"

@@ -168,9 +168,9 @@ ui <- shinyUI(fluidPage(
             inputId = "insightTabToggle",
             label = NULL,
             choiceNames = list(
-              HTML('<i class="fa fa-ranking-star"></i><span class="btn-text">AMR priority pathogens</span>'),
-              HTML('<i class="fa fa-map-location-dot"></i><span class="btn-text">Coverage and representativeness</span>'),
-              HTML('<i class="fa fa-book"></i><span class="btn-text">Guidance - common infections</span>')
+              HTML('<i class="fa fa-ranking-star"></i><span class="btn-text">Mandatory surveillance of AMR priority pathogens</span>'),
+              HTML('<i class="fa fa-map-location-dot"></i><span class="btn-text">Expansion of European surveillance beyond invasive infections</span>'),
+              HTML('<i class="fa fa-book"></i><span class="btn-text">Use of surveillance data for national treatment guidance</span>')
             ),
             choiceValues = c("tab1", "tab2", "tab3"),
             selected = character(0),

@@ -838,67 +838,46 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 
-/* Sections wrapper in sidebar - horizontal layout with square buttons */
+/* Dashboard section buttons (National surveillance / genomic surveillance /
+   guidance) - stacked one per row, each its own pill, same style as the Insight
+   tab buttons below (#insightTabToggle). Each section keeps its own colour: on
+   the icon when unselected, as the fill when selected. */
 .sections-wrapper-sidebar {
     padding: 12px 12px;
 }
 
 .sections-wrapper-sidebar .btn-group-container-sw {
     width: 100%;
+    flex-direction: column !important;
+    gap: 8px;
 }
 
 .sections-wrapper-sidebar .btn-group {
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-between;
 }
-
-.sections-wrapper-sidebar #filters-sectionsSelection .btn {
-    width: calc(33.33% - 3px) !important;
-    /*border-radius: 4px !important;*/
-    padding: 8px 4px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: 1.2;
-}
-
-.sections-wrapper-sidebar #filters-sectionsSelection .btn .btn-text {
-    display: block;
-    font-size: 0.95em;
-    margin-top: 4px;
-    word-wrap: break-word;
-    white-space: normal;
-}
-
-.sections-wrapper-sidebar #filters-sectionsSelection .btn i {
-    font-size: 1.2em;
-}
-
 
 #filters-sectionsSelection .btn {
-    width: 280px;
-    padding: 6px 12px !important;
+    flex: 1;
+    padding: 11px 14px !important;
     background-color: #e0e0e0 !important;
     border-color: #e0e0e0 !important;
     color: #666 !important;
-    border-radius: 0 !important;
+    border-radius: 999px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-/* Pill-shaped button group for sections */
-#filters-sectionsSelection .btn:first-of-type {
-    border-radius: 60px 0 0 60px !important;
+#filters-sectionsSelection .btn .btn-text {
+    white-space: normal;
+    line-height: 1.2;
 }
 
-#filters-sectionsSelection .btn:last-of-type {
-    border-radius: 0 60px 60px 0 !important;
-}
-
-#filters-sectionsSelection .btn:only-of-type {
-    border-radius: 60px !important;
+#filters-sectionsSelection .btn i {
+    margin-right: 6px;
 }
 
 #filters-sectionsSelection .btn:hover {
@@ -907,6 +886,10 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 /* Section 1 - National surveillance (teal) */
+#filters-sectionsSelection input:nth-of-type(1) + .btn i {
+    color: #2a9d8f;
+}
+
 #filters-sectionsSelection input:nth-of-type(1):checked + .btn {
     background-color: #2a9d8f !important;
     border-color: #2a9d8f !important;
@@ -919,6 +902,10 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 /* Section 2 - National genomic surveillance (gold) */
+#filters-sectionsSelection input:nth-of-type(2) + .btn i {
+    color: #d4a843;
+}
+
 #filters-sectionsSelection input:nth-of-type(2):checked + .btn {
     background-color: #d4a843 !important;
     border-color: #d4a843 !important;
@@ -931,6 +918,10 @@ body.section-3 .question-selector-card .selectize-input {
 }
 
 /* Section 3 - National guidance (soft red) */
+#filters-sectionsSelection input:nth-of-type(3) + .btn i {
+    color: #cc8888;
+}
+
 #filters-sectionsSelection input:nth-of-type(3):checked + .btn {
     background-color: #cc8888 !important;
     border-color: #cc8888 !important;
@@ -940,6 +931,10 @@ body.section-3 .question-selector-card .selectize-input {
 #filters-sectionsSelection input:nth-of-type(3):checked + .btn:hover {
     background-color: #b87373 !important;
     border-color: #b87373 !important;
+}
+
+#filters-sectionsSelection input:checked + .btn i {
+    color: white;
 }
 
 
@@ -1113,7 +1108,7 @@ h1 {
 }
 
 /* Card layout: "Insight X" pill on top, round icon badge with the title on its
-   right, "Explore" link at the bottom, and a large faded number in the corner. */
+   right, "Explore" link at the bottom right. */
 .insight-landing-card {
     position: relative;
     overflow: hidden;
@@ -1134,7 +1129,6 @@ h1 {
 }
 
 .insight-landing-card-body {
-    position: relative;   /* above the corner number */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1196,6 +1190,7 @@ h1 {
 }
 
 .insight-landing-card-cta {
+    align-self: flex-end;
     color: #008aab;
     font-weight: 600;
 }
@@ -1210,18 +1205,6 @@ h1 {
     transform: translateX(4px);
 }
 
-.insight-landing-card-watermark {
-    position: absolute;
-    right: 12px;
-    bottom: -28px;
-    font-size: 7em;
-    font-weight: bold;
-    line-height: 1;
-    color: #008aab;
-    opacity: 0.08;
-    pointer-events: none;
-}
-
 /* Bullet lists on the landing page ("Why these insights matter") as small boxes */
 .insight-landing-section ul {
     list-style: none;
@@ -1232,16 +1215,14 @@ h1 {
     gap: 16px;
 }
 
-/* Each box follows the app's .question-selector-card style (rounded, thin outline,
-   thicker left border), with the bullet's icon (the <i> at the start of each line
-   in landing.md) on the left of the text. */
+/* Each box is kept plain (no fill, thin light grey outline) so it doesn't look
+   like the clickable insight cards above it, with the bullet's icon (the <i> at
+   the start of each line in landing.md) on the left of the text. */
 .insight-landing-section li {
     display: flex;
     align-items: center;
     gap: 12px;
-    background-color: #effcfb;
-    border: 1px solid #a9ece9;
-    border-left: 4px solid #0fdbd5;
+    border: 1px solid #c4c4c4;
     border-radius: 6px;
     padding: 14px 16px;
     font-weight: 600;
@@ -1765,8 +1746,7 @@ body.section-3 .full-question-title-box {
     color: var(--insight-text, #005f78);
 }
 
-.insight-landing-card-cta,
-.insight-landing-card-watermark {
+.insight-landing-card-cta {
     color: var(--insight-color, #008aab);
 }
 

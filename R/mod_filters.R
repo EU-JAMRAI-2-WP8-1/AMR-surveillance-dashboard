@@ -11,9 +11,9 @@ mod_filters_ui <- function(id) {
         inputId     = ns("sectionsSelection"),
         label       = NULL,
         choiceNames = list(
-          HTML('<i class="fa fa-eye"></i><span class="btn-text"> National surveillance</span>'),
-          HTML('<i class="fa fa-dna"></i><span class="btn-text"> National genomic surveillance</span>'),
-          HTML('<i class="fa fa-book-open"></i><span class="btn-text"> National guidance</span>')
+          HTML('<i class="fa fa-eye"></i><span class="btn-text">National surveillance</span>'),
+          HTML('<i class="fa fa-dna"></i><span class="btn-text">National genomic surveillance</span>'),
+          HTML('<i class="fa fa-book-open"></i><span class="btn-text">National guidance</span>')
         ),
         choiceValues = sectionList,
         selected     = sectionList[1],
