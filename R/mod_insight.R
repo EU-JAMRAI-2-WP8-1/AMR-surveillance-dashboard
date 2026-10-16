@@ -642,13 +642,36 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     gg_bp_it1 <- reactive({
       it1_bp_f() %>%
         group_by(type, xlab) %>%
-        mutate(percentage = percentage / sum(percentage))%>%
+  mutate(percentage = percentage / sum(percentage))%>%
+  mutate(type = factor(type, levels = c("Blood/CSF","Urine","Lower respiratory tract","Wound/Tissue swab", "Screening")),
+         type_lab =  str_to_lower(type)) |> 
+  mutate(abr = case_when(str_detect(xlab,"CR")~"carbapenem resistant",# resistant",
+                         str_detect(xlab,"3GC")~"3rd-generation cephalosporin",
+                         str_detect(xlab,"CT")~"colistin resistant",
+                         str_detect(xlab,"AMP")~"ampicillin resistant",
+                         
+                         str_detect(xlab,"MRSA")~"methicillin-resistant <i>S. aureus</i>",
+                         str_detect(xlab,"VRE")~"vancomycin-resistant Enterococci",
+                         str_detect(xlab,"PNSP")~"penicillin-nonsusceptible Pneumococcus",
+                         
+                         .default = NA),
+         bug = case_when(str_detect(xlab,"E.coli")~"E. coli",
+                         str_detect(xlab,"K.pneumoniae")~"K. pneumoniae",
+                         str_detect(xlab,"A.baumannii")~"A. baumannii",
+                         str_detect(xlab,"P.aeruginosa")~"P. aeruginosa",
+                         str_detect(xlab,"H.influenzae") ~"H. influenzae",
+                         .default = ""),
+         surv_lab = case_when(value=="No" ~ "does <b>not exist</b>",
+                              value=="Yes, voluntary" ~ "is <b>voluntary</b>",
+                              value=="Yes, mandatory" ~ "is <b>mandatory</b>",
+                              .default = "")
+  ) |> 
         ungroup() %>%
         ggplot(aes(x       = xlab,
                    y       = percentage,
                    fill    = value,
-                   tooltip = glue("{round(percentage * 100)}%"))) +
-        geom_col_interactive(position = "stack") +
+                   tooltip = glue::glue("Surveillance of <b>{abr} 
+                                                  <i>{bug}</i> </b> in <b>{type_lab}</b> {surv_lab} in {round(percentage,2)*100}% of countries."))) +         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colors) +
