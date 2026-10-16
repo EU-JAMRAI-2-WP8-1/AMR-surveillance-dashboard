@@ -665,7 +665,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                                                   resistant <i>{bug}</i> </b> in <b>{type}</b> {surv_lab}")),
                               color = "white", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
-        scale_fill_manual(name   = "Surveillance Type",
+        scale_fill_manual(name   = "National Surveillance Type",
                           values = surv_colors,
                           breaks = c("Yes, mandatory", "Yes, voluntary", "No"),
                           labels = c("Mandatory", "Voluntary", "No")) +
@@ -701,7 +701,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         scale_y_continuous(limits = c(0, 100)) +
         scale_fill_manual(values = c("Mandatory" = surv_colors[["Yes, mandatory"]],
                                      "Voluntary" = surv_colors[["Yes, voluntary"]])) +
-        labs(x = "Patient information", y = "Countries (%)", fill = "Surveillance type") +
+        labs(x = "Patient information", y = "Countries (%)", fill = "National Surveillance type") +
         theme_minimal() +
         theme(axis.text.x     = element_text(angle = 90, hjust = 1, vjust = .5),
               legend.position = "top")

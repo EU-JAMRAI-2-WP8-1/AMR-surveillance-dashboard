@@ -1040,12 +1040,15 @@ h1 {
 }
 
 /* Banner box: light grey matching the background image, with the image shown on
-   the right part only. The gradient fades the image into the grey so its left side
-   (incl. the EU-JAMRAI logo) stays hidden under the text area. */
+   the right part. The image is a crop of EUjamrai2_Background_6.png without its
+   top band (which holds the EU-JAMRAI logo), so it can be shown wide and zoomed in
+   without the logo appearing. The gradient fades the image into the grey behind
+   the text; it is angled (rather than "to right") so the fade edge is slanted. */
 .insight-landing-hero {
     position: relative;
     overflow: hidden;
     background-color: #e6e6e6;
+    border: 1px solid #c4c4c4;
     border-radius: 8px;
     margin: 16px 0 32px;
     min-height: 260px;
@@ -1059,10 +1062,10 @@ h1 {
     top: 0;
     right: 0;
     bottom: 0;
-    width: 55%;
+    width: 75%;
     background-image:
-        linear-gradient(to right, #e6e6e6 0%, #e6e6e6 25%, rgba(230, 230, 230, 0) 60%),
-        url("www/images/EUjamrai2_Background_6.png");
+        linear-gradient(110deg, #e6e6e6 0%, #e6e6e6 12%, rgba(230, 230, 230, 0) 70%),
+        url("www/images/EUjamrai2_Background_6_banner.png");
     /* The gradient layer gets its own full-size, non-tiled box: with both layers
        sized "cover" and right-aligned, sub-pixel rounding left a 1px gap on the
        left edge where the tiled image's opposite edge showed through as a line. */
@@ -1666,4 +1669,117 @@ body.section-3 .full-question-title-box {
         width: 100%;
         float: none;
     }
+}
+
+/* ==========================================================================
+   INSIGHT TAB COLOURS (proposal, pending colleagues' approval)
+   One colour per insight tab, like the Dashboard's three section colours:
+     Insight 1 - muted purple, Insight 2 - soft orange, Insight 3 - muted lime.
+   Applied only to page chrome (landing cards, sidebar buttons, intro box,
+   Insight 2 sub-tabs), never to titles, charts or tables.
+   Self-contained: deleting this whole block restores the JAMRAI blue
+   (#008aab) everywhere, since every rule below falls back to it.
+   ========================================================================== */
+#insight-goto_tab1,
+#insightTabToggle input[value="tab1"] + .btn,
+.tab-pane[data-value="tab1"] {
+    --insight-color: #8e7cc3;   /* main colour */
+    --insight-dark:  #6f5ca8;   /* hover */
+    --insight-text:  #4e3d85;   /* dark text on tinted backgrounds */
+    --insight-tint:  #f5f2fb;   /* pale background */
+    --insight-light: #d6cdeb;   /* thin outlines */
+    --insight-soft:  #e6e0f4;   /* icon badge background */
+}
+
+#insight-goto_tab2,
+#insightTabToggle input[value="tab2"] + .btn,
+.tab-pane[data-value="tab2"] {
+    --insight-color: #e8935a;
+    --insight-dark:  #c97538;
+    --insight-text:  #8a4a1c;
+    --insight-tint:  #fdf4ee;
+    --insight-light: #f2cfb6;
+    --insight-soft:  #fae2d1;
+}
+
+#insight-goto_tab3,
+#insightTabToggle input[value="tab3"] + .btn,
+.tab-pane[data-value="tab3"] {
+    --insight-color: #8aa83f;
+    --insight-dark:  #6e8a2c;
+    --insight-text:  #4a5e1c;
+    --insight-tint:  #f6f9ee;
+    --insight-light: #d3e2b0;
+    --insight-soft:  #e5eecc;
+}
+
+/* Sidebar insight buttons: coloured icon when unselected, filled when selected */
+.view-toggle-wrapper #insightTabToggle .btn i {
+    color: var(--insight-color, inherit);
+}
+
+.view-toggle-wrapper #insightTabToggle input:checked + .btn {
+    background-color: var(--insight-color, #008aab) !important;
+    border-color: var(--insight-color, #008aab) !important;
+}
+
+.view-toggle-wrapper #insightTabToggle input:checked + .btn i {
+    color: white;
+}
+
+.view-toggle-wrapper #insightTabToggle input:checked + .btn:hover {
+    background-color: var(--insight-dark, #006d88) !important;
+    border-color: var(--insight-dark, #006d88) !important;
+}
+
+/* Landing page cards */
+.insight-landing-card {
+    background-color: var(--insight-tint, #f2fafc);
+    border-color: var(--insight-light, #b3dde6);
+    border-top-color: var(--insight-color, #008aab);
+    color: var(--insight-text, #005f78);
+}
+
+.insight-landing-card:hover,
+.insight-landing-card:focus {
+    color: var(--insight-text, #005f78);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--insight-color, #008aab) 28%, transparent);
+}
+
+.insight-landing-card-number {
+    background-color: var(--insight-color, #008aab);
+}
+
+.insight-landing-card-icon {
+    background-color: var(--insight-soft, #d6eff5);
+    color: var(--insight-color, #008aab);
+}
+
+.insight-landing-card:hover .insight-landing-card-icon,
+.insight-landing-card:focus .insight-landing-card-icon {
+    background-color: var(--insight-color, #008aab);
+    color: #fff;
+}
+
+.insight-landing-card-title {
+    color: var(--insight-text, #005f78);
+}
+
+.insight-landing-card-cta,
+.insight-landing-card-watermark {
+    color: var(--insight-color, #008aab);
+}
+
+/* Insight tabs: intro box ("Policy commitment" text) - titles and subtitles
+   keep the JAMRAI blue */
+.insight-intro-box {
+    background-color: var(--insight-tint, #f2fafc);
+    border-color: var(--insight-light, #b3dde6);
+    border-left-color: var(--insight-color, #008aab);
+}
+
+/* Insight #2 sub-tabs (Population coverage / Geographical representativeness) */
+#insight-it2SubTabs > li > a.active,
+#insight-it2SubTabs > li > a.active:hover {
+    background-color: var(--insight-color, #008aab) !important;
 }
