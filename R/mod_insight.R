@@ -684,7 +684,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       it1_hm_f() %>%
         ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
         geom_tile_interactive(aes(tooltip = glue("In <b>{Country}</b>, suveillance of <b>{abr} 
-                                                  resistant <i>{bug}</i> </b> in <b>{type}</b> {surv_lab}")),
+                                                  <i>{bug}</i> </b> in <b>{type}</b> {surv_lab}")),
                               color = "white", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free", switch = "both") +
         scale_fill_manual(name   = "National Surveillance Type",
