@@ -645,7 +645,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
   mutate(type = factor(type, levels = c("Blood/CSF","Urine","Lower respiratory tract","Wound/Tissue swab", "Screening")),
          type_lab =  str_to_lower(type)) |> 
   mutate(abr = case_when(str_detect(xlab,"CR")~"carbapenem resistant",# resistant",
-                         str_detect(xlab,"3GC")~"3rd-generation cephalosporin",
+                         str_detect(xlab,"3GC")~"3rd-generation cephalosporin resistant",
                          str_detect(xlab,"CT")~"colistin resistant",
                          str_detect(xlab,"AMP")~"ampicillin resistant",
                          
