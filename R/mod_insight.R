@@ -1,81 +1,81 @@
 
 mod_insight_ui <- function(id) {
   ns <- NS(id)
-
+  
   tabsetPanel(
     id = ns("insightTabs"),
-
+    
     tabPanel("Insight - landing page", value = "landing",
-      uiOutput(ns("md_content_landing"))
+             uiOutput(ns("md_content_landing"))
     ),
-
+    
     tabPanel("Insight #1", value = "tab1",
-      fluidRow(
-        column(6,
-          girafeOutput(ns("plot_it1")),
-          uiOutput(ns("country_comparison_header_if1")),
-          DT::dataTableOutput(ns("country_context_if1"))
-        ),
-        column(6,
-          uiOutput(ns("md_content_it1"))
-        )
-      )
+             fluidRow(
+               column(6,
+                      girafeOutput(ns("plot_it1")),
+                      uiOutput(ns("country_comparison_header_if1")),
+                      DT::dataTableOutput(ns("country_context_if1"))
+               ),
+               column(6,
+                      uiOutput(ns("md_content_it1"))
+               )
+             )
     ),
-
+    
     tabPanel("Insight #2", value = "tab2",
-      fluidRow(
-        column(6,
-          tabsetPanel(
-            id = ns("it2SubTabs"),
-
-            # Population coverage
-            tabPanel(title = tagList(icon("people-group"), " Population coverage"), value = "population_coverage",
-              fluidRow(
-                column(12,
-                  girafeOutput(ns("plot_it2"))
-                )
-              ),
-              fluidRow(
-                column(12,
-                  uiOutput(ns("country_comparison_header_if2")),
-                  DT::dataTableOutput(ns("country_context_if2"))
-                )
-              )
-            ),
-
-            # Geographical representativeness
-            tabPanel(title = tagList(icon("map"), " Geographical representativeness"), value = "geographical_representativeness",
-              fluidRow(
-                column(12,
-                  girafeOutput(ns("plot_it2_2"))
-                )
-              ),
-              fluidRow(
-                column(12,
-                  uiOutput(ns("country_comparison_header_if2_2")),
-                  DT::dataTableOutput(ns("country_context_if2_2"))
-                )
-              )
-            )
-          )
-        ),
-        column(6,
-          uiOutput(ns("md_content_it2"))
-        )
-      )
+             fluidRow(
+               column(6,
+                      tabsetPanel(
+                        id = ns("it2SubTabs"),
+                        
+                        # Population coverage
+                        tabPanel(title = tagList(icon("people-group"), " Population coverage"), value = "population_coverage",
+                                 fluidRow(
+                                   column(12,
+                                          girafeOutput(ns("plot_it2"))
+                                   )
+                                 ),
+                                 fluidRow(
+                                   column(12,
+                                          uiOutput(ns("country_comparison_header_if2")),
+                                          DT::dataTableOutput(ns("country_context_if2"))
+                                   )
+                                 )
+                        ),
+                        
+                        # Geographical representativeness
+                        tabPanel(title = tagList(icon("map"), " Geographical representativeness"), value = "geographical_representativeness",
+                                 fluidRow(
+                                   column(12,
+                                          girafeOutput(ns("plot_it2_2"))
+                                   )
+                                 ),
+                                 fluidRow(
+                                   column(12,
+                                          uiOutput(ns("country_comparison_header_if2_2")),
+                                          DT::dataTableOutput(ns("country_context_if2_2"))
+                                   )
+                                 )
+                        )
+                      )
+               ),
+               column(6,
+                      uiOutput(ns("md_content_it2"))
+               )
+             )
     ),
-
+    
     tabPanel("Insight #3", value = "tab3",
-      fluidRow(
-        column(6,
-          girafeOutput(ns("plot_it3"))
-        ),
-        column(6,
-          uiOutput(ns("md_content_it3"))
-        )
-      )
+             fluidRow(
+               column(6,
+                      girafeOutput(ns("plot_it3"))
+               ),
+               column(6,
+                      uiOutput(ns("md_content_it3"))
+               )
+             )
     )
-
+    
   )
 }
 
@@ -87,15 +87,15 @@ mod_insight_ui <- function(id) {
 # in at its own marker.
 render_md_with_markers <- function(lines, markers = list()) {
   if (length(lines) == 0 || !any(nzchar(trimws(lines)))) return(NULL)
-
+  
   to_html <- function(md_lines) {
     if (!any(nzchar(trimws(md_lines)))) return(NULL)
     HTML(markdown::markdownToHTML(paste(md_lines, collapse = "\n"), fragment.only = TRUE))
   }
-
+  
   marker_idx <- which(trimws(lines) %in% names(markers))
   if (length(marker_idx) == 0) return(to_html(lines))
-
+  
   pieces <- list()
   start  <- 1
   for (idx in marker_idx) {
@@ -104,7 +104,7 @@ render_md_with_markers <- function(lines, markers = list()) {
     start <- idx + 1
   }
   if (start <= length(lines)) pieces[[length(pieces) + 1]] <- to_html(lines[start:length(lines)])
-
+  
   tagList(pieces)
 }
 
@@ -118,26 +118,26 @@ insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px",
                                   collapsible = TRUE) {
   if (!collapsible) {
     return(tags$div(class = "insight-md-inline-figure",
-      tags$div(class = "insight-md-subtitle", h5(title)),
-      girafeOutput(ns(output_id), width = width, height = height)
+                    tags$div(class = "insight-md-subtitle", h5(title)),
+                    girafeOutput(ns(output_id), width = width, height = height)
     ))
   }
-
+  
   tags$div(class = "insight-md-inline-figure",
-    tags$div(class = "insight-md-subtitle",
-      tags$a(class = "insight-md-toggle collapsed",
-        `data-bs-toggle` = "collapse",
-        href             = paste0("#", fig_id),
-        role             = "button",
-        `aria-expanded`  = "false",
-        `aria-controls`  = fig_id,
-        tags$i(class = "fa fa-chevron-down")
-      ),
-      h5(title)
-    ),
-    tags$div(id = fig_id, class = "collapse",
-      girafeOutput(ns(output_id), width = width, height = height)
-    )
+           tags$div(class = "insight-md-subtitle",
+                    tags$a(class = "insight-md-toggle collapsed",
+                           `data-bs-toggle` = "collapse",
+                           href             = paste0("#", fig_id),
+                           role             = "button",
+                           `aria-expanded`  = "false",
+                           `aria-controls`  = fig_id,
+                           tags$i(class = "fa fa-chevron-down")
+                    ),
+                    h5(title)
+           ),
+           tags$div(id = fig_id, class = "collapse",
+                    girafeOutput(ns(output_id), width = width, height = height)
+           )
   )
 }
 
@@ -150,12 +150,12 @@ insight_inline_figure <- function(ns, fig_id, title, output_id, width = "720px",
 # lets a body splice in live content, e.g. a plot, in place of a placeholder line.
 render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, markers = list(), box_intro = FALSE) {
   lines <- readLines(path)
-
+  
   h3_idx <- which(grepl("^###\\s", lines))
-
+  
   preamble_end <- if (length(h3_idx)) h3_idx[1] - 1 else length(lines)
   preamble      <- lines[seq_len(preamble_end)]
-
+  
   if (box_intro) {
     # Box just the tab's intro text - the preamble content between its leading
     # "#"/"##" title line and the next heading line (e.g. the "## What can we learn
@@ -175,7 +175,7 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, ma
       body_lines    <- if (box_end >= title_end + 1) preamble[(title_end + 1):box_end] else character(0)
       after_lines   <- if (box_end < length(preamble)) preamble[(box_end + 1):length(preamble)] else character(0)
     }
-
+    
     preamble_html <- tagList(
       render_md_with_markers(heading_lines, markers),
       if (any(nzchar(trimws(body_lines)))) {
@@ -186,46 +186,46 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, ma
   } else {
     preamble_html <- render_md_with_markers(preamble, markers)
   }
-
+  
   if (length(h3_idx) == 0) return(tagList(preamble_html, disclaimer))
-
+  
   section_ends <- c(h3_idx[-1] - 1, length(lines))
-
+  
   sections <- Map(function(start, end, i) {
     heading_html <- HTML(markdown::markdownToHTML(lines[start], fragment.only = TRUE))
     body_lines   <- if (end >= start + 1) lines[(start + 1):end] else character(0)
-
+    
     # A heading with no text underneath (e.g. a legend-only "###" line) has nothing
     # to toggle, so it's shown as a plain heading with no arrow.
     if (!any(nzchar(trimws(body_lines)))) {
       return(tags$div(class = "insight-md-subtitle", heading_html))
     }
-
+    
     section_id <- paste0(id_prefix, "-section-", i)
-
+    
     # The closing "Why does X matter?" section of each tab starts folded in;
     # "Major trends"/"Actions for change" (and anything else) start folded out.
     starts_collapsed <- grepl("^###\\s+Why\\b", lines[start], ignore.case = TRUE)
-
+    
     tagList(
       tags$div(class = "insight-md-subtitle",
-        tags$a(class = if (starts_collapsed) "insight-md-toggle collapsed" else "insight-md-toggle",
-          `data-bs-toggle` = "collapse",
-          href             = paste0("#", section_id),
-          role             = "button",
-          `aria-expanded`  = if (starts_collapsed) "false" else "true",
-          `aria-controls`  = section_id,
-          tags$i(class = "fa fa-chevron-down")
-        ),
-        heading_html
+               tags$a(class = if (starts_collapsed) "insight-md-toggle collapsed" else "insight-md-toggle",
+                      `data-bs-toggle` = "collapse",
+                      href             = paste0("#", section_id),
+                      role             = "button",
+                      `aria-expanded`  = if (starts_collapsed) "false" else "true",
+                      `aria-controls`  = section_id,
+                      tags$i(class = "fa fa-chevron-down")
+               ),
+               heading_html
       ),
       tags$div(id = section_id,
-        class = if (starts_collapsed) "collapse insight-md-section" else "collapse show insight-md-section",
-        render_md_with_markers(body_lines, markers)
+               class = if (starts_collapsed) "collapse insight-md-section" else "collapse show insight-md-section",
+               render_md_with_markers(body_lines, markers)
       )
     )
   }, h3_idx, section_ends, seq_along(h3_idx))
-
+  
   tagList(preamble_html, disclaimer, sections)
 }
 
@@ -235,23 +235,23 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, ma
 insight_landing_cards <- function(ns) {
   card <- function(input_id, icon_name, number, title) {
     actionLink(ns(input_id), class = "insight-landing-card",
-      label = tagList(
-        tags$span(class = "insight-landing-card-body",
-          tags$span(class = "insight-landing-card-number", paste("Insight", number)),
-          tags$span(class = "insight-landing-card-head",
-            tags$span(class = "insight-landing-card-icon", icon(icon_name)),
-            tags$span(class = "insight-landing-card-title", title)
-          ),
-          tags$span(class = "insight-landing-card-cta", "Explore", icon("arrow-right"))
-        )
-      )
+               label = tagList(
+                 tags$span(class = "insight-landing-card-body",
+                           tags$span(class = "insight-landing-card-number", paste("Insight", number)),
+                           tags$span(class = "insight-landing-card-head",
+                                     tags$span(class = "insight-landing-card-icon", icon(icon_name)),
+                                     tags$span(class = "insight-landing-card-title", title)
+                           ),
+                           tags$span(class = "insight-landing-card-cta", "Explore", icon("arrow-right"))
+                 )
+               )
     )
   }
-
+  
   tags$div(class = "insight-landing-cards",
-    card("goto_tab1", "ranking-star", 1, "Mandatory surveillance of AMR priority pathogens"),
-    card("goto_tab2", "map-location-dot", 2, "Expansion of European surveillance beyond invasive infections"),
-    card("goto_tab3", "book", 3, "Use of surveillance data for national treatment guidance")
+           card("goto_tab1", "ranking-star", 1, "Mandatory surveillance of AMR priority pathogens"),
+           card("goto_tab2", "map-location-dot", 2, "Expansion of European surveillance beyond invasive infections"),
+           card("goto_tab3", "book", 3, "Use of surveillance data for national treatment guidance")
   )
 }
 
@@ -264,25 +264,25 @@ insight_landing_cards <- function(ns) {
 render_landing_md <- function(path, ns) {
   lines <- readLines(path)
   lines <- lines[!grepl("^<!---.*--->\\s*$", lines)]  # source-file comments
-
+  
   markers <- list("<!-- insight-cards -->" = function() insight_landing_cards(ns))
-
+  
   h2_idx   <- which(grepl("^##\\s", lines))
   hero_end <- if (length(h2_idx)) h2_idx[1] - 1 else length(lines)
-
+  
   hero <- tags$div(class = "insight-landing-hero",
-    tags$div(class = "insight-landing-hero-text",
-      render_md_with_markers(lines[seq_len(hero_end)], markers)
-    )
+                   tags$div(class = "insight-landing-hero-text",
+                            render_md_with_markers(lines[seq_len(hero_end)], markers)
+                   )
   )
-
+  
   section_ends <- c(h2_idx[-1] - 1, length(lines))
   sections <- Map(function(start, end) {
     tags$section(class = "insight-landing-section",
-      render_md_with_markers(lines[start:end], markers)
+                 render_md_with_markers(lines[start:end], markers)
     )
   }, h2_idx, section_ends)
-
+  
   tagList(hero, sections)
 }
 
@@ -305,8 +305,8 @@ country_comparison_header <- function(selected, filters_modified = FALSE) {
 # culture material filters (i.e. anything but the country filter) have been
 # narrowed from their default (all-selected) state.
 insight_table_filters_note <- tags$p(class = "insight-md-disclaimer",
-  icon("circle-info"),
-  "This table reflects your current filter selection."
+                                     icon("circle-info"),
+                                     "This table reflects your current filter selection."
 )
 
 # Renders a country head-to-head comparison table with the same DT widget and
@@ -350,12 +350,12 @@ with_country_summary_rows <- function(pct_long, selected) {
     group_by(value) %>%
     summarise(Percent = mean(Percent), .groups = "drop") %>%
     mutate(Country = "Selection mean")
-
+  
   overall_row <- pct_long %>%
     group_by(value) %>%
     summarise(Percent = mean(Percent), .groups = "drop") %>%
     mutate(Country = "Overall mean")
-
+  
   bind_rows(
     filter(pct_long, Country %in% selected),
     selection_row,
@@ -365,23 +365,23 @@ with_country_summary_rows <- function(pct_long, selected) {
 
 mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation, set_selected_tab) {
   moduleServer(id, function(input, output, session) {
-
+    
     observeEvent(selected_tab(), {
       updateTabsetPanel(session, "insightTabs", selected = selected_tab())
     })
-
+    
     ## Landing page ----
     output$md_content_landing <- renderUI({
       div(class = "insight-md-content insight-landing",
-        render_landing_md("content/md/landing.md", session$ns)
+          render_landing_md("content/md/landing.md", session$ns)
       )
     })
-
+    
     ## Landing page insight-box navigation ----
     observeEvent(input$goto_tab1, { set_selected_tab("tab1") })
     observeEvent(input$goto_tab2, { set_selected_tab("tab2") })
     observeEvent(input$goto_tab3, { set_selected_tab("tab3") })
-
+    
     ## Country filter integration ----
     # "shown" countries are the ones displayed on the graphs (selected + activated);
     # "activated" countries are additionally pre-selected on the graphs, as if the user
@@ -398,7 +398,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     #    ggiraph's lightweight "_set" client message (same mechanism as the reset
     #    buttons below), which updates the highlighted selection without regenerating
     #    the plot at all.
-
+    
     shownCountriesRV <- reactiveVal(character(0))
     observe({
       newShown <- sort(insight_filters()$shown)
@@ -408,7 +408,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     })
     shownCountries     <- debounce(reactive({ shownCountriesRV() }), 400)
     activatedCountries <- reactive({ insight_filters()$activated })
-
+    
     # Culture material / Pathogens filters — same "guard then debounce" treatment as
     # shownCountries above, and for the same reason: insight_filters() is one combined
     # reactive, so toggling *any* filter (say, a country) invalidates it and would
@@ -425,7 +425,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       }
     })
     selectedCultureMaterials <- debounce(reactive({ cultureMaterialsRV() }), 400)
-
+    
     pathogensRV <- reactiveVal(insightPathogenList)
     observe({
       newSelection <- insight_filters()$pathogens
@@ -434,7 +434,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       }
     })
     selectedPathogens <- debounce(reactive({ pathogensRV() }), 400)
-
+    
     resistancesRV <- reactiveVal(insightResistanceList)
     observe({
       newSelection <- insight_filters()$resistances
@@ -443,7 +443,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       }
     })
     selectedResistances <- debounce(reactive({ resistancesRV() }), 400)
-
+    
     # Whether the non-country filters relevant to each tab's graph have been changed from
     # their default (all-selected) state - used to warn that the fixed narrative text next
     # to the graph describes the default/unfiltered data, not the current selection. Country
@@ -455,21 +455,21 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         !identical(sort(selectedPathogens()),       sort(insightPathogenList))       ||
         !identical(sort(selectedResistances()),     sort(insightResistanceList))
     })
-
+    
     it2_filters_modified <- reactive({
       !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList)) ||
         !identical(sort(selectedPathogens()),       sort(insightPathogenList))
     })
-
+    
     it3_filters_modified <- reactive({
       !identical(sort(selectedCultureMaterials()), sort(insightCultureMaterialList))
     })
-
+    
     insight_text_disclaimer <- tags$p(class = "insight-md-disclaimer",
-      icon("triangle-exclamation"),
-      "This text reflects the default (unfiltered) data and may not match your current filter selection."
+                                      icon("triangle-exclamation"),
+                                      "This text reflects the default (unfiltered) data and may not match your current filter selection."
     )
-
+    
     # Sync graph selection -> country filter: selecting/deselecting a country directly
     # on any graph activates/deactivates the same country in the sidebar filter (the
     # reverse of the filter -> graph "_set" push in each renderGirafe block below).
@@ -500,12 +500,12 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         )
       }, ignoreNULL = FALSE)
     }
-
+    
     sync_graph_selection("plot_it1_selected")
     sync_graph_selection("plot_it2_selected")
     sync_graph_selection("plot_it2_2_selected")
     sync_graph_selection("plot_it3_selected")
-
+    
     # Re-derive the bar chart aggregates (count/total/proportion per group) from the
     # country-level heatmap data, so the bar charts stay consistent with whichever
     # countries are currently shown (the pre-computed *_bp.rds objects assume all countries).
@@ -518,7 +518,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         mutate(prop = count / total)
       rename(agg, !!prop_name := prop)
     }
-
+    
     # droplevels() so unselected countries/culture materials/pathogens/resistances don't
     # linger as empty rows/bars or facets (ggplot otherwise keeps unused factor levels as
     # breaks).
@@ -551,7 +551,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                Pathogen   %in% selectedPathogens(),
                Antibiotic %in% selectedResistances())
     })
-
+    
     it2_hm_f   <- reactive({
       it2$hm %>%
         mutate(pathogen = insightPathogenByXlabCode[as.character(xlab)]) %>%
@@ -561,7 +561,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         droplevels()
     })
     it2_bp_f   <- reactive({ recompute_bp(it2_hm_f(), c("type", "xlab"), "proportion") })
-
+    
     it2_2_hm_f <- reactive({
       it2_2$hm %>%
         mutate(pathogen = insightPathogenByXlabCode[as.character(xlab)]) %>%
@@ -571,7 +571,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         droplevels()
     })
     it2_2_bp_f <- reactive({ recompute_bp(it2_2_hm_f(), c("type", "xlab"), "proportion") })
-
+    
     # it3 has no culture-material column of its own - its x-axis is an infection syndrome
     # (BSI, UTI, ...), so insightTab3XlabToCultureMaterial translates each syndrome to the
     # specimen it's cultured from, letting the Culture material filter drive this graph too.
@@ -583,18 +583,18 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         droplevels()
     })
     it3_bp_f   <- reactive({ recompute_bp(it3_hm_f(), "xlab", "proportion") })
-
+    
     it3_ast_f  <- reactive({ filter(it3_ast, as.character(Country) %in% shownCountries()) %>% droplevels() })
     it3_wgt_f  <- reactive({ filter(it3_wgt, as.character(Country) %in% shownCountries()) %>% droplevels() })
-
+    
     ## Color scales ----
-
+    
     surv_colors <- c(
       "Yes, mandatory" = "#086D6A",
       "Yes, voluntary" = "#0fdbd5",
       "No"             = "#949494"
     )
-
+    
     surv_colorsPC <- c(
       "76-100%"                           = "#086D6A",
       "51-75%"                            = "#0BA4A0",
@@ -603,7 +603,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       "Do not know"                       = "#949494",
       "Not part of national surveillance" = "#E3C19B"
     )
-
+    
     surv_colorsGR <- c(
       "HIGH: all main geographical regions of the country are covered."   = "#086D6A",
       "MEDIUM: most geographical regions of the country are covered."     = "#0BA4A0",
@@ -611,15 +611,15 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       "Not part of national surveillance"                                 = "#E3C19B",
       "Do not know"                                                       = "#949494"
     )
-
+    
     surv_colorsEG <- c(
       "Yes"         = "#044556",
       "No"          = "#F9BCB3",
       "Do not know" = "#949494"
     )
-
+    
     ## Shared bar chart theme ----
-
+    
     bp_theme <- theme_minimal() +
       theme(
         axis.title.x     = element_blank(),
@@ -631,46 +631,52 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         legend.position  = "none",
         strip.clip       = "off"
       )
-
+    
     ## Build ggplot objects ----
     # Reactive on the filtered *_bp_f()/*_hm_f() data so the charts stay in sync with
     # the country filter (shown countries appear, unselected ones are dropped entirely).
-
+    
     # --- Tab 1 ---
-
+    
     gg_bp_it1 <- reactive({
       it1_bp_f() %>%
         group_by(type, xlab) %>%
-  mutate(percentage = percentage / sum(percentage))%>%
-  mutate(type = factor(type, levels = c("Blood/CSF","Urine","Lower respiratory tract","Wound/Tissue swab", "Screening")),
-         type_lab =  str_to_lower(type)) |> 
-  mutate(abr = case_when(str_detect(xlab,"CR")~"carbapenem resistant",# resistant",
-                         str_detect(xlab,"3GC")~"3rd-generation cephalosporin resistant",
-                         str_detect(xlab,"CT")~"colistin resistant",
-                         str_detect(xlab,"AMP")~"ampicillin resistant",
-                         
-                         str_detect(xlab,"MRSA")~"methicillin-resistant <i>S. aureus</i>",
-                         str_detect(xlab,"VRE")~"vancomycin-resistant Enterococci",
-                         str_detect(xlab,"PNSP")~"penicillin-nonsusceptible Pneumococcus",
-                         
-                         .default = NA),
-         bug = case_when(str_detect(xlab,"E.coli")~"E. coli",
-                         str_detect(xlab,"K.pneumoniae")~"K. pneumoniae",
-                         str_detect(xlab,"A.baumannii")~"A. baumannii",
-                         str_detect(xlab,"P.aeruginosa")~"P. aeruginosa",
-                         str_detect(xlab,"H.influenzae") ~"H. influenzae",
-                         .default = ""),
-         surv_lab = case_when(value=="No" ~ "does <b>not exist</b>",
-                              value=="Yes, voluntary" ~ "is <b>voluntary</b>",
-                              value=="Yes, mandatory" ~ "is <b>mandatory</b>",
-                              .default = "")
-  ) |> 
+        mutate(percentage = percentage / sum(percentage))%>%
+        mutate(type = factor(type, levels = c("Blood/CSF","Urine","Lower respiratory/\ntract","Wound/\nTissue swab", "Screening")),
+               type_lab =  str_to_lower(type),
+               type_lab = str_remove(type_lab, "\n"),
+               type_lab = case_when(type_lab == "blood/csf" ~ "blood/CSF",
+                                    .default = type_lab)) |> 
+        mutate(abr = case_when(str_detect(xlab,"CR")~"carbapenem resistant",# resistant",
+                               str_detect(xlab,"3GC")~"3rd-generation cephalosporin resistant",
+                               str_detect(xlab,"CT")~"colistin resistant",
+                               str_detect(xlab,"AMP")~"ampicillin resistant",
+                               
+                               str_detect(xlab,"MRSA")~"methicillin-resistant <i>S. aureus</i>",
+                               str_detect(xlab,"VRE")~"vancomycin-resistant Enterococci",
+                               str_detect(xlab,"PNSP")~"penicillin-nonsusceptible Pneumococcus",
+                               
+                               .default = NA),
+               bug = case_when(str_detect(xlab,"E.coli")~"E. coli",
+                               str_detect(xlab,"K.pneumoniae")~"K. pneumoniae",
+                               str_detect(xlab,"A.baumannii")~"A. baumannii",
+                               str_detect(xlab,"P.aeruginosa")~"P. aeruginosa",
+                               str_detect(xlab,"H.influenzae") ~"H. influenzae",
+                               .default = ""),
+               surv_lab = case_when(value=="No" ~ "does <b>not exist</b>",
+                                    value=="Yes, voluntary" ~ "is <b>voluntary</b>",
+                                    value=="Yes, mandatory" ~ "is <b>mandatory</b>",
+                                    .default = "")
+        ) |> 
         ungroup() %>%
         ggplot(aes(x       = xlab,
                    y       = percentage,
                    fill    = value,
                    tooltip = glue::glue("Surveillance of <b>{abr} 
-                                                  <i>{bug}</i> </b> in <b>{type_lab}</b> {surv_lab} in {round(percentage,2)*100}% of countries."))) +         geom_col_interactive(position = "stack") +
+                                        <i>{bug}</i> </b> in <b>{type_lab}</b>
+                                        {surv_lab} in {round(percentage,2)*100}% 
+                                        of countries."))) + 
+        geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
         scale_fill_manual(values = surv_colors) +
@@ -679,7 +685,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         guides(fill = "none") +
         bp_theme
     })
-
+    
     gg_hm_it1 <- reactive({
       it1_hm_f() %>%
         ggplot(aes(x = xlab, y = Country, fill = value, data_id = Country)) +
@@ -704,7 +710,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           strip.clip       = "off"
         )
     })
-
+    
     # Split violins (R/geom_split_violin.R) can't carry tooltips - ggiraph has no interactive
     # version of geom_split_violin - so the overlaid boxplots carry them instead, with
     # their quartiles pre-computed per variable/surveillance type for the tooltip text.
@@ -729,18 +735,42 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         theme(axis.text.x     = element_text(angle = 90, hjust = 1, vjust = .5),
               legend.position = "top")
     })
-
+    
     # --- Tab 2: population coverage ---
-
+    
     gg_bp_it2 <- reactive({
       it2_bp_f() %>%
         group_by(type, xlab) %>%
         mutate(proportion = proportion / sum(proportion)) %>%
+        mutate(type = factor(type, levels = c("Blood/CSF","Urine","Lower respiratory/\ntract","Wound/\nTissue swab", "Screening")),
+               type_lab =  str_to_lower(type),
+               type_lab = str_remove(type_lab, "\n"),
+               type_lab = case_when(type_lab == "blood/csf" ~ "blood/CSF",
+                                    .default = type_lab)) |> 
+        mutate(bug = case_when(str_detect(xlab,"E.coli")~"E. coli",
+                               str_detect(xlab,"K.pneumoniae")~"K. pneumoniae",
+                               str_detect(xlab,"A.baumannii")~"A. baumannii",
+                               str_detect(xlab,"P.aeruginosa")~"P. aeruginosa",
+                               str_detect(xlab,"H.influenzae") ~"H. influenzae",
+                               .default = ""),
+               
+               
+               surv_lab = case_when(str_detect(value,"76-100") ~ "between 76-100%",
+                                    str_detect(value,"51-75%") ~"between 51-75%",
+                                    str_detect(value,"26-50") ~"between 26-50%",
+                                    str_detect(value,"1-25%") ~"between 1-25%",
+                                    str_detect(value,"Not part of national") ~"not part of national surveillance",
+                                    str_detect(value,"Do not know") ~ "unknown",
+                                    .default = "")
+        ) |> 
         ungroup() %>%
         ggplot(aes(x       = xlab,
                    y       = proportion,
                    fill    = value,
-                   tooltip = glue("{round(proportion * 100)}%"))) +
+                   tooltip = glue("The population coverage for national AST data from 
+                                  <b>{bug}</b> in <b>{type} </b> is <b>{surv_lab}</b> in 
+                                  <b>{round(proportion * 100)}%</b> of all countries.")#glue("{round(proportion * 100)}%"))
+        )) +
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
@@ -753,7 +783,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         guides(fill = "none") +
         bp_theme
     })
-
+    
     gg_hm_it2 <- reactive({
       it2_hm_f() |>
         mutate(tooltip = glue("In <b>{Country}</b>, the population coverage for national AST data 
@@ -783,24 +813,39 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           strip.clip       = "off"
         )
     })
-
+    
     # --- Tab 2: geographical representativeness ---
-
+    
     gg_bp_it2_2 <- reactive({
       it2_2_bp_f() %>%
         group_by(type, xlab) %>%
         mutate(proportion = proportion / sum(proportion)) %>%
+        mutate(type = factor(type, levels = c("Blood/CSF","Urine","Lower respiratory/\ntract","Wound/\nTissue swab", "Screening")),
+               type_lab =  str_to_lower(type),
+               type_lab = str_remove(type_lab, "\n"),
+               type_lab = case_when(type_lab == "blood/csf" ~ "blood/CSF",
+                                    .default = type_lab)) |> 
+        mutate(bug = case_when(str_detect(xlab,"E.coli")~"E. coli",
+                               str_detect(xlab,"K.pneumoniae")~"K. pneumoniae",
+                               str_detect(xlab,"A.baumannii")~"A. baumannii",
+                               str_detect(xlab,"P.aeruginosa")~"P. aeruginosa",
+                               str_detect(xlab,"H.influenzae") ~"H. influenzae",
+                               .default = ""),
+               
+               
+               surv_lab = case_when(str_detect(value,"HIGH") ~ "high",
+                                    str_detect(value,"MEDIUM") ~"medium",
+                                    str_detect(value,"Not part of national") ~"not part of national surveillance",
+                                    str_detect(value,"Do not know") ~ "unknown",
+                                    .default = "")
+        ) |> 
         ungroup() %>%
         ggplot(aes(x       = xlab,
                    y       = proportion,
                    fill    = value,
-                   tooltip = glue("{
-                                   case_when(
-	      value == 'HIGH: all main geographical regions of the country are covered.' ~ 'High',
-	      value == 'MEDIUM: most geographical regions of the country are covered.'  ~ 'Medium',
-	      value == 'LOW: a few geographical areas of the country are covered.'      ~ 'Low',
-	      TRUE                      ~ as.character(value)
-	    )}, {round(proportion * 100)}%"))) +
+                   tooltip = glue("The geographical representativness for national AST data from 
+                                  <b>{bug}</b> in <b>{type} </b> is <b>{surv_lab}</b> in 
+                                  <b>{round(proportion * 100)}%</b> of all countries."))) +
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         facet_grid(cols = vars(type), scales = "free_x", space = "free") +
@@ -810,7 +855,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         guides(fill = "none") +
         bp_theme
     })
-
+    
     gg_hm_it2_2 <- reactive({
       it2_2_hm_f() |>
         mutate(tooltip = glue("In <b>{Country}</b> the geographical representativeness for national AST data 
@@ -865,18 +910,22 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           strip.clip       = "off"
         )
     })
-
+    
     # --- Tab 3 ---
-
+    
     gg_bp_it3 <- reactive({
       it3_bp_f() |>
-        group_by(xlab) %>%
-        mutate(proportion = proportion / sum(proportion)) %>%
+        group_by(xlab)  |> 
+        mutate(proportion = proportion / sum(proportion)) |> 
+        mutate(infections = xlab,
+               surv_lab = "dummy") |> 
         ungroup() %>%
         ggplot(aes(x       = xlab,
                    y       = proportion,
                    fill    = value,
-                   tooltip = glue("{round(proportion * 100)}%"))) +
+                   tooltip = glue("A national guidance plan for {infections} is {surv_lab} in {round(proportion * 100)}% of countries.")
+               )
+               ) +
         geom_col_interactive(position = "stack") +
         geom_hline(yintercept = 0.5, color = "red", linewidth = 0.5) +
         scale_fill_manual(values = surv_colorsEG) +
@@ -885,7 +934,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         guides(fill = "none") +
         bp_theme
     })
-
+    
     it3_xlab_labels <- c(
       "BSI"         = "Bloodstream\ninfection",
       "uncomp. UTI" = "Uncomplicated\nurinary tract infection",
@@ -894,7 +943,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       "LRTI"        = "Lower respiratory\ntract infection",
       "SSTI"        = "Skin and soft\ntissue infection"
     )
-
+    
     gg_hm_it3 <- reactive({
       it3_hm_f() |>
         mutate(tooltip = glue("In <b>{Country}</b> national treatment guidance 
@@ -931,11 +980,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           legend.position  = "right"
         )
     })
-
+    
     ## Combine bar charts and heatmaps ----
-
+    
     hm_no_strip <- theme(strip.text = element_blank())
-
+    
     gg_combined_it1 <- reactive({
       gg_bp_it1() + plot_spacer() + (gg_hm_it1() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
@@ -946,7 +995,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
               legend.title.position = "top",
               legend.key.spacing.x = unit(6, "pt"))
     })
-
+    
     gg_combined_it2 <- reactive({
       gg_bp_it2() + plot_spacer() + (gg_hm_it2() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
@@ -957,7 +1006,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
               legend.title.position = "top",
               legend.key.spacing.x = unit(6, "pt"))
     })
-
+    
     gg_combined_it2_2 <- reactive({
       gg_bp_it2_2() + plot_spacer() + (gg_hm_it2_2() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
@@ -968,7 +1017,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
               legend.title.position = "top",
               legend.key.spacing.x = unit(6, "pt"))
     })
-
+    
     gg_combined_it3 <- reactive({
       gg_bp_it3() + plot_spacer() + (gg_hm_it3() + hm_no_strip) +
         plot_layout(ncol = 1, heights = c(2.5, -0.5, 10), guides = "collect") &
@@ -979,9 +1028,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
               legend.title.position = "top",
               legend.key.spacing.x = unit(6, "pt"))
     })
-
+    
     ## Shared girafe options ----
-
+    
     # Highlight color for "activated" countries on the graphs - keep in sync with
     # .country-pill-activated in www/css/style.css.
     #
@@ -996,7 +1045,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
     # is comfortably larger than the width so the whole outline sits inside the tile,
     # clear of that shared line regardless of paint order.
     selection_css <- "outline: 1px solid #ff6a00; outline-offset: -2px;"
-
+    
     girafe_opts <- list(
       opts_hover_inv(css = "opacity:0.5;"),
       opts_hover(css = "stroke-width:1;cursor:pointer", reactive = TRUE),
@@ -1009,9 +1058,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       opts_sizing(rescale = TRUE),
       opts_toolbar(saveaspng = TRUE, position = "bottomright", delay_mouseout = 2000)
     )
-
+    
     ## Insight tab 1 ----
-
+    
     output$plot_it1 <- renderGirafe({
       req(nrow(it1_hm_f()) > 0)
       girafe(code    = print(gg_combined_it1()),
@@ -1027,7 +1076,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                             pngname = "JAMREYE_InsightTab_1", delay_mouseout = 2000)
              )))
     })
-
+    
     # Sync the highlighted selection to the client without rebuilding the widget.
     observeEvent(activatedCountries(), {
       session$sendCustomMessage(
@@ -1035,11 +1084,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         message = activatedCountries()
       )
     }, ignoreInit = TRUE)
-
+    
     output$country_comparison_header_if1 <- renderUI({
       country_comparison_header(input$plot_it1_selected, it1_filters_modified())
     })
-
+    
     output$country_context_if1 <- DT::renderDT({
       req(input$plot_it1_selected)
       pct <- it1_hm_f() %>%
@@ -1052,7 +1101,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
         ungroup()
-
+      
       with_country_summary_rows(pct, input$plot_it1_selected) |>
         tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
         dplyr::transmute(Country,
@@ -1063,24 +1112,24 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                              ~ paste0(round(.x, 0), "%"))) |>
         render_country_comparison_table()
     })
-
+    
     output$md_content_it1 <- renderUI({
       div(class = "insight-md-content",
-        render_collapsible_insight_md("content/md/tab1.md", session$ns("it1"),
-          disclaimer = if (it1_filters_modified()) insight_text_disclaimer,
-          box_intro  = TRUE,
-          # See md_content_it3 below for why width/height match width_svg/height_svg.
-          markers = list(
-            "<!-- insight-tab1-vp-figure -->" = function() {
-              insight_inline_figure(session$ns, session$ns("it1-vp-figure"),
-                "Patient data availability for mandatory versus voluntary surveillance",
-                "plot_it1_vp", collapsible = FALSE)
-            }
+          render_collapsible_insight_md("content/md/tab1.md", session$ns("it1"),
+                                        disclaimer = if (it1_filters_modified()) insight_text_disclaimer,
+                                        box_intro  = TRUE,
+                                        # See md_content_it3 below for why width/height match width_svg/height_svg.
+                                        markers = list(
+                                          "<!-- insight-tab1-vp-figure -->" = function() {
+                                            insight_inline_figure(session$ns, session$ns("it1-vp-figure"),
+                                                                  "Patient data availability for mandatory versus voluntary surveillance",
+                                                                  "plot_it1_vp", collapsible = FALSE)
+                                          }
+                                        )
           )
-        )
       )
     })
-
+    
     output$plot_it1_vp <- renderGirafe({
       req(nrow(it1_vp_f()) > 0)
       girafe(code       = print(gg_vp_it1()),
@@ -1099,9 +1148,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                             pngname = "JAMREYE_InsightTab_1_VP", delay_mouseout = 2000)
              ))
     })
-
+    
     ## Insight tab 2 — population coverage ----
-
+    
     output$plot_it2 <- renderGirafe({
       req(nrow(it2_hm_f()) > 0)
       girafe(code    = print(gg_combined_it2()),
@@ -1117,7 +1166,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                             pngname = "JAMREYE_InsightTab_2", delay_mouseout = 2000)
              )))
     })
-
+    
     # Sync the highlighted selection to the client without rebuilding the widget.
     observeEvent(activatedCountries(), {
       session$sendCustomMessage(
@@ -1125,11 +1174,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         message = activatedCountries()
       )
     }, ignoreInit = TRUE)
-
+    
     output$country_comparison_header_if2 <- renderUI({
       country_comparison_header(input$plot_it2_selected, it2_filters_modified())
     })
-
+    
     output$country_context_if2 <- DT::renderDT({
       req(input$plot_it2_selected)
       pct <- it2_hm_f() %>%
@@ -1143,24 +1192,24 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
         ungroup()
-
+      
       with_country_summary_rows(pct, input$plot_it2_selected) |>
         tidyr::pivot_wider(id_cols = "Country", names_from = value, values_from = Percent) |>
         dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%"))) |>
         render_country_comparison_table()
     })
-
+    
     output$md_content_it2 <- renderUI({
       div(class = "insight-md-content",
-        render_collapsible_insight_md("content/md/tab2.md", session$ns("it2"),
-          disclaimer = if (it2_filters_modified()) insight_text_disclaimer,
-          box_intro  = TRUE
-        )
+          render_collapsible_insight_md("content/md/tab2.md", session$ns("it2"),
+                                        disclaimer = if (it2_filters_modified()) insight_text_disclaimer,
+                                        box_intro  = TRUE
+          )
       )
     })
-
+    
     ## Insight tab 2 — geographical representativeness ----
-
+    
     output$plot_it2_2 <- renderGirafe({
       req(nrow(it2_2_hm_f()) > 0)
       girafe(code    = print(gg_combined_it2_2()),
@@ -1176,7 +1225,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                             pngname = "JAMREYE_InsightTab_2b", delay_mouseout = 2000)
              )))
     })
-
+    
     # Sync the highlighted selection to the client without rebuilding the widget.
     observeEvent(activatedCountries(), {
       session$sendCustomMessage(
@@ -1184,11 +1233,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         message = activatedCountries()
       )
     }, ignoreInit = TRUE)
-
+    
     output$country_comparison_header_if2_2 <- renderUI({
       country_comparison_header(input$plot_it2_2_selected, it2_filters_modified())
     })
-
+    
     output$country_context_if2_2 <- DT::renderDT({
       req(input$plot_it2_2_selected)
       pct <- it2_2_hm_f() %>%
@@ -1204,7 +1253,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         group_by(Country) %>%
         mutate(Percent = 100 * Number / sum(Number)) %>%
         ungroup()
-
+      
       with_country_summary_rows(pct, input$plot_it2_2_selected) |>
         mutate(value = case_when(
           grepl("^HIGH",   value) ~ "HIGH",
@@ -1216,9 +1265,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         dplyr::mutate(across(-Country, ~ paste0(round(.x, 0), "%"))) |>
         render_country_comparison_table()
     })
-
+    
     ## Insight tab 3 ----
-
+    
     output$plot_it3 <- renderGirafe({
       req(nrow(it3_hm_f()) > 0)
       girafe(code    = print(gg_combined_it3()),
@@ -1234,7 +1283,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                             pngname = "JAMREYE_InsightTab_3", delay_mouseout = 2000)
              )))
     })
-
+    
     # Sync the highlighted selection to the client without rebuilding the widget.
     observeEvent(activatedCountries(), {
       session$sendCustomMessage(
@@ -1242,33 +1291,33 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
         message = activatedCountries()
       )
     }, ignoreInit = TRUE)
-
+    
     output$md_content_it3 <- renderUI({
       div(class = "insight-md-content",
-        render_collapsible_insight_md("content/md/tab3.md", session$ns("it3"),
-          disclaimer = if (it3_filters_modified()) insight_text_disclaimer,
-          box_intro  = TRUE,
-          # width/height on both figures below match their plot's own width_svg=6,
-          # height_svg=5 ratio rather than width="100%": with rescale=TRUE, a
-          # container wider than that ratio leaves slack space that ggiraph
-          # letterboxes by centering the SVG in it - matching the ratio removes the
-          # slack so the plot sits flush against the box's left edge.
-          markers = list(
-            "<!-- insight-tab3-ast-figure -->" = function() {
-              insight_inline_figure(session$ns, session$ns("it3-ast-figure"),
-                "AST data used for national treatment guidance", "plot_it3_ast")
-            },
-            "<!-- insight-tab3-wgt-figure -->" = function() {
-              insight_inline_figure(session$ns, session$ns("it3-wgt-figure"),
-                "Who guides empiric antibiotic treatment", "plot_it3_wgt")
-            }
+          render_collapsible_insight_md("content/md/tab3.md", session$ns("it3"),
+                                        disclaimer = if (it3_filters_modified()) insight_text_disclaimer,
+                                        box_intro  = TRUE,
+                                        # width/height on both figures below match their plot's own width_svg=6,
+                                        # height_svg=5 ratio rather than width="100%": with rescale=TRUE, a
+                                        # container wider than that ratio leaves slack space that ggiraph
+                                        # letterboxes by centering the SVG in it - matching the ratio removes the
+                                        # slack so the plot sits flush against the box's left edge.
+                                        markers = list(
+                                          "<!-- insight-tab3-ast-figure -->" = function() {
+                                            insight_inline_figure(session$ns, session$ns("it3-ast-figure"),
+                                                                  "AST data used for national treatment guidance", "plot_it3_ast")
+                                          },
+                                          "<!-- insight-tab3-wgt-figure -->" = function() {
+                                            insight_inline_figure(session$ns, session$ns("it3-wgt-figure"),
+                                                                  "Who guides empiric antibiotic treatment", "plot_it3_wgt")
+                                          }
+                                        )
           )
-        )
       )
     })
-
+    
     ## Insight tab 3 — AST data used ----
-
+    
     surv_colorsNTG <- c(
       "Routine AST data"        = "#044556",
       "Extended AST data"       = "#34687a",
@@ -1278,11 +1327,11 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       "No AST data used"        = "#b5a7b6",
       "Other"                   = "#4e3751"
     )
-
+    
     coverage_orderNTG <- c("Routine AST data", "Extended AST data", "AST data from NRL",
                            "International AST data.", "International guidance",
                            "No AST data used", "Other")
-
+    
     gg_it3_ast <- reactive({
       it3_ast_f() |>
         ggplot(aes(x       = count,
@@ -1301,7 +1350,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           panel.grid.minor   = element_blank()
         )
     })
-
+    
     output$plot_it3_ast <- renderGirafe({
       req(nrow(it3_ast_f()) > 0)
       girafe(code       = print(gg_it3_ast()),
@@ -1320,9 +1369,9 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                             pngname = "JAMREYE_InsightTab_3_AST", delay_mouseout = 2000)
              ))
     })
-
+    
     ## Insight tab 3 — Who guides empiric treatment ----
-
+    
     surv_colorsWGT <- c(
       "Regional and/or local guidance" = "#f9bcb3",
       "The healthcare facility"        = "#ca9088",
@@ -1330,10 +1379,10 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
       "Clinical microbiologist(s)"     = "#703f39",
       "Other."                         = "#471b17"
     )
-
+    
     coverage_orderWGT <- c("Regional and/or local guidance", "The healthcare facility",
                            "The treating physician(s).", "Clinical microbiologist(s)", "Other.")
-
+    
     gg_it3_wgt <- reactive({
       it3_wgt_f() |>
         ggplot(aes(x       = count,
@@ -1352,7 +1401,7 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
           panel.grid.minor   = element_blank()
         )
     })
-
+    
     output$plot_it3_wgt <- renderGirafe({
       req(nrow(it3_wgt_f()) > 0)
       girafe(code       = print(gg_it3_wgt()),
@@ -1371,6 +1420,6 @@ mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selec
                             pngname = "JAMREYE_InsightTab_3_WGT", delay_mouseout = 2000)
              ))
     })
-
+    
   })
 }
