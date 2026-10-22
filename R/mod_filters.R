@@ -194,6 +194,9 @@ mod_filters_server <- function(id) {
       )),
       update_countries = function(new_selection) {
         updateCheckboxGroupInput(session, "countriesSelection", selected = new_selection)
+      },
+      update_section = function(section) {
+        updateRadioGroupButtons(session, "sectionsSelection", selected = section)
       }
     )
 

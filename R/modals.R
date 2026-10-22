@@ -84,40 +84,7 @@ setup_modals <- function(input, output, session, email_config) {
     ))
   })
 
-  # Welcome/Usage modal - shows once on page load
-  observeEvent(TRUE, {
-    showModal(modalDialog(
-      title = tags$div(
-        class = "flex-space-between",
-        tags$div(
-          class = "modal-header-left",
-          tags$img(
-            src   = "www/logos/Jamreye_primary-Colour-RGB.svg",
-            class = "modal-logo",
-            alt   = "JAMREYE Logo"
-          ),
-          tags$div(
-            class = "modal-title-text",
-            HTML("Welcome to JAMREYE:<br>Your AMR Surveillance Dashboard")
-          )
-        ),
-        tags$div(
-          class = "modal-header-right",
-          modalButton("Start Exploring")
-        )
-      ),
-      tryCatch({
-        includeHTML("content/html/usage.html")
-      }, error = function(e) {
-        HTML("<p>Usage information unavailable</p>")
-      }),
-      easyClose = TRUE,
-      footer = NULL,
-      size = "l"
-    ))
-  }, once = TRUE, ignoreInit = FALSE)
-
-  # Instructions button - reopens the usage modal
+  # Instructions button - opens the usage modal
   observeEvent(input$showInstructions, {
     showModal(modalDialog(
       title = tags$div(

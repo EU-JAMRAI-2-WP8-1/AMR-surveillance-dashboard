@@ -1,7 +1,7 @@
 <!---  Landing page for insight tabs --->
 <!---  The "#" title and the text under it form the banner at the top of the page; each "##" heading starts a new section below it. --->
 <!---  Bullet points are shown as a row of small boxes; the insight-cards marker is replaced by the three clickable insight boxes. --->
-# Welcome to <span class="jamreye-word">JAMREYE</span> Insights!
+# Welcome to <span class="jamreye-word">JAMREYE</span> Insights analysis !
 
 This section presents dashboard data in an interactive and comparative format, supporting surveillance experts and policymakers to make data-driven decisions. By analysing data related to the three policy commitments (outlined in the [2023 Council Recommendation on AMR](https://health.ec.europa.eu/publications/council-recommendation-stepping-eu-actions-combat-antimicrobial-resistance-one-health-approach_en)) we have established a baseline evaluation of Europe’s progress toward implementation.
 

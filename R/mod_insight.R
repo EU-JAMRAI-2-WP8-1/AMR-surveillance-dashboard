@@ -260,12 +260,12 @@ insight_landing_cards <- function(ns) {
 # .insight-landing-hero), and each "##" heading starts its own section below it.
 # Bullet lists inside a section are styled as a row of small boxes in CSS
 # (.insight-landing-section ul), and the "<!-- insight-cards -->" marker line is
-# replaced by insight_landing_cards().
-render_landing_md <- function(path, ns) {
+# replaced by insight_landing_cards(). Also used for the dashboard landing page
+# (R/mod_dashboard_landing.R), which passes its own markers.
+render_landing_md <- function(path, ns,
+                              markers = list("<!-- insight-cards -->" = function() insight_landing_cards(ns))) {
   lines <- readLines(path)
   lines <- lines[!grepl("^<!---.*--->\\s*$", lines)]  # source-file comments
-
-  markers <- list("<!-- insight-cards -->" = function() insight_landing_cards(ns))
 
   h2_idx   <- which(grepl("^##\\s", lines))
   hero_end <- if (length(h2_idx)) h2_idx[1] - 1 else length(lines)

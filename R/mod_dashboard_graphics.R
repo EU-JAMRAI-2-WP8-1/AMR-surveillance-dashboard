@@ -1,25 +1,39 @@
+# Question drop-down, also shown on the dashboard landing page (R/mod_dashboard_landing.R)
+question_selector_card <- function(input_id, tip) {
+  tags$div(
+    class = "question-selector-card",
+    selectizeInput(
+      inputId   = input_id,
+      label     = HTML(paste0("<strong>Select a question</strong> (tip: ", tip, ")")),
+      choices   = c("Participating countries", allShortTitles),
+      selected  = "Participating countries",
+      multiple  = FALSE,
+      width     = "99%",
+      options   = list(
+        render = I("{
+          option: function(item, escape) { return '<div>' + item.label + '</div>'; },
+          item:   function(item, escape) { return '<div>' + item.label + '</div>'; }
+        }")
+      )
+    )
+  )
+}
+
+# Choices for question_selector_card() matching the active filters (labels carry the badges)
+question_choices <- function(active_questions) {
+  setNames(
+    c("Participating countries", active_questions[[2]]),
+    c("Participating countries", active_questions[[3]])
+  )
+}
+
 mod_dashboard_graphics_ui <- function(id) {
   ns <- NS(id)
   fluidRow(
     column(
       width = 5,
-      tags$div(
-        class = "question-selector-card",
-        selectizeInput(
-          inputId   = ns("questionSelection"),
-          label     = HTML("<strong>Select a question</strong> (tip: use the left filter panel first to narrow the selection)"),
-          choices   = c("Participating countries", allShortTitles),
-          selected  = "Participating countries",
-          multiple  = FALSE,
-          width     = "99%",
-          options   = list(
-            render = I("{
-              option: function(item, escape) { return '<div>' + item.label + '</div>'; },
-              item:   function(item, escape) { return '<div>' + item.label + '</div>'; }
-            }")
-          )
-        )
-      ),
+      question_selector_card(ns("questionSelection"),
+        tip = "use the left filter panel first to narrow the selection"),
       uiOutput(ns("multipleChoiceAnswerSelector")),
       tags$div(
         class = "dashboard-plot-container",
@@ -46,12 +60,8 @@ mod_dashboard_graphics_server <- function(id, filters, active_questions) {
   moduleServer(id, function(input, output, session) {
 
     observeEvent(filters(), {
-      choicesWithBadges <- setNames(
-        c("Participating countries", active_questions()[[2]]),
-        c("Participating countries", active_questions()[[3]])
-      )
       updateSelectizeInput(session, "questionSelection",
-                           choices = choicesWithBadges,
+                           choices = question_choices(active_questions()),
                            selected = "Participating countries")
     }, ignoreNULL = FALSE)
 
@@ -376,6 +386,13 @@ mod_dashboard_graphics_server <- function(id, filters, active_questions) {
         ) %>% config(displaylogo = FALSE, responsive = TRUE)
       }
     })
+
+    list(
+      question     = reactive(input$questionSelection),
+      set_question = function(question) {
+        updateSelectizeInput(session, "questionSelection", selected = question)
+      }
+    )
 
   })
 }

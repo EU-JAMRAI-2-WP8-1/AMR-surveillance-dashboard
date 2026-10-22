@@ -210,7 +210,14 @@ ui <- shinyUI(fluidPage(
           value = "dashboard",
           tabsetPanel(
             id = "mainTabs",
-            
+
+            # landing page (shown on app open and when clicking "Dashboard")
+            tabPanel(
+              "",
+              value = "landing",
+              mod_dashboard_landing_ui("dashboard_landing")
+            ),
+
             # map and bar chart
             tabPanel(
               "",
@@ -291,11 +298,19 @@ server <- function(input, output, session) {
   # Outer toggle - switch between Dashboard and Insight tabs
   observeEvent(input$outerToggle, {
     updateTabsetPanel(session, "outerTabs", selected = input$outerToggle)
-    if (input$outerToggle == "insight") {
+    if (input$outerToggle == "dashboard") {
+      showDashboardLanding()
+    } else if (input$outerToggle == "insight") {
       insightSelectedTab("landing")
       # Empty selection un-checks all 3 buttons (none of them is "active" while on the landing page)
       updateRadioGroupButtons(session, "insightTabToggle", selected = character(0))
     }
+  })
+
+  # Same as insightHomeClick below, for re-clicking "Dashboard" while already there
+  observeEvent(input$dashboardHomeClick, {
+    updateTabsetPanel(session, "outerTabs", selected = "dashboard")
+    showDashboardLanding()
   })
 
   # Re-clicking "Insight" while already in the Insight section doesn't change
@@ -308,8 +323,10 @@ server <- function(input, output, session) {
     updateRadioGroupButtons(session, "insightTabToggle", selected = character(0))
   })
   
-  # View toggle - switch between Graphics and Table tabs
+  # View toggle - switch between Graphics and Table tabs (on the landing page it
+  # only records the choice, opened by the landing page's button)
   observeEvent(input$viewToggle, {
+    if (identical(input$mainTabs, "landing")) return()
     if (input$viewToggle == "graphics") {
       updateTabsetPanel(session, "mainTabs", selected = "graphics")
     } else if (input$viewToggle == "table") {
@@ -321,8 +338,28 @@ server <- function(input, output, session) {
   ## Dashboard modules ----
   activeQuestions <- reactive({ getActiveQuestions() })
 
-  mod_dashboard_graphics_server("graphics", filters = filters, active_questions = activeQuestions)
+  graphics_mod <- mod_dashboard_graphics_server("graphics", filters = filters, active_questions = activeQuestions)
   mod_dashboard_table_server("table",    filters = filters, active_questions = activeQuestions)
+
+  # Dashboard landing page - its section/view cards only set the sidebar's section
+  # filter and Graphics/Table toggle; its "Open" button leaves it for the view
+  # (carrying over the question picked there)
+  dashboard_landing_mod <- mod_dashboard_landing_server("dashboard_landing",
+    filters          = filters,
+    active_questions = activeQuestions,
+    view             = reactive(input$viewToggle),
+    select_section   = filters_mod$update_section,
+    select_view      = function(view) updateRadioGroupButtons(session, "viewToggle", selected = view),
+    open_view        = function(view, question) {
+      if (view == "graphics") graphics_mod$set_question(question)
+      updateTabsetPanel(session, "mainTabs", selected = view)
+    }
+  )
+
+  showDashboardLanding <- function() {
+    updateTabsetPanel(session, "mainTabs", selected = "landing")
+    dashboard_landing_mod$set_question(graphics_mod$question())
+  }
   
   # Remove country from selection when cross button is clicked
   observeEvent(input$remove_country, {
