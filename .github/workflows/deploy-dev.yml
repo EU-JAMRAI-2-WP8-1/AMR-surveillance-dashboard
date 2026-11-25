@@ -7,7 +7,8 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moved to gcc 15/new glibc, where 'later' 1.4.4 fails to compile from source
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
