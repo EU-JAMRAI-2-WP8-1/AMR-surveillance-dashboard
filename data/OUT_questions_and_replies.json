@@ -3178,7 +3178,7 @@
             "Denmark": "No.",
             "Latvia": "Yes.",
             "Iceland": "No.",
-            "Cyprus": "No.",
+            "Cyprus": "WGS not used.",
             "Romania": "No."
         }
     },
@@ -3742,7 +3742,7 @@
             "Denmark": "Yes.",
             "Latvia": "No, WGS not used in real-time.",
             "Iceland": "No but under implementation.",
-            "Cyprus": "No, WGS not used in real-time.",
+            "Cyprus": "WGS not used.",
             "Romania": "WGS not used."
         }
     },
@@ -3818,7 +3818,7 @@
             "Denmark": "Yes, we have a data sharing/analysis pipeline set-up for this analysis.",
             "Latvia": "Yes, it can be done but there is no official data sharing/analysis pipeline.",
             "Iceland": "Yes, it can be done but there is no official data sharing/analysis pipeline.",
-            "Cyprus": "No joint analysis is performed with WGS data.",
+            "Cyprus": "WGS not used.",
             "Romania": "WGS not used."
         }
     },
