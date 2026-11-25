@@ -5,10 +5,6 @@ mod_insight_ui <- function(id) {
   tabsetPanel(
     id = ns("insightTabs"),
     
-    tabPanel("Insight - landing page", value = "landing",
-             uiOutput(ns("md_content_landing"))
-    ),
-    
     tabPanel("Insight #1", value = "tab1",
              fluidRow(
                column(6,
@@ -83,8 +79,7 @@ mod_insight_ui <- function(id) {
 # exactly matches a name in `markers` - that line is replaced by the live UI
 # `markers[[line]]()` produces (e.g. a Shiny plot output) instead of being passed
 # through markdownToHTML. Lets a source .md file mark a spot for a widget that plain
-# markdown can't express, the same way render_landing_md splices the insight boxes
-# in at its own marker.
+# markdown can't express.
 render_md_with_markers <- function(lines, markers = list()) {
   if (length(lines) == 0 || !any(nzchar(trimws(lines)))) return(NULL)
   
@@ -229,63 +224,6 @@ render_collapsible_insight_md <- function(path, id_prefix, disclaimer = NULL, ma
   tagList(preamble_html, disclaimer, sections)
 }
 
-# The landing page's three clickable insight boxes, spliced into landing.md at its
-# "<!-- insight-cards -->" marker. Each box is an actionLink wired to the same
-# set_selected_tab() navigation as the module's goto_tabX observers.
-insight_landing_cards <- function(ns) {
-  card <- function(input_id, icon_name, number, title) {
-    actionLink(ns(input_id), class = "insight-landing-card",
-               label = tagList(
-                 tags$span(class = "insight-landing-card-body",
-                           tags$span(class = "insight-landing-card-number", paste("Insight", number)),
-                           tags$span(class = "insight-landing-card-head",
-                                     tags$span(class = "insight-landing-card-icon", icon(icon_name)),
-                                     tags$span(class = "insight-landing-card-title", title)
-                           ),
-                           tags$span(class = "insight-landing-card-cta", "Explore", icon("arrow-right"))
-                 )
-               )
-    )
-  }
-  
-  tags$div(class = "insight-landing-cards",
-           card("goto_tab1", "ranking-star", 1, "Mandatory surveillance of AMR priority pathogens"),
-           card("goto_tab2", "map-location-dot", 2, "Expansion of European surveillance beyond invasive infections"),
-           card("goto_tab3", "book", 3, "Use of surveillance data for national treatment guidance")
-  )
-}
-
-# Renders landing.md as a single-column page: the "#" title and the text under it
-# become the banner box at the top (background image in CSS, see
-# .insight-landing-hero), and each "##" heading starts its own section below it.
-# Bullet lists inside a section are styled as a row of small boxes in CSS
-# (.insight-landing-section ul), and the "<!-- insight-cards -->" marker line is
-# replaced by insight_landing_cards(). Also used for the dashboard landing page
-# (R/mod_dashboard_landing.R), which passes its own markers.
-render_landing_md <- function(path, ns,
-                              markers = list("<!-- insight-cards -->" = function() insight_landing_cards(ns))) {
-  lines <- readLines(path)
-  lines <- lines[!grepl("^<!---.*--->\\s*$", lines)]  # source-file comments
-
-  h2_idx   <- which(grepl("^##\\s", lines))
-  hero_end <- if (length(h2_idx)) h2_idx[1] - 1 else length(lines)
-  
-  hero <- tags$div(class = "insight-landing-hero",
-                   tags$div(class = "insight-landing-hero-text",
-                            render_md_with_markers(lines[seq_len(hero_end)], markers)
-                   )
-  )
-  
-  section_ends <- c(h2_idx[-1] - 1, length(lines))
-  sections <- Map(function(start, end) {
-    tags$section(class = "insight-landing-section",
-                 render_md_with_markers(lines[start:end], markers)
-    )
-  }, h2_idx, section_ends)
-  
-  tagList(hero, sections)
-}
-
 # The head-to-head comparison table only has content once at least one country is
 # selected on the graph above it; this renders either its header or, in the meantime,
 # a placeholder sentence instead of a header with nothing underneath it.
@@ -363,24 +301,12 @@ with_country_summary_rows <- function(pct_long, selected) {
   )
 }
 
-mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation, set_selected_tab) {
+mod_insight_server <- function(id, it1, it2, it2_2, it3, it3_ast, it3_wgt, selected_tab, insight_filters, sync_activation) {
   moduleServer(id, function(input, output, session) {
     
     observeEvent(selected_tab(), {
       updateTabsetPanel(session, "insightTabs", selected = selected_tab())
     })
-    
-    ## Landing page ----
-    output$md_content_landing <- renderUI({
-      div(class = "insight-md-content insight-landing",
-          render_landing_md("content/md/landing.md", session$ns)
-      )
-    })
-    
-    ## Landing page insight-box navigation ----
-    observeEvent(input$goto_tab1, { set_selected_tab("tab1") })
-    observeEvent(input$goto_tab2, { set_selected_tab("tab2") })
-    observeEvent(input$goto_tab3, { set_selected_tab("tab3") })
     
     ## Country filter integration ----
     # "shown" countries are the ones displayed on the graphs (selected + activated);

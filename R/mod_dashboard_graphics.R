@@ -1,4 +1,4 @@
-# Question drop-down, also shown on the dashboard landing page (R/mod_dashboard_landing.R)
+# Question drop-down at the top of the Graphics view
 question_selector_card <- function(input_id, tip) {
   tags$div(
     class = "question-selector-card",
@@ -386,13 +386,6 @@ mod_dashboard_graphics_server <- function(id, filters, active_questions) {
         ) %>% config(displaylogo = FALSE, responsive = TRUE)
       }
     })
-
-    list(
-      question     = reactive(input$questionSelection),
-      set_question = function(question) {
-        updateSelectizeInput(session, "questionSelection", selected = question)
-      }
-    )
 
   })
 }

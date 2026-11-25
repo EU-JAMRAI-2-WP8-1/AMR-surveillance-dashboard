@@ -89,6 +89,9 @@ ui <- shinyUI(fluidPage(
   
   # add favicon
   tags$head(tags$link(rel="shortcut icon", href=file.path("www/favicons/jamrai_favicon_32x32.png"))),
+
+  # main landing page - popup shown over the app when it opens (R/mod_main_landing.R)
+  main_landing_ui(),
   
   # Layout type
   sidebarLayout(
@@ -173,7 +176,7 @@ ui <- shinyUI(fluidPage(
               HTML('<i class="fa fa-book"></i><span class="btn-text">Use of surveillance data for national treatment guidance</span>')
             ),
             choiceValues = c("tab1", "tab2", "tab3"),
-            selected = character(0),
+            selected = "tab1",
             individual = FALSE,
             checkIcon = list(),
             status = "primary"
@@ -210,13 +213,6 @@ ui <- shinyUI(fluidPage(
           value = "dashboard",
           tabsetPanel(
             id = "mainTabs",
-
-            # landing page (shown on app open and when clicking "Dashboard")
-            tabPanel(
-              "",
-              value = "landing",
-              mod_dashboard_landing_ui("dashboard_landing")
-            ),
 
             # map and bar chart
             tabPanel(
@@ -284,9 +280,9 @@ server <- function(input, output, session) {
   insight_filters_mod <- mod_insight_filters_server("insight_filters")
   insight_filters     <- insight_filters_mod$filters
 
-  # Insight tab selection - defaults to the landing page, updated by the #1/#2/#3 buttons
-  # (either the sidebar toggle or the landing page's own shortcut buttons)
-  insightSelectedTab <- reactiveVal("landing")
+  # Insight tab selection - defaults to Insight 1, updated by the sidebar's #1/#2/#3
+  # buttons or the main landing page's insight cards
+  insightSelectedTab <- reactiveVal("tab1")
   observeEvent(input$insightTabToggle, {
     insightSelectedTab(input$insightTabToggle)
   })
@@ -298,35 +294,29 @@ server <- function(input, output, session) {
   # Outer toggle - switch between Dashboard and Insight tabs
   observeEvent(input$outerToggle, {
     updateTabsetPanel(session, "outerTabs", selected = input$outerToggle)
-    if (input$outerToggle == "dashboard") {
-      showDashboardLanding()
-    } else if (input$outerToggle == "insight") {
-      insightSelectedTab("landing")
-      # Empty selection un-checks all 3 buttons (none of them is "active" while on the landing page)
-      updateRadioGroupButtons(session, "insightTabToggle", selected = character(0))
+  })
+
+  # Main landing page (popup) - opens the Dashboard view/section or the insight
+  # picked there (see R/mod_main_landing.R)
+  observeEvent(input$mainLanding, {
+    choice <- input$mainLanding
+    if (identical(choice$page, "dashboard")) {
+      section <- sectionList[as.integer(choice$section)]
+      view    <- if (identical(choice$view, "table")) "table" else "graphics"
+      filters_mod$update_section(section)
+      updateRadioGroupButtons(session, "viewToggle", selected = view)
+      updateTabsetPanel(session, "mainTabs", selected = view)
+      updateRadioGroupButtons(session, "outerToggle", selected = "dashboard")
+      updateTabsetPanel(session, "outerTabs", selected = "dashboard")
+    } else if (identical(choice$page, "insight") && choice$tab %in% c("tab1", "tab2", "tab3")) {
+      setInsightSelectedTab(choice$tab)
+      updateRadioGroupButtons(session, "outerToggle", selected = "insight")
+      updateTabsetPanel(session, "outerTabs", selected = "insight")
     }
   })
-
-  # Same as insightHomeClick below, for re-clicking "Dashboard" while already there
-  observeEvent(input$dashboardHomeClick, {
-    updateTabsetPanel(session, "outerTabs", selected = "dashboard")
-    showDashboardLanding()
-  })
-
-  # Re-clicking "Insight" while already in the Insight section doesn't change
-  # input$outerToggle (its value was already "insight"), so the observer above
-  # never fires. script.js reports every click on that button regardless, so
-  # this always resets back to the Insight landing page.
-  observeEvent(input$insightHomeClick, {
-    updateTabsetPanel(session, "outerTabs", selected = "insight")
-    insightSelectedTab("landing")
-    updateRadioGroupButtons(session, "insightTabToggle", selected = character(0))
-  })
   
-  # View toggle - switch between Graphics and Table tabs (on the landing page it
-  # only records the choice, opened by the landing page's button)
+  # View toggle - switch between Graphics and Table tabs
   observeEvent(input$viewToggle, {
-    if (identical(input$mainTabs, "landing")) return()
     if (input$viewToggle == "graphics") {
       updateTabsetPanel(session, "mainTabs", selected = "graphics")
     } else if (input$viewToggle == "table") {
@@ -338,28 +328,8 @@ server <- function(input, output, session) {
   ## Dashboard modules ----
   activeQuestions <- reactive({ getActiveQuestions() })
 
-  graphics_mod <- mod_dashboard_graphics_server("graphics", filters = filters, active_questions = activeQuestions)
+  mod_dashboard_graphics_server("graphics", filters = filters, active_questions = activeQuestions)
   mod_dashboard_table_server("table",    filters = filters, active_questions = activeQuestions)
-
-  # Dashboard landing page - its section/view cards only set the sidebar's section
-  # filter and Graphics/Table toggle; its "Open" button leaves it for the view
-  # (carrying over the question picked there)
-  dashboard_landing_mod <- mod_dashboard_landing_server("dashboard_landing",
-    filters          = filters,
-    active_questions = activeQuestions,
-    view             = reactive(input$viewToggle),
-    select_section   = filters_mod$update_section,
-    select_view      = function(view) updateRadioGroupButtons(session, "viewToggle", selected = view),
-    open_view        = function(view, question) {
-      if (view == "graphics") graphics_mod$set_question(question)
-      updateTabsetPanel(session, "mainTabs", selected = view)
-    }
-  )
-
-  showDashboardLanding <- function() {
-    updateTabsetPanel(session, "mainTabs", selected = "landing")
-    dashboard_landing_mod$set_question(graphics_mod$question())
-  }
   
   # Remove country from selection when cross button is clicked
   observeEvent(input$remove_country, {
@@ -482,8 +452,7 @@ server <- function(input, output, session) {
     it3_ast = it3_ast, it3_wgt = it3_wgt,
     selected_tab = insightSelectedTab,
     insight_filters = insight_filters,
-    sync_activation = insight_filters_mod$syncActivation,
-    set_selected_tab = setInsightSelectedTab
+    sync_activation = insight_filters_mod$syncActivation
   )
 
 }

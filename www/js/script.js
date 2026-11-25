@@ -122,23 +122,71 @@ $(document).on('click', '.geo-disclaimer-link', function(e) {
     Shiny.setInputValue('showGeoDataDisclaimer', Math.random(), {priority: 'event'});
 });
 
-// The Dashboard/Insight toggle only reports a change to Shiny when its selected
-// value actually changes, so re-clicking "Dashboard"/"Insight" while already on
-// that section does nothing by default. Report every click on those buttons so the
-// server can always reset to the section's landing page, even when re-clicked.
-// Bound on the capture phase directly on document (rather than delegated jQuery
-// .on('click', ...), which listens on the bubble phase) so this still fires even
-// if the button's own Bootstrap/shinyWidgets click handler stops propagation.
-document.addEventListener('click', function(e) {
-    var el = e.target.closest('#outerToggle .btn, #outerToggle input[type="radio"]');
-    if (!el) return;
-    var val = el.matches('input') ? el.value : (el.querySelector('input') || {}).value;
-    if (val === 'insight') {
-        Shiny.setInputValue('insightHomeClick', Math.random(), {priority: 'event'});
-    } else if (val === 'dashboard') {
-        Shiny.setInputValue('dashboardHomeClick', Math.random(), {priority: 'event'});
+// Main landing page popup (R/mod_main_landing.R). Screens and card selection are
+// handled here; only the final choice is sent to the server, as input$mainLanding.
+(function() {
+    var choice = { view: null, section: null };
+
+    function landing() { return document.getElementById('main-landing'); }
+
+    function showScreen(name) {
+        $('#main-landing .main-landing-screen').each(function() {
+            this.classList.toggle('active', this.dataset.screen === name);
+        });
+        $('#main-landing .main-landing-body').scrollTop(0);
     }
-}, true);
+
+    function closeLanding() {
+        var el = landing();
+        if (el) el.classList.add('hidden');
+    }
+
+    function openWith(value) {
+        closeLanding();
+        Shiny.setInputValue('mainLanding', value, {priority: 'event'});
+    }
+
+    // Welcome screen choices and Back buttons
+    $(document).on('click', '#main-landing [data-landing-screen]', function() {
+        showScreen(this.dataset.landingScreen);
+    });
+
+    // Dashboard cards: one view and one section, like radio buttons
+    $(document).on('click', '#main-landing [data-landing-group]', function() {
+        var group = this.dataset.landingGroup;
+        $('#main-landing [data-landing-group="' + group + '"]').removeClass('selected');
+        this.classList.add('selected');
+        choice[group] = this.dataset.landingValue;
+
+        var missing = [];
+        if (!choice.view) missing.push('a view');
+        if (!choice.section) missing.push('a section');
+        $('#main-landing .main-landing-open-btn').prop('disabled', missing.length > 0);
+        $('#main-landing .main-landing-open-label').text(
+            choice.view === 'table' ? 'Open the Table' :
+            choice.view === 'graphics' ? 'Open the Graphics' : 'Open the Dashboard');
+        $('#main-landing .main-landing-open-hint').text(missing.length ?
+            'Choose ' + missing.join(' and ') :
+            $('#main-landing [data-landing-group="section"].selected .insight-landing-card-title').text());
+    });
+
+    $(document).on('click', '#main-landing .main-landing-open-btn', function() {
+        if (!choice.view || !choice.section) return;
+        openWith({ page: 'dashboard', view: choice.view, section: choice.section });
+    });
+
+    // Insight cards
+    $(document).on('click', '#main-landing [data-landing-insight]', function() {
+        openWith({ page: 'insight', tab: this.dataset.landingInsight });
+    });
+
+    // Close button and Escape just hide the popup
+    $(document).on('click', '#main-landing .main-landing-close', closeLanding);
+    document.addEventListener('keydown', function(e) {
+        var el = landing();
+        if (e.key === 'Escape' && el && !el.classList.contains('hidden')) closeLanding();
+    });
+})();
 
 // Insight country filter: tapping a country pill cycles it through
 // selected -> activated -> unselected -> selected -> ...
