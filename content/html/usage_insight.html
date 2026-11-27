@@ -1,0 +1,113 @@
+<div class="usage-content">
+    <!-- Welcome Section -->
+    <section style="margin-bottom: 30px;">
+        <p style="margin-bottom: 10px;">
+            The Insights present our <strong>interactive and comparative analysis</strong> of the survey data,
+            built around the three policy commitments of the 2023 Council Recommendation on AMR.
+            Each insight combines an <strong>interactive figure</strong> with its <strong>key findings</strong>.
+        </p>
+        <p>For project details and contacts, please click the <strong>Info</strong> button at the bottom of the menu bar.</p>
+    </section>
+
+    <!-- How to Use Section -->
+    <section style="margin-bottom: 30px;">
+        <h5 class="modal-section-title">How to Use the Insights</h5>
+        <ol style="margin-left: 20px;">
+            <li style="margin-bottom: 5px;"><strong>Choose an insight</strong> with the buttons in the left panel.</li>
+            <li style="margin-bottom: 5px;">The <strong>figure</strong> (left) shows the results by country. <strong>Hover</strong> over it for details.</li>
+            <li style="margin-bottom: 5px;">The <strong>key findings</strong> (right) summarise what the figure shows.</li>
+            <li style="margin-bottom: 5px;"><strong>Click countries on the figure</strong> to highlight them and compare them side by side in the table below it.</li>
+        </ol>
+    </section>
+
+    <!-- Customize Your View Section -->
+    <section style="margin-bottom: 30px;">
+        <h5 class="modal-section-title">Customize Your View (Left Panel)</h5>
+
+        <!-- Insights -->
+        <h6 class="modal-subsection-title">Insights</h6>
+        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-ranking-star" style="color: #666; margin-right: 8px;"></i>
+                <strong>Insight 1</strong>: Mandatory surveillance of AMR priority pathogens.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-map-location-dot" style="color: #666; margin-right: 8px;"></i>
+                <strong>Insight 2</strong>: Expansion of European surveillance beyond invasive infections
+                (two views: <em>Population coverage</em> and <em>Geographical representativeness</em>).
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-book" style="color: #666; margin-right: 8px;"></i>
+                <strong>Insight 3</strong>: Use of surveillance data for national treatment guidance.
+            </li>
+        </ul>
+
+        <!-- Filters -->
+        <h6 class="modal-subsection-title">Filters</h6>
+        <p style="margin-bottom: 8px;">Narrow the figures by:</p>
+        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-flask" style="color: #666; margin-right: 8px;"></i>
+                <strong>Culture material</strong>: Filter by specimen type (e.g., blood, urine).
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-bacteria" style="color: #666; margin-right: 8px;"></i>
+                <strong>Pathogens</strong>: Focus on specific bacterial pathogens.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-triangle-exclamation" style="color: #666; margin-right: 8px;"></i>
+                <strong>Resistances</strong>: Select specific antibiotic resistances.
+            </li>
+        </ul>
+
+        <!-- Countries -->
+        <h6 class="modal-subsection-title">Countries</h6>
+        <p style="margin-bottom: 8px;">Click a country to cycle it through three states:</p>
+        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 20px;">
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-check" style="color: #666; margin-right: 8px;"></i>
+                <strong>Shown</strong>: the country appears on the figures.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-star" style="color: #666; margin-right: 8px;"></i>
+                <strong>Selected</strong>: the country is also highlighted on the figures and added to the comparison table.
+            </li>
+            <li style="margin-bottom: 8px;">
+                <i class="fa fa-eye-slash" style="color: #666; margin-right: 8px;"></i>
+                <strong>Hidden</strong>: the country is removed from the figures.
+            </li>
+        </ul>
+        <p>Use <strong>Hide all</strong>, <strong>Show all</strong> and <strong>Select all</strong> to change every country at once.</p>
+    </section>
+
+    <!-- Tips Section -->
+    <section style="margin-bottom: 30px;">
+        <h5 class="modal-section-title">Tips for Better Navigation</h5>
+        <ul style="margin-left: 20px;">
+            <li style="margin-bottom: 5px;">Click <strong>"Reset filters"</strong> to return to the default view.</li>
+            <li style="margin-bottom: 5px;">Switch to the <strong>Survey results</strong> (top of the menu bar) to browse the raw answers to the survey.</li>
+            <li style="margin-bottom: 5px;">Click the <strong>JAMREYE logo</strong> to go back to the welcome page.</li>
+            <li style="margin-bottom: 5px;">Click the <strong>Help button</strong> (top left) to revisit this guide.</li>
+        </ul>
+    </section>
+
+    <!-- Closing -->
+    <p style="font-size: 1.1em; margin-top: 20px;">
+        <strong>Happy exploring!</strong>
+        <a href="#" id="linkToContact" style="color: #008aab; text-decoration: underline; cursor: pointer;">
+            Let us know if you need help.
+        </a>
+    </p>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#linkToContact').on('click', function(e) {
+        e.preventDefault();
+        $('.modal').modal('hide');
+        setTimeout(function() {
+            $('#showContactModal').click();
+        }, 300);
+    });
+});
+</script>

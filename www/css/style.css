@@ -837,6 +837,47 @@ body.section-3 .question-selector-card .selectize-input {
     width: 100%;
 }
 
+/* The logo reopens the main landing page */
+.sidebar-logo-wrapper.open-main-landing {
+    cursor: pointer;
+}
+
+.sidebar-logo-wrapper.open-main-landing .sidebar-logo {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.sidebar-logo-wrapper.open-main-landing:hover .sidebar-logo {
+    transform: scale(1.03);
+    opacity: 0.85;
+}
+
+/* "Open the welcome page" link at the top of the Help modal */
+.usage-welcome-link {
+    margin-bottom: 20px;
+}
+
+.usage-welcome-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: 1.5px solid #008aab;
+    border-radius: 999px;
+    background-color: #e6f4f7;
+    color: #008aab;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.usage-welcome-link a:hover,
+.usage-welcome-link a:focus-visible {
+    background-color: #008aab;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 138, 171, 0.3);
+    text-decoration: none;
+}
+
 
 /* Dashboard section buttons (National surveillance / genomic surveillance /
    guidance) - stacked one per row, each its own pill, same style as the Insight
@@ -2091,8 +2132,16 @@ body.section-3 .full-question-title-box {
 
 /* ==========================================================================
    INSIGHT TAB COLOURS (proposal, pending colleagues' approval)
-   One colour per insight tab, like the Dashboard's three section colours:
-     Insight 1 - muted purple, Insight 2 - soft orange, Insight 3 - muted lime.
+   One colour per insight tab, like the Dashboard's three section colours.
+   Turquoise family, spread by hue so the three stay apart and step away from
+   the JAMRAI blue #008aab (hue 192, darker) and the Dashboard teal #2a9d8f:
+     Insight 1 - cerulean (blue side, hue ~200)
+     Insight 2 - turquoise (middle, hue ~184)
+     Insight 3 - seafoam (green side, hue ~160)
+   Previous proposal (2026-10-16), to restore if needed:
+     1 purple #8e7cc3/#6f5ca8/#4e3d85/#f5f2fb/#d6cdeb/#e6e0f4
+     2 orange #e8935a/#c97538/#8a4a1c/#fdf4ee/#f2cfb6/#fae2d1
+     3 lime   #8aa83f/#6e8a2c/#4a5e1c/#f6f9ee/#d3e2b0/#e5eecc
    Applied only to page chrome (landing cards, sidebar buttons, intro box,
    Insight 2 sub-tabs), never to titles, charts or tables.
    Self-contained: deleting this whole block restores the JAMRAI blue
@@ -2101,34 +2150,34 @@ body.section-3 .full-question-title-box {
 #landing-goto_tab1,
 #insightTabToggle input[value="tab1"] + .btn,
 .tab-pane[data-value="tab1"] {
-    --insight-color: #8e7cc3;   /* main colour */
-    --insight-dark:  #6f5ca8;   /* hover */
-    --insight-text:  #4e3d85;   /* dark text on tinted backgrounds */
-    --insight-tint:  #f5f2fb;   /* pale background */
-    --insight-light: #d6cdeb;   /* thin outlines */
-    --insight-soft:  #e6e0f4;   /* icon badge background */
+    --insight-color: #2f8fbf;   /* main colour */
+    --insight-dark:  #23729b;   /* hover */
+    --insight-text:  #17506e;   /* dark text on tinted backgrounds */
+    --insight-tint:  #f0f7fb;   /* pale background */
+    --insight-light: #bcdcee;   /* thin outlines */
+    --insight-soft:  #dcedf7;   /* icon badge background */
 }
 
 #landing-goto_tab2,
 #insightTabToggle input[value="tab2"] + .btn,
 .tab-pane[data-value="tab2"] {
-    --insight-color: #e8935a;
-    --insight-dark:  #c97538;
-    --insight-text:  #8a4a1c;
-    --insight-tint:  #fdf4ee;
-    --insight-light: #f2cfb6;
-    --insight-soft:  #fae2d1;
+    --insight-color: #1fa3ad;
+    --insight-dark:  #17838b;
+    --insight-text:  #0e5a60;
+    --insight-tint:  #eefafa;
+    --insight-light: #b4e3e6;
+    --insight-soft:  #d6f1f3;
 }
 
 #landing-goto_tab3,
 #insightTabToggle input[value="tab3"] + .btn,
 .tab-pane[data-value="tab3"] {
-    --insight-color: #8aa83f;
-    --insight-dark:  #6e8a2c;
-    --insight-text:  #4a5e1c;
-    --insight-tint:  #f6f9ee;
-    --insight-light: #d3e2b0;
-    --insight-soft:  #e5eecc;
+    --insight-color: #2fa77f;
+    --insight-dark:  #238665;
+    --insight-text:  #165c45;
+    --insight-tint:  #effaf5;
+    --insight-light: #b7e3d2;
+    --insight-soft:  #d8f2e8;
 }
 
 /* Sidebar insight buttons: coloured icon when unselected, filled when selected */

@@ -84,8 +84,11 @@ setup_modals <- function(input, output, session, email_config) {
     ))
   })
 
-  # Instructions button - opens the usage modal
+  # Help button - opens the usage guide of the current section (Dashboard or Insights),
+  # with a link back to the main landing page (handled in www/js/script.js)
   observeEvent(input$showInstructions, {
+    in_insight <- identical(input$outerToggle, "insight")
+    usage_file <- if (in_insight) "content/html/usage_insight.html" else "content/html/usage.html"
     showModal(modalDialog(
       title = tags$div(
         class = "flex-space-between",
@@ -98,7 +101,7 @@ setup_modals <- function(input, output, session, email_config) {
           ),
           tags$div(
             class = "modal-title-text",
-            HTML("How to Use This Dashboard")
+            if (in_insight) "How to Use the Insights" else "How to Use the Survey Results"
           )
         ),
         tags$div(
@@ -106,8 +109,12 @@ setup_modals <- function(input, output, session, email_config) {
           modalButton("Close")
         )
       ),
+      tags$p(class = "usage-welcome-link",
+        tags$a(href = "#", class = "open-main-landing",
+               tags$i(class = "fa fa-house"), "Open the welcome page")
+      ),
       tryCatch({
-        includeHTML("content/html/usage.html")
+        includeHTML(usage_file)
       }, error = function(e) {
         HTML("<p>Usage information unavailable</p>")
       }),

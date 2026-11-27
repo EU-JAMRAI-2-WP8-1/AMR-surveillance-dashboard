@@ -95,19 +95,19 @@ main_landing_ui <- function() {
              tags$strong("tool for national and international AMR experts"),
              " and policymakers to ", tags$strong("explore, compare and analyse surveillance information"),
              " across Europe."),
-      tags$p("Browse the raw survey results in the Dashboard, or read our analysis of Europe's progress ",
+      tags$p("Browse each country's answers in the Survey results, or read our analysis of Europe's progress ",
              "towards the three policy commitments of the ", council_link, " in the Insights.")
     ),
     tags$h2("Where would you like to start?"),
     tags$p(class = "main-landing-subtitle",
            "You can switch between both at any time with the buttons at the top of the menu bar."),
     tags$div(class = "main-landing-big-choices",
-      main_landing_big_choice("dashboard", "", "chart-bar", "Survey results", "Dashboard",
+      main_landing_big_choice("dashboard", "", "chart-bar", "Raw data", "Survey results",
         "Explore the answers of each country to the survey, on a map and bar chart or in an interactive table.",
         list(c("globe",  "Maps and charts, question by question"),
              c("table",  "Full answer tables, ready to export"),
              c("filter", "Filter by pathogen, resistance, culture material and country")),
-        "Go to the Dashboard"),
+        "Go to the Survey results"),
       main_landing_big_choice("insight", "insight", "lightbulb", "Analysis", "Insights",
         "Discover our interactive and comparative analysis of the data, built around the three policy commitments of the Council Recommendation.",
         list(c("magnifying-glass-chart", "Interactive figures with their key findings"),
@@ -118,7 +118,7 @@ main_landing_ui <- function() {
   )
 
   dashboard_screen <- tags$section(class = "main-landing-screen", `data-screen` = "dashboard",
-    main_landing_hero(tagList(jamreye_word(), " Dashboard - Survey Results"), compact = TRUE,
+    main_landing_hero(tagList(jamreye_word(), " Survey results"), compact = TRUE,
       tags$p("Choose how you want to see the results and which part of the survey to start with. ",
              "Filters can be refined afterwards in the menu bar.")
     ),
@@ -146,7 +146,7 @@ main_landing_ui <- function() {
     ),
     tags$div(class = "main-landing-filters-hint",
       tags$i(class = "fa fa-sliders"),
-      tags$span("Once in the dashboard, narrow your selection with the filters in the menu bar: ",
+      tags$span("Once in the Survey results, narrow your selection with the filters in the menu bar: ",
                 tags$strong("culture material"), ", ", tags$strong("pathogens"), ", ",
                 tags$strong("resistances"), " and ", tags$strong("countries"), ".")
     ),
@@ -156,7 +156,7 @@ main_landing_ui <- function() {
         tags$span(class = "main-landing-open-hint", "Choose a view and a section"),
         tags$button(type = "button", class = "btn dashboard-landing-open-btn main-landing-open-btn",
                     disabled = NA,
-                    tags$span(class = "main-landing-open-label", "Open the Dashboard"),
+                    tags$span(class = "main-landing-open-label", "Open the Survey results"),
                     tags$i(class = "fa fa-arrow-right"))
       )
     )

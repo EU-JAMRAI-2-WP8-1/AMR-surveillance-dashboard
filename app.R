@@ -104,8 +104,11 @@ ui <- shinyUI(fluidPage(
       width = 2,
       
       # logo
+      # logo - clicking it reopens the main landing page (www/js/script.js)
       tags$div(
-        class = "sidebar-logo-wrapper",
+        class = "sidebar-logo-wrapper open-main-landing",
+        role = "button", tabindex = "0",
+        title = "Back to the welcome page",
         tags$img(
           src = "www/logos/Jamreye_primary-Colour-RGB.svg",
           class = "sidebar-logo",
@@ -115,7 +118,7 @@ ui <- shinyUI(fluidPage(
       
       tags$span(
         class = "reset-filters-wrapper",
-        actionButton("showInstructions", "Instructions", class = "btn btn-outline-info", icon = icon("circle-info"))
+        actionButton("showInstructions", "Help", class = "btn btn-outline-info", icon = icon("circle-question"))
       ),
 
       # Toggle between Dashboard and Insight views
@@ -125,7 +128,7 @@ ui <- shinyUI(fluidPage(
           inputId = "outerToggle",
           label = NULL,
           choiceNames = list(
-            HTML('<i class="fa fa-chart-bar"></i><span class="btn-text"> Dashboard</span>'),
+            HTML('<i class="fa fa-chart-bar"></i><span class="btn-text"> Survey results</span>'),
             HTML('<i class="fa fa-lightbulb"></i><span class="btn-text"> Insight</span>')
           ),
           choiceValues = c("dashboard", "insight"),

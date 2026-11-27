@@ -164,7 +164,7 @@ $(document).on('click', '.geo-disclaimer-link', function(e) {
         $('#main-landing .main-landing-open-btn').prop('disabled', missing.length > 0);
         $('#main-landing .main-landing-open-label').text(
             choice.view === 'table' ? 'Open the Table' :
-            choice.view === 'graphics' ? 'Open the Graphics' : 'Open the Dashboard');
+            choice.view === 'graphics' ? 'Open the Graphics' : 'Open the Survey results');
         $('#main-landing .main-landing-open-hint').text(missing.length ?
             'Choose ' + missing.join(' and ') :
             $('#main-landing [data-landing-group="section"].selected .insight-landing-card-title').text());
@@ -178,6 +178,27 @@ $(document).on('click', '.geo-disclaimer-link', function(e) {
     // Insight cards
     $(document).on('click', '#main-landing [data-landing-insight]', function() {
         openWith({ page: 'insight', tab: this.dataset.landingInsight });
+    });
+
+    // Reopen the popup on its welcome screen: sidebar logo, or the link in the Help
+    // modal (closed first, as Bootstrap modals sit above the popup)
+    function openLanding() {
+        var el = landing();
+        if (!el) return;
+        showScreen('welcome');
+        el.classList.remove('hidden');
+    }
+    $(document).on('click', '.open-main-landing', function(e) {
+        e.preventDefault();
+        var modal = $(this).closest('.modal');
+        if (modal.length) {
+            modal.one('hidden.bs.modal', openLanding).modal('hide');
+        } else {
+            openLanding();
+        }
+    });
+    $(document).on('keydown', '.sidebar-logo-wrapper.open-main-landing', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLanding(); }
     });
 
     // Close button and Escape just hide the popup
